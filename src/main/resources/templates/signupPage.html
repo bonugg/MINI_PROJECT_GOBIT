@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SignUp</title>
+    <link rel="stylesheet" type="text/css" href="css/signup.css">
+    <script src="js/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+<div id="fullscreen">
+    <div id="screen1">
+        <form method="post" action="/signup" id="siginin_form">
+            <div id="div_form">
+                <div id="div_form2">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <select name="USER_DEPT" id="DEPT">
+                        <option value="" selected>부서 선택</option>
+                        <option value="IT">IT</option>
+                        <option value="경영">경영</option>
+                        <option value="디자인">디자인</option>
+                        <option value="영업">인사</option>
+                    </select><br>
+                    <div id="error_dept" style="display: none;"></div>
+                    <input type="text" name="USER_NAME" id="NAME" placeholder="이름"/>
+                    <div id="error_name" style="display: none;"></div>
+                    <input type="text" name="USERENO" id="CNO" placeholder="사번"/>
+                    <div id="error_cno" style="display: none;"></div>
+                    <input type="password" name="USER_PWD" id="PWD" placeholder="비밀번호"/>
+                    <div id="error_pwd" style="display: none;"></div>
+                    <input type="password" name="PWDCHECK" id="PWDCHECK" placeholder="비밀번호 확인"/>
+                    <div id="error_pwdchk" style="display: none;"></div>
+                    <input type="text" name="USER_EMAIL" id="EMAIL" placeholder="이메일"/>
+                    <div id="error_email" style="display: none;"></div>
+                    <input type="text" name="USER_PHONE" id="USER_PHONE" placeholder="폰번호"/>
+                </div>
+            </div>
+            <div id="button_sign_cancle_div">
+                <button type="submit" class="button_sign_cancle" id="submit">회원가입</button>
+                <button type="button" class="button_sign_cancle" style="margin-left: 10px"
+                        onclick="location.href='/login'">취소
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
