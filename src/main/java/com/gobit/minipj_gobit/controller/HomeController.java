@@ -25,6 +25,7 @@ import java.util.*;
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
+    //테스트
     @Autowired
     private HttpSession httpSession;
     private final UserRepository userRepository;
