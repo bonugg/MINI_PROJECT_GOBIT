@@ -1,7 +1,9 @@
 package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.Entity.Calendar;
 import com.gobit.minipj_gobit.Entity.UserOnOff;
+import com.gobit.minipj_gobit.repository.CalendarRepository;
 import com.gobit.minipj_gobit.repository.UserOnOffRepository;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +29,7 @@ public class HomeController {
     private HttpSession httpSession;
     private final UserRepository userRepository;
     private final UserOnOffRepository userOnOffRepository;
+    private final CalendarRepository calendarRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/")
@@ -107,6 +110,7 @@ public class HomeController {
     @RequestMapping(value = "/onadd", method = RequestMethod.POST)
     public String onadd(HttpServletRequest request) throws Exception {
         UserOnOff userOnOff = new UserOnOff();
+        Calendar calendar = new Calendar();
         User user = (User) httpSession.getAttribute("user");
         Date today = new Date();
         SimpleDateFormat inputDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
@@ -117,7 +121,12 @@ public class HomeController {
         userOnOff.setUser(user);
         userOnOff.setSTART(outputDateString);
         userOnOff.setEND("0");
+        calendar.setUser(user);
+        calendar.setCALTYPE("출퇴근");
+        calendar.setCALSTART(outputDateString);
+        calendar.setCALEND("0");
         userOnOffRepository.save(userOnOff);
+        calendarRepository.save(calendar);
 
         return outputDateString;
     }
@@ -125,8 +134,11 @@ public class HomeController {
     @ResponseBody
     @RequestMapping(value = "/offadd", method = RequestMethod.POST)
     public String offadd(@RequestParam("start") String start) throws Exception {
+        System.out.println(start);
         User user = (User) httpSession.getAttribute("user");
         UserOnOff userOnOff = userOnOffRepository.findByUSERANDSTART(user.getUSERNUM(),start).get();
+        Calendar calendar = calendarRepository.findByUNandCS(user.getUSERNUM(),start).get();
+        System.out.println(calendar + "---------------");
         Date today = new Date();
         SimpleDateFormat inputDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
         SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
@@ -135,6 +147,7 @@ public class HomeController {
         String outputDateString = outputDateFormat.format(inputDate);
 
         userOnOff.setEND(outputDateString);
+        calendar.setCALEND(outputDateString);
 
         // start와 end 시간을 Date 형식으로 변환
         Date startDate = outputDateFormat.parse(userOnOff.getSTART());
@@ -146,21 +159,26 @@ public class HomeController {
         java.util.Calendar endDateCalendar = java.util.Calendar.getInstance();
         endDateCalendar.setTime(endDate);
 
-
         int starthours = startDate.getHours();
         int endthours = endDate.getHours();
         userOnOff.setCOMMUTETIME(endthours-starthours);
 
         if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
             userOnOff.setCOMMUTETYPE("출석");
+            calendar.setCALTITLE("출석");
         }else if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 18) {
             userOnOff.setCOMMUTETYPE("조퇴");
+            calendar.setCALTITLE("조퇴");
         }else if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
             userOnOff.setCOMMUTETYPE("지각");
+            calendar.setCALTITLE("지각");
         }else {
             userOnOff.setCOMMUTETYPE("결석");
+            calendar.setCALTITLE("결석");
         }
         userOnOffRepository.save(userOnOff);
+        calendarRepository.save(calendar);
+
         return outputDateString;
     }
     @ResponseBody

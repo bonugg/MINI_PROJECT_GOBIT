@@ -127,38 +127,39 @@
     width: 100%;
     height: 50%;
 }
-#on_button_div{
+.onoff_button_div{
     width: 100%;
-    height: 40%;
+    height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-#on{
-    width: 30%;
-    height: 80%;
-    font-family: 'Gowun Dodum', sans-serif;
-    font-weight: bold;
-}
-#on_time_div{
-    width: 100%;
-    height: 60%;
-    display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
+    margin-left: 20px;
 }
-#off_button_div{
-    width: 100%;
-    height: 40%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-#off{
+.onoff_btn{
     width: 30%;
-    height: 80%;
-    font-family: 'Gowun Dodum', sans-serif;
+    height: 50%;
     font-weight: bold;
+    margin-right: 15px;
+    background: #181F42;
+    color: white;
+    border-radius: 5px;
+    outline: none;
+    border: 0px;
+}
+.onoff_btn:hover{
+    background-color: #253170;
+}
+.onoff_btn:disabled{
+    background: rgb(200,200,200);
+    color: gray;
+    outline: none;
+    border: 0px;
+}
+#on_text{
+    color: #4c4c4c;
+}
+#off_text{
+    color: #4c4c4c;
 }
 #off_time_div{
     width: 100%;
@@ -224,6 +225,7 @@
     height: 50px;
     background-color: white;
     border-radius: 5px;
+    color: #4c4c4c;
 }
 .img_td{
     width: 50px;
@@ -533,19 +535,18 @@ body, ul, li {
     background-color: white;
 }
 .fc-day-sun a {
-    color: indianred;
+    color: darkred;
     text-decoration: none;
 }
 .fc-day-sun{
-    background-color: floralwhite;
+    background-color: ghostwhite;
 }
 .fc-day-sat{
-    background-color: floralwhite;
+    background-color: ghostwhite;
 }
-
 /* 토요일 날짜 파란색 */
 .fc-day-sat a {
-    color: dodgerblue;
+    color: darkblue;
     text-decoration: none;
 }
 .fc-header-toolbar{

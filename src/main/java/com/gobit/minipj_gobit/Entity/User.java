@@ -49,4 +49,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<UserOnOff> userOnOffList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Calendar> calendarList = new ArrayList<>();
 }

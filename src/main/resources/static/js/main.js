@@ -2,7 +2,6 @@ $(function() {
     let popupLayer = document.getElementById("popup_layer");
     const onButton = document.getElementById('on');
     const offButton = document.getElementById('off');
-    const cno = $('#cno').val();
     const no = $('#no').val();
     let today = new Date();
     let year = today.getFullYear();
@@ -58,8 +57,9 @@ $(function() {
             type: 'POST',
             url: '/onadd',
             success: function (outputDateString) {
+                let formattedStartDate = formatDateString(outputDateString);
                 $('#on').attr('disabled', true);
-                $('#on_text').text(outputDateString);
+                $('#on_text').text(formattedStartDate);
                 $('#off').removeAttr("disabled");
             }
         });
@@ -96,7 +96,6 @@ $(function() {
             }
         }
     });
-
     offButton.onclick = function () { //퇴근 버튼 클릭 이벤트
         $.ajax({
             type: 'POST',
@@ -120,12 +119,13 @@ $(function() {
         // 원래 'DOMContentLoaded' 이벤트 리스너에서 실행하려고 했던 코드를 작성
         $(function () {
             const request = $.ajax({
-                url: "/production/monthPlan",
+                url: "/main/calendar",
                 method: "GET",
                 dataType: "json"
             });
             request.done(function (data) {
                 console.log(data)
+
                 const calendarEl = document.getElementById('calendar');
                 $('#business').css("backgroundColor", "lightgray");
                 $('#vacation').css("backgroundColor", "lightgray");
@@ -201,7 +201,7 @@ $(function() {
                         popupLayer.style.display = "block";
 
                         if (info.event.extendedProps.classify == '휴가') {
-                            $('#popup_vacationtype_div').text(info.event.extendedProps.vacationtype).show();
+                            $('#popup_vacationtype_div').text(info.event.extendedProps.title).show();
                             $('#popup_desc_div').css("height", "64%");
                         } else {
                             $('#popup_vacationtype_div').hide();

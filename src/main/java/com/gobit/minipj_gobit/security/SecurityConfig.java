@@ -14,14 +14,14 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf->csrf
-                        .ignoringRequestMatchers("/chart","/onadd", "/onaddcheck","/offadd", "/offaddcheck", "/production/monthPlan")
+                        .ignoringRequestMatchers("/chart","/onadd", "/onaddcheck","/offadd", "/offaddcheck", "/main/calendar")
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/login", "/signup", "/signup").permitAll()
-                        .requestMatchers("/onadd" ,"/offadd" , "/production/monthPlan").permitAll()
+                        .requestMatchers("/onadd" ,"/offadd" , "/main/calendar").permitAll()
                         .requestMatchers("/").authenticated()
                         .anyRequest().authenticated()
                 )
