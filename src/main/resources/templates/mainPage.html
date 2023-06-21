@@ -16,7 +16,6 @@
     <div id="_emt1"></div>
     <div id="_emt2">
         <div id="_emt3">
-
         </div>
         <div id="_emt4">
             <div class="a_screen1"></div>
@@ -24,16 +23,16 @@
                 <div id="b_screen">
                     <div id="b_screen_1">
                         <div id="b_screen_1_1">
-                            <div id="shadow">
-                                <div id="com_title">
-                                    <div id="title">
-                                        <h4 id="title_text">출퇴근</h4>
+                            <div class="shadow">
+                                <div class="com_title">
+                                    <div class="title">
+                                        <h4 class="title_text">출퇴근</h4>
                                     </div>
                                 </div>
                                 <div id="com_content_on_off">
                                     <div id="user_on_off_div">
                                         <div id="user_img_div">
-                                            <img src="img/user.jpg" id="user_img">
+                                            <img src="img/user.png" id="user_img">
                                         </div>
                                         <div id="on_off_div">
                                             <div id="on_div">
@@ -54,7 +53,7 @@
                             </div>
                         </div>
                         <div id="b_screen_1_2">
-                            <div id="shadow">
+                            <div class="shadow">
                                 <div id="b_screen_1_2_1">
                                     <div id="on_off_check">
                                         <div id="onoff-grid-container" th:each="item : ${userMap}">
@@ -63,23 +62,27 @@
                                                     <tr>
                                                         <td rowspan="2" class="img_td">
                                                             <div class="img_td_div">
-                                                                <img src="img/user.jpg" alt="유저 프로필 이미지"
+                                                                <img src="img/user.png" alt="유저 프로필 이미지"
                                                                      class="img_list"/>
                                                             </div>
                                                         </td>
-                                                        <td class="name_list" th:text="${item.get('user').USER_NAME}"></td>
+                                                        <td class="name_list"
+                                                            th:text="${item.get('user').USER_NAME}"></td>
                                                         <td class="name_list2">출근</td>
                                                         <td class="name_list2">퇴근</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="cno_list" th:text="${item.get('user').USERENO}"></td>
+                                                        <td class="cno_list"
+                                                            th:text="${item.get('user').USERENO}"></td>
                                                         <td class="cno_list">
-                                                            <div class="on_div" th:data-check="${item.get('oncheck')}">
+                                                            <div class="on_div"
+                                                                 th:data-check="${item.get('oncheck')}">
                                                                 <div class="on_img"></div>
                                                             </div>
                                                         </td>
                                                         <td class="cno_list">
-                                                            <div class="off_div" th:data-check="${item.get('offcheck')}">
+                                                            <div class="off_div"
+                                                                 th:data-check="${item.get('offcheck')}">
                                                                 <div class="off_img"></div>
                                                             </div>
                                                         </td>
@@ -95,33 +98,38 @@
 
                     </div>
                     <div id="b_screen_2">
-                        <div id="shadow">
-                            <div id="com_title">
-                                <div id="title">
-                                    <h4 id="title_text">업무 시간</h4>
+                        <div class="shadow">
+                            <div class="com_title">
+                                <div class="title">
+                                    <h4 class="title_text">업무 시간</h4>
                                 </div>
                             </div>
-                            <div id="com_content">
+                            <div class="com_content">
                                 <div id="b_screen_2_1">
                                     <div id="chart_btn">
-                                        <button id="changeChart">차트 변경</button>
+                                        <div id="chart_btn1">
+                                            <span id="chart_title">월간 근무 시간</span>
+                                        </div>
+                                        <div id="chart_btn2">
+                                            <button id="changeChart">차트 변경</button>
+                                        </div>
                                     </div>
-                                    <div id="main">
-
+                                    <div id="chart_div">
+                                        <div id="main"></div>
+                                        <div id="hoverInfo"></div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div id="b_screen_3">
-                        <div id="shadow">
-                            <div id="com_title">
-                                <div id="title">
-                                    <h4 id="title_text">캘린더</h4>
+                        <div class="shadow">
+                            <div class="com_title">
+                                <div class="title" style="background-color: #181F42">
+                                    <h4 class="title_text" style="color: white">캘린더</h4>
                                 </div>
                             </div>
-                            <div id="com_content">
+                            <div class="com_content">
                                 <div id="calendar_div">
                                     <div id="cal_btn_div">
                                         <button class="cal_btn" id="all">출근</button>
@@ -150,11 +158,270 @@
                 </div>
                 <div id="c_screen">
                     <div id="e_screen">
+                        <div class="shadow">
+                            <div class="com_title">
+                                <div class="title">
+                                    <div class="title_1">
+                                    </div>
+                                    <div class="title_2">
+                                        <h4 class="title_text">공지 게시판</h4>
+                                    </div>
+                                    <div class="title_3">
+                                        <a class="more_text" href="/">+ 더보기</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="com_content">
+                                <div class="board">
+                                    <div id="notice_div">
+                                        <div id="notice-grid-container">
+                                            <div class="notice_item">
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td rowspan="2" class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">전체</div>
+                                                            </div>
+                                                        </td>
+                                                        <td rowspan="2" class="notice_title_td">하반기 교육
+                                                            참여자 명단...
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="notice_writer_cnt_td" id="writer">
+                                                            김부장
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td" id="cnt">15
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td rowspan="2" class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">IT</div>
+                                                            </div>
+                                                        </td>
+                                                        <td rowspan="2" class="notice_title_td">IT부서 전
+                                                            인원...
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="notice_writer_cnt_td" id="writer">
+                                                            박팀장
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td" id="cnt">8</td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td rowspan="2" class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">디자인</div>
+                                                            </div>
+                                                        </td>
+                                                        <td rowspan="2" class="notice_title_td">디자인부서
+                                                            공지사항입니다...
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="notice_writer_cnt_td" id="writer">
+                                                            이팀장
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td" id="cnt">20
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td rowspan="2" class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">인사</div>
+                                                            </div>
+                                                        </td>
+                                                        <td rowspan="2" class="notice_title_td">인사부서
+                                                            이번주부터...
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="notice_writer_cnt_td" id="writer">
+                                                            오팀장
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td" id="cnt">5</td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td rowspan="2" class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">전체</div>
+                                                            </div>
+                                                        </td>
+                                                        <td rowspan="2" class="notice_title_td">하반기 교육
+                                                            참여자 명단...
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="notice_writer_cnt_td" id="writer">
+                                                            김부장
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td" id="cnt">15
+                                                        </td>
+                                                    </tr>
+                                                </table>
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="f_screen">
+                        <div class="shadow">
+                            <div class="com_title">
+                                <div class="title">
+                                    <div class="title">
+                                        <div class="title_1">
+                                        </div>
+                                        <div class="title_2">
+                                            <h4 class="title_text">부서 게시판</h4>
+                                        </div>
+                                        <div class="title_3">
+                                            <a class="more_text" href="/">+ 더보기</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="com_content">
+                                <div class="board">
+                                    <div id="notice_div">
+                                        <div id="notice-grid-container">
+                                            <div class="notice_item">
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td rowspan="2" class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">전체</div>
+                                                            </div>
+                                                        </td>
+                                                        <td rowspan="2" class="notice_title_td">하반기 교육
+                                                            참여자 명단...
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="notice_writer_cnt_td" id="writer">
+                                                            김부장
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td" id="cnt">15
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td rowspan="2" class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">IT</div>
+                                                            </div>
+                                                        </td>
+                                                        <td rowspan="2" class="notice_title_td">IT부서 전
+                                                            인원...
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="notice_writer_cnt_td" id="writer">
+                                                            박팀장
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td" id="cnt">8</td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td rowspan="2" class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">디자인</div>
+                                                            </div>
+                                                        </td>
+                                                        <td rowspan="2" class="notice_title_td">디자인부서
+                                                            공지사항입니다...
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="notice_writer_cnt_td" id="writer">
+                                                            이팀장
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td" id="cnt">20
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td rowspan="2" class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">인사</div>
+                                                            </div>
+                                                        </td>
+                                                        <td rowspan="2" class="notice_title_td">인사부서
+                                                            이번주부터...
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="notice_writer_cnt_td" id="writer">
+                                                            오팀장
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td" id="cnt">5</td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td rowspan="2" class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">전체</div>
+                                                            </div>
+                                                        </td>
+                                                        <td rowspan="2" class="notice_title_td">하반기 교육
+                                                            참여자 명단...
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="notice_writer_cnt_td" id="writer">
+                                                            김부장
+                                                        </td>
+                                                        <td class="notice_writer_cnt_td" id="cnt">15
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div id="d_screen">
                         <div id="d_screen_1">
-                            <div id="shadow">
+                            <div class="shadow">
                                 <div id="notic_image">
                                     <div class="slider-2">
                                         <div class="side-btns">
@@ -176,7 +443,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="a_screen1"></div>
