@@ -22,39 +22,65 @@
         <!--헤더와 메뉴바를 제외한 영역 -->
         <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
         <div class="content">
-          <div class="mypage">
+          <section class="profile-card">
             <p class="mypage-title">마이페이지</p>
-            <div class="profile">
-              <img id="bigprofile-image" src="../static/img/user.jpg" alt="프로필 사진">
-              <input type="file" id="profile-upload" accept="image/*">
-              <button id="edit-profile" type="button">내 프로필 수정</button>
-            </div>
-          </div>
-          <div class="rectangle1">
-            <div class="profile1">
-              <p class="basic-info">기본 정보</p>
-              <div class="profile-image">
-                <img src="../static/img/user.jpg" alt="프로필 이미지">
-              </div>
-              <div class="info">
-                <p class="name" th:text="${user.USER_NAME}">이름</p>
-                <p class="email" th:email="${user.USER_EMAIL}">이메일</p>
-                <p class="phone" th:text="${user.USER_PHONE}">휴대폰 번호</p>
+            <img id="profile-imageL" src="../static/img/user.jpg" alt="프로필 사진">
+            <input type="file" id="profile-upload" accept="image/*">
+            <a href="myPageUpdate.html" class="btnUpdate">내 프로필 수정</a>
+          </section>
+          <section class="profile-info">
+              <div class="profile1">
+                <p class="basic-info">기본 정보</p>
+                <div class="profile-image">
+                  <img src="../static/img/user.jpg" alt="프로필 이미지">
+                </div>
+                <div class="info">
+                  <p class="basic-info">기본 정보</p>
+                  <p class="name">구본욱</p>
+                  <p class="mini-email">9bonwook@gobit.com</p>
+                  <ul>
+                    <li>010-1111-1111</li>
+                    <li>9bonwook@gobit.com</li>
+                  </ul>
 
-              </div>
-            </div>
-          </div>
+                  <!--                <p class="name" th:text="${session.user.USER_NAME}"></p>-->
+                  <!--                <p class="email" th:text="${session.user.USER_EMAIL}">이메일</p>-->
+                  <!--                <p class="phone" th:text="${user.USER_PHONE}">휴대폰 번호</p>-->
 
-          <div class="rectangle2">
-            <div th:class="profile2">
-              <p th:class="userNum" th:text="$user.USER_ENO">사번</p>
-              <p th:class="userNum" th:text="$user.USER_DEPT">부서</p>
-              <p th:class="userNum" th:text="$user.USER_POSITION">직위</p>
-              <p th:class="userNum" th:text="$user.USER_ADDRESS">주소</p>
-              <p th:class="userNum" th:text="$user.USER_JOIN">입사일</p>
-              <p th:class="userNum" th:text="$user.USER_EXIT_CHK">재직여부</p>
+                </div>
+              </div>
+            <div class="profile2">
+              <!--            <div th:class="profile2">-->
+              <!--              <p th:class="userNum" th:text="$user.USER_ENO">사번</p>-->
+              <!--              <p th:class="userNum" th:text="$user.USER_DEPT">부서</p>-->
+              <!--              <p th:class="userNum" th:text="$user.USER_POSITION">직위</p>-->
+              <!--              <p th:class="userNum" th:text="$user.USER_ADDRESS">주소</p>-->
+              <!--              <p th:class="userNum" th:text="$user.USER_JOIN">입사일</p>-->
+              <!--              <p th:class="userNum" th:text="$user.USER_EXIT_CHK">재직여부</p>-->
+              <!--            </div>-->
+              <ul>
+                <li>사번</li>
+                <li>직위</li>
+                <li>귀속 사업장</li>
+                <li>생년월일</li>
+                <li>재직구분</li>
+                <li>소속부서</li>
+                <li>입사일</li>
+              </ul>
+              <ul>
+                <li class="userEno">사번</li>
+                <li class="userPos">직위</li>
+                <li class="userPlace">귀속 사업장</li>
+                <li class="userBirth">생년월일</li>
+                <li class="currently-employed">재직구분</li>
+                <li class="userDept">소속부서</li>
+                <li class="userRegDate">입사일</li>
+              </ul>
+
             </div>
-          </div>
+
+          </section>
+
 
         </div>
       </div>
