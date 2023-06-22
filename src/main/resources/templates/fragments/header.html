@@ -12,27 +12,27 @@
             </section>
         </section>
         <ul>
-            <li>
-                <a href="#">모든 메뉴</a>
+            <li class="menu_li">
+                <a class="menu_a">모든 메뉴</a>
                 <ul>
-                    <li><a href="/" class="menu_text">홈</a></li>
-                    <li><a href="#" class="menu_text">마이페이지</a></li>
-                    <li><a href="#" class="menu_text">전자결재 신청</a></li>
-                    <li><a href="#" class="menu_text">전자결재 요청 목록</a></li>
+                    <li class="menu_li_li"><a href="/" class="menu_text">홈</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">마이페이지</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">전자결재 요청 목록</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="#">전자결재</a>
+            <li class="menu_li">
+                <a class="menu_a">전자결재</a>
                 <ul>
-                    <li><a href="#" class="menu_text">전자결재 신청</a></li>
-                    <li><a href="#" class="menu_text">전자결재 요청 목록</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">전자결재 요청 목록</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="#">게시판</a>
+            <li class="menu_li">
+                <a class="menu_a">게시판</a>
                 <ul>
-                    <li><a href="#" class="menu_text">공지 게시판</a></li>
-                    <li><a href="#" class="menu_text">부서 게시판</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">공지 게시판</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">부서 게시판</a></li>
                 </ul>
             </li>
         </ul>
@@ -50,11 +50,6 @@
                 </li>
                 <li id="my_li">
                     <div id="my_div">
-                        <div id="my_div_1">
-                            <div id="my_dept">
-                                <h5 th:text="${session.user.USERDEPT + ' 부서'}"></h5>
-                            </div>
-                        </div>
                         <div id="my_div_2">
                             <h6 th:text="${session.user.USER_NAME + '님'}"></h6>
                             <div class="nav_div">

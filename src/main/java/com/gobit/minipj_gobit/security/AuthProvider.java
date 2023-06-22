@@ -38,7 +38,6 @@ public class AuthProvider implements AuthenticationProvider {
             long ENO;
             try {
                 ENO = Long.parseLong(ENO_STRING);
-                // 숫자 타입일 때 처리할 로직
             } catch (NumberFormatException e) {
                 ENO = 0;
             }
@@ -60,7 +59,7 @@ public class AuthProvider implements AuthenticationProvider {
             }
         }catch (NoSuchElementException ne){
         }
-        throw new BadCredentialsException("아이디 또는 비밀번호를 찾을 수 없습니다");
+        throw new BadCredentialsException("");
     }
 
     @Override

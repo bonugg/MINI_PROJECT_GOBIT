@@ -31,71 +31,49 @@
                                 </div>
                                 <div id="com_content_on_off">
                                     <div id="user_on_off_div">
-                                        <div id="user_img_div">
-                                            <img src="img/user.png" id="user_img">
-                                        </div>
-                                        <div id="on_off_div">
-                                            <div id="on_div">
-                                                <div class="onoff_button_div">
-                                                    <button id="on" class="onoff_btn">출근</button>
-                                                    <a id="on_text">출근 시각</a>
-                                                </div>
-                                            </div>
-                                            <div id="off_div">
-                                                <div class="onoff_button_div">
-                                                    <button id="off" class="onoff_btn">퇴근</button>
-                                                    <a id="off_text">퇴근 시각</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <table id="usertable">
+                                            <tr>
+                                                <td rowspan="3" id="img_td">
+                                                    <div id="user_img_div">
+                                                        <img src="img/user.png" id="user_img">
+                                                    </div>
+                                                </td>
+                                                <td class="userinfo_div_th">이름</td>
+                                                <td class="userinfo_div_td" th:text="${session.user.USER_NAME}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="userinfo_div_th">사번</td>
+                                                <td class="userinfo_div_td" th:text="${session.user.USERENO}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="userinfo_div_th">부서</td>
+                                                <td class="userinfo_div_td" th:text="${session.user.USERDEPT}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="on_off_div">
+                                                    <div class="on_off_btn_div">
+                                                        <button id="on" class="onoff_btn">출근</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="on_off_div">
+                                                    <div class="on_off_btn_div">
+                                                        <button id="off" class="onoff_btn">퇴근</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="on_off_div" id="on_text">출근 시각</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3" class="on_off_div" id="off_text">퇴근 시각</td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div id="b_screen_1_2">
-                            <div class="shadow">
-                                <div id="b_screen_1_2_1">
-                                    <div id="on_off_check">
-                                        <div id="onoff-grid-container" th:each="item : ${userMap}">
-                                            <div class="item">
-                                                <table class="onoff_table">
-                                                    <tr>
-                                                        <td rowspan="2" class="img_td">
-                                                            <div class="img_td_div">
-                                                                <img src="img/user.png" alt="유저 프로필 이미지"
-                                                                     class="img_list"/>
-                                                            </div>
-                                                        </td>
-                                                        <td class="name_list"
-                                                            th:text="${item.get('user').USER_NAME}"></td>
-                                                        <td class="name_list2">출근</td>
-                                                        <td class="name_list2">퇴근</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="cno_list"
-                                                            th:text="${item.get('user').USERENO}"></td>
-                                                        <td class="cno_list">
-                                                            <div class="on_div"
-                                                                 th:data-check="${item.get('oncheck')}">
-                                                                <div class="on_img"></div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="cno_list">
-                                                            <div class="off_div"
-                                                                 th:data-check="${item.get('offcheck')}">
-                                                                <div class="off_img"></div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                     <div id="b_screen_2">
                         <div class="shadow">
@@ -157,6 +135,49 @@
 
                 </div>
                 <div id="c_screen">
+                    <div id="d_screen">
+                        <div class="shadow">
+                            <div id="b_screen_1_2_1">
+                                <div id="on_off_check">
+                                    <div id="onoff-grid-container" th:each="item : ${userMap}">
+                                        <div class="item">
+                                            <table class="onoff_table">
+                                                <tr>
+                                                    <td rowspan="2" class="img_td">
+                                                        <div class="img_td_div">
+                                                            <img src="img/user.png" alt="유저 프로필 이미지"
+                                                                 class="img_list"/>
+                                                        </div>
+                                                    </td>
+                                                    <td class="name_list"
+                                                        th:text="${item.get('user').USER_NAME}"></td>
+                                                    <td class="name_list2">출근</td>
+                                                    <td class="name_list2">퇴근</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="cno_list"
+                                                        th:text="${item.get('user').USERENO}"></td>
+                                                    <td class="cno_list">
+                                                        <div class="on_div"
+                                                             th:data-check="${item.get('oncheck')}">
+                                                            <div class="on_img"></div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="cno_list">
+                                                        <div class="off_div"
+                                                             th:data-check="${item.get('offcheck')}">
+                                                            <div class="off_img"></div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="e_screen">
                         <div class="shadow">
                             <div class="com_title">
@@ -178,108 +199,147 @@
                                             <div class="notice_item">
                                                 <table class="notice_table">
                                                     <tr>
-                                                        <td rowspan="2" class="notice_td">
+                                                        <td class="notice_td">
                                                             <div class="notice_td_div">
                                                                 <div class="notice_type">전체</div>
                                                             </div>
                                                         </td>
-                                                        <td rowspan="2" class="notice_title_td">하반기 교육
-                                                            참여자 명단...
-                                                        </td>
+                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
                                                         <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td2">김부장</td>
                                                         <td class="notice_writer_cnt_td">조회수</td>
+                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="notice_writer_cnt_td" id="writer">
-                                                            김부장
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td" id="cnt">15
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td rowspan="2" class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">IT</div>
-                                                            </div>
-                                                        </td>
-                                                        <td rowspan="2" class="notice_title_td">IT부서 전
-                                                            인원...
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="notice_writer_cnt_td" id="writer">
-                                                            박팀장
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td" id="cnt">8</td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td rowspan="2" class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">디자인</div>
-                                                            </div>
-                                                        </td>
-                                                        <td rowspan="2" class="notice_title_td">디자인부서
-                                                            공지사항입니다...
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="notice_writer_cnt_td" id="writer">
-                                                            이팀장
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td" id="cnt">20
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td rowspan="2" class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">인사</div>
-                                                            </div>
-                                                        </td>
-                                                        <td rowspan="2" class="notice_title_td">인사부서
-                                                            이번주부터...
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="notice_writer_cnt_td" id="writer">
-                                                            오팀장
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td" id="cnt">5</td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td rowspan="2" class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">전체</div>
-                                                            </div>
-                                                        </td>
-                                                        <td rowspan="2" class="notice_title_td">하반기 교육
-                                                            참여자 명단...
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="notice_writer_cnt_td" id="writer">
-                                                            김부장
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td" id="cnt">15
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                                        <td rowspan="2">
+                                                            <div class="notice_img_div">
+                                                                <div class="notice_img_div2">
 
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td colspan="4" rowspan="2" class="notice_content_td">
+                                                            <div class="notice_content_div">
+                                                                <div class="notice_content_div2">
+                                                                    <span>안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">전체</div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td2">김부장</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">
+                                                            <div class="notice_img_div">
+                                                                <div class="notice_img_div2">
+
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td colspan="4" rowspan="2" class="notice_content_td">
+                                                            <div class="notice_content_div">
+                                                                <div class="notice_content_div2">
+                                                                    <span>안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여
+                                                                        안녕하요 안녕하세여 안녕하세요 안녕
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">전체</div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td2">김부장</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">
+                                                            <div class="notice_img_div">
+                                                                <div class="notice_img_div2">
+
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td colspan="4" rowspan="2" class="notice_content_td">
+                                                            <div class="notice_content_div">
+                                                                <div class="notice_content_div2">
+                                                                    <span>안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여
+
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">전체</div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td2">김부장</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">
+                                                            <div class="notice_img_div">
+                                                                <div class="notice_img_div2">
+
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td colspan="4" rowspan="2" class="notice_content_td">
+                                                            <div class="notice_content_div">
+                                                                <div class="notice_content_div2">
+                                                                    <span>안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여
+                                                                        안녕하세
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -310,133 +370,79 @@
                                             <div class="notice_item">
                                                 <table class="notice_table">
                                                     <tr>
-                                                        <td rowspan="2" class="notice_td">
+                                                        <td class="notice_td">
                                                             <div class="notice_td_div">
                                                                 <div class="notice_type">전체</div>
                                                             </div>
                                                         </td>
-                                                        <td rowspan="2" class="notice_title_td">하반기 교육
-                                                            참여자 명단...
-                                                        </td>
+                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
                                                         <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td2">김부장</td>
                                                         <td class="notice_writer_cnt_td">조회수</td>
+                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="notice_writer_cnt_td" id="writer">
-                                                            김부장
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td" id="cnt">15
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td rowspan="2" class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">IT</div>
-                                                            </div>
-                                                        </td>
-                                                        <td rowspan="2" class="notice_title_td">IT부서 전
-                                                            인원...
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="notice_writer_cnt_td" id="writer">
-                                                            박팀장
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td" id="cnt">8</td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td rowspan="2" class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">디자인</div>
-                                                            </div>
-                                                        </td>
-                                                        <td rowspan="2" class="notice_title_td">디자인부서
-                                                            공지사항입니다...
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="notice_writer_cnt_td" id="writer">
-                                                            이팀장
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td" id="cnt">20
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td rowspan="2" class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">인사</div>
-                                                            </div>
-                                                        </td>
-                                                        <td rowspan="2" class="notice_title_td">인사부서
-                                                            이번주부터...
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="notice_writer_cnt_td" id="writer">
-                                                            오팀장
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td" id="cnt">5</td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td rowspan="2" class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">전체</div>
-                                                            </div>
-                                                        </td>
-                                                        <td rowspan="2" class="notice_title_td">하반기 교육
-                                                            참여자 명단...
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="notice_writer_cnt_td" id="writer">
-                                                            김부장
-                                                        </td>
-                                                        <td class="notice_writer_cnt_td" id="cnt">15
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                                        <td rowspan="2">
+                                                            <div class="notice_img_div">
+                                                                <div class="notice_img_div2">
 
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td colspan="4" rowspan="2" class="notice_content_td">
+                                                            <div class="notice_content_div">
+                                                                <div class="notice_content_div2">
+                                                                    <span>안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여
+                                                                        안녕하세요 안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여
+                                                                        안녕하세요 안세여
+
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                                <table class="notice_table">
+                                                    <tr>
+                                                        <td class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">전체</div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td2">김부장</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="2">
+                                                            <div class="notice_img_div">
+                                                                <div class="notice_img_div2">
+
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td colspan="4" rowspan="2" class="notice_content_td">
+                                                            <div class="notice_content_div">
+                                                                <div class="notice_content_div2">
+                                                                    <span>안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여
+                                                                        안
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="d_screen">
-                        <div id="d_screen_1">
-                            <div class="shadow">
-                                <div id="notic_image">
-                                    <div class="slider-2">
-                                        <div class="side-btns">
-                                            <div><span><i class="fas fa-caret-left"></i></span></div>
-                                            <div><span><i class="fas fa-caret-right"></i></span></div>
-                                        </div>
-                                        <div class="slides">
-                                            <div class="active"
-                                                 style="background-image:url(https://i.ibb.co/KhhN59M/background.jpg);"></div>
-                                            <div class="active_a"
-                                                 style="background-image:url(https://i.ibb.co/CndHWCK/background1.jpg);"></div>
-                                        </div>
-                                        <div class="page-nav">
-                                            <div class="active"></div>
-                                            <div class="active_a"></div>
                                         </div>
                                     </div>
                                 </div>

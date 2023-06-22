@@ -18,6 +18,7 @@ public class SecurityConfig {
                 .csrf(csrf->csrf
                         .ignoringRequestMatchers("/**")
                 )
+                //세션 설정
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionFixation().changeSessionId()
                         .maximumSessions(1)

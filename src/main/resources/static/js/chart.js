@@ -3,8 +3,6 @@ $(function() {
         type: 'POST',
         url: '/chart',
         success: function (result) {
-            console.log(result.yearMonthChart);
-            console.log(result.yearChart);
             // Initialize the echarts instance based on the prepared dom
             let myChart = echarts.init(document.getElementById('main'));
 

@@ -59,7 +59,7 @@ $(function () {
             success: function (outputDateString) {
                 let formattedStartDate = formatDateString(outputDateString);
                 $('#on').attr('disabled', true);
-                $('#on_text').text(formattedStartDate);
+                $('#on_text').text('출근 시각 : '+formattedStartDate);
                 $('#off').removeAttr("disabled");
             },
             error: function (xhr) {
@@ -80,7 +80,7 @@ $(function () {
             if (startdate != "") {
                 let formattedStartDate = formatDateString(startdate);
                 $('#on').attr('disabled', true);
-                $('#on_text').text(formattedStartDate);
+                $('#on_text').text('출근 시각 : '+formattedStartDate);
                 $.ajax({
                     type: 'POST',
                     url: '/offaddcheck',
@@ -91,7 +91,7 @@ $(function () {
                         if (enddate != "") {
                             let formattedEndDate = formatDateString(enddate);
                             $('#off').attr('disabled', true);
-                            $('#off_text').text(formattedEndDate);
+                            $('#off_text').text('퇴근 시각 : '+formattedEndDate);
                         } else {
                             ipcheck(off);
                         }
@@ -112,7 +112,7 @@ $(function () {
             success: function (outputDateString) {
                 let formattedEndDate = formatDateString(outputDateString);
                 $('#off').attr('disabled', true);
-                $('#off_text').text(formattedEndDate);
+                $('#off_text').text('퇴근 시각 : '+formattedEndDate);
                 onContentLoaded();
                 $('#all').click();
             },
@@ -136,8 +136,6 @@ $(function () {
                 dataType: "json"
             });
             request.done(function (data) {
-                console.log(data)
-
                 const calendarEl = document.getElementById('calendar');
                 $('#all').css("backgroundColor", "white");
 
