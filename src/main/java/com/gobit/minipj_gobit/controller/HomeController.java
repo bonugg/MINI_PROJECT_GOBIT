@@ -9,6 +9,7 @@ import com.gobit.minipj_gobit.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.aop.AopInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ import java.util.*;
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
+    //테스트
     @Autowired
     private HttpSession httpSession;
     private final UserRepository userRepository;
@@ -93,6 +95,9 @@ public class HomeController {
     }
     @GetMapping("/login")
     public String loginPage(){
+        if (httpSession.getAttribute("user") != null) {
+            return "mainPage";
+        }
         return "loginPage";
     }
     @GetMapping("/signup")
@@ -134,7 +139,6 @@ public class HomeController {
     @ResponseBody
     @RequestMapping(value = "/offadd", method = RequestMethod.POST)
     public String offadd(@RequestParam("start") String start) throws Exception {
-        System.out.println(start);
         User user = (User) httpSession.getAttribute("user");
         UserOnOff userOnOff = userOnOffRepository.findByUSERANDSTART(user.getUSERNUM(),start).get();
         Calendar calendar = calendarRepository.findByUNandCS(user.getUSERNUM(),start).get();
@@ -159,9 +163,13 @@ public class HomeController {
         java.util.Calendar endDateCalendar = java.util.Calendar.getInstance();
         endDateCalendar.setTime(endDate);
 
-        int starthours = startDate.getHours();
-        int endthours = endDate.getHours();
-        userOnOff.setCOMMUTETIME(endthours-starthours);
+        int a = endDate.getHours() - startDate.getHours();
+        int b = endDate.getMinutes() - startDate.getMinutes();
+        System.out.println(a);
+        System.out.println(b);
+        String commutetime = String.format("%.1f", (double) ((a * 60) + b) / 60);
+        System.out.println(commutetime);
+        userOnOff.setCOMMUTETIME(Double.parseDouble(commutetime));
 
         if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
             userOnOff.setCOMMUTETYPE("출석");
@@ -185,9 +193,7 @@ public class HomeController {
     @RequestMapping(value = "/onaddcheck", method = RequestMethod.POST) //좋아요 체크 및 좋아요 수
     public String onaddcheck(@RequestParam("start") String start) throws Exception {
         User user = (User) httpSession.getAttribute("user");
-        System.out.println(start);
         String startdate = userOnOffRepository.findByCLASSIFYANDSTART(user.getUSERNUM(),start);
-        System.out.println(startdate);
         return startdate;
     }
 
@@ -200,16 +206,16 @@ public class HomeController {
     }
     @ResponseBody
     @RequestMapping(value = "/chart", method = RequestMethod.POST) //좋아요 체크 및 좋아요 수
-    public Map<String, Integer> chart() throws Exception {
+    public Map<String, Double> chart() {
         User user = (User) httpSession.getAttribute("user");
         LocalDate today = LocalDate.now();
 
         String yearMonth = today.format(DateTimeFormatter.ofPattern("yyyy-MM"));
         String year = today.format(DateTimeFormatter.ofPattern("yyyy"));
-        int yearMonthChart = userOnOffRepository.findByYearMonthChart(yearMonth, user.getUSERNUM());
-        int yearChart =userOnOffRepository.findByYearMonthChart(year, user.getUSERNUM());
+        double yearMonthChart = userOnOffRepository.findByYearMonthChart(yearMonth, user.getUSERNUM());
+        double yearChart =userOnOffRepository.findByYearMonthChart(year, user.getUSERNUM());
 
-        Map<String, Integer> result = new HashMap<>();
+        Map<String, Double> result = new HashMap<>();
         result.put("yearMonthChart", yearMonthChart);
         result.put("yearChart", yearChart);
 

@@ -5,8 +5,8 @@ body{
     padding: 0;
     font-size: 0;
     background-image: url("../img/background.jpg");
-    background-size: 100%;
-    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 #fullscreen{
     width: 100%;

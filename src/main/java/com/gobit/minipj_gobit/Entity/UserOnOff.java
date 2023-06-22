@@ -25,5 +25,5 @@ public class UserOnOff {
     @Column(name = "COMMUTE_TYPE")
     private String COMMUTETYPE;
     @Column(name = "COMMUTE_TIME")
-    private int COMMUTETIME;
+    private double COMMUTETIME;
 }

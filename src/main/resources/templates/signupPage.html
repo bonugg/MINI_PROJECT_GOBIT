@@ -14,7 +14,8 @@
             <div id="div_form">
                 <div id="div_form2">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <select name="USER_DEPT" id="DEPT">
+                    <input type="hidden" name="USER_POSITION" value="신입" />
+                    <select name="USERDEPT" id="DEPT">
                         <option value="" selected>부서 선택</option>
                         <option value="IT">IT</option>
                         <option value="경영">경영</option>

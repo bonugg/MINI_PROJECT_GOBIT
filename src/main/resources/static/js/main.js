@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     let popupLayer = document.getElementById("popup_layer");
     const onButton = document.getElementById('on');
     const offButton = document.getElementById('off');
@@ -17,22 +17,22 @@ $(function() {
             let text = $(this).data('check').toString();
 
             if (text === '0') {
-                $(this).find('.on_img').css('backgroundColor', 'indianred');
+                $(this).find('.on_img').css('backgroundColor', 'white');
             } else if (text === '1') {
-                $(this).find('.on_img').css('backgroundColor', 'green');
+                $(this).find('.on_img').css('backgroundColor', '#181F42');
             } else if (text === '2') {
-                $(this).find('.on_img').css('backgroundColor', 'orange');
+                $(this).find('.on_img').css('backgroundColor', 'rgba(24, 31, 66, 0.5)');
             }
         });
         $('.off_div').each(function () {
             let text = $(this).data('check').toString();
 
             if (text === '0') {
-                $(this).find('.off_img').css('background-color', 'indianred');
+                $(this).find('.off_img').css('background-color', 'white');
             } else if (text === '1') {
-                $(this).find('.off_img').css('background-color', 'green');
+                $(this).find('.off_img').css('background-color', '#181F42');
             } else if (text === '2') {
-                $(this).find('.off_img').css('background-color', 'orange');
+                $(this).find('.off_img').css('background-color', 'rgba(24, 31, 66, 0.5)');
             }
         });
     });
@@ -59,8 +59,14 @@ $(function() {
             success: function (outputDateString) {
                 let formattedStartDate = formatDateString(outputDateString);
                 $('#on').attr('disabled', true);
-                $('#on_text').text(formattedStartDate);
+                $('#on_text').text('출근 시각 : '+formattedStartDate);
                 $('#off').removeAttr("disabled");
+            },
+            error: function (xhr) {
+                if (xhr.status === 401) {
+                    // 상태 코드가 401 Unauthorized인 경우 로그인 페이지로 이동
+                    window.location.href = "/login";
+                }
             }
         });
     }
@@ -74,7 +80,7 @@ $(function() {
             if (startdate != "") {
                 let formattedStartDate = formatDateString(startdate);
                 $('#on').attr('disabled', true);
-                $('#on_text').text(formattedStartDate);
+                $('#on_text').text('출근 시각 : '+formattedStartDate);
                 $.ajax({
                     type: 'POST',
                     url: '/offaddcheck',
@@ -85,7 +91,7 @@ $(function() {
                         if (enddate != "") {
                             let formattedEndDate = formatDateString(enddate);
                             $('#off').attr('disabled', true);
-                            $('#off_text').text(formattedEndDate);
+                            $('#off_text').text('퇴근 시각 : '+formattedEndDate);
                         } else {
                             ipcheck(off);
                         }
@@ -106,9 +112,15 @@ $(function() {
             success: function (outputDateString) {
                 let formattedEndDate = formatDateString(outputDateString);
                 $('#off').attr('disabled', true);
-                $('#off_text').text(formattedEndDate);
+                $('#off_text').text('퇴근 시각 : '+formattedEndDate);
                 onContentLoaded();
                 $('#all').click();
+            },
+            error: function (xhr) {
+                if (xhr.status === 401) {
+                    // 상태 코드가 401 Unauthorized인 경우 로그인 페이지로 이동
+                    window.location.href = "/login";
+                }
             }
         });
     }
@@ -124,12 +136,8 @@ $(function() {
                 dataType: "json"
             });
             request.done(function (data) {
-                console.log(data)
-
                 const calendarEl = document.getElementById('calendar');
-                $('#business').css("backgroundColor", "lightgray");
-                $('#vacation').css("backgroundColor", "lightgray");
-                $('#meeting').css("backgroundColor", "lightgray");
+                $('#all').css("backgroundColor", "white");
 
                 let filteredAttendanceData = data.filter(function (event) {
                     return event.title === '출석' && event.no == no;
@@ -156,8 +164,8 @@ $(function() {
                 }).map(function (event) {
                     return {
                         ...event,
-                        backgroundColor: 'indianred',
-                        borderColor: 'indianred'
+                        backgroundColor: 'orange',
+                        borderColor: 'orange'
                     };
                 });
 
@@ -166,8 +174,8 @@ $(function() {
                 }).map(function (event) {
                     return {
                         ...event,
-                        backgroundColor: 'red',
-                        borderColor: 'red'
+                        backgroundColor: 'indianred',
+                        borderColor: 'indianred'
                     };
                 });
 
@@ -259,9 +267,9 @@ $(function() {
                     });
 
                     $('#vacation').css("backgroundColor", "white");
-                    $('#meeting').css("backgroundColor", "lightgray");
-                    $('#business').css("backgroundColor", "lightgray");
-                    $('#all').css("backgroundColor", "lightgray");
+                    $('#meeting').css("backgroundColor", "");
+                    $('#business').css("backgroundColor", "");
+                    $('#all').css("backgroundColor", "");
                     calendar.removeAllEvents();
                     calendar.addEventSource(filteredEvents);
                 });
@@ -282,9 +290,9 @@ $(function() {
                         return newEvent;
                     });
                     $('#meeting').css("backgroundColor", "white");
-                    $('#vacation').css("backgroundColor", "lightgray");
-                    $('#business').css("backgroundColor", "lightgray");
-                    $('#all').css("backgroundColor", "lightgray");
+                    $('#vacation').css("backgroundColor", "");
+                    $('#business').css("backgroundColor", "");
+                    $('#all').css("backgroundColor", "");
                     calendar.removeAllEvents();
                     calendar.addEventSource(filteredEvents);
                 });
@@ -305,17 +313,17 @@ $(function() {
                         return newEvent;
                     });
                     $('#business').css("backgroundColor", "white");
-                    $('#all').css("backgroundColor", "lightgray");
-                    $('#vacation').css("backgroundColor", "lightgray");
-                    $('#meeting').css("backgroundColor", "lightgray");
+                    $('#all').css("backgroundColor", "");
+                    $('#vacation').css("backgroundColor", "");
+                    $('#meeting').css("backgroundColor", "");
                     calendar.removeAllEvents();
                     calendar.addEventSource(filteredEvents);
                 });
                 $('#all').on('click', function () {
                     $('#all').css("backgroundColor", "white");
-                    $('#business').css("backgroundColor", "lightgray");
-                    $('#vacation').css("backgroundColor", "lightgray");
-                    $('#meeting').css("backgroundColor", "lightgray");
+                    $('#business').css("backgroundColor", "");
+                    $('#vacation').css("backgroundColor", "");
+                    $('#meeting').css("backgroundColor", "");
                     calendar.removeAllEvents();
                     calendar.addEventSource(newEventData);
                 });
