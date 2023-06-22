@@ -17,14 +17,14 @@ public class MyPageController {
     @Autowired
     private MyPageService myPageService;
 
-//    @GetMapping("/myPage/{USERNO}")
-//    public String getMyPage(@PathVariable Long USERNO, Model model) {
-//        User user = myPageService.getPage(USERNO);
-//
-//        model.addAttribute("user", user);
-//
-//        return "myPage";
-//    }
+    @GetMapping("/myPage/{USERNO}")
+    public String getMyPage(@PathVariable Long USERNO, Model model) {
+        User user = myPageService.getPage(USERNO);
+
+        model.addAttribute("user", user);
+
+        return "myPage";
+    }
 
     @GetMapping("/myPage")
     public String myPage(){
@@ -39,11 +39,11 @@ public class MyPageController {
         return "myPageUpdate";
     }
 
-    @PostMapping("/myPage/update")
-    public String updatemyPage (Long USERNO, User user, MultipartFile imageFile) throws IOException {
-        myPageService.updateMyPage(user, USERNO, imageFile);
-
-        return "redirect:/myPage";
-    }
+//    @PostMapping("/myPage/update")
+//    public String updatemyPage (Long USERNO, User user, MultipartFile imageFile) throws IOException {
+//        myPageService.updateMyPage(user, USERNO, imageFile);
+//
+//        return "redirect:/myPage";
+//    }
 
 }
