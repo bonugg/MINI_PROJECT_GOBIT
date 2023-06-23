@@ -9,13 +9,13 @@ import com.gobit.minipj_gobit.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.aop.AopInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -91,7 +91,7 @@ public class HomeController {
     }
     @GetMapping("/empty")
     public String empty(){
-        return "emptyPage";
+        return "AppBuisness";
     }
     @GetMapping("/login")
     public String loginPage(){
@@ -220,5 +220,23 @@ public class HomeController {
         result.put("yearChart", yearChart);
 
         return result;
+    }
+
+    @GetMapping("/AppBuisness-view")
+    public ModelAndView AppBuisnessView() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("AppBuisness.html");
+
+        return mv;
+    }
+
+    @GetMapping("/AppMeeting-view")
+    public ModelAndView AppMeetingView() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("AppMeeting.html");
+
+        return mv;
     }
 }

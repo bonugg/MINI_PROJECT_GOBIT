@@ -23,12 +23,12 @@ public class MyPageController {
         return "myPage";
     }
 
-    @GetMapping("/myPageUpdate/{USERNO}")
-    public String updateGetMyPage(@PathVariable Long USERNO, Model model) {
-        User user = myPageService.updateMyPage();
-
-        return "myPageUpdate";
-    }
+//    @GetMapping("/myPageUpdate/{USERNO}")
+//    public String updateGetMyPage(@PathVariable Long USERNO, Model model) {
+//        User user = myPageService.updateMyPage();
+//
+//        return "myPageUpdate";
+//    }
 
     @PostMapping("/myPage/update")
     public String updatemyPage (Long USERNO, User user){
@@ -36,5 +36,7 @@ public class MyPageController {
 
         return "redirect:/myPage";
     }
+
+
 
 }
