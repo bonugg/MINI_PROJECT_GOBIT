@@ -141,7 +141,7 @@
                                 <div id="on_off_check">
                                     <div id="onoff-grid-container" th:each="item : ${userMap}">
                                         <div class="item">
-                                            <table class="onoff_table">
+                                            <table class="onoff_table" th:id="${item.get('user').USERNUM}">
                                                 <tr>
                                                     <td rowspan="2" class="img_td">
                                                         <div class="img_td_div">
@@ -482,5 +482,8 @@
     <script src="js/slide.js"></script>
     <script src="js/chart.js"></script>
     <script src="js/main.js"></script>
+    <script>
+
+    </script>
 </th:block>
 </html>

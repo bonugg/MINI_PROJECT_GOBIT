@@ -172,8 +172,8 @@ public class HomeController {
         userOnOff.setCOMMUTETIME(Double.parseDouble(commutetime));
 
         if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
-            userOnOff.setCOMMUTETYPE("출석");
-            calendar.setCALTITLE("출석");
+            userOnOff.setCOMMUTETYPE("출근");
+            calendar.setCALTITLE("출근");
         }else if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 18) {
             userOnOff.setCOMMUTETYPE("조퇴");
             calendar.setCALTITLE("조퇴");
@@ -181,8 +181,8 @@ public class HomeController {
             userOnOff.setCOMMUTETYPE("지각");
             calendar.setCALTITLE("지각");
         }else {
-            userOnOff.setCOMMUTETYPE("결석");
-            calendar.setCALTITLE("결석");
+            userOnOff.setCOMMUTETYPE("결근");
+            calendar.setCALTITLE("결근");
         }
         userOnOffRepository.save(userOnOff);
         calendarRepository.save(calendar);
@@ -212,12 +212,14 @@ public class HomeController {
 
         String yearMonth = today.format(DateTimeFormatter.ofPattern("yyyy-MM"));
         String year = today.format(DateTimeFormatter.ofPattern("yyyy"));
-        double yearMonthChart = userOnOffRepository.findByYearMonthChart(yearMonth, user.getUSERNUM());
-        double yearChart =userOnOffRepository.findByYearMonthChart(year, user.getUSERNUM());
+        Double yearMonthChart = userOnOffRepository.findByYearMonthChart(yearMonth, user.getUSERNUM());
+        Double yearChart =userOnOffRepository.findByYearMonthChart(year, user.getUSERNUM());
+        double yearMonthChartValue = (yearMonthChart != null) ? yearMonthChart : 0.0;
+        double yearChartValue = (yearChart != null) ? yearChart : 0.0;
 
         Map<String, Double> result = new HashMap<>();
-        result.put("yearMonthChart", yearMonthChart);
-        result.put("yearChart", yearChart);
+        result.put("yearMonthChart", yearMonthChartValue);
+        result.put("yearChart", yearChartValue);
 
         return result;
     }

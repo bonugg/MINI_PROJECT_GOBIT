@@ -11,6 +11,53 @@ $(function () {
 
     let formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd 형식으로 날짜를 표현합니다.
 
+    // 현재 페이지 URL이 /main 인 경우에만 웹소켓 연결을 시작합니다.
+    if (window.location.pathname === "/") {
+        window.onload = () => {
+            const url = `ws://${location.host}/database-change`;
+            setupWebSocketAsync(url);
+        };
+    }
+
+    async function setupWebSocketAsync(url) {
+        const socket = new WebSocket(url);
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onmessage = (event) => {
+            let jsonObj = JSON.parse(event.data);
+            if(jsonObj.end == 0){
+                let startObj = new Date(jsonObj.start);
+                let hour = startObj.getHours();
+                if (hour <= 9) {
+                    $('#'+jsonObj.usernum+ " .on_img").css("backgroundColor", "#181F42");
+                } else {
+                    $('#'+jsonObj.usernum+ " .on_img").css("backgroundColor", "rgba(24, 31, 66, 0.5)");
+                }
+            }else {
+                let endObj = new Date(jsonObj.end);
+                let hour = endObj.getHours();
+                if (hour <= 9) {
+                    $('#'+jsonObj.usernum+ " .off_img").css("backgroundColor", "#181F42");
+                } else {
+                    $('#'+jsonObj.usernum+ " .off_img").css("backgroundColor", "rgba(24, 31, 66, 0.5)");
+                }
+            }
+
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+        };
+
+        // WebSocket이 종료될 때까지 기다리기
+        await new Promise((resolve) => {
+            socket.addEventListener("close", resolve);
+        });
+    }
+
     //출근 퇴근 색상별 표시
     $(document).ready(function () {
         $('.on_div').each(function () {
@@ -59,7 +106,7 @@ $(function () {
             success: function (outputDateString) {
                 let formattedStartDate = formatDateString(outputDateString);
                 $('#on').attr('disabled', true);
-                $('#on_text').text('출근 시각 : '+formattedStartDate);
+                $('#on_text').text('출근 시각 : ' + formattedStartDate);
                 $('#off').removeAttr("disabled");
             },
             error: function (xhr) {
@@ -80,7 +127,7 @@ $(function () {
             if (startdate != "") {
                 let formattedStartDate = formatDateString(startdate);
                 $('#on').attr('disabled', true);
-                $('#on_text').text('출근 시각 : '+formattedStartDate);
+                $('#on_text').text('출근 시각 : ' + formattedStartDate);
                 $.ajax({
                     type: 'POST',
                     url: '/offaddcheck',
@@ -91,7 +138,7 @@ $(function () {
                         if (enddate != "") {
                             let formattedEndDate = formatDateString(enddate);
                             $('#off').attr('disabled', true);
-                            $('#off_text').text('퇴근 시각 : '+formattedEndDate);
+                            $('#off_text').text('퇴근 시각 : ' + formattedEndDate);
                         } else {
                             ipcheck(off);
                         }
@@ -112,7 +159,7 @@ $(function () {
             success: function (outputDateString) {
                 let formattedEndDate = formatDateString(outputDateString);
                 $('#off').attr('disabled', true);
-                $('#off_text').text('퇴근 시각 : '+formattedEndDate);
+                $('#off_text').text('퇴근 시각 : ' + formattedEndDate);
                 onContentLoaded();
                 $('#all').click();
             },
@@ -140,7 +187,7 @@ $(function () {
                 $('#all').css("backgroundColor", "white");
 
                 let filteredAttendanceData = data.filter(function (event) {
-                    return event.title === '출석' && event.no == no;
+                    return event.title === '출근' && event.no == no;
                 }).map(function (event) {
                     return {
                         ...event,
@@ -170,7 +217,7 @@ $(function () {
                 });
 
                 let filteredAbsentData = data.filter(function (event) {
-                    return event.title === '결석' && event.no == no;
+                    return event.title === '결근' && event.no == no;
                 }).map(function (event) {
                     return {
                         ...event,
