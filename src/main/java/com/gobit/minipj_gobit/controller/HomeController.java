@@ -91,7 +91,7 @@ public class HomeController {
     }
     @GetMapping("/empty")
     public String empty(){
-        return "AppBuisness";
+        return "appBuisness";
     }
     @GetMapping("/login")
     public String loginPage(){
@@ -222,20 +222,29 @@ public class HomeController {
         return result;
     }
 
-    @GetMapping("/AppBuisness-view")
-    public ModelAndView AppBuisnessView() {
+    @GetMapping("/appBuisness-view")
+    public ModelAndView appBuisnessView() {
         ModelAndView mv = new ModelAndView();
 
-        mv.setViewName("AppBuisness.html");
+        mv.setViewName("appBuisness.html");
 
         return mv;
     }
 
-    @GetMapping("/AppMeeting-view")
-    public ModelAndView AppMeetingView() {
+    @GetMapping("/appMeeting-view")
+    public ModelAndView appMeetingView() {
         ModelAndView mv = new ModelAndView();
 
-        mv.setViewName("AppMeeting.html");
+        mv.setViewName("appMeeting.html");
+
+        return mv;
+    }
+
+    @GetMapping("/appVacation-view")
+    public ModelAndView appVacationView() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("appVacation.html");
 
         return mv;
     }
