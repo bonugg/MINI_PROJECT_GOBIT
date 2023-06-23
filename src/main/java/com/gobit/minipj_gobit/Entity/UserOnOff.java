@@ -5,6 +5,9 @@ import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -26,4 +29,19 @@ public class UserOnOff {
     private String COMMUTETYPE;
     @Column(name = "COMMUTE_TIME")
     private double COMMUTETIME;
+    @Column(name = "UPDATE_AT")
+    @UpdateTimestamp
+    private LocalDateTime UPDATEAT;
+
+    @Override
+    public String toString() {
+        return "UserOnOff{" +
+                "COMMUTENUM=" + COMMUTENUM +
+                ", START='" + START + '\'' +
+                ", END='" + END + '\'' +
+                ", COMMUTETYPE='" + COMMUTETYPE + '\'' +
+                ", COMMUTETIME=" + COMMUTETIME +
+                ", UPDATEAT=" + UPDATEAT +
+                '}';
+    }
 }
