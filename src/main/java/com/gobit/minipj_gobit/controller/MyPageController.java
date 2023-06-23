@@ -25,7 +25,7 @@ public class MyPageController {
 
     @GetMapping("/myPageUpdate/{USERNO}")
     public String updateGetMyPage(@PathVariable Long USERNO, Model model) {
-        User user = myPageService.updateMyPage();
+//        User user = myPageService.updateMyPage();
 
         return "myPageUpdate";
     }
