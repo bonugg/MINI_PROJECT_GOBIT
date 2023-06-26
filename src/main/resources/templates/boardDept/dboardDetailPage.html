@@ -36,30 +36,30 @@
 
 
                     <!-- 몸통 부분 -->
-                    <div class="boody">
+                    <td class="boody">
 
                         <!-- 제목 -->
                         <div class="div-botitle">
-                            <div class="board-title" th:text="${dBoard.title}"></div>
+                            <div class="board-title" th:text="${board.title}"></div>
                         </div>
                         <!-- 제목 -->
 
 
                         <!-- 내용 -->
                         <div class="div-content">
-                            <div class="board-content" th:text="${dBoard.content}"></div>
+                            <div class="board-content" th:text="${board.content}"></div>
                         </div>
                         <!-- 내용 -->
 
 
                         <!-- 작성 관련 내용 -->
                         <div class="div-values">
-                            <div class="username" th:if="${dBoard.user != null}" th:text="${dBoard.user.USERNAME}">
+                            <div class="username" th:if="${board.user != null}" th:text="${board.user.USERNAME}">
                                 작성자
                             </div>
-                            <div class="date" th:text="${#temporals.format(dBoard.createDate, 'yyyy-MM-dd HH:mm')}"></div>
-                            <div class="cnt" th:text="${dBoard.cnt}"></div>
-                            <div class="like-cnt" th:text="${dBoard.like}"></div>
+                            <div class="date" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                            <div class="cnt" th:text="${board.cnt}"></div>
+                            <div class="like-cnt" th:text="${board.like}"></div>
 
                             <div class="files">
                                 첨부파일
@@ -70,11 +70,10 @@
 
                         <!-- 버튼들 -->
                         <div class="div-board-btns">
-
-                            <a th:if="${session.user.USERENO == dBoard.user.USERENO}"
-                               th:href="@{|/boardDept/modify/${dBoard.id}|}" class="modify">수정</a>
-                            <a th:if="${session.user.USERENO == dBoard.user.USERENO}"
-                                href="javascript:void(0);" th:data-uri="@{|/boardDept/delete/${dBoard.id}|}"
+                            <a th:if="${session.user.USERENO == board.user.USERENO}"
+                               th:href="@{|/boardDept/modify/${board.id}|}" class="modify">수정</a>
+                            <a th:if="${session.user.USERENO == board.user.USERENO}"
+                                href="javascript:void(0);" th:data-uri="@{|/boardDept/delete/${board.id}|}"
                                 class="delete">삭제</a>
 
                             <a href="/boardDept/list" class="list">목록</a>
@@ -83,24 +82,30 @@
 
 
 
-                        <!-- 댓글 -->
-                        <div class="reply-title">
-                            <strong>댓글 | 15개</strong>
-                        </div>
-                        <!-- 댓글 -->
+                            <!-- 댓글 -->
+                            <div class="reply-title">
+                                <div th:text="'댓글 수: '+ ${#lists.size(board.replyList)} + '개'"></div>
+                            </div>
+                            <!-- 댓글 -->
 
+                            <!-- 댓글 작성 -->
+                            <form class="reply-form" th:action="@{|/reply/create/${board.id}|}" method="post">
+                                <textarea class="reply-area" name="content" id="" cols="30" rows="3"></textarea>
+                                <input class="reply-btn" type="submit" value="댓글등록">
+                            </form>
+                            <!-- 댓글 작성 -->
 
-                        <!-- 댓글 반복 -->
+                            <!-- 댓글 반복 -->
+                            <div class="for-reply">
 
-                        <!-- 댓글 반복 -->
+                            <div th:each="reply, loop : ${board.replyList}"></div>
+                            <div th:text="${loop.count}"></div>
+                            <div th:if="${reply.user != null}" th:text="${reply.user.USERNAME}"></div>
+                            <div th:if="${reply.content}" th:text="${reply.content}"></div>
+                            <div th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></div>
 
-
-                        <!-- 댓글 작성 -->
-                        <form class="reply-form">
-                            <textarea class="reply-area" name="replyContent" id="" cols="30" rows="3"></textarea>
-                            <input class="reply-btn" type="submit" value="댓글등록">
-                        </form>
-                        <!-- 댓글 작성 -->
+                            </div>
+                            <!-- 댓글 반복 -->
 
 
                     </div>

@@ -47,7 +47,7 @@ public class dBoardController {
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
         dBoard dBoard = this.dBoardService.getBoard(id);
-        model.addAttribute("dBoard", dBoard);
+        model.addAttribute("board", dBoard);
         return "boardDept/dboardDetailPage";
     }
 

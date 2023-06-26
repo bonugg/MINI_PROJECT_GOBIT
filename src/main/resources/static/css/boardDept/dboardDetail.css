@@ -103,5 +103,16 @@ a {
 
 
 /* 댓글 작성 */
+.reply-form, .reply-title, .div-reply{
+    width: 100%;
+    justify-content: flex-start;
+}
 
+.reply-area{
+    resize: none;
+}
+
+.for-reply{
+    display: flex;
+}
 /* 댓글 작성 */
