@@ -47,7 +47,7 @@ public class dBoardService {
         b.setCnt(0);
         b.setLike(0);
         b.setUser(user);
-        this.dBoardRepository.save(board);
+        this.dBoardRepository.save(b);
     }
 
     public void modify(dBoard board, String title, String content) {
