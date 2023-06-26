@@ -9,7 +9,6 @@ import com.gobit.minipj_gobit.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.aop.AopInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -91,7 +90,7 @@ public class HomeController {
     }
     @GetMapping("/empty")
     public String empty(){
-        return "emptyPage";
+        return "noticelist";
     }
     @GetMapping("/login")
     public String loginPage(){

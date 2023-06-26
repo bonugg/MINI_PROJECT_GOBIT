@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Empty</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/empty.css">
+        <link rel="stylesheet" type="text/css" href="/css/notice.css">
+    </th:block>
+</head>
+<body layout:fragment="content">
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
+                <section class="notice">
+                <div class="page-title">
+                <div class="container">
+                <strong>공지사항</strong>
+                </div>
+                </div>
+                <!-- board seach area -->
+                <div id="board-search">
+                <div class="container">
+                <div class="search-window">
+                <form action="">
+                <div class="search-wrap">
+                <label for="search" class="blind">공지사항 내용 검색</label>
+                <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">
+                <button type="submit" class="btn btn-dark">검색</button>
+                </div>
+                </form>
+                </div>
+                </div>
+                </div>
+
+                <!-- board list area -->
+                <div id="board-list">
+                <div class="container">
+                <table class="board-table">
+                <thead>
+                <tr>
+                <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-title">제목</th>
+                <th scope="col" class="th-name">이름</th>
+                <th scope="col" class="th-date">작성일자</th>
+                <th scope="col" class="th-cnt">조회수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td>3</td>
+                <th>
+                <a href="#">[공지사항] 개인정보 처리방침 변경안내처리방침</a>
+                <p>테스트</p>
+                </th>
+                <td>이정수</td>
+                <td>2017.07.13</td>
+                <td>54</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <th><a href="#">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                <td>이정수</td>
+                <td>2017.07.13</td>
+                <td>59</td>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <th><a href="#">공지사항 안내입니다. 이용해주셔서 감사합니다</a></th>
+                <td>이정수</td>
+                <td>2017.07.13</td>
+                <td>60</td>
+                </tr>
+                </tbody>
+                </table>
+                </div>
+                </div>
+                </section>
+                <!-- paging-->
+                <div class="page_wrap">
+                <div class="page_nation">
+                <a class="arrow pprev" href="#"></a>
+                <a class="arrow prev" href="#"></a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">10</a>
+                <a class="arrow next" href="#"></a>
+                <a class="arrow nnext" href="#"></a>
+                </div>
+                </div>
+                <div class="bt_wrap">
+                <a href="#" class="on">등록</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+
+</th:block>
+</html>
