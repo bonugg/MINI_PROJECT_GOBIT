@@ -26,8 +26,7 @@ import java.util.List;
 public class dBoardController {
 
     private final dBoardService dBoardService;
-    @Autowired
-    private HttpSession httpSession;
+    private final UserRepository userRepository;
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
@@ -53,12 +52,13 @@ public class dBoardController {
     }
 
     @GetMapping("/create")
-    public String create() {
+    public String create(BoardForm boardForm) {
         return "boardDept/dboardWritePage";
     }
 
     @PostMapping("/create")
-    public String create(dBoard board, User user) {
+    public String create(dBoard board, Principal principal) {
+        User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
         this.dBoardService.create(board, user);
         return "redirect:/boardDept/list";
     }

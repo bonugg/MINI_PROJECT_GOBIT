@@ -54,7 +54,7 @@
 
                         <!-- 작성 관련 내용 -->
                         <div class="div-values">
-                            <div class="username" th:if="${dBoard.user != null}" th:text="${dBoard.user.USER_NAME}">
+                            <div class="username" th:if="${dBoard.user != null}" th:text="${dBoard.user.USERNAME}">
                                 작성자
                             </div>
                             <div class="date" th:text="${#temporals.format(dBoard.createDate, 'yyyy-MM-dd HH:mm')}"></div>

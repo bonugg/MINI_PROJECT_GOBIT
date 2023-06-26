@@ -67,7 +67,7 @@
                                     <a th:href="@{|/boardDept/updateCnt/${board.id}|}"
                                     th:text="${board.title}"></a>
                                 </td>
-                                <td class="table-name" th:if="${board.user != null}" th:text="${board.user.USER_NAME}"></td>
+                                <td class="table-name" th:if="${board.user != null}" th:text="${board.user.USERNAME}"></td>
                                 <td class="table-date" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
                                 <td class="table-cnt" th:text="${board.cnt}"></td>
                                 <td class="table-like" th:text="${board.like}"></td>
