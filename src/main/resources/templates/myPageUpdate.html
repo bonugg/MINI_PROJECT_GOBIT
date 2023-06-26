@@ -8,10 +8,11 @@
   <title>Empty</title>
   <th:block layout:fragment="css">
     <!--사용할 css는 여기에 첨부 -->
-    <link rel="stylesheet" type="text/css" href="/css/empty.css">
+    <link rel="stylesheet" type="text/css" href="css/myPage.css">
   </th:block>
 </head>
 <body layout:fragment="content">
+
 <div id="fullscreen">
   <div id="_emt1"></div>
   <div id="_emt2">
@@ -19,44 +20,28 @@
     </div>
     <div id="_emt4">
       <div id="use_screen">
-        <!--헤더와 메뉴바를 제외한 영역 -->
-        <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
-        <div class="content">
-          <div class="mypage">
-            <p class="mypage-title">마이페이지</p>
-            <div class="profile">
-              <img id="bigprofile-image" src="../static/img/user.jpg" alt="프로필 사진">
-              <input type="file" id="profile-upload" accept="image/*">
-              <button id="edit-profile" type="submit">수정 완료</button>
-            </div>
-          </div>
-          <div class="rectangle1">
+        <p class="mypage-title">프로필 수정</p>
+        <form action="/myPage/update" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="userNum" th:value="${session.user.USERNUM}" />
+          <section class="profile-card">
+            <img id="profile-imageL"  th:src="${session.user.imagePath}" alt="프로필 사진">
+            <input type="file" id="profileImageLInput" name="imageFile" value="사진 선택">
+            <button type="submit" class="btnUpdate">프로필 변경사항 저장</button>
+          </section>
+          <section class="profile-info">
             <div class="profile1">
+            <!--수정 가능-->
               <p class="basic-info">기본 정보</p>
-              <div class="profile-image">
-                <img src="../static/img/user.jpg" alt="프로필 이미지">
-              </div>
-              <div class="info">
-                <p class="name" th:text="${user.USER_NAME}">이름</p>
-                <p class="email" th:email="${user.USER_EMAIL}">이메일</p>
-                <p class="phone" th:text="${user.USER_PHONE}">휴대폰 번호</p>
-
-              </div>
+              <input class="nameUpdate" type="text" name="userName" placeholder="이름" th:value="${session.user.USER_NAME}">
+              <input class="phoneUpdate" type="text" name="userPhone" placeholder="010-XXXX-XXXX" th:value="${session.user.USER_PHONE}">
+              <input class="emailUpdate" type="text" name="userEmail" placeholder="xxxx@gobit.com" th:value="${session.user.USER_EMAIL}">
             </div>
+          </section>
+        </form>
+          <div class="profile2">
+          <!--수정 불가-->
+            <p>수정 불가</p>
           </div>
-
-          <div class="rectangle2">
-            <div th:class="profile2">
-              <p th:class="userNum" th:text="$user.USER_ENO">사번</p>
-              <p th:class="userNum" th:text="$user.USER_DEPT">부서</p>
-              <p th:class="userNum" th:text="$user.USER_POSITION">직위</p>
-              <p th:class="userNum" th:text="$user.USER_ADDRESS">주소</p>
-              <p th:class="userNum" th:text="$user.USER_JOIN">입사일</p>
-              <p th:class="userNum" th:text="$user.USER_EXIT_CHK">재직여부</p>
-            </div>
-          </div>
-
-        </div>
       </div>
     </div>
   </div>
