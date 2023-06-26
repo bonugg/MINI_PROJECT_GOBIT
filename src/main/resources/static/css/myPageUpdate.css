@@ -1,0 +1,138 @@
+#fullscreen{
+    width: 100vw;
+    height: 100vh;
+}
+#_emt1{
+    width: 100%;
+    height: 70px;
+}
+#_emt2{
+    width: 100%;
+    height: calc(100% - 70px);
+    display: flex;
+}
+#_emt3{
+    width: 100px;
+    height: 100%;
+}
+#_emt4{
+    width: calc(100% - 100px);
+    height: 100%;
+    display: flex;
+}
+#use_screen{
+    width: 100%;
+    height: 100%;
+}
+
+.mypage-title {
+    font-size: 13px;
+    color: #949393;
+    position: absolute;
+    left: 200px;
+    top: 130px;
+}
+
+.profile-card {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin-left: 10vw;
+    top: 150px;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile-imageL {
+    width: 170px;
+    height: 170px;
+
+}
+
+.btnUpdate {
+    position: absolute;
+    left: 10px;
+    top: 200px;
+    width: 150px;
+    height: 50px;
+    background-color: #878BA0;
+    color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    justify-content: center;
+    border: none;
+}
+
+.btnUpdate:hover {
+    background-color: #6E7182;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile1 {
+    position: absolute;
+    top: 150px;
+    width: calc(100vw - 800px);
+    left: 35vw;
+    height: 250px;
+    background-color: #ffffff;
+    border: 0.2px solid #949393;
+    border-radius: 3px;
+    padding: 15px 30px;
+}
+
+.profile2 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    top: 450px;
+    position: absolute;
+    width: calc(100vw - 800px);
+    height: 450px;
+    background-color: #ffffff;
+    border: 0.2px solid #949393;
+    border-radius: 3px;
+    left: 35vw;
+    padding: 15px 30px;
+}
+
+.basic-info {
+    font-size: 14px;
+    color: #949393;
+}
+
+.profile-imagespace {
+    width: 25%;
+}
+
+.nameUpdate {
+    margin-top: 25px;
+}
+
+.nameUpdate, .phoneUpdate, .emailUpdate {
+    height: 35px;
+    display: flex;
+    padding: 5px;
+    margin-bottom: 15px;
+    width: 98%;
+}
+
+.profile2 {
+    background: rgb(211, 211, 211);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: white;
+}
+
+.tel, .email {
+    border-bottom: 0.2px solid #949393;
+}
+
+
