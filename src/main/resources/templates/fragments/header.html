@@ -3,61 +3,43 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <header th:fragment="header">
-    <div id="div_row">
-        <div id="div_imt">
-        </div>
-        <div class="menu_div">
-            <div id="img_div">
-                <div id="menu_btn">
-                    <div class="line" style="margin-bottom: 10px"></div>
-                    <div class="line" style="margin-bottom: 10px"></div>
-                    <div class="line"></div>
-                </div>
-            </div>
-            <ul class="appmenu">
-                <div id="div_imt2">
-                </div>
-                <li class="appmenu_item">
-                    <div class="menu_text_div_app">
-                        <a class="menu_text_app" href="/empty">전자결재 신청하기</a>
-                    </div>
-                </li>
-                <li class="appmenu_item">
-                    <div class="menu_text_div_app">
-                        <a class="menu_text_app" href="/approvalList">전자결재 요청 목록</a>
-                    </div>
-                </li>
-                <li class="appmenu_item">
-                    <div class="menu_text_div_app">
-                        <a class="menu_text_app" href="/appDetail">전자결재 상세 목록</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div id="space"></div>
-        <div class="menu_div2">
-            <div id="img_div">
-                <div id="menu_btn">
-                    <div class="line" style="margin-bottom: 10px"></div>
-                    <div class="line" style="margin-bottom: 10px"></div>
-                    <div class="line"></div>
-                </div>
-            </div>
-            <ul class="boardmenu">
-                <div id="div_imt2"></div>
-                <li class="boardmenu_item">
-                    <div class="menu_text_div_app">
-                        <a class="menu_text_app" href="/#">공지 게시판</a>
-                    </div>
-                </li>
-                <li class="boardmenu_item">
-                    <div class="menu_text_div_app">
-                        <a class="menu_text_app" href="/#">부서 게시판</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <aside class="side-bar">
+        <section class="side-bar__icon-box">
+            <section class="side-bar__icon-1">
+                <div></div>
+                <div></div>
+                <div></div>
+            </section>
+        </section>
+        <ul>
+            <li class="menu_li">
+                <a class="menu_a">모든 메뉴</a>
+                <ul>
+                    <li class="menu_li_li"><a href="/" class="menu_text">홈</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">마이페이지</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">전자결재 요청 목록</a></li>
+                </ul>
+            </li>
+            <li class="menu_li">
+                <a class="menu_a">전자결재</a>
+                <ul>
+                    <li class="menu_li_li"><a href="/appBuisness-view" class="menu_text">출장 전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="/appVacation-view" class="menu_text">휴가 전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="/appMeeting-view" class="menu_text">회의 전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="/approvalList" class="menu_text">전자결재 요청 목록</a></li>
+                    <li class="menu_li_li"><a href="/appDetail" class="menu_text">전자결재 상세 목록</a></li>
+                </ul>
+            </li>
+            <li class="menu_li">
+                <a class="menu_a">게시판</a>
+                <ul>
+                    <li class="menu_li_li"><a href="#" class="menu_text">공지 게시판</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">부서 게시판</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
     <header id="header_cols">
         <nav id="nav_cols">
             <ul id="ul_cols">
@@ -65,22 +47,17 @@
                 <li id="logo_li">
                     <div id="logo_div">
                         <a href="/">
-                            <img src="img/1.png" id="logo_img">
+                            <img src="/img/1.png" id="logo_img">
                         </a>
                     </div>
                 </li>
                 <li id="my_li">
                     <div id="my_div">
-                        <div id="my_div_1">
-                            <div id="my_dept">
-                                <h5 th:text="${session.user.USERDEPT}"></h5>
-                            </div>
-                        </div>
                         <div id="my_div_2">
-                            <h6 th:text="${session.user.USER_NAME + '님'}"></h6>
+                            <h6 th:text="${session.user.USERNAME + '님'}"></h6>
                             <div class="nav_div">
                                 <div id="nav_img_div">
-                                    <img src="img/nav.png" id="nav_img">
+                                    <img src="/img/nav.png" id="nav_img">
                                 </div>
                                 <ul class="submenu">
                                     <li class="submenu_item">
