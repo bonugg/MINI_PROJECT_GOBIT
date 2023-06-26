@@ -39,7 +39,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="userinfo_div_th">이름</td>
-                                                <td class="userinfo_div_td" th:text="${session.user.USER_NAME}"></td>
+                                                <td class="userinfo_div_td" th:text="${session.user.USERNAME}"></td>
                                             </tr>
                                             <tr>
                                                 <td class="userinfo_div_th">사번</td>
@@ -154,7 +154,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="name_list"
-                                                        th:text="${item.get('user').USER_NAME}"></td>
+                                                        th:text="${item.get('user').USERNAME}"></td>
                                                     <td class="name_list2">출근</td>
                                                     <td class="name_list2">퇴근</td>
                                                 </tr>
@@ -164,13 +164,19 @@
                                                     <td class="cno_list">
                                                         <div class="on_div"
                                                              th:data-check="${item.get('oncheck')}">
-                                                            <div class="on_img"></div>
+                                                            <div class="on_img">
+                                                                <input type="hidden"  th:value="${item.get('userontime')}" th:id="${'ontime'+item.get('user').USERNUM}">
+                                                                <div class="tooltip"></div>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td class="cno_list">
                                                         <div class="off_div"
                                                              th:data-check="${item.get('offcheck')}">
-                                                            <div class="off_img"></div>
+                                                            <div class="off_img">
+                                                                <input type="hidden"  th:value="${item.get('userofftime')}" th:id="${'offtime'+item.get('user').USERNUM}">
+                                                                <div class="tooltip"></div>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                 </tr>
