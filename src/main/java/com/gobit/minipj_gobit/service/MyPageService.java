@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.NoSuchElementException;
 
 @Service
@@ -23,51 +22,53 @@ public class MyPageService {
     }
 
 
-    public User getPage(Long USERNO) {
+    public User getMyPage(Long USERNO) {
         User user = userRepository.findById(USERNO)
-                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 사원입니다."));
-
-        userRepository.save(user);
+                .orElseThrow(() -> new NoSuchElementException("사용자를 찾을 수 없습니다."));
 
         return user;
     }
 
-//    public byte[] convertImageToByteArray(String imagePath) throws IOException {
-//        Path path = Paths.get(imagePath);
-//        return Files.readAllBytes(path);
-//    }
+    public User getUpdateMypage (Long USERNO) {
+        User user = userRepository.findById(USERNO)
+                .orElseThrow(() -> new NoSuchElementException("사용자를 찾을 수 없습니다."));
 
-//    public User updateMyPage(User user, Long USERENO, MultipartFile imageFile) throws IOException {
-//        User updateMyPage = userRepository.findById(USERENO)
-//                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 사원입니다."));
-//        updateMyPage.setUSER_PHONE(user.getUSER_PHONE());
-//        updateMyPage.setUSER_ADDRESS(user.getUSER_ADDRESS());
-//        updateMyPage.setUSER_PWD(user.getUSER_PWD());
-//
-//        String imagePath = "static/img/user.jpg";
-//        byte[] imageBytes = convertImageToByteArray(imagePath);
-//
-//        if (imageFile != null && !imageFile.isEmpty()) {
-//            try {
-//                // 파일명 생성 (현재 시간 기반)
-//                String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
-//                // 파일을 업로드할 경로 생성
-//                String filePath = Paths.get(imagePath, fileName).toString();
-//                // 파일 저장
-//                Files.copy(imageFile.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
-//
-//                // 업로드된 파일의 경로를 엔티티에 저장
-//                updateMyPage.setUSERIMAGE(imageBytes);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        userRepository.save(updateMyPage);
-//
-//        return updateMyPage;
-//
-//    }
+        return user;
+    }
+
+    public byte[] convertImageToByteArray(String imagePath) throws IOException {
+        Path path = Paths.get(imagePath);
+        return Files.readAllBytes(path);
+    }
+
+    private byte[] getDefaultImage() {
+        try {
+            String defaultImagePath = "static/img/user.jpg";
+            Path path = Paths.get(defaultImagePath);
+            return Files.readAllBytes(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public User updateMyPage(User user, Long USERENO, MultipartFile imageFile) throws IOException {
+        User updateMyPage = userRepository.findByUSERENO(USERENO)
+                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 사원입니다."));
+        updateMyPage.setUSER_PHONE(user.getUSER_PHONE());
+        updateMyPage.setUSER_ADDRESS(user.getUSER_ADDRESS());
+        updateMyPage.setUSER_PWD(user.getUSER_PWD());
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            updateMyPage.setImagePath(user.getImagePath());
+        } else {
+            updateMyPage.setImagePath("img/user/user.png");
+        }
+
+        userRepository.save(updateMyPage);
+
+        return updateMyPage;
+    }
 
 
 

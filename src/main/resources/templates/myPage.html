@@ -4,87 +4,88 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <head>
-  <meta charset="UTF-8">
-  <title>Empty</title>
-  <th:block layout:fragment="css">
-    <!--사용할 css는 여기에 첨부 -->
-    <link rel="stylesheet" type="text/css" href="css/myPage.css">
-  </th:block>
+    <meta charset="UTF-8">
+    <title>Empty</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="css/myPage.css">
+    </th:block>
 </head>
 <body layout:fragment="content">
+
 <div id="fullscreen">
-  <div id="_emt1"></div>
-  <div id="_emt2">
-    <div id="_emt3">
-    </div>
-    <div id="_emt4">
-      <div id="use_screen">
-        <!--헤더와 메뉴바를 제외한 영역 -->
-        <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
-          <p class="mypage-title">마이페이지</p>
-          <section class="profile-card">
-            <img id="profile-imageL" src="img/user.jpg" alt="프로필 사진">
-            <a href="myPageUpdate.html" class="btnUpdate">내 프로필 수정</a>
-          </section>
-          <section class="profile-info">
-              <div class="profile1">
-                <p class="basic-info">기본 정보</p>
-                <div class="profile-imageR">
-                  <img src="../static/img/user.jpg" alt="프로필 이미지">
-                </div>
-                <div class="info">
-                  <p class="name">구본욱</p>
-                  <p class="mini-email">9bonwook@gobit.com</p>
-                  <ul>
-                    <li>010-1111-1111</li>
-                    <li>9bonwook@gobit.com</li>
-                  </ul>
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <p class="mypage-title">마이페이지</p>
+                <section class="profile-card">
+                    <img id="profile-imageL" th:src="${user.imagePath}" alt="프로필 사진">
+                    <a href="/myPageUpdate">
+                        <button class="btnUpdate">내 프로필 수정</button>
+                    </a>
+                </section>
+                <section class="profile-info">
+                    <div class="profile1">
+                        <p class="basic-info">기본 정보</p>
+                        <table class="profile1-table">
+                            <tr>
+                                <td class="profile-imagespace"  rowspan="4">
+                                    <img class="profile-imageR"  th:src="${user.imagePath}" alt="프로필 이미지">
+                                </td>
+                                <td class="name" th:text="${session.user.USER_NAME}"></td>
+                            </tr>
+                            <tr>
+                                <td class="mini-email" th:text="${session.user.USER_EMAIL}"></td>
+                            </tr>
+                            <tr>
+                                <td class="tel" th:text="${session.user.USER_PHONE}"></td>
+                            </tr>
+                            <tr>
+                                <td class="email" th:text="${session.user.USER_EMAIL}"></td>
+                            </tr>
+                        </table>
 
-                  <!--                <p class="name" th:text="${session.user.USER_NAME}"></p>-->
-                  <!--                <p class="email" th:text="${session.user.USER_EMAIL}">이메일</p>-->
-                  <!--                <p class="phone" th:text="${user.USER_PHONE}">휴대폰 번호</p>-->
-
-                </div>
-              </div>
-            <div class="profile2">
-              <!--            <div th:class="profile2">-->
-              <!--              <p th:class="userNum" th:text="$user.USER_ENO">사번</p>-->
-              <!--              <p th:class="userNum" th:text="$user.USER_DEPT">부서</p>-->
-              <!--              <p th:class="userNum" 1th:text="$user.USER_POSITION">직위</p>-->
-              <!--              <p th:class="userNum" th:text="$user.USER_ADDRESS">주소</p>-->
-              <!--              <p th:class="userNum" th:text="$user.USER_JOIN">입사일</p>-->
-              <!--              <p th:class="userNum" th:text="$user.USER_EXIT_CHK">재직여부</p>-->
-              <!--            </div>-->
-              <ul class="classification">
-                <li>사번</li>
-                <li>직위</li>
-                <li>귀속 사업장</li>
-                <li>생년월일</li>
-                <li>재직구분</li>
-                <li>소속부서</li>
-                <li>입사일</li>
-              </ul>
-              <ul class="user">
-                <li class="userEno">20230144</li>
-                <li class="userPos">부장</li>
-                <li class="userPlace">강남지점</li>
-                <li class="userBirth">1996.06.30</li>
-                <li class="currently-employed">Y</li>
-                <li class="userDept">IT</li>
-                <li class="userRegDate">2022.03.27</li>
-              </ul>
+                    </div>
+                    <div class="profile2">
+                        <table class="profile2-table">
+                            <tr>
+                                <td class="col1">사번</td>
+                                <td class="col2" th:text="${session.user.USERENO}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col1">직위</td>
+                                <td class="col2" th:text="${session.user.USER_POSITION}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col1">생년월일</td>
+                                <td class="col2" th:text="${session.user.USER_BIRTH}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col1">재직여부</td>
+                                <td class="col2" th:text="${session.user.USER_EXIT_CHK}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col1">부서</td>
+                                <td class="col2" th:text="${session.user.USERDEPT}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col1">입사일</td>
+                                <td class="col2" th:text="${session.user.USER_JOIN}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </section>
 
             </div>
-
-          </section>
-
-      </div>
+        </div>
     </div>
-  </div>
 </div>
 </body>
 <th:block layout:fragment="script">
-  <!--사용할 자바스크립트는 여기에 첨부 -->
+    <!--사용할 자바스크립트는 여기에 첨부 -->
 
 </th:block>
 </html>

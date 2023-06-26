@@ -89,6 +89,7 @@
 .profile2 {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     top: 450px;
     position: absolute;
     width: calc(100vw - 800px);
@@ -100,62 +101,38 @@
     padding: 15px 30px;
 }
 
-ul, li {
-    list-style: none;
-}
-
-
 .basic-info {
     font-size: 14px;
     color: #949393;
-}
-
-.profile1-table{
-    width: 100%;
-    height: 90%;
-    border-spacing: 1;
-    border: none;
 }
 
 .profile-imagespace {
     width: 25%;
 }
 
-.profile-imageR {
-    width: 45px;
-    height: 45px;
+.nameUpdate {
+    margin-top: 25px;
 }
 
-.name {
-    font-weight: bold;
-    font-size: 30px;
+.nameUpdate, .phoneUpdate, .emailUpdate {
+    height: 35px;
+    display: flex;
+    padding: 5px;
+    margin-bottom: 15px;
+    width: 98%;
 }
 
-.mini-email {
-    font-size: 13px;
-    color: #949393;
+.profile2 {
+    background: rgb(211, 211, 211);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: white;
 }
 
-.tel, email {
-    font-size: 15px;
-}
-
-
-.profile2-table{
-    width: 100%;
-    height: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    border: none;
-    font-size: 16px;
-}
-
-.col1, .col2, .tel, .email {
+.tel, .email {
     border-bottom: 0.2px solid #949393;
 }
 
-.col1{
-    width: 30%;
-    color: #949393;
-}
 
