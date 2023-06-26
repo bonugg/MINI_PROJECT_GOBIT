@@ -1142,3 +1142,13 @@ body, ul, li {
     z-index: 1001;;
     background: rgba(0, 0, 0, 0.5);
 }
+
+.tooltip {
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    font-size: 10px; /* 폰트 크기를 줄이세요. */
+}
