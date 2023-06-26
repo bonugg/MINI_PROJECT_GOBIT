@@ -4,7 +4,12 @@ import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +48,22 @@ public class User {
     @Column
     private String USER_JOIN;
     @Column
+    private String USER_BIRTH;
+    @Column
     private String USER_EXIT;
     @Column
     private char USER_EXIT_CHK;
+    @Column
+    @ColumnDefault("'img/user/user.png'")
+    private String imagePath;
+
+    @Lob
+    @Column(name = "USER_IMAGE", columnDefinition = "LONGBLOB", nullable = true)
+    private byte[] USERIMAGE = getDefaultImage();
+
+    @Lob
+    @Column(name = "default_image")
+    private byte[] defaultImage;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<UserOnOff> userOnOffList = new ArrayList<>();
