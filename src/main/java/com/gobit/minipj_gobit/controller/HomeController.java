@@ -9,13 +9,13 @@ import com.gobit.minipj_gobit.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.aop.AopInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -91,7 +91,7 @@ public class HomeController {
     }
     @GetMapping("/empty")
     public String empty(){
-        return "emptyPage";
+        return "appBuisness";
     }
     @GetMapping("/login")
     public String loginPage(){
@@ -222,5 +222,32 @@ public class HomeController {
         result.put("yearChart", yearChartValue);
 
         return result;
+    }
+
+    @GetMapping("/appBuisness-view")
+    public ModelAndView appBuisnessView() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("appBuisness.html");
+
+        return mv;
+    }
+
+    @GetMapping("/appMeeting-view")
+    public ModelAndView appMeetingView() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("appMeeting.html");
+
+        return mv;
+    }
+
+    @GetMapping("/appVacation-view")
+    public ModelAndView appVacationView() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("appVacation.html");
+
+        return mv;
     }
 }
