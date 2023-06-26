@@ -18,7 +18,7 @@ public class UserOnOff {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "COMMUTE_NUM")
     private long COMMUTENUM;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_NUM")
     private User user;
     @Column(name = "GO_TO_WORK")

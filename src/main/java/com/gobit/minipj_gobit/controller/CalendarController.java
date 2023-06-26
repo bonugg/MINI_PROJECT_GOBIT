@@ -31,6 +31,7 @@ public class CalendarController {
     public List<Map<String, Object>> monthPlan() {
         User user = (User) httpSession.getAttribute("user");
         List<Calendar> calendarList = calendarRepository.findByCalList(user.getUSERDEPT());
+        System.out.println(calendarList);
         List<Map<String, Object>> mapList = calendarList.stream().map(calendar -> {
             Map<String, Object> map = new HashMap<>();
             map.put("no", calendar.getUser().getUSERNUM());
@@ -59,6 +60,7 @@ public class CalendarController {
             jsonObj = new JSONObject(hash);
             jsonArr.add(jsonObj);
         }
+        System.out.println(jsonArr);
         return jsonArr;
     }
 }

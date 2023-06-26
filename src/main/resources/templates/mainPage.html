@@ -8,7 +8,7 @@
     <title>Home</title>
     <th:block layout:fragment="css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
     </th:block>
 </head>
 <body layout:fragment="content">
@@ -51,15 +51,19 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="3" class="on_off_div">
-                                                    <div class="on_off_btn_div">
-                                                        <button id="on" class="onoff_btn">출근</button>
+                                                    <div class="on_off_btn_div1">
+                                                        <div class="on_off_btn_div2">
+                                                            <button id="on" class="onoff_btn">출근</button>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="3" class="on_off_div">
-                                                    <div class="on_off_btn_div">
-                                                        <button id="off" class="onoff_btn">퇴근</button>
+                                                    <div class="on_off_btn_div1">
+                                                        <div class="on_off_btn_div2">
+                                                            <button id="off" class="onoff_btn">퇴근</button>
+                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -385,7 +389,8 @@
                                                         <td rowspan="2">
                                                             <div class="notice_img_div">
                                                                 <div class="notice_img_div2">
-                                                                    <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa-RvZUd171ZJ9FsZO_d0FZPOgJQVlsudMIw&usqp=CAU">
+                                                                    <img class="img"
+                                                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa-RvZUd171ZJ9FsZO_d0FZPOgJQVlsudMIw&usqp=CAU">
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -420,7 +425,8 @@
                                                         <td rowspan="2">
                                                             <div class="notice_img_div">
                                                                 <div class="notice_img_div2">
-                                                                    <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa-RvZUd171ZJ9FsZO_d0FZPOgJQVlsudMIw&usqp=CAU">
+                                                                    <img class="img"
+                                                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa-RvZUd171ZJ9FsZO_d0FZPOgJQVlsudMIw&usqp=CAU">
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -450,26 +456,30 @@
             <div class="a_screen1"></div>
         </div>
     </div>
-    <div class="popup_layer" id="popup_layer" style="display: none;">
+    <div class="popup_layer" id="popup_layer">
         <div class="popup_box">
             <!--팝업 컨텐츠 영역-->
             <div class="popup_cont">
-                <div id="popup_vacationtype_div"></div>
-                <div id="popup_title_div">
-                    <p id="popup_title"></p>
+                <div class="popup_cont_1">
+                    <div id="popup_vacationtype_div"></div>
+                    <div id="popup_title_div">
+                        <p id="popup_title"></p>
+                    </div>
                 </div>
-                <div id="popup_date_div">
-                    <p id="popup_date"></p>
+                <div class="popup_cont_2">
+                    <div id="popup_date_div">
+                        <p id="popup_date"></p>
+                    </div>
                 </div>
-                <div id="popup_desc_div">
-                    <p id="popup_desc"></p>
+                <div class="popup_cont_3">
+                    <div class="popup_desc_div">
+                        <div id="popup_desc"></div>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-<input type="hidden" id="no" th:value="${session.user.USERNUM}">
 </body>
 <th:block layout:fragment="script">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.2/echarts.min.js"
@@ -482,8 +492,10 @@
     <script src="js/slide.js"></script>
     <script src="js/chart.js"></script>
     <script src="js/main.js"></script>
-    <script>
-
+    <script th:inline="javascript">
+        const userDept = [[${session.user.USERDEPT}]];
+        const userNum = [[${session.user.USERNUM}]];
     </script>
+    <script th:src="@{/js/websocket.js}"></script>
 </th:block>
 </html>
