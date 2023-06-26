@@ -6,7 +6,7 @@
 <head th:fragment="config">
     <!--모든 페이지에서 사용할 공용 css링크-->
     <!--thymeleaf에서 링크를 걸때는 @{}로 사용-->
-    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&family=Orbit&family=Russo+One&display=swap" rel="stylesheet">
@@ -23,6 +23,11 @@
 
     <!--모든 페이지에서 사용할 공용 js링크-->
     <script src="js/jquery-3.7.0.min.js"></script>
+    <script th:inline="javascript">
+        const userDept = [[${session.user.USERDEPT}]];
+        const userNum = [[${session.user.USERNUM}]];
+    </script>
+    <script th:src="@{/js/websocket.js}"></script>
     <!--특정 페이지에서만 동작할 js 링크나 태그 -->
     <th:block layout:fragment="script">
         <!--<script>

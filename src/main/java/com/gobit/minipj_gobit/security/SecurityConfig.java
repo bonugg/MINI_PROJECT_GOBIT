@@ -29,7 +29,7 @@ public class SecurityConfig {
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/login", "/signup", "/signup").permitAll()
-                        .requestMatchers("/onadd" ,"/offadd" , "/main/calendar").permitAll()
+                        .requestMatchers("/polling","/onadd" ,"/offadd" , "/main/calendar").permitAll()
                         .requestMatchers("/").authenticated()
                         .anyRequest().authenticated()
                 )

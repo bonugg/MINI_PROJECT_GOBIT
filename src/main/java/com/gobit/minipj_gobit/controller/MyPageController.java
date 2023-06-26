@@ -18,23 +18,14 @@ public class MyPageController {
     @Autowired
     private MyPageService myPageService;
 
-    @GetMapping("/myPage/{USERNO}")
-    public String getMyPage(@PathVariable Long USERNO, Model model) {
-        User user = myPageService.getMyPage(USERNO);
-
-        model.addAttribute("user", user);
-
-        return "myPage";
-    }
-
     @GetMapping("/myPage")
     public String myPage(){
         return "myPage";
     }
 
     @GetMapping("/myPageUpdate")
-    public String updateGetMyPage() {
-
+    public String updateGetMyPage(@PathVariable Long USERNO, Model model) {
+//        User user = myPageService.updateMyPage();
         return "myPageUpdate";
     }
 
@@ -52,15 +43,16 @@ public class MyPageController {
             try {
                 Files.write(path, imageFile.getBytes());
 
-
+                // Update the imagePath field in the User entity
                 user.setImagePath("img/user/" + fileName);
             } catch (IOException ex) {
                 ex.getStackTrace();
             }
+        } else {
+            user.setImagePath("img/user/user.png");
         }
 
         myPageService.updateMyPage(user, userNum, imageFile);
-
 
         model.addAttribute("imagePath", user.getImagePath());
         return "redirect:/myPage";

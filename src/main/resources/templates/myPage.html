@@ -10,6 +10,12 @@
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="css/myPage.css">
     </th:block>
+  <meta charset="UTF-8">
+  <title>Empty</title>
+  <th:block layout:fragment="css">
+    <!--사용할 css는 여기에 첨부 -->
+    <link rel="stylesheet" type="text/css" href="/css/empty.css">
+  </th:block>
 </head>
 <body layout:fragment="content">
 
@@ -22,7 +28,7 @@
             <div id="use_screen">
                 <p class="mypage-title">마이페이지</p>
                 <section class="profile-card">
-                    <img id="profile-imageL" th:src="${user.imagePath}" alt="프로필 사진">
+                    <img id="profile-imageL" th:src="${session.user.imagePath}" alt="프로필 사진">
                     <a href="/myPageUpdate">
                         <button class="btnUpdate">내 프로필 수정</button>
                     </a>
@@ -33,7 +39,7 @@
                         <table class="profile1-table">
                             <tr>
                                 <td class="profile-imagespace"  rowspan="4">
-                                    <img class="profile-imageR"  th:src="${user.imagePath}" alt="프로필 이미지">
+                                    <img class="profile-imageR"  th:src="${session.user.imagePath}" alt="프로필 이미지">
                                 </td>
                                 <td class="name" th:text="${session.user.USER_NAME}"></td>
                             </tr>

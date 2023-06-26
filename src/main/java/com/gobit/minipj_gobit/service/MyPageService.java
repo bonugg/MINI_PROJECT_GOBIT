@@ -52,17 +52,16 @@ public class MyPageService {
         return null;
     }
 
-    public User updateMyPage(User user, Long USERENO, MultipartFile imageFile) throws IOException {
-        User updateMyPage = userRepository.findByUSERENO(USERENO)
+    public User updateMyPage(User user, Long USERNO, MultipartFile imageFile) throws IOException {
+        User updateMyPage = userRepository.findByUSERENO(USERNO)
                 .orElseThrow(() -> new NoSuchElementException("존재하지 않는 사원입니다."));
         updateMyPage.setUSER_PHONE(user.getUSER_PHONE());
         updateMyPage.setUSER_ADDRESS(user.getUSER_ADDRESS());
         updateMyPage.setUSER_PWD(user.getUSER_PWD());
 
+        // 이미지 파일이 있는 경우 imagePath 업데이트
         if (imageFile != null && !imageFile.isEmpty()) {
             updateMyPage.setImagePath(user.getImagePath());
-        } else {
-            updateMyPage.setImagePath("img/user/user.png");
         }
 
         userRepository.save(updateMyPage);

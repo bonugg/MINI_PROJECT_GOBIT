@@ -25,9 +25,9 @@ public class User {
     @Column(unique = true, name = "USER_ENO") //중복 제거
     @NotNull
     private long USERENO;
-    @Column
+    @Column(name = "USER_NAME")
     @NotNull
-    private String USER_NAME;
+    private String USERNAME;
     @NotNull
     @Column(name = "USER_DEPT")
     private String USERDEPT;

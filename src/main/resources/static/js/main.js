@@ -2,7 +2,6 @@ $(function () {
     let popupLayer = document.getElementById("popup_layer");
     const onButton = document.getElementById('on');
     const offButton = document.getElementById('off');
-    const no = $('#no').val();
     let today = new Date();
     let year = today.getFullYear();
     let month = (today.getMonth() + 1).toString().padStart(2, '0'); // 월은 1월이 0으로 시작하므로 1을 더합니다.
@@ -10,6 +9,45 @@ $(function () {
     const pattern = "218.153.162.95";
 
     let formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd 형식으로 날짜를 표현합니다.
+
+    document.querySelectorAll('.off_img').forEach(function(div) {
+        div.addEventListener('mouseover', function(event) {
+            let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
+            let offTimeValue = event.target.closest('.off_img').querySelector('input[type="hidden"]').value;
+            tooltip.innerHTML = offTimeValue;
+            tooltip.style.display = 'block';
+        });
+        div.addEventListener('mousemove', function(event) {
+            let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
+            tooltip.style.left = (event.pageX + 10) + 'px';
+            tooltip.style.top = (event.pageY + 10) + 'px';
+        });
+
+
+        div.addEventListener('mouseout', function(event) {
+            let tooltip = event.currentTarget.querySelector('.tooltip');
+            tooltip.style.display = 'none';
+        });
+    });
+
+    document.querySelectorAll('.on_img').forEach(function(div) {
+        div.addEventListener('mouseover', function(event) {
+            let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
+            let offTimeValue = event.target.closest('.on_img').querySelector('input[type="hidden"]').value;
+            tooltip.innerHTML = offTimeValue;
+            tooltip.style.display = 'block';
+        });
+        div.addEventListener('mousemove', function(event) {
+            let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
+            tooltip.style.left = (event.pageX + 10) + 'px';
+            tooltip.style.top = (event.pageY + 10) + 'px';
+        });
+
+        div.addEventListener('mouseout', function(event) {
+            let tooltip = event.currentTarget.querySelector('.tooltip');
+            tooltip.style.display = 'none';
+        });
+    });
 
     //출근 퇴근 색상별 표시
     $(document).ready(function () {
@@ -59,7 +97,7 @@ $(function () {
             success: function (outputDateString) {
                 let formattedStartDate = formatDateString(outputDateString);
                 $('#on').attr('disabled', true);
-                $('#on_text').text('출근 시각 : '+formattedStartDate);
+                $('#on_text').text('출근 시각 : ' + formattedStartDate);
                 $('#off').removeAttr("disabled");
             },
             error: function (xhr) {
@@ -77,10 +115,11 @@ $(function () {
             start: formattedDate
         },
         success: function (startdate) {
+            console.log(startdate);
             if (startdate != "") {
                 let formattedStartDate = formatDateString(startdate);
                 $('#on').attr('disabled', true);
-                $('#on_text').text('출근 시각 : '+formattedStartDate);
+                $('#on_text').text('출근 시각 : ' + formattedStartDate);
                 $.ajax({
                     type: 'POST',
                     url: '/offaddcheck',
@@ -91,7 +130,7 @@ $(function () {
                         if (enddate != "") {
                             let formattedEndDate = formatDateString(enddate);
                             $('#off').attr('disabled', true);
-                            $('#off_text').text('퇴근 시각 : '+formattedEndDate);
+                            $('#off_text').text('퇴근 시각 : ' + formattedEndDate);
                         } else {
                             ipcheck(off);
                         }
@@ -112,7 +151,7 @@ $(function () {
             success: function (outputDateString) {
                 let formattedEndDate = formatDateString(outputDateString);
                 $('#off').attr('disabled', true);
-                $('#off_text').text('퇴근 시각 : '+formattedEndDate);
+                $('#off_text').text('퇴근 시각 : ' + formattedEndDate);
                 onContentLoaded();
                 $('#all').click();
             },
@@ -136,11 +175,12 @@ $(function () {
                 dataType: "json"
             });
             request.done(function (data) {
+                console.log(data);
                 const calendarEl = document.getElementById('calendar');
                 $('#all').css("backgroundColor", "white");
 
                 let filteredAttendanceData = data.filter(function (event) {
-                    return event.title === '출석' && event.no == no;
+                    return event.title === '출근' && event.no == userNum;
                 }).map(function (event) {
                     return {
                         ...event,
@@ -150,7 +190,7 @@ $(function () {
                 });
 
                 let filteredEarlyLeaveData = data.filter(function (event) {//휴가가 아닌 데이터 필터링
-                    return event.title === '조퇴' && event.no == no;
+                    return event.title === '조퇴' && event.no == userNum;
                 }).map(function (event) {
                     return {
                         ...event,
@@ -160,7 +200,7 @@ $(function () {
                 });
 
                 let filteredLatenessData = data.filter(function (event) {
-                    return event.title === '지각' && event.no == no;
+                    return event.title === '지각' && event.no == userNum;
                 }).map(function (event) {
                     return {
                         ...event,
@@ -170,7 +210,7 @@ $(function () {
                 });
 
                 let filteredAbsentData = data.filter(function (event) {
-                    return event.title === '결석' && event.no == no;
+                    return event.title === '결근' && event.no == userNum;
                 }).map(function (event) {
                     return {
                         ...event,
