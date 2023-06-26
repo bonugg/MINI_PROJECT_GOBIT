@@ -1,5 +1,8 @@
 package com.gobit.minipj_gobit.security;
 
+import com.gobit.minipj_gobit.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,8 +10,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+
+import java.util.logging.Filter;
 
 @Configuration
 @EnableWebSecurity
@@ -17,7 +24,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf->csrf
+                .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/**")
                 )
                 //세션 설정
@@ -31,7 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/login", "/signup", "/signup").permitAll()
-                        .requestMatchers("/polling","/onadd" ,"/offadd" , "/main/calendar").permitAll()
+                        .requestMatchers("/polling", "/onadd", "/offadd", "/main/calendar").permitAll()
                         .requestMatchers("/").authenticated()
                         .anyRequest().authenticated()
                 )
@@ -56,6 +63,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
     @Bean
     public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
         return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());

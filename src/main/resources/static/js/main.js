@@ -14,7 +14,11 @@ $(function () {
         div.addEventListener('mouseover', function(event) {
             let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
             let offTimeValue = event.target.closest('.off_img').querySelector('input[type="hidden"]').value;
-            tooltip.innerHTML = offTimeValue;
+            let offtime = formatDatesec(offTimeValue);
+            if(offtime == "NaN시 aN분 aN초"){
+                offtime = "퇴근 정보 없음";
+            }
+            tooltip.innerHTML = offtime;
             tooltip.style.display = 'block';
         });
         div.addEventListener('mousemove', function(event) {
@@ -33,8 +37,12 @@ $(function () {
     document.querySelectorAll('.on_img').forEach(function(div) {
         div.addEventListener('mouseover', function(event) {
             let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
-            let offTimeValue = event.target.closest('.on_img').querySelector('input[type="hidden"]').value;
-            tooltip.innerHTML = offTimeValue;
+            let onTimeValue = event.target.closest('.on_img').querySelector('input[type="hidden"]').value;
+            let ontime = formatDatesec(onTimeValue);
+            if(ontime == "NaN시 aN분 aN초"){
+                ontime = "출근 정보 없음";
+            }
+            tooltip.innerHTML = ontime;
             tooltip.style.display = 'block';
         });
         div.addEventListener('mousemove', function(event) {
@@ -381,4 +389,13 @@ function formatDateString(dateString) {
     let minutes = ('0' + date.getMinutes()).slice(-2);
 
     return `${hours}시 ${minutes}분`;
+}
+
+function formatDatesec(dateString) {
+    let date = new Date(dateString);
+    let hours = date.getHours();
+    let minutes = ('0' + date.getMinutes()).slice(-2);
+    let sec = ('0' + date.getSeconds()).slice(-2);
+
+    return `${hours}시 ${minutes}분 ${sec}초`;
 }

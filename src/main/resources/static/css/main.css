@@ -1035,7 +1035,7 @@ body, ul, li {
     top: 50%;
     left: 50%;
     overflow: auto;
-    height: 500px;
+    height: 400px;
     width: 375px;
     z-index: 30;
     box-sizing: border-box;

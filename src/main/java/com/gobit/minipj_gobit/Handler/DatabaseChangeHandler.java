@@ -56,7 +56,7 @@ public class DatabaseChangeHandler extends TextWebSocketHandler {
                 }
             }
 
-        }, 0, 3, TimeUnit.SECONDS); // 3초마다 실행
+        }, 0, 5, TimeUnit.SECONDS); // 5초마다 실행
     }
 
     private void sendUserOnOffMessage(WebSocketSession session, UserOnOff userOnOff) throws IOException {
