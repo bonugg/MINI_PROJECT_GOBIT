@@ -8,6 +8,6 @@ public class NoticeController {
 
     @GetMapping("/notice")
     public String getNotice() {
-        return "emptyPage.html";
+        return "noticelist.html";
     }
 }

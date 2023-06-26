@@ -15,10 +15,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -40,16 +42,20 @@ public class HomeController {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // 출력 형식 지정
         String formattedDate = currentDate.format(format); // 현재 날짜를 지정된 형식으로 변환
 
-        SimpleDateFormat startEndDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        SimpleDateFormat startEndDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
         List<User> userList = userRepository.findByUSERDEPT(user.getUSERDEPT());
         List<Integer> useroncheck = new ArrayList<>();
         List<Integer> useroffcheck = new ArrayList<>();
+        List<String> userontime = new ArrayList<>();
+        List<String> userofftime = new ArrayList<>();
         for (int i = 0; i < userList.size(); i++) {
             useroncheck.add(i, 0);
+            userontime.add(i, "");
             for (int j = 0; j < userList.get(i).getUserOnOffList().size(); j++) {
                 if (userList.get(i).getUserOnOffList().get(j).getSTART().contains(formattedDate)) {
                     Date startDate = startEndDateFormat.parse(userList.get(i).getUserOnOffList().get(j).getSTART());
+                    userontime.set(i, userList.get(i).getUserOnOffList().get(j).getSTART());
                     java.util.Calendar startDateCalendar = java.util.Calendar.getInstance();
                     startDateCalendar.setTime(startDate);
                     if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9) {
@@ -62,11 +68,13 @@ public class HomeController {
         }
         for (int i = 0; i < userList.size(); i++) {
             useroffcheck.add(i, 0);
+            userofftime.add(i,"");
             for (int j = 0; j < userList.get(i).getUserOnOffList().size(); j++) {
                 if (userList.get(i).getUserOnOffList().get(j).getEND().contains(formattedDate)) {
-                    Date startDate = startEndDateFormat.parse(userList.get(i).getUserOnOffList().get(j).getEND());
+                    Date endDate = startEndDateFormat.parse(userList.get(i).getUserOnOffList().get(j).getEND());
+                    userofftime.set(i, userList.get(i).getUserOnOffList().get(j).getEND());
                     java.util.Calendar endDateCalendar = java.util.Calendar.getInstance();
-                    endDateCalendar.setTime(startDate);
+                    endDateCalendar.setTime(endDate);
                     if (endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
                         useroffcheck.set(i, 1);
                     }else if (endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 18) {
@@ -80,6 +88,8 @@ public class HomeController {
         for (int i = 0; i < userList.size(); i++) {
             Map<String, Object> dataMap = new HashMap<>();
             dataMap.put("user", userList.get(i));
+            dataMap.put("userontime", userontime.get(i));
+            dataMap.put("userofftime", userofftime.get(i));
             dataMap.put("oncheck", useroncheck.get(i));
             dataMap.put("offcheck", useroffcheck.get(i));
             combinedList.add(dataMap);
@@ -90,7 +100,7 @@ public class HomeController {
     }
     @GetMapping("/empty")
     public String empty(){
-        return "noticelist";
+        return "appBuisness";
     }
     @GetMapping("/login")
     public String loginPage(){
@@ -119,7 +129,7 @@ public class HomeController {
         Date today = new Date();
         SimpleDateFormat inputDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
         Date inputDate = inputDateFormat.parse(String.valueOf(today));
-        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String outputDateString = outputDateFormat.format(inputDate);
 
         userOnOff.setUser(user);
@@ -141,14 +151,15 @@ public class HomeController {
         User user = (User) httpSession.getAttribute("user");
         UserOnOff userOnOff = userOnOffRepository.findByUSERANDSTART(user.getUSERNUM(),start).get();
         Calendar calendar = calendarRepository.findByUNandCS(user.getUSERNUM(),start).get();
-        System.out.println(calendar + "---------------");
+        System.out.println("---------------------");
+        System.out.println(userOnOff);
+        System.out.println(calendar);
+        System.out.println("---------------------");
         Date today = new Date();
         SimpleDateFormat inputDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
-        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-
         Date inputDate = inputDateFormat.parse(String.valueOf(today));
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         String outputDateString = outputDateFormat.format(inputDate);
-
         userOnOff.setEND(outputDateString);
         calendar.setCALEND(outputDateString);
 
@@ -164,10 +175,7 @@ public class HomeController {
 
         int a = endDate.getHours() - startDate.getHours();
         int b = endDate.getMinutes() - startDate.getMinutes();
-        System.out.println(a);
-        System.out.println(b);
         String commutetime = String.format("%.1f", (double) ((a * 60) + b) / 60);
-        System.out.println(commutetime);
         userOnOff.setCOMMUTETIME(Double.parseDouble(commutetime));
 
         if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
@@ -221,5 +229,32 @@ public class HomeController {
         result.put("yearChart", yearChartValue);
 
         return result;
+    }
+
+    @GetMapping("/appBuisness-view")
+    public ModelAndView appBuisnessView() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("appBuisness.html");
+
+        return mv;
+    }
+
+    @GetMapping("/appMeeting-view")
+    public ModelAndView appMeetingView() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("appMeeting.html");
+
+        return mv;
+    }
+
+    @GetMapping("/appVacation-view")
+    public ModelAndView appVacationView() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("appVacation.html");
+
+        return mv;
     }
 }
