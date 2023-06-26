@@ -47,11 +47,15 @@ public class HomeController {
         List<User> userList = userRepository.findByUSERDEPT(user.getUSERDEPT());
         List<Integer> useroncheck = new ArrayList<>();
         List<Integer> useroffcheck = new ArrayList<>();
+        List<String> userontime = new ArrayList<>();
+        List<String> userofftime = new ArrayList<>();
         for (int i = 0; i < userList.size(); i++) {
             useroncheck.add(i, 0);
+            userontime.add(i, "");
             for (int j = 0; j < userList.get(i).getUserOnOffList().size(); j++) {
                 if (userList.get(i).getUserOnOffList().get(j).getSTART().contains(formattedDate)) {
                     Date startDate = startEndDateFormat.parse(userList.get(i).getUserOnOffList().get(j).getSTART());
+                    userontime.set(i, userList.get(i).getUserOnOffList().get(j).getSTART());
                     java.util.Calendar startDateCalendar = java.util.Calendar.getInstance();
                     startDateCalendar.setTime(startDate);
                     if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9) {
@@ -64,11 +68,13 @@ public class HomeController {
         }
         for (int i = 0; i < userList.size(); i++) {
             useroffcheck.add(i, 0);
+            userofftime.add(i,"");
             for (int j = 0; j < userList.get(i).getUserOnOffList().size(); j++) {
                 if (userList.get(i).getUserOnOffList().get(j).getEND().contains(formattedDate)) {
-                    Date startDate = startEndDateFormat.parse(userList.get(i).getUserOnOffList().get(j).getEND());
+                    Date endDate = startEndDateFormat.parse(userList.get(i).getUserOnOffList().get(j).getEND());
+                    userofftime.set(i, userList.get(i).getUserOnOffList().get(j).getEND());
                     java.util.Calendar endDateCalendar = java.util.Calendar.getInstance();
-                    endDateCalendar.setTime(startDate);
+                    endDateCalendar.setTime(endDate);
                     if (endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
                         useroffcheck.set(i, 1);
                     }else if (endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 18) {
@@ -82,6 +88,8 @@ public class HomeController {
         for (int i = 0; i < userList.size(); i++) {
             Map<String, Object> dataMap = new HashMap<>();
             dataMap.put("user", userList.get(i));
+            dataMap.put("userontime", userontime.get(i));
+            dataMap.put("userofftime", userofftime.get(i));
             dataMap.put("oncheck", useroncheck.get(i));
             dataMap.put("offcheck", useroffcheck.get(i));
             combinedList.add(dataMap);

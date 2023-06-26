@@ -10,6 +10,45 @@ $(function () {
 
     let formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd 형식으로 날짜를 표현합니다.
 
+    document.querySelectorAll('.off_img').forEach(function(div) {
+        div.addEventListener('mouseover', function(event) {
+            let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
+            let offTimeValue = event.target.closest('.off_img').querySelector('input[type="hidden"]').value;
+            tooltip.innerHTML = offTimeValue;
+            tooltip.style.display = 'block';
+        });
+        div.addEventListener('mousemove', function(event) {
+            let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
+            tooltip.style.left = (event.pageX + 10) + 'px';
+            tooltip.style.top = (event.pageY + 10) + 'px';
+        });
+
+
+        div.addEventListener('mouseout', function(event) {
+            let tooltip = event.currentTarget.querySelector('.tooltip');
+            tooltip.style.display = 'none';
+        });
+    });
+
+    document.querySelectorAll('.on_img').forEach(function(div) {
+        div.addEventListener('mouseover', function(event) {
+            let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
+            let offTimeValue = event.target.closest('.on_img').querySelector('input[type="hidden"]').value;
+            tooltip.innerHTML = offTimeValue;
+            tooltip.style.display = 'block';
+        });
+        div.addEventListener('mousemove', function(event) {
+            let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
+            tooltip.style.left = (event.pageX + 10) + 'px';
+            tooltip.style.top = (event.pageY + 10) + 'px';
+        });
+
+        div.addEventListener('mouseout', function(event) {
+            let tooltip = event.currentTarget.querySelector('.tooltip');
+            tooltip.style.display = 'none';
+        });
+    });
+
     //출근 퇴근 색상별 표시
     $(document).ready(function () {
         $('.on_div').each(function () {
