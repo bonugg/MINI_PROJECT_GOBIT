@@ -71,11 +71,13 @@
                         <!-- 버튼들 -->
                         <div class="div-board-btns">
 
-                            <a th:href="@{|/boardDept/modify/${dBoard.id}|}" class="modify">수정</a>
-                            <a href="javascript:void(0);" th:data-uri="@{|/boardDept/delete/${dBoard.id}|}"
-                               class="delete">삭제</a>
+                            <a th:if="${session.user.USERENO == dBoard.user.USERENO}"
+                               th:href="@{|/boardDept/modify/${dBoard.id}|}" class="modify">수정</a>
+                            <a th:if="${session.user.USERENO == dBoard.user.USERENO}"
+                                href="javascript:void(0);" th:data-uri="@{|/boardDept/delete/${dBoard.id}|}"
+                                class="delete">삭제</a>
 
-                            <a href="/board Dept/list" class="list">목록</a>
+                            <a href="/boardDept/list" class="list">목록</a>
                         </div>
                         <!-- 버튼들 -->
 
