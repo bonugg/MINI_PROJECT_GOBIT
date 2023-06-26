@@ -23,21 +23,12 @@ public class MyPageController {
         return "myPage";
     }
 
-<<<<<<< HEAD
-//    @GetMapping("/myPageUpdate/{USERNO}")
-//    public String updateGetMyPage(@PathVariable Long USERNO, Model model) {
-//        User user = myPageService.updateMyPage();
-//
-//        return "myPageUpdate";
-//    }
-=======
     @GetMapping("/myPageUpdate/{USERNO}")
     public String updateGetMyPage(@PathVariable Long USERNO, Model model) {
 //        User user = myPageService.updateMyPage();
 
         return "myPageUpdate";
     }
->>>>>>> 5e55bd28f9fb9051666c7ba7bc87005c5d336e60
 
     @PostMapping("/myPage/update")
     public String updatemyPage (Long USERNO, User user){
