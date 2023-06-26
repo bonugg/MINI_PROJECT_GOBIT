@@ -30,9 +30,9 @@
                             <div class="input-date">
                                 <div>휴가날짜</div>
                                 <div class="input-date-form">
-                                    <input type="date" id="inputDate-start">
+                                    <input type="date" id="inputDate-start" required>
                                     <p>~</p>
-                                    <input type="date" id="inputDate-end">
+                                    <input type="date" id="inputDate-end" required>
                                 </div>
                             </div>
                             <div class="input-user">
@@ -45,7 +45,7 @@
                                 <div>휴가 종류</div>
                                 <div class="input-place-form">
                                     <form action="#" name="inputType" method="post">
-                                        <select id="vacationType">
+                                        <select id="vacationType" required>
                                             <option value="morningOff">오전반차</option>
                                             <option value="afternoonOff">오후반차</option>
                                             <option value="dayOff">연차</option>
@@ -58,7 +58,7 @@
                                 <div>휴가 사유</div>
                                 <div class="input-text-form">
                             <textarea id="inputContent" style="resize:vertical" cols="50"
-                                      rows="1"></textarea>
+                                      rows="1" required></textarea>
                                 </div>
                             </div>
                         </section>
