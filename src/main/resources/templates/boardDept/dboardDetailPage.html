@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Empty</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/empty.css">
+        <link rel="stylesheet" type="text/css" href="/css/boardDept/dboardDetail.css">
+
+    </th:block>
+</head>
+<body layout:fragment="content">
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
+                <div>
+                    <!-- 머리부분 -->
+                    <div class="heead">
+                        <div class="div-title">
+                            <div class="title">
+                                <h1>부서게시판</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 머리부분 -->
+
+
+                    <!-- 몸통 부분 -->
+                    <div class="boody">
+
+                        <!-- 제목 -->
+                        <div class="div-botitle">
+                            <div class="board-title" th:text="${dBoard.title}"></div>
+                        </div>
+                        <!-- 제목 -->
+
+
+                        <!-- 내용 -->
+                        <div class="div-content">
+                            <div class="board-content" th:text="${dBoard.content}"></div>
+                        </div>
+                        <!-- 내용 -->
+
+
+                        <!-- 작성 관련 내용 -->
+                        <div class="div-values">
+                            <div class="username" th:if="${dBoard.user != null}" th:text="${dBoard.user.USER_NAME}">
+                                작성자
+                            </div>
+                            <div class="date" th:text="${#temporals.format(dBoard.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                            <div class="cnt" th:text="${dBoard.cnt}"></div>
+                            <div class="like-cnt" th:text="${dBoard.like}"></div>
+
+                            <div class="files">
+                                첨부파일
+                            </div>
+                        </div>
+                        <!-- 작성 관련 내용 -->
+
+
+                        <!-- 버튼들 -->
+                        <div class="div-board-btns">
+
+                            <a th:href="@{|/boardDept/modify/${dBoard.id}|}" class="modify">수정</a>
+                            <a href="javascript:void(0);" th:data-uri="@{|/boardDept/delete/${dBoard.id}|}"
+                               class="delete">삭제</a>
+
+                            <a href="/board Dept/list" class="list">목록</a>
+                        </div>
+                        <!-- 버튼들 -->
+
+
+
+                        <!-- 댓글 -->
+                        <div class="reply-title">
+                            <strong>댓글 | 15개</strong>
+                        </div>
+                        <!-- 댓글 -->
+
+
+                        <!-- 댓글 반복 -->
+
+                        <!-- 댓글 반복 -->
+
+
+                        <!-- 댓글 작성 -->
+                        <form class="reply-form">
+                            <textarea class="reply-area" name="replyContent" id="" cols="30" rows="3"></textarea>
+                            <input class="reply-btn" type="submit" value="댓글등록">
+                        </form>
+                        <!-- 댓글 작성 -->
+
+
+                    </div>
+                    <!-- 몸통 부분 -->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function(ele) {
+        ele.addEventListener('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+</script>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+</th:block>
+</html>
