@@ -2,7 +2,6 @@ $(function () {
     let popupLayer = document.getElementById("popup_layer");
     const onButton = document.getElementById('on');
     const offButton = document.getElementById('off');
-    const no = $('#no').val();
     let today = new Date();
     let year = today.getFullYear();
     let month = (today.getMonth() + 1).toString().padStart(2, '0'); // 월은 1월이 0으로 시작하므로 1을 더합니다.
@@ -10,53 +9,6 @@ $(function () {
     const pattern = "218.153.162.95";
 
     let formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd 형식으로 날짜를 표현합니다.
-
-    // 현재 페이지 URL이 /main 인 경우에만 웹소켓 연결을 시작합니다.
-    if (window.location.pathname === "/") {
-        window.onload = () => {
-            const url = `ws://${location.host}/database-change`;
-            setupWebSocketAsync(url);
-        };
-    }
-
-    async function setupWebSocketAsync(url) {
-        const socket = new WebSocket(url);
-
-        socket.onopen = () => {
-            console.log("Connected to WebSocket server");
-        };
-
-        socket.onmessage = (event) => {
-            let jsonObj = JSON.parse(event.data);
-            if(jsonObj.end == 0){
-                let startObj = new Date(jsonObj.start);
-                let hour = startObj.getHours();
-                if (hour <= 9) {
-                    $('#'+jsonObj.usernum+ " .on_img").css("backgroundColor", "#181F42");
-                } else {
-                    $('#'+jsonObj.usernum+ " .on_img").css("backgroundColor", "rgba(24, 31, 66, 0.5)");
-                }
-            }else {
-                let endObj = new Date(jsonObj.end);
-                let hour = endObj.getHours();
-                if (hour <= 9) {
-                    $('#'+jsonObj.usernum+ " .off_img").css("backgroundColor", "#181F42");
-                } else {
-                    $('#'+jsonObj.usernum+ " .off_img").css("backgroundColor", "rgba(24, 31, 66, 0.5)");
-                }
-            }
-
-        };
-
-        socket.onclose = () => {
-            console.log("Disconnected from WebSocket server");
-        };
-
-        // WebSocket이 종료될 때까지 기다리기
-        await new Promise((resolve) => {
-            socket.addEventListener("close", resolve);
-        });
-    }
 
     //출근 퇴근 색상별 표시
     $(document).ready(function () {
@@ -124,6 +76,7 @@ $(function () {
             start: formattedDate
         },
         success: function (startdate) {
+            console.log(startdate);
             if (startdate != "") {
                 let formattedStartDate = formatDateString(startdate);
                 $('#on').attr('disabled', true);
@@ -183,11 +136,12 @@ $(function () {
                 dataType: "json"
             });
             request.done(function (data) {
+                console.log(data);
                 const calendarEl = document.getElementById('calendar');
                 $('#all').css("backgroundColor", "white");
 
                 let filteredAttendanceData = data.filter(function (event) {
-                    return event.title === '출근' && event.no == no;
+                    return event.title === '출근' && event.no == userNum;
                 }).map(function (event) {
                     return {
                         ...event,
@@ -197,7 +151,7 @@ $(function () {
                 });
 
                 let filteredEarlyLeaveData = data.filter(function (event) {//휴가가 아닌 데이터 필터링
-                    return event.title === '조퇴' && event.no == no;
+                    return event.title === '조퇴' && event.no == userNum;
                 }).map(function (event) {
                     return {
                         ...event,
@@ -207,7 +161,7 @@ $(function () {
                 });
 
                 let filteredLatenessData = data.filter(function (event) {
-                    return event.title === '지각' && event.no == no;
+                    return event.title === '지각' && event.no == userNum;
                 }).map(function (event) {
                     return {
                         ...event,
@@ -217,7 +171,7 @@ $(function () {
                 });
 
                 let filteredAbsentData = data.filter(function (event) {
-                    return event.title === '결근' && event.no == no;
+                    return event.title === '결근' && event.no == userNum;
                 }).map(function (event) {
                     return {
                         ...event,

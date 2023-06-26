@@ -20,6 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 @RequiredArgsConstructor
@@ -32,10 +33,16 @@ public class DatabaseChangeHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
+        AtomicBoolean sentFirstMessage = new AtomicBoolean(false);
+
         executor.scheduleAtFixedRate(() -> {
             Optional<LocalDateTime> updatedTime = databaseWatcherService.checkForDatabaseChange();
             for (WebSocketSession currentSession : sessions) {
                 if (updatedTime.isPresent() && currentSession.isOpen()) {
+                    if (!sentFirstMessage.get()) {
+                        sentFirstMessage.set(true);
+                        continue;
+                    }
                     Optional<UserOnOff> userOnOff = databaseWatcherService.findByUPDATEAT(updatedTime.get());
                     if (userOnOff.isPresent()) {
                         CompletableFuture.runAsync(() -> {
@@ -60,6 +67,8 @@ public class DatabaseChangeHandler extends TextWebSocketHandler {
     private void sendUserOnOffMessage(WebSocketSession session, UserOnOff userOnOff) throws IOException {
         Map<String, Object> result = new HashMap<>();
         result.put("usernum", userOnOff.getUser().getUSERNUM());
+        result.put("username", userOnOff.getUser().getUSER_NAME());
+        result.put("userdept", userOnOff.getUser().getUSERDEPT());
         result.put("start", userOnOff.getSTART());
         result.put("end", userOnOff.getEND());
 

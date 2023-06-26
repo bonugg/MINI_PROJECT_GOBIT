@@ -33,7 +33,6 @@ public interface UserOnOffRepository extends JpaRepository<UserOnOff, Long>, Dat
         LocalDateTime currentUpdatedAt = findMaxUpdatedAt();
         if (previousUpdatedAt.get() == null || (currentUpdatedAt != null && !currentUpdatedAt.isEqual(previousUpdatedAt.get()))) {
             previousUpdatedAt.set(currentUpdatedAt);
-            System.out.println(currentUpdatedAt);
             return Optional.of(currentUpdatedAt);
         }
         return Optional.empty();
