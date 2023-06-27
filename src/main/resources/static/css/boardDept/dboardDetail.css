@@ -169,20 +169,34 @@ a {
     transform: translate(-50%, -50%); /* 중앙 정렬을 위한 위치 조정 */
     margin-left: auto;
     margin-right: -35px;
+    border-left: 0.5px solid black;
+    cursor: pointer;
 }
 
 /* 댓글 작성 */
 
+
+/* 댓글 반복 */
+.div-reply-for {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 .reply-wri-btn {
     display: flex;
     justify-content: space-between;
 }
 
-.reply-content {
-    margin-bottom: 20px;
-}
-
 .reply-writer {
     margin-right: auto;
 }
+
+.reply-content {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.reply-content-hr {
+    margin-bottom: 20px;
+}
+/* 댓글 반복 */

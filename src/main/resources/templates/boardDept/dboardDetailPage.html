@@ -110,21 +110,23 @@
                             <!-- 댓글 반복 -->
                             <div class="reply-for">
 
-                                <div th:each="reply : ${board.replyList}">
+                                <div class="div-reply-for" th:each="reply : ${board.replyList}">
                                     <div class="reply-wri-btn">
                                         <p class="reply-writer">
-                                            <span th:text="${reply.user.USERNAME}">고기천 | </span>
-                                            <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}">2023-06-26 11:11</span>
+                                            <span th:text="${reply.user.USERNAME}"></span>
+                                            <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></span>
                                         </p>
                                         <div class="reply-btns">
-                                            <button type="button" class="reply-fbtn">수정</button>
-                                            <button type="button" class="reply-fbtn">삭제</button>
+                                            <button th:if="${session.user.USERENO == reply.user.USERENO}"
+                                                    type="button" class="reply-fbtn">수정</button>
+                                            <button th:if="${session.user.USERENO == reply.user.USERENO}"
+                                                    type="button" class="reply-fbtn">삭제</button>
                                         </div>
                                     </div>
 
-                                    <div class="reply-content" th:text="${reply.content}">댓글 내용입니다.</div>
+                                    <div class="reply-content" th:text="${reply.content}"></div>
 
-                                    <hr>
+                                    <hr class="reply-content-hr">
                                 </div>
 
 
