@@ -77,6 +77,8 @@
                                 class="delete">삭제</a>
 
                             <a href="/boardDept/list" class="list">목록</a>
+                            <a th:if="${session.user.USERENO != board.user.USERENO}"
+                               href="#" class="list">추천</a>
                         </div>
                         <!-- 버튼들 -->
 
@@ -112,6 +114,7 @@
                             <div class="reply-for">
 
                                 <div class="div-reply-for" th:each="reply : ${board.replyList}">
+                                    <a th:id="|reply_${reply.id}|"></a>
                                     <div class="reply-wri-btn">
                                         <p class="reply-writer">
                                             <span th:text="${reply.user.USERNAME}"></span>

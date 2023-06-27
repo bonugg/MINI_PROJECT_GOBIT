@@ -15,12 +15,13 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
 
-    public void create(dBoard board, String content, User user) {
+    public Reply create(dBoard board, String content, User user) {
         Reply reply = new Reply();
         reply.setContent(content);
         reply.setModifyDate(LocalDateTime.now());
         reply.setBoard(board);
         reply.setUser(user);
         this.replyRepository.save(reply);
+        return  reply;
     }
 }

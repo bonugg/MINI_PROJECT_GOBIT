@@ -1,6 +1,7 @@
 package com.gobit.minipj_gobit.boardDept.controller;
 
 import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.boardDept.entity.Reply;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.service.ReplyService;
 import com.gobit.minipj_gobit.boardDept.service.dBoardService;
@@ -29,7 +30,9 @@ public class ReplyController {
                               @RequestParam String content, Principal principal) {
         dBoard board = this.boardService.getBoard(id);
         User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
-        this.replyService.create(board, content, user);
-        return "redirect:/boardDept/detail/" + id ;
+
+        Reply reply = this.replyService.create(board, content, user);
+
+        return String.format("redirect:/boardDept/detail/%s#reply_%s", id, reply.getId());
     }
 }
