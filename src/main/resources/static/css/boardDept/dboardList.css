@@ -151,6 +151,13 @@ a {
     justify-content: flex-end;
     align-items: center;
     margin-right: 10px;
+    border: 1px solid black;
+    padding: 2px;
+}
+
+.div-writeBtn:hover {
+    color: white;
+    background-color: #62A9EB;
 }
 
 /* 페이징 박스 */
