@@ -96,9 +96,10 @@
                             <!-- 댓글 작성 -->
                             <div class="reply-dform">
                                 <form class="reply-form" th:action="@{|/reply/create/${board.id}|}" method="post">
-                                    <textarea class="reply-area" name="content" id="" cols="30" rows="3"></textarea>
+                                    <textarea class="reply-area" name="content" id="" cols="90" rows="4"
+                                              placeholder="댓글을 입력해 주세요." onkeyup="countingLength(this)"></textarea>
                                     <div class="reply-btn">
-                                        <span class="reply-span">11/300자</span>
+                                        <span id="reply-length">0/300자</span>
                                         <input class="reply-input" type="submit" value="등록">
                                     </div>
                                 </form>
@@ -159,6 +160,17 @@
             };
         });
     });
+
+    // 댓글 길이 카운팅
+    function countingLength(content) {
+        if (content.value.length > 300) {
+            alert('댓글을 300자 이하로 입력해 주세요.');
+            content.value = content.value.substring(0, 300);
+            content.focus();
+        }
+        document.getElementById('reply-length').innerText = content.value.length + '/300자';
+    }
+
 </script>
 </body>
 <th:block layout:fragment="script">

@@ -136,6 +136,7 @@ a {
     box-sizing: border-box;
     margin-bottom: -10px;
     outline: none !important;
+    padding: 10px;
 }
 
 .reply-btn {
@@ -149,7 +150,7 @@ a {
     position: relative; /* 부모 요소에 대한 상대적인 위치 설정 */
 }
 
-.reply-span {
+#reply-length {
     margin-right: auto;
     display: flex;
     align-items: center;
@@ -171,6 +172,10 @@ a {
     margin-right: -35px;
     border-left: 0.5px solid black;
     cursor: pointer;
+}
+
+.reply-input:hover{
+    background: #181F42;
 }
 
 /* 댓글 작성 */
