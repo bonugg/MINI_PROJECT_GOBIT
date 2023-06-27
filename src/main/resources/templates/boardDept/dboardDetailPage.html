@@ -77,8 +77,10 @@
                                 class="delete">삭제</a>
 
                             <a href="/boardDept/list" class="list">목록</a>
+
                             <a th:if="${session.user.USERENO != board.user.USERENO}"
-                               href="#" class="list">추천</a>
+                               href="javascript:void(0);" th:data-uri="@{|/boardDept/like/${board.id}|}"
+                               class="like">추천</a>
                         </div>
                         <!-- 버튼들 -->
 
@@ -159,6 +161,14 @@
     Array.from(delete_elements).forEach(function(ele) {
         ele.addEventListener('click', function() {
             if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+    const like_elements = document.getElementsByClassName("like");
+    Array.from(like_elements).forEach(function(ele) {
+        ele.addEventListener('click', function() {
+            if(confirm("정말로 추천하시겠습니까?")) {
                 location.href = this.dataset.uri;
             };
         });

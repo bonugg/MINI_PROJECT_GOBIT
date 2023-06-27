@@ -74,18 +74,24 @@ public class dBoardController {
     }
 
     @PostMapping("/modify/{id}")
-    public String modifyCreate(@PathVariable("id") Long id, BoardForm boardForm) {
+    public String modifyPost(@PathVariable("id") Long id, BoardForm boardForm) {
         dBoard board = this.dBoardService.getBoard(id);
         this.dBoardService.modify(board, boardForm.getTitle(), boardForm.getContent());
         return "redirect:/boardDept/detail/" + id;
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Long id){
+    public String delete(@PathVariable("id") Long id) {
         dBoard board = this.dBoardService.getBoard(id);
         this.dBoardService.delete(board);
         return "redirect:/boardDept/list";
     }
 
-
+    @GetMapping("/like/{id}")
+    public String boardLike(@PathVariable("id") Long id, Principal principal) {
+        dBoard board = this.dBoardService.getBoard(id);
+        User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
+        this.dBoardService.like(board, user);
+        return "redirect:/boardDept/detail/" + id;
+    }
 }
