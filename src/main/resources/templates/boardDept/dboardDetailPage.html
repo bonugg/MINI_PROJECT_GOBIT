@@ -36,7 +36,7 @@
 
 
                     <!-- 몸통 부분 -->
-                    <td class="boody">
+                    <div class="boody">
 
                         <!-- 제목 -->
                         <div class="div-botitle">
@@ -82,30 +82,60 @@
 
 
 
-                            <!-- 댓글 -->
+                        <!-- 댓글 시작-->
+                        <div class="div-reply">
+
+
+                            <!-- 댓글 수 표시 -->
                             <div class="reply-title">
-                                <div th:text="'댓글 수: '+ ${#lists.size(board.replyList)} + '개'"></div>
+                                <h4 th:text="'댓글 수 : ' + ${#lists.size(board.replyList)} + '개'"></h4>
                             </div>
-                            <!-- 댓글 -->
+                            <!-- 댓글 수 표시 -->
+
 
                             <!-- 댓글 작성 -->
-                            <form class="reply-form" th:action="@{|/reply/create/${board.id}|}" method="post">
-                                <textarea class="reply-area" name="content" id="" cols="30" rows="3"></textarea>
-                                <input class="reply-btn" type="submit" value="댓글등록">
-                            </form>
+                            <div class="reply-dform">
+                                <form class="reply-form" th:action="@{|/reply/create/${board.id}|}" method="post">
+                                    <textarea class="reply-area" name="content" id="" cols="30" rows="3"></textarea>
+                                    <div class="reply-btn">
+                                        <span class="reply-span">11/300자</span>
+                                        <input class="reply-input" type="submit" value="등록">
+                                    </div>
+                                </form>
+                            </div>
                             <!-- 댓글 작성 -->
 
-                            <!-- 댓글 반복 -->
-                            <div class="for-reply">
 
-                            <div th:each="reply, loop : ${board.replyList}"></div>
-                            <div th:text="${loop.count}"></div>
-                            <div th:if="${reply.user != null}" th:text="${reply.user.USERNAME}"></div>
-                            <div th:if="${reply.content}" th:text="${reply.content}"></div>
-                            <div th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+
+                            <!-- 댓글 반복 -->
+                            <div class="reply-for">
+
+                                <div th:each="reply : ${board.replyList}">
+                                    <div class="reply-wri-btn">
+                                        <p class="reply-writer">
+                                            <span th:text="${reply.user.USERNAME}">고기천 | </span>
+                                            <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}">2023-06-26 11:11</span>
+                                        </p>
+                                        <div class="reply-btns">
+                                            <button type="button" class="reply-fbtn">수정</button>
+                                            <button type="button" class="reply-fbtn">삭제</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="reply-content" th:text="${reply.content}">댓글 내용입니다.</div>
+
+                                    <hr>
+                                </div>
+
+
 
                             </div>
+
                             <!-- 댓글 반복 -->
+
+
+                        </div>
+                        <!-- 댓글 끝 -->
 
 
                     </div>
