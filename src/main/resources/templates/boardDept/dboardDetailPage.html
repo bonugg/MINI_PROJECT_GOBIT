@@ -71,7 +71,8 @@
                         <!-- 버튼들 -->
                         <div class="div-board-btns">
                             <a th:if="${session.user.USERENO == board.user.USERENO}"
-                               th:href="@{|/boardDept/modify/${board.id}|}" class="modify">수정</a>
+                               th:href="@{|/boardDept/modify/${board.id}|}"
+                               class="modify">수정</a>
                             <a th:if="${session.user.USERENO == board.user.USERENO}"
                                 href="javascript:void(0);" th:data-uri="@{|/boardDept/delete/${board.id}|}"
                                 class="delete">삭제</a>

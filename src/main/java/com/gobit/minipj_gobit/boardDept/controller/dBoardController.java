@@ -5,20 +5,13 @@ import com.gobit.minipj_gobit.boardDept.entity.BoardForm;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.service.dBoardService;
 import com.gobit.minipj_gobit.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/boardDept")
