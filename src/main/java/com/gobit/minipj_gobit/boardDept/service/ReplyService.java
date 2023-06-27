@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +24,13 @@ public class ReplyService {
         reply.setUser(user);
         this.replyRepository.save(reply);
         return  reply;
+    }
+
+    public Reply getReply(Long id) {
+        return this.replyRepository.findById(id).get();
+    }
+
+    public void delete(Reply reply) {
+        this.replyRepository.delete(reply);
     }
 }

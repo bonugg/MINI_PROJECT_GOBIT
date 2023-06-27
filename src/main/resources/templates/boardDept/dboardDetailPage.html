@@ -124,9 +124,8 @@
                                         </p>
                                         <div class="reply-btns">
                                             <button th:if="${session.user.USERENO == reply.user.USERENO}"
-                                                    type="button" class="reply-fbtn">수정</button>
-                                            <button th:if="${session.user.USERENO == reply.user.USERENO}"
-                                                    type="button" class="reply-fbtn">삭제</button>
+                                                    href="javascript:void(0);" th:data-uri="@{|/reply/delete/${reply.id}|}"
+                                                    type="button" class="reply-fbtn delete">삭제</button>
                                         </div>
                                     </div>
 
