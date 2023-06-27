@@ -52,12 +52,20 @@ public class MyPageService {
         return null;
     }
 
-    public User updateMyPage(User user, Long USERNO, MultipartFile imageFile) throws IOException {
-        User updateMyPage = userRepository.findByUSERENO(USERNO)
+    public User userget(long usernum){
+        User user = userRepository.findByUSERNUM(usernum)
                 .orElseThrow(() -> new NoSuchElementException("존재하지 않는 사원입니다."));
+        return user;
+    }
+
+    public User updateMyPage(User user, Long userNum, MultipartFile imageFile) throws IOException {
+        System.out.println(user);
+        User updateMyPage = userRepository.findByUSERNUM(userNum)
+                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 사원입니다."));
+        System.out.println(updateMyPage);
+        updateMyPage.setUSER_EMAIL(user.getUSER_EMAIL());
         updateMyPage.setUSER_PHONE(user.getUSER_PHONE());
         updateMyPage.setUSER_ADDRESS(user.getUSER_ADDRESS());
-        updateMyPage.setUSER_PWD(user.getUSER_PWD());
 
         // 이미지 파일이 있는 경우 imagePath 업데이트
         if (imageFile != null && !imageFile.isEmpty()) {

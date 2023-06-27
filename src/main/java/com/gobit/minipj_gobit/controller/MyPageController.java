@@ -2,6 +2,8 @@ package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.Entity.User;
 import com.gobit.minipj_gobit.service.MyPageService;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +19,14 @@ import java.nio.file.Paths;
 public class MyPageController {
     @Autowired
     private MyPageService myPageService;
+    @Autowired
+    private HttpSession httpSession;
 
     @GetMapping("/myPage")
-    public String myPage(){
+    public String myPage(Model model){
+        User user = (User) httpSession.getAttribute("user");
+        model.addAttribute("user", myPageService.userget(user.getUSERNUM()));
+
         return "myPage";
     }
 
@@ -31,9 +38,9 @@ public class MyPageController {
 //    }
 
 
-    @GetMapping("/myPageUpdate/{USERNO}")
-    public String updateGetMyPage(@PathVariable Long USERNO, Model model) {
-//        User user = myPageService.updateMyPage();
+    @GetMapping("/myPageUpdate11")
+    public String updateGetMyPage() {
+
         return "myPageUpdate";
     }
 
@@ -42,16 +49,16 @@ public class MyPageController {
                                @RequestParam("imageFile") MultipartFile imageFile,
                                @RequestParam(value = "USERNUM", required = false) Long userNum,
                                Model model) throws IOException {
+        System.out.println(user);
 
         if (!imageFile.isEmpty()) {
-            // Save the image file to the server
-            String fileName = user.getUSERNUM() + "_" + imageFile.getOriginalFilename();
+
+            String fileName = userNum + "_" + imageFile.getOriginalFilename();
             String imagesDirectory = "src/main/resources/static/img/user/";
             Path path = Paths.get(imagesDirectory, fileName);
             try {
                 Files.write(path, imageFile.getBytes());
 
-                // Update the imagePath field in the User entity
                 user.setImagePath("img/user/" + fileName);
             } catch (IOException ex) {
                 ex.getStackTrace();
@@ -62,7 +69,8 @@ public class MyPageController {
 
         myPageService.updateMyPage(user, userNum, imageFile);
 
-        model.addAttribute("imagePath", user.getImagePath());
+        model.addAttribute("user", myPageService.userget(user.getUSERNUM()));
+
         return "redirect:/myPage";
     }
 
