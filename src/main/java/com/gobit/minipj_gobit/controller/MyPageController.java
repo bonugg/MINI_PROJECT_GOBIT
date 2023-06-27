@@ -2,7 +2,6 @@ package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.Entity.User;
 import com.gobit.minipj_gobit.service.MyPageService;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,16 +29,10 @@ public class MyPageController {
         return "myPage";
     }
 
-//    @GetMapping("/myPageUpdate/{USERNO}")
-//    public String updateGetMyPage(@PathVariable Long USERNO, Model model) {
-//        User user = myPageService.updateMyPage();
-//
-//        return "myPageUpdate";
-//    }
-
-
     @GetMapping("/myPageUpdate11")
-    public String updateGetMyPage() {
+    public String updateGetMyPage(Model model) {
+        User user = (User) httpSession.getAttribute("user");
+        model.addAttribute("user", myPageService.userget(user.getUSERNUM()));
 
         return "myPageUpdate";
     }
@@ -68,8 +61,6 @@ public class MyPageController {
         }
 
         myPageService.updateMyPage(user, userNum, imageFile);
-
-        model.addAttribute("user", myPageService.userget(user.getUSERNUM()));
 
         return "redirect:/myPage";
     }

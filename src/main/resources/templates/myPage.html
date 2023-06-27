@@ -36,7 +36,7 @@
                             <tr>
                                 <td class="profile-imagespace"  rowspan="4">
                                 </td>
-                                <td class="name" th:text="${session.user.USERNAME}"></td>
+                                <td class="name" th:text="${user.USERNAME}"></td>
                             </tr>
                             <tr>
                                 <td class="mini-email" th:text="${user.USER_EMAIL}"></td>
@@ -54,27 +54,27 @@
                         <table class="profile2-table">
                             <tr>
                                 <td class="col1">사번</td>
-                                <td class="col2" th:text="${session.user.USERENO}"></td>
+                                <td class="col2" th:text="${user.USERENO}"></td>
                             </tr>
                             <tr>
                                 <td class="col1">직위</td>
-                                <td class="col2" th:text="${session.user.USER_POSITION}"></td>
+                                <td class="col2" th:text="${user.USER_POSITION}"></td>
                             </tr>
                             <tr>
                                 <td class="col1">생년월일</td>
-                                <td class="col2" th:text="${session.user.USER_BIRTH}"></td>
+                                <td class="col2" th:text="${user.USER_BIRTH}"></td>
                             </tr>
                             <tr>
                                 <td class="col1">재직여부</td>
-                                <td class="col2" th:text="${session.user.USER_EXIT_CHK}"></td>
+                                <td class="col2" th:text="${user.USER_EXIT_CHK}"></td>
                             </tr>
                             <tr>
                                 <td class="col1">부서</td>
-                                <td class="col2" th:text="${session.user.USERDEPT}"></td>
+                                <td class="col2" th:text="${user.USERDEPT}"></td>
                             </tr>
                             <tr>
                                 <td class="col1">입사일</td>
-                                <td class="col2" th:text="${session.user.USER_JOIN}"></td>
+                                <td class="col2" th:text="${user.USER_JOIN}"></td>
                             </tr>
                         </table>
                     </div>
