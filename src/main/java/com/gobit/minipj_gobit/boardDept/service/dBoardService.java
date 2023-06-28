@@ -1,6 +1,6 @@
 package com.gobit.minipj_gobit.boardDept.service;
 
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.boardDept.entity.Like;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.repository.LikeRepository;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

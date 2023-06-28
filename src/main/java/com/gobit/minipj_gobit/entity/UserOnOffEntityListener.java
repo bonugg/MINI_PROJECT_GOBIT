@@ -1,4 +1,4 @@
-package com.gobit.minipj_gobit.Entity;
+package com.gobit.minipj_gobit.entity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.PostPersist;

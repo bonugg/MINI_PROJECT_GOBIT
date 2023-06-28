@@ -1,13 +1,12 @@
 package com.gobit.minipj_gobit.service;
 
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.CalendarRepository;
 import com.gobit.minipj_gobit.repository.UserOnOffRepository;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;

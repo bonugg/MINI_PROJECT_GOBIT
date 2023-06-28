@@ -1,9 +1,7 @@
 package com.gobit.minipj_gobit.boardDept.file;
 
-import com.gobit.minipj_gobit.Entity.User;
-import com.gobit.minipj_gobit.Entity.UserSecurityService;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.UserRepository;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -14,7 +12,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,8 +82,6 @@ public class excepController {
 
             userRepository.save(data);
         }
-
-//        model.addAttribute("datas", dataList); // 5
 
         return "AdminPage";
 

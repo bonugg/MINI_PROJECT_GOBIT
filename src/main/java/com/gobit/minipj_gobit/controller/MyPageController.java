@@ -1,6 +1,6 @@
 package com.gobit.minipj_gobit.controller;
 
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.service.MyPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

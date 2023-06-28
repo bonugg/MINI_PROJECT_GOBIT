@@ -1,4 +1,4 @@
-package com.gobit.minipj_gobit.Entity;//package com.gobit.minipj_gobit.Entity;
+package com.gobit.minipj_gobit.entity;//package com.gobit.minipj_gobit.Entity;
 //
 //import jakarta.persistence.*;
 //import lombok.Data;

@@ -1,6 +1,6 @@
 package com.gobit.minipj_gobit.boardDept.service;
 
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.boardDept.entity.Reply;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.repository.ReplyRepository;
@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

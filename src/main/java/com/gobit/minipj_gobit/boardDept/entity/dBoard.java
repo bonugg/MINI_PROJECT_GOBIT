@@ -1,6 +1,6 @@
 package com.gobit.minipj_gobit.boardDept.entity;
 
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
