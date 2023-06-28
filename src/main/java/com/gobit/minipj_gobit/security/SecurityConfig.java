@@ -1,6 +1,7 @@
 package com.gobit.minipj_gobit.security;
 
 import com.gobit.minipj_gobit.handler.LoginFailureHandler;
+import com.gobit.minipj_gobit.handler.LoginSuccessHandler;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,8 @@ import java.util.logging.Filter;
 public class SecurityConfig {
     @Autowired
     private LoginFailureHandler loginFailureHandler;
-
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -43,7 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/signup", "/signup").permitAll()
                         .requestMatchers("/polling", "/onadd", "/offadd", "/main/calendar").permitAll()
                         .requestMatchers("/memberSign", "/memberSign").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .anyRequest().hasAnyRole("USER", "MANAGER")
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
@@ -51,7 +53,7 @@ public class SecurityConfig {
                         .usernameParameter("ENO")
                         .passwordParameter("PWD")
                         .failureHandler(loginFailureHandler)
-                        .defaultSuccessUrl("/")
+                        .successHandler(loginSuccessHandler)
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -60,7 +62,7 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/")
+                        .accessDeniedPage("/login")
                 );
 
 

@@ -64,7 +64,12 @@ public class HomeController {
     @GetMapping("/login")
     public String loginPage(){
         if (httpSession.getAttribute("user") != null) {
-            return "mainPage";
+            User user = (User) httpSession.getAttribute("user");
+            if(user.getUSER_POSITION().equals("관리자")){
+                return "redirect:/memberSign";
+            }else {
+                return "redirect:/";
+            }
         }
         return "loginPage";
     }
@@ -104,14 +109,5 @@ public class HomeController {
         mv.setViewName("appVacation.html");
 
         return mv;
-    }
-
-    @GetMapping("/memberSign")
-    public String memberSign(){
-        return "AdminPage";
-    }
-    @PostMapping("/memberSign")
-    public String memberSignPost(){
-        return "AdminPage";
     }
 }
