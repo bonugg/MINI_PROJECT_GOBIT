@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,10 +50,13 @@ public class AuthProvider implements AuthenticationProvider {
                 List<GrantedAuthority> roles = new ArrayList<>();
                 if(user.getUSER_POSITION().equals("팀장")){
                     roles.add(new SimpleGrantedAuthority("ROLE_MANAGER")); // 권한 부여
+                }else if (user.getUSER_POSITION().equals("관리자")){
+                    roles.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // 권한 부여
                 }else {
                     roles.add(new SimpleGrantedAuthority("ROLE_USER")); // 권한 부여
                 }
                 token = new UsernamePasswordAuthenticationToken(user.getUSERENO(), null, roles);
+//                SecurityContextHolder.getContext().setAuthentication(token);
                 httpSession.setAttribute("user", user);
 
                 return token;

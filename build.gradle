@@ -38,9 +38,13 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.1'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+<<<<<<< HEAD
+    implementation group: 'com.auth0', name: 'java-jwt', version: '4.0.0'
+=======
     implementation 'org.apache.poi:poi:5.2.3'
     implementation 'org.apache.poi:poi-ooxml:5.2.3'
     implementation 'commons-io:commons-io:2.13.0'
+>>>>>>> d8f760f0b580da424ffb3e1ecc9ab575e6c83304
 }
 
 tasks.named('test') {

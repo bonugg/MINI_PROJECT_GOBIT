@@ -1,9 +1,13 @@
 package com.gobit.minipj_gobit.configuration;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.security.Principal;
 
 public class TeamLeaderInterceptor implements HandlerInterceptor {
 
@@ -12,7 +16,6 @@ public class TeamLeaderInterceptor implements HandlerInterceptor {
         // AJAX 요청 여부 확인
         String requestedWithHeader = request.getHeader("X-Requested-With");
         boolean isAjax = "XMLHttpRequest".equals(requestedWithHeader);
-
 
         // 세션 확인
         HttpSession httpSession = request.getSession();
