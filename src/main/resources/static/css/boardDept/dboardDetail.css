@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     width: 100vw;
     height: 100vh;
@@ -27,7 +31,7 @@ a {
     background-color: white;
     align-items: center;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
     width: 70%;
     margin: 0 auto;
 }
@@ -102,6 +106,106 @@ a {
 /* 버튼들 */
 
 
-/* 댓글 작성 */
+/* 댓글 시작 */
+
+
+/* 댓글 구역 */
+.div-reply {
+    width: 90%;
+}
+/* 댓글 구역 */
+
+.reply-title {
+    margin-bottom: 10px;
+}
 
 /* 댓글 작성 */
+.reply-dform {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.reply-form {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.reply-area {
+    resize: none;
+    width: 100%;
+    height: 70px;
+    border: 0.5px solid #000;
+    border-bottom: none;
+    box-sizing: border-box;
+    margin-bottom: -10px;
+    outline: none !important;
+    padding: 10px;
+}
+
+.reply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.5px solid #000;
+    padding: 5px;
+    box-sizing: border-box;
+    height: 40px;
+    position: relative; /* 부모 요소에 대한 상대적인 위치 설정 */
+}
+
+#reply-length {
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reply-input {
+    height: 100%;
+    width: 70px;
+    border: none;
+    color: white;
+    background: skyblue;
+    position: absolute; /* 절대적인 위치 설정 */
+    top: 50%; /* 부모 요소의 50% 위치로 이동 */
+    left: 50%; /* 부모 요소의 50% 위치로 이동 */
+    right: 0;
+    transform: translate(-50%, -50%); /* 중앙 정렬을 위한 위치 조정 */
+    margin-left: auto;
+    margin-right: -35px;
+    border-left: 0.5px solid black;
+    cursor: pointer;
+}
+
+.reply-input:hover{
+    background: #181F42;
+}
+
+/* 댓글 작성 */
+
+
+/* 댓글 반복 */
+.div-reply-for {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.reply-wri-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reply-writer {
+    margin-right: auto;
+}
+
+.reply-content {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.reply-content-hr {
+    margin-bottom: 20px;
+}
+/* 댓글 반복 */
