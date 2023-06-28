@@ -32,12 +32,12 @@ public class excepController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    @GetMapping("/excel")
+    @GetMapping("/memberSign")
     public String main() { // 1
-        return "boardDept/excel";
+        return "AdminPage";
     }
 
-    @PostMapping("/excel/read")
+    @PostMapping("/memberSign")
     public String readExcel(@RequestParam("file") MultipartFile file)
             throws IOException { // 2
 
@@ -88,7 +88,7 @@ public class excepController {
 
 //        model.addAttribute("datas", dataList); // 5
 
-        return "boardDept/excel";
+        return "AdminPage";
 
     }
 }
