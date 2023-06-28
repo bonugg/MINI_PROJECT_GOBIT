@@ -30,7 +30,7 @@ public class HomeController {
     public String homePage(Model model, Principal principal) throws ParseException {
         long userNum = Long.parseLong(principal.getName());
         User user = (User) httpSession.getAttribute("user");
-        if (user.getUSER_POSITION().equals("관리자")){
+        if (user.getUSER_POSITION().equals("관리자")) {
             return "redirect:/memberSign";
         }
         model.addAttribute("userMap", mainPageService.UserOnOffList(userNum));
@@ -39,34 +39,33 @@ public class HomeController {
 
     //(06.20 17:26) 결재 요청 리스트 페이지로 이동
     @GetMapping("/approvalList")
-    public String approvalList(){
+    public String approvalList() {
         return "approvalPage";
     }
 
     @GetMapping("/appDetail")
-    public String approvalDetail(){
+    public String approvalDetail() {
         return "appDetailPage";
     }
-    @GetMapping("/empty")
-    public String empty(){
-        return "appBuisness";
-    }
+
     @GetMapping("/login")
-    public String loginPage(){
+    public String loginPage() {
         if (httpSession.getAttribute("user") != null) {
             User user = (User) httpSession.getAttribute("user");
-            if(user.getUSER_POSITION().equals("관리자")){
+            if (user.getUSER_POSITION().equals("관리자")) {
                 return "redirect:/memberSign";
-            }else {
+            } else {
                 return "redirect:/";
             }
         }
         return "loginPage";
     }
+
     @GetMapping("/signup")
-    public String signupPage(){
+    public String signupPage() {
         return "signupPage";
     }
+
     @PostMapping("/signup")
     public String sginupMember(User user) {
         user.setUSER_PWD(passwordEncoder.encode(user.getUSER_PWD()));
@@ -74,30 +73,20 @@ public class HomeController {
         return "redirect:/login";
     }
 
-    @GetMapping("/appBuisness-view")
-    public ModelAndView appBuisnessView() {
-        ModelAndView mv = new ModelAndView();
-
-        mv.setViewName("appBuisness.html");
-
-        return mv;
+    @GetMapping("/appBuisness")
+    public String appBuisness() {
+        return "appBuisness.html";
     }
 
-    @GetMapping("/appMeeting-view")
-    public ModelAndView appMeetingView() {
-        ModelAndView mv = new ModelAndView();
-
-        mv.setViewName("appMeeting.html");
-
-        return mv;
+    @GetMapping("/appMeeting")
+    public String appMeeting() {
+        return "appMeeting.html";
     }
 
-    @GetMapping("/appVacation-view")
-    public ModelAndView appVacationView() {
-        ModelAndView mv = new ModelAndView();
-
-        mv.setViewName("appVacation.html");
-
-        return mv;
+    @GetMapping("/appVacation")
+    public String appVacation() {
+        return "appVacation.html";
     }
+
+
 }
