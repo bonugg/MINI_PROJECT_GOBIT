@@ -1,4 +1,4 @@
-package com.gobit.minipj_gobit.Entity;
+package com.gobit.minipj_gobit.entity;
 
 import com.gobit.minipj_gobit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

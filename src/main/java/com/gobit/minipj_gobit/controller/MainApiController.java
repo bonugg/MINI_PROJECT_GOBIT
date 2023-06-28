@@ -1,13 +1,10 @@
 package com.gobit.minipj_gobit.controller;
 
-import com.gobit.minipj_gobit.Entity.Calendar;
-import com.gobit.minipj_gobit.Entity.User;
-import com.gobit.minipj_gobit.Entity.UserOnOff;
+import com.gobit.minipj_gobit.entity.Calendar;
+import com.gobit.minipj_gobit.entity.User;
+import com.gobit.minipj_gobit.entity.UserOnOff;
 import com.gobit.minipj_gobit.repository.CalendarRepository;
 import com.gobit.minipj_gobit.repository.UserOnOffRepository;
-import com.gobit.minipj_gobit.repository.UserRepository;
-import com.gobit.minipj_gobit.service.MainPageService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

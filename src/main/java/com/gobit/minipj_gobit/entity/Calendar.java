@@ -1,12 +1,9 @@
-package com.gobit.minipj_gobit.Entity;
+package com.gobit.minipj_gobit.entity;
 
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
