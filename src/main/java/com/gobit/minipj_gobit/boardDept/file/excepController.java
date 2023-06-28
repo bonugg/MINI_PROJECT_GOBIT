@@ -3,6 +3,7 @@ package com.gobit.minipj_gobit.boardDept.file;
 import com.gobit.minipj_gobit.Entity.User;
 import com.gobit.minipj_gobit.Entity.UserSecurityService;
 import com.gobit.minipj_gobit.repository.UserRepository;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -61,7 +64,11 @@ public class excepController {
             Row row = worksheet.getRow(i);
 
             User data = new User();
+
             String pwd = String.valueOf((int)row.getCell(4).getNumericCellValue());
+            Date joinDate = row.getCell(7).getDateCellValue();
+            String joinStr = new SimpleDateFormat("yyyy-MM-dd").format(joinDate);
+
 
 
             data.setUSERENO((long) row.getCell(0).getNumericCellValue());
@@ -71,7 +78,7 @@ public class excepController {
             data.setUSER_PWD(passwordEncoder.encode(pwd));
             data.setUSER_EMAIL(row.getCell(5).getStringCellValue());
             data.setUSER_PHONE(row.getCell(6).getStringCellValue());
-//            data.setUSER_JOIN(row.getCell(7).getStringCellValue());
+            data.setUSER_JOIN(joinStr);
             dataList.add(data);
 
             System.out.println(data);
