@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @Builder
 public class AppMeetingDTO {
-    private long metNum;
+    private Long metNum;
     private long appNum;
     private String metContent;
     private String metLocation;

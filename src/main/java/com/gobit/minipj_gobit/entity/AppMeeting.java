@@ -14,12 +14,12 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "T_MEETING")
-@SequenceGenerator(
-        name="AppMeetSeqGenerator",
-        sequenceName = "T_MEET_SEQ",
-        initialValue = 3,
-        allocationSize = 1
-)
+//@SequenceGenerator(
+//        name="AppMeetSeqGenerator",
+//        sequenceName = "T_MEET_SEQ",
+//        initialValue = 3,
+//        allocationSize = 1
+//)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,12 +27,11 @@ import java.time.format.DateTimeFormatter;
 public class AppMeeting {
     @Id
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "AppMeetSeqGenerator"
+            strategy = GenerationType.SEQUENCE
+//            generator = "AppMeetSeqGenerator"
     )
-
     @Column(name="MET_NUM")
-    private long metNum;
+    private Long metNum;
 
     @NotNull
     @Column(name="APP_NUM")
@@ -59,9 +58,11 @@ public class AppMeeting {
 
     @PrePersist
     public void prePersistMetNum(){
-        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        String sequenceNumber = String.format("%02d", this.metNum); // 순서가 10 이하인 경우 앞에 0을 붙임
-        this.metNum = Long.parseLong("3" + currentDate + sequenceNumber);
+        int sequenceNum = 1;
+        if(this.metNum == null) {
+            String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            this.metNum = Long.parseLong("3" + currentDate + sequenceNum++);
+        }
     }
 
     public AppMeetingDTO toDTO(){
