@@ -114,7 +114,7 @@ public class MyPageController {
     @PostMapping("/pwChange")
     public String changePw(User user){
         user.setUSER_PWD(passwordEncoder.encode(user.getUSER_PWD()));
-        MyPageService.pwChange(user);
+        myPageService.pwChange(user);
 
         return "redirect:/loginPage";
     }
