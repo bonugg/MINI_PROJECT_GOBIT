@@ -25,7 +25,7 @@ body{
     height: 70px;
     position: fixed;
     top: 0;
-    z-index: 100000;
+    z-index: 1000000;
 }
 #nav_cols{
     width: 100%;
