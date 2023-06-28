@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<header th:fragment="header">
+    <aside class="side-bar">
+        <section class="side-bar__icon-box">
+            <section class="side-bar__icon-1">
+                <div></div>
+                <div></div>
+                <div></div>
+            </section>
+        </section>
+        <ul>
+            <li class="menu_li">
+                <a class="menu_a">모든 메뉴</a>
+                <ul>
+                    <li class="menu_li_li"><a href="/" class="menu_text">홈</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">마이페이지</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="#" class="menu_text">전자결재 요청 목록</a></li>
+                </ul>
+            </li>
+            <li class="menu_li">
+                <a class="menu_a">전자결재</a>
+                <ul>
+                    <li class="menu_li_li"><a href="/appBuisness-view" class="menu_text">출장 전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="/appVacation-view" class="menu_text">휴가 전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="/appMeeting-view" class="menu_text">회의 전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="/approvalList" class="menu_text">전자결재 요청 목록</a></li>
+                    <li class="menu_li_li"><a href="/appDetail" class="menu_text">전자결재 상세 목록</a></li>
+                </ul>
+            </li>
+            <li class="menu_li">
+                <a class="menu_a">게시판</a>
+                <ul>
+                    <li class="menu_li_li"><a href="/notice" class="menu_text">공지 게시판</a></li>
+                    <li class="menu_li_li"><a href="/boardDept/list" class="menu_text">부서 게시판</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+    <header id="header_cols">
+        <nav id="nav_cols">
+            <ul id="ul_cols">
+                <li id="emt_li"></li>
+                <li id="logo_li">
+                    <div id="logo_div">
+                        <a href="/">
+                            <img src="/img/1.png" id="logo_img">
+                        </a>
+                    </div>
+                </li>
+                <li id="my_li">
+                    <div id="my_div">
+                        <div id="my_div_2">
+                            <h6 th:text="${session.user.USERNAME + '님'}"></h6>
+                            <div class="nav_div">
+                                <div id="nav_img_div">
+                                    <img src="/img/nav.png" id="nav_img">
+                                </div>
+                                <ul class="submenu">
+                                    <li class="submenu_item">
+                                        <div class="menu_text_div">
+                                            <a class="menu_text_user" href="/myPage">마이페이지</a>
+                                        </div>
+                                    </li>
+                                    <li class="submenu_item">
+                                        <div class="menu_text_div">
+                                            <form action="/logout" method="post">
+                                                <input type="hidden" th:name="${_csrf.parameterName}"
+                                                       th:value="${_csrf.token}"/>
+                                                <button type="button" id="logout_text" onclick="this.form.submit();">
+                                                    로그아웃
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</header>
+</html>

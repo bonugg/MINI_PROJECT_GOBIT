@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Empty</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/empty.css">
+        <link rel="stylesheet" type="text/css" href="/css/boardDept/dboardDetail.css">
+
+    </th:block>
+</head>
+<body layout:fragment="content">
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
+                <div>
+                    <!-- 머리부분 -->
+                    <div class="heead">
+                        <div class="div-title">
+                            <div class="title">
+                                <h1>부서게시판</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 머리부분 -->
+
+
+                    <!-- 몸통 부분 -->
+                    <div class="boody">
+
+                        <!-- 제목 -->
+                        <div class="div-botitle">
+                            <div class="board-title" th:text="${board.title}"></div>
+                        </div>
+                        <!-- 제목 -->
+
+
+                        <!-- 내용 -->
+                        <div class="div-content">
+                            <div class="board-content" th:text="${board.content}"></div>
+                        </div>
+                        <!-- 내용 -->
+
+
+                        <!-- 작성 관련 내용 -->
+                        <div class="div-values">
+                            <div class="username" th:if="${board.user != null}" th:text="${board.user.USERNAME}">
+                                작성자
+                            </div>
+                            <div class="date" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                            <div class="cnt" th:text="${board.cnt}"></div>
+                            <div class="like-cnt" th:text="${board.like}"></div>
+
+                            <div class="files">
+                                첨부파일
+                            </div>
+                        </div>
+                        <!-- 작성 관련 내용 -->
+
+
+                        <!-- 버튼들 -->
+                        <div class="div-board-btns">
+                            <a th:if="${#authentication.getName() == #strings.toString(board.user.USERENO)}"
+                               th:href="@{|/boardDept/modify/${board.id}|}"
+                               class="modify">수정</a>
+
+                            <a th:if="${#authentication.getName() == board.user.USERENO}"
+                                href="javascript:void(0);" th:data-uri="@{|/boardDept/delete/${board.id}|}"
+                                class="delete">삭제</a>
+
+                            <a href="/boardDept/list" class="list">목록</a>
+
+                            <a th:if="${#authentication.getName() != board.user.USERENO}"
+                               href="javascript:void(0);" th:data-uri="@{|/boardDept/like/${board.id}|}"
+                               class="like">추천</a>
+                        </div>
+                        <!-- 버튼들 -->
+
+
+
+                        <!-- 댓글 시작-->
+                        <div class="div-reply">
+
+
+                            <!-- 댓글 수 표시 -->
+                            <div class="reply-title">
+                                <h4 th:text="'댓글 수 : ' + ${#lists.size(board.replyList)} + '개'"></h4>
+                            </div>
+                            <!-- 댓글 수 표시 -->
+
+
+                            <!-- 댓글 작성 -->
+                            <div class="reply-dform">
+                                <form class="reply-form" th:action="@{|/reply/create/${board.id}|}" method="post">
+                                    <textarea class="reply-area" name="content" id="" cols="90" rows="4"
+                                              placeholder="댓글을 입력해 주세요." onkeyup="countingLength(this)"></textarea>
+                                    <div class="reply-btn">
+                                        <span id="reply-length">0/300자</span>
+                                        <input class="reply-input" type="submit" value="등록">
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- 댓글 작성 -->
+
+
+
+                            <!-- 댓글 반복 -->
+                            <div class="reply-for">
+
+                                <div class="div-reply-for" th:each="reply : ${board.replyList}">
+                                    <a th:id="|reply_${reply.id}|"></a>
+                                    <div class="reply-wri-btn">
+                                        <p class="reply-writer">
+                                            <span th:text="${reply.user.USERNAME}"></span>
+                                            <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></span>
+                                        </p>
+                                        <div class="reply-btns">
+                                            <button th:if="${#authentication.getName() == reply.user.USERENO}"
+                                                    href="javascript:void(0);" th:data-uri="@{|/reply/delete/${reply.id}|}"
+                                                    type="button" class="reply-fbtn delete">삭제</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="reply-content" th:text="${reply.content}"></div>
+
+                                    <hr class="reply-content-hr">
+                                </div>
+
+
+
+                            </div>
+
+                            <!-- 댓글 반복 -->
+
+
+                        </div>
+                        <!-- 댓글 끝 -->
+
+
+                    </div>
+                    <!-- 몸통 부분 -->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function(ele) {
+        ele.addEventListener('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+    const like_elements = document.getElementsByClassName("like");
+    Array.from(like_elements).forEach(function(ele) {
+        ele.addEventListener('click', function() {
+            if(confirm("정말로 추천하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+
+    // 댓글 길이 카운팅
+    function countingLength(content) {
+        if (content.value.length > 300) {
+            alert('댓글을 300자 이하로 입력해 주세요.');
+            content.value = content.value.substring(0, 300);
+            content.focus();
+        }
+        document.getElementById('reply-length').innerText = content.value.length + '/300자';
+    }
+
+</script>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+</th:block>
+</html>
