@@ -47,7 +47,7 @@
 
                         <!-- 내용 -->
                         <div class="div-content">
-                            <div class="board-content" th:text="${board.content}"></div>
+                            <div class="board-content" th:utext="${@commonUtil.markdown(board.content)}"></div>
                         </div>
                         <!-- 내용 -->
 
@@ -74,13 +74,13 @@
                                th:href="@{|/boardDept/modify/${board.id}|}"
                                class="modify">수정</a>
 
-                            <a th:if="${#authentication.getName() == board.user.USERENO}"
+                            <a th:if="${#authentication.getName() == #strings.toString(board.user.USERENO)}"
                                 href="javascript:void(0);" th:data-uri="@{|/boardDept/delete/${board.id}|}"
                                 class="delete">삭제</a>
 
                             <a href="/boardDept/list" class="list">목록</a>
 
-                            <a th:if="${#authentication.getName() != board.user.USERENO}"
+                            <a th:if="${#authentication.getName() != #strings.toString(board.user.USERENO)}"
                                href="javascript:void(0);" th:data-uri="@{|/boardDept/like/${board.id}|}"
                                class="like">추천</a>
                         </div>
@@ -125,7 +125,7 @@
                                             <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></span>
                                         </p>
                                         <div class="reply-btns">
-                                            <button th:if="${#authentication.getName() == reply.user.USERENO}"
+                                            <button th:if="${#authentication.getName() == #strings.toString(reply.user.USERENO)}"
                                                     href="javascript:void(0);" th:data-uri="@{|/reply/delete/${reply.id}|}"
                                                     type="button" class="reply-fbtn delete">삭제</button>
                                         </div>

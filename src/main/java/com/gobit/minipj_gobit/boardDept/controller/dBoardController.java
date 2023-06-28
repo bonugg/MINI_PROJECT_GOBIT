@@ -87,4 +87,9 @@ public class dBoardController {
         this.dBoardService.like(board, user);
         return "redirect:/boardDept/detail/" + id;
     }
+
+    @GetMapping("/editor")
+    public String edit() {
+        return "/boardDept/editorPage";
+    }
 }
