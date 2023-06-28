@@ -33,6 +33,14 @@
     top: 130px;
 }
 
+.pwChangeLink {
+    font-size: 13px;
+    color: #949393;
+    position: absolute;
+    left: 50px;
+    top: 280px;
+}
+
 .profile-card {
     position: relative;
     width: 300px;
@@ -46,7 +54,6 @@
 #profile-imageL {
     width: 170px;
     height: 170px;
-
 }
 
 .btnUpdate {

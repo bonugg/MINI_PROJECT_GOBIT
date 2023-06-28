@@ -39,15 +39,15 @@
                                                     </div>
                                                 </td>
                                                 <td class="userinfo_div_th">이름</td>
-                                                <td class="userinfo_div_td" th:text="${user.USERNAME}"></td>
+                                                <td class="userinfo_div_td" th:text="${session.user.USERNAME}"></td>
                                             </tr>
                                             <tr>
                                                 <td class="userinfo_div_th">사번</td>
-                                                <td class="userinfo_div_td" th:text="${user.USERENO}"></td>
+                                                <td class="userinfo_div_td" th:text="${session.user.USERENO}"></td>
                                             </tr>
                                             <tr>
                                                 <td class="userinfo_div_th">부서</td>
-                                                <td class="userinfo_div_td" th:text="${user.USERDEPT}"></td>
+                                                <td class="userinfo_div_td" th:text="${session.user.USERDEPT}"></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="3" class="on_off_div">
@@ -499,8 +499,8 @@
     <script src="js/chart.js"></script>
     <script src="js/main.js"></script>
     <script th:inline="javascript">
-        const userDept = [[${user.USERDEPT}]];
-        const userNum = [[${user.USERNUM}]];
+        const userDept = [[${session.user.USERDEPT}]];
+        const userNum = [[${session.user.USERNUM}]];
     </script>
     <script th:src="@{/js/websocket.js}"></script>
 </th:block>

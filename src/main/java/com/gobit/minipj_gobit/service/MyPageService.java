@@ -3,6 +3,8 @@ package com.gobit.minipj_gobit.service;
 import com.gobit.minipj_gobit.Entity.User;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,10 +13,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class MyPageService {
     private final UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public MyPageService(UserRepository userRepository){
@@ -67,7 +72,6 @@ public class MyPageService {
         updateMyPage.setUSER_PHONE(user.getUSER_PHONE());
         updateMyPage.setUSER_ADDRESS(user.getUSER_ADDRESS());
 
-        // 이미지 파일이 있는 경우 imagePath 업데이트
         if (imageFile != null && !imageFile.isEmpty()) {
             updateMyPage.setImagePath(user.getImagePath());
         }
@@ -77,8 +81,30 @@ public class MyPageService {
         return updateMyPage;
     }
 
+    public boolean updatePassword(User user, String originPw, String changePw) {
+        // 입력한 기존 비밀번호가 맞는지 확인
+        if (!passwordEncoder.matches(originPw, user.getUSER_PWD())) {
+            return false;
+        }
+
+        // 새로운 비밀번호 저장
+        user.setUSER_PWD(passwordEncoder.encode(changePw));
+        userRepository.save(user);
+        return true;
+    }
 
 
+    public User originPwCheck(long usereno) {
+        Optional<User> userOptional = userRepository.findByUSERENO(usereno);
 
+        if(userOptional.isEmpty()) {
+            return null;
+        }
 
+        return userOptional.get();
+    }
+
+    public void pwChange(User user) {
+        userRepository.save(user);
+    }
 }
