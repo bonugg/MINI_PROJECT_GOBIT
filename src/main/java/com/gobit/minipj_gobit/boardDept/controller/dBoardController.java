@@ -5,20 +5,13 @@ import com.gobit.minipj_gobit.boardDept.entity.BoardForm;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.service.dBoardService;
 import com.gobit.minipj_gobit.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/boardDept")
@@ -47,7 +40,7 @@ public class dBoardController {
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
         dBoard dBoard = this.dBoardService.getBoard(id);
-        model.addAttribute("dBoard", dBoard);
+        model.addAttribute("board", dBoard);
         return "boardDept/dboardDetailPage";
     }
 
@@ -74,18 +67,24 @@ public class dBoardController {
     }
 
     @PostMapping("/modify/{id}")
-    public String modifyCreate(@PathVariable("id") Long id, BoardForm boardForm) {
+    public String modifyPost(@PathVariable("id") Long id, BoardForm boardForm) {
         dBoard board = this.dBoardService.getBoard(id);
         this.dBoardService.modify(board, boardForm.getTitle(), boardForm.getContent());
         return "redirect:/boardDept/detail/" + id;
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") Long id){
+    public String delete(@PathVariable("id") Long id) {
         dBoard board = this.dBoardService.getBoard(id);
         this.dBoardService.delete(board);
         return "redirect:/boardDept/list";
     }
 
-
+    @GetMapping("/like/{id}")
+    public String boardLike(@PathVariable("id") Long id, Principal principal) {
+        dBoard board = this.dBoardService.getBoard(id);
+        User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
+        this.dBoardService.like(board, user);
+        return "redirect:/boardDept/detail/" + id;
+    }
 }

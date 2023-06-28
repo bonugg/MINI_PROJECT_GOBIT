@@ -1,7 +1,9 @@
 package com.gobit.minipj_gobit.boardDept.service;
 
 import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.boardDept.entity.Like;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
+import com.gobit.minipj_gobit.boardDept.repository.LikeRepository;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class dBoardService {
     private final dBoardRepository dBoardRepository;
+    private final LikeRepository likeRepository;
 
     public Page<dBoard> getList(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
@@ -63,4 +66,18 @@ public class dBoardService {
     }
 
 
+    public void like(dBoard board, User user) {
+        long bId = board.getId();
+        long uId = user.getUSERENO();
+
+        if (this.likeRepository.findByBoardIdAndUserId(bId, uId) == null) {
+            Like like = new Like();
+
+            like.setBoardId(bId);
+            like.setUserId(uId);
+            this.likeRepository.save(like);
+            board.setLike(this.likeRepository.countByBoardId(bId));
+            this.dBoardRepository.save(board);
+        }
+    }
 }
