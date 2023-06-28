@@ -116,12 +116,3 @@ input[type="text"]:focus, input[type="password"]:focus{
     outline:none;
     border: 1px solid gray;
 }
-.button_sign_cancle:hover{
-    background-color: lightgray;
-}
-.button_sign_cancle:disabled:hover{
-    background-color: lightgray;
-}
-label{
-    font-size: 10px;
-}
