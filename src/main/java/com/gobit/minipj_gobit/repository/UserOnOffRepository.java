@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Repository
-public interface UserOnOffRepository extends JpaRepository<UserOnOff, Long>, DatabaseChangeRepository {
+public interface UserOnOffRepository extends JpaRepository<UserOnOff, Long> {
     @Query(value = "SELECT * FROM t_commute T WHERE T.USER_NUM =:USERNUM AND T.GO_TO_WORK LIKE %:START%", nativeQuery = true)
     Optional<UserOnOff> findByUSERANDSTART(long USERNUM, String START);
 
@@ -22,19 +22,4 @@ public interface UserOnOffRepository extends JpaRepository<UserOnOff, Long>, Dat
 
     @Query(value = "SELECT T.GET_OUT_WORK FROM t_commute T WHERE T.USER_NUM =:no AND T.GET_OUT_WORK LIKE %:end%", nativeQuery = true)
     String findByCLASSIFYANDEND(long no, String end);
-
-    Optional<UserOnOff> findByUPDATEAT(LocalDateTime UPDATEAT);
-
-    @Query("SELECT MAX(UPDATEAT) FROM UserOnOff")
-    LocalDateTime findMaxUpdatedAt();
-    AtomicReference<LocalDateTime> previousUpdatedAt = new AtomicReference<>();
-    @Override
-    default Optional<LocalDateTime> checkForDatabaseChange() {
-        LocalDateTime currentUpdatedAt = findMaxUpdatedAt();
-        if (previousUpdatedAt.get() == null || (currentUpdatedAt != null && !currentUpdatedAt.isEqual(previousUpdatedAt.get()))) {
-            previousUpdatedAt.set(currentUpdatedAt);
-            return Optional.of(currentUpdatedAt);
-        }
-        return Optional.empty();
-    }
 }

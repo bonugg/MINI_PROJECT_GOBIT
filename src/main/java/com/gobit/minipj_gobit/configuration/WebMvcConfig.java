@@ -11,6 +11,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new TeamLeaderInterceptor())
                 .excludePathPatterns("/login")    // 로그인 관련 요청은 제외
+                .excludePathPatterns("/login/**")    // 로그인 관련 요청은 제외
                 .excludePathPatterns("/signup")    // 회원가입 관련 요청은 제외
                 .excludePathPatterns("/css/**") // 정적 리소스 요청은 제외
                 .excludePathPatterns("/js/**") // 정적 리소스 요청은 제외

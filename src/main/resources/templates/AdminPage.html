@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AdminPage</title>
+    <link rel="stylesheet" type="text/css" href="/css/signup.css">
+    <script src="js/jquery-3.7.0.min.js"></script>
+</head>
+<body>
+<div id="fullscreen">
+    <div id="screen1">
+        <form action="/excel/read" method="post" enctype="multipart/form-data">
+            <div id="div_form">
+                <input type="file" th:name="file">
+                <input th:type="submit" value="제출"/>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.gobit.minipj_gobit.security;
 
+import com.gobit.minipj_gobit.handler.LoginFailureHandler;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.util.logging.Filter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    private LoginFailureHandler loginFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -39,7 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/login", "/signup", "/signup").permitAll()
                         .requestMatchers("/polling", "/onadd", "/offadd", "/main/calendar").permitAll()
-                        .requestMatchers("/").authenticated()
+                        .requestMatchers("/memberSign", "/memberSign").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
@@ -47,7 +50,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/auth")
                         .usernameParameter("ENO")
                         .passwordParameter("PWD")
-                        .failureUrl("/login")
+                        .failureHandler(loginFailureHandler)
                         .defaultSuccessUrl("/")
                 )
                 .logout(logout -> logout
