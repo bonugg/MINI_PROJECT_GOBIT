@@ -1,10 +1,11 @@
 package com.gobit.minipj_gobit.controller;
 
-import com.gobit.minipj_gobit.Entity.CustomUserDetails;
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.CustomUserDetails;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.dto.PasswordChangeRequestDTO;
 import com.gobit.minipj_gobit.dto.ResponseDTO;
 import com.gobit.minipj_gobit.repository.UserRepository;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.service.MyPageService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

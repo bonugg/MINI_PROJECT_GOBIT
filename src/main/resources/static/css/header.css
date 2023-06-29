@@ -26,6 +26,8 @@ body{
     position: fixed;
     top: 0;
     z-index: 100000000;
+    z-index: 100000;
+    z-index: 1000000;
 }
 #nav_cols{
     width: 100%;
@@ -254,6 +256,9 @@ a {
 .menu_a:focus{
     outline: none;
 }
+#menu_a2{
+    display: flex;
+}
 
 /* 모든 메뉴의 a에 속성값 부여 */
 .side-bar ul > li > a {
@@ -273,6 +278,36 @@ a {
     text-align: center;
     color: rgb(240,240,240) !important;
     font-size: 13px !important;
+}
+#menu_text2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#hid_1{
+    position: relative;
+    top: 2px;
+    right: -3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: indianred;
+    display: none;
+}
+#hid{
+    position: relative;
+    top: -3px;
+    right: 0px;
+    font-size: 5px;
+    line-height: 15px;
+    background-color: indianred;
+    width: 17px;
+    height: 17px;
+    border-radius: 5px;
+    margin-left: 5px;
+    text-align: center;
+    display: none;
+
 }
 
 /* 자식의 position이 absolute일 때 자식을 영역 안에 가두어 준다 */

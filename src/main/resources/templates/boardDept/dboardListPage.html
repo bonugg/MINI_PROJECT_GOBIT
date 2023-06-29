@@ -62,7 +62,7 @@
                             </thead>
                             <tbody><tr th:each="board, loop : ${paging}">
 <!--                                <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>-->
-                                <td th:text="${loop.index}"></td>
+                                <td th:text="${loop.count}"></td>
                                 <td class="table-title">
                                     <a th:href="@{|/boardDept/updateCnt/${board.id}|}"
                                     th:text="${board.title}"></a>
@@ -98,11 +98,11 @@
                                 </li>
                             </ul>
 
+                            <div class="div-writeBtn">
+                                <a href="/boardDept/create">글쓰기</a>
+                            </div>
+                        </div>
 
-                        </div>
-                        <div class="div-writeBtn">
-                            <a href="/boardDept/create">글쓰기</a>
-                        </div>
                         <!-- 페이징처리 끝 -->
                     </div>
                 </div>

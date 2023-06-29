@@ -1,7 +1,7 @@
 package com.gobit.minipj_gobit.controller;
 
-import com.gobit.minipj_gobit.Entity.Calendar;
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.Calendar;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.CalendarRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

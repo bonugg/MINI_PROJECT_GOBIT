@@ -15,6 +15,7 @@ $(function () {
 
         socket.onmessage = (event) => {
             let jsonObj = JSON.parse(event.data);
+            $('#hid').text(jsonObj.testcnt);
             if (userDept == jsonObj.userdept) {
                 if (jsonObj.end == 0) {
                     if (window.location.pathname === "/") {
@@ -25,6 +26,8 @@ $(function () {
                         } else {
                             $('#' + jsonObj.usernum + " .on_img").css("backgroundColor", "rgba(24, 31, 66, 0.5)");
                         }
+                        $('#ontime'+ jsonObj.usernum).val(jsonObj.start);
+
                     }
                     message = jsonObj.username + `님이 출근하였습니다.`;
 
@@ -37,10 +40,17 @@ $(function () {
                         } else {
                             $('#' + jsonObj.usernum + " .off_img").css("backgroundColor", "rgba(24, 31, 66, 0.5)");
                         }
+                        $('#offtime'+ jsonObj.usernum).val(jsonObj.end);
                     }
                     message = jsonObj.username + `님이 퇴근하였습니다.`;
                 }
                 showNotification(message);
+            }
+            if(jsonObj.testusernum == userNum){
+                if( $('#hid').text() != 0){
+                    $('#hid_1').css("display","block");
+                    $('#hid').css("display","block").text(jsonObj.testcnt);
+                }
             }
         };
 
@@ -104,3 +114,12 @@ $(function () {
         }, 3000);
     }
 });
+
+function formatDatesec(dateString) {
+    let date = new Date(dateString);
+    let hours = date.getHours();
+    let minutes = ('0' + date.getMinutes()).slice(-2);
+    let sec = ('0' + date.getSeconds()).slice(-2);
+
+    return `${hours}시 ${minutes}분 ${sec}초`;
+}
