@@ -1,6 +1,6 @@
 package com.gobit.minipj_gobit.noticeDept.entity;
 
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 @Transactional
 @Component
 public class TestEntityListener {
-    private Testentity tste;
 
     @PostUpdate
     public void onUserOnOffUpdate(Testentity testentity) {
-        tste = testentity;
         if (testentity.getCheck().equals("승인")){
             WSHandler websocketHandler = BeanUtils.getBean(WSHandler.class);
             websocketHandler.handleDatabaseChanges(testentity);

@@ -1,6 +1,6 @@
 package com.gobit.minipj_gobit.noticeDept.controller;
 
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.boardDept.entity.BoardForm;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.noticeDept.dto.nBoardDto;
