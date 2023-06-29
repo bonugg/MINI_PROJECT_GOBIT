@@ -34,7 +34,7 @@ public class Approval {
 
     //사원ID
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_NUM")
+    @JoinColumn(name = "APP_USER_NUM")
     private User user;
 
     //--------결제공통--------
@@ -48,9 +48,6 @@ public class Approval {
 
     @Column(name = "APP_STATE_DATE")
     private LocalDateTime appStateDate = LocalDateTime.now();
-
-    @Column(name = "APP_USER_NUM", nullable = false)
-    private long appUserNum;
 
 
     //--------결제상세--------
