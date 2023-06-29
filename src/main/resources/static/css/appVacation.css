@@ -106,16 +106,20 @@
 
 #inputPlace{
     width:100%;
-    width: calc(100% - 2px);
-    height: calc(100% - 2px);
+    /*width: calc(100% - 2px);*/
+    /*height: calc(100% - 2px);*/
     /*max-width: calc(100% - 2px);*/
+    width: 100%;
+    height: 100%;
 }
 
 #inputContent{
     resize: vertical;
     align-items: center;
-    width: calc(100% - 2px);
-    height: calc(100% - 2px);
+    /*width: calc(100% - 2px);*/
+    /*height: calc(100% - 2px);*/
+    width: 100%;
+    height: 100%;
 }
 
 /*데이터 표출부*/
@@ -131,8 +135,9 @@
     position: relative;
     z-index: 1;
     margin-top: 30px;
-    /*margin-left: 35px;*/
-    /*margin-right: 300px;*/
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
     box-sizing: border-box;
     width: 100%;
     height: 100%;
