@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Empty</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/empty.css">
+        <link rel="stylesheet" type="text/css" href="/css/noticeDept/noticeDetailWriteEdit.css">
+    </th:block>
+</head>
+<body layout:fragment="content">
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
+                <div class="board_wrap">
+                    <div class="board_title">
+                        <strong>공지사항</strong>
+                    </div>
+                    <div class="board_view_wrap">
+                        <div class="board_view">
+                            <div class="title" th:text="${nBoard.title}">
+                            </div>
+                            <div class="info">
+                                <dl>
+                                    <dt>번호</dt>
+                                    <dd th:text="${nBoard.id}"></dd>
+                                </dl>
+                                <dl>
+                                    <dt>작성자</dt>
+                                    <dd th:if="${nBoard.user != null}" th:text="${nBoard.user.USERNAME}"></dd>
+                                </dl>
+                                <dl>
+                                    <dt>작성일자</dt>
+                                    <dd th:text="${#temporals.format(nBoard.regDate, 'yyyy-MM-dd HH:mm')}"></dd>
+                                </dl>
+                                <dl>
+                                    <dt>조회</dt>
+                                    <dd th:text="${nBoard.cnt}"></dd>
+                                </dl>
+                                <dl>
+                                    <dt>첨부파일</dt>
+                                    <dd></dd>
+                                </dl>
+                            </div>
+                            <div class="cont" th:text="${nBoard.content}">
+                            </div>
+                        </div>
+                        <div class="bt_wrap">
+                            <a href="/noticeDept/list"><button class="on" type="button">목록</button></a>
+                            <a th:href="@{/noticeDept/modify/{id}(id=${id})}"><button type="button">수정</button></a>
+                            <a th:href="@{/noticeDept/delete/{id}(id=${nBoard.id})}"><button type="button">삭제</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+
+</th:block>
+</html>
