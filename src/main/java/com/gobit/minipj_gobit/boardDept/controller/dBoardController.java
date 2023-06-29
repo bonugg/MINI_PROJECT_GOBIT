@@ -3,6 +3,10 @@ package com.gobit.minipj_gobit.boardDept.controller;
 import com.gobit.minipj_gobit.Entity.User;
 import com.gobit.minipj_gobit.boardDept.entity.BoardForm;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
+import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
+import com.gobit.minipj_gobit.boardDept.file.FileHandler;
+import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
+import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
 import com.gobit.minipj_gobit.boardDept.service.dBoardService;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +14,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.List;
 
 @Controller
 @RequestMapping("/boardDept")
@@ -20,6 +29,9 @@ public class dBoardController {
 
     private final dBoardService dBoardService;
     private final UserRepository userRepository;
+    private final dBoardRepository boardRepository;
+    private final dBoardFileRepository boardFileRepository;
+    private final FileHandler fileHandler;
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
@@ -49,12 +61,12 @@ public class dBoardController {
         return "boardDept/dboardWritePage";
     }
 
-    @PostMapping("/create")
-    public String create(dBoard board, Principal principal) {
-        User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
-        this.dBoardService.create(board, user);
-        return "redirect:/boardDept/list";
-    }
+//    @PostMapping("/create")
+//    public String create(dBoard board, Principal principal) {
+//        User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
+//        this.dBoardService.create(board, user);
+//        return "redirect:/boardDept/list";
+//    }
 
     @GetMapping("/modify/{id}")
     public String modify(@PathVariable("id") Long id, BoardForm boardForm) {
@@ -88,8 +100,28 @@ public class dBoardController {
         return "redirect:/boardDept/detail/" + id;
     }
 
-    @GetMapping("/editor")
-    public String edit() {
-        return "/boardDept/editorPage";
+    @PostMapping("/create")
+    public String fileCreate(@RequestParam("files") List<MultipartFile> files,
+                             @RequestParam("title") String title,
+                             @RequestParam("content") String content,
+                             Principal principal) throws Exception {
+        List<dBoardFile> fileList = fileHandler.parseFileInfo(files);
+        User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
+        dBoard board = dBoard.builder()
+                .title(title)
+                .content(content)
+                .user(user)
+                .cnt(0)
+                .like(0)
+                .createDate(LocalDateTime.now())
+                .modifyDate(LocalDateTime.now())
+                .fileList(fileList)
+                .build();
+
+        //파일 첨부하기
+        dBoardService.create(board, fileList);
+
+
+        return "redirect:/boardDept/list";
     }
 }

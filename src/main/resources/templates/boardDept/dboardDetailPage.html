@@ -61,11 +61,18 @@
                             <div class="cnt" th:text="${board.cnt}"></div>
                             <div class="like-cnt" th:text="${board.like}"></div>
 
-                            <div class="files">
-                                첨부파일
-                            </div>
                         </div>
                         <!-- 작성 관련 내용 -->
+
+                        <!-- 첨부 파일들 -->
+                        <div class="div-files">
+                            첨부파일
+                            <div th:if="${board.fileList}" th:each="file : ${board.fileList}">
+                                <a class="downlink" th:id="${file.id}"
+                                   th:text="${file.originalName}"></a>
+                            </div>
+                        </div>
+                        <!-- 첨부 파일들 -->
 
 
                         <!-- 버튼들 -->
@@ -158,6 +165,15 @@
 </div>
 
 <script>
+    const down_elements = document.getElementsByClassName("downlink");
+    Array.from(down_elements).forEach(function (ele){
+       ele.addEventListener('click', function (){
+         ele.preventDefault();
+         var fileName = $(this).attr("href");
+         location.href = "fileDown.do?fileName=" + fileName;
+       });
+    });
+
     const delete_elements = document.getElementsByClassName("delete");
     Array.from(delete_elements).forEach(function(ele) {
         ele.addEventListener('click', function() {
