@@ -131,7 +131,9 @@
     position: relative;
     z-index: 1;
     margin-top: 30px;
-    /*margin-left: 35px;*/
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-bottom: 35px;
     /*margin-right: 300px;*/
     box-sizing: border-box;
     width: 100%;
@@ -166,6 +168,9 @@ th, td, tr{
     border:0.5px solid grey;
     text-align: center;
 }
+td{
+    width:25%;
+}
 
 .appInfo{
     grid-area: appInfo;
@@ -198,7 +203,7 @@ th, td, tr{
     float: right;
 }
 
-#save, #request{
+#btnSave, #btnDelete{
     background-color: #181F42;
     color: #ffffff;
     border-radius: 3px;
@@ -206,4 +211,5 @@ th, td, tr{
     width: 60px;
     height: 30px;
     margin-bottom: 30px;
+    cursor: pointer;
 }

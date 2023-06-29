@@ -78,6 +78,13 @@ a {
 }
 /* 작성 관련 내용 부분 */
 
+/*첨부파일 내용 부분*/
+.div-files {
+    width: 90%;
+    justify-content: flex-start;
+}
+/*첨부파일 내용 부분*/
+
 
 /* 버튼들 */
 .div-board-btns {

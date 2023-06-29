@@ -2,6 +2,8 @@ package com.gobit.minipj_gobit.boardDept.entity;
 
 import com.gobit.minipj_gobit.entity.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +12,10 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "T_BOARD_DEPT")
+@Builder
 public class dBoard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,4 +45,7 @@ public class dBoard {
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<Reply> replyList;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+    private List<dBoardFile> fileList;
 }
