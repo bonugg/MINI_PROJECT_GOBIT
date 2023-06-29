@@ -84,7 +84,7 @@
                             <!-- 버튼들 -->
                             <div class="div-board-btns">
                                 <button type="submit">완료</button>
-                                <button type="button">취소</button>
+                                <button type="button" class="cancel" data-uri="/boardDept/list">취소</button>
                             </div>
                             <!-- 버튼들 -->
                         </form>
@@ -171,6 +171,15 @@
         }
         element.parentElement.remove();
     }
+
+    const cancel_elements = document.getElementsByClassName("cancel");
+    Array.from(cancel_elements).forEach(function(ele) {
+        ele.addEventListener('click', function() {
+            if(confirm("정말로 작성을 취소하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
 </script>
 </body>
 <th:block layout:fragment="script">
