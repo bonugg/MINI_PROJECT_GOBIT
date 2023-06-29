@@ -84,17 +84,19 @@ public class MyPageController {
         return "pwChange";
     }
     @PostMapping("/originPw-check")
-    public ResponseEntity<?> originPwCheck(User user) {
+    public ResponseEntity<?> originPwCheck(@RequestParam String encryptedOriginPw,
+                                           @RequestParam long usereno) {
         ResponseDTO<Map<String, String>> responseDTO =
-                    new ResponseDTO<>();
+                new ResponseDTO<>();
 
         try {
-            User user1 = myPageService.originPwCheck(user.getUSERENO());
+            // encryptedOriginPw를 인자로 넘깁니다.
+            User user = myPageService.originPwCheck(usereno, encryptedOriginPw);
 
             Map<String, String> returnMap = new HashMap<>();
 
-            //조건문으로 메시지를 다르게 리턴
-            if(user1 == null) {
+            // 조건문으로 메시지를 다르게 리턴
+            if(user != null) {
                 returnMap.put("pwCheckMsg", "pwOk");
             } else {
                 returnMap.put("pwCheckMsg", "pwFail");
@@ -112,11 +114,16 @@ public class MyPageController {
     }
 
     @PostMapping("/pwChange")
-    public String changePw(User user){
-        user.setUSER_PWD(passwordEncoder.encode(user.getUSER_PWD()));
-        myPageService.pwChange(user);
+    public String changePw(@RequestParam("encryptedOriginPw") String encryptedOriginPw,
+                           @RequestParam("NEW_USER_PWD") String newPass,
+                           @RequestParam long usereno) {
+        boolean result = myPageService.changePw(usereno, encryptedOriginPw, newPass);
 
-        return "redirect:/loginPage";
+        if (result) {
+            return "redirect:/loginPage";
+        } else {
+            return "pwChange";
+        }
     }
 
 }

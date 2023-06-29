@@ -22,8 +22,8 @@ public class MyPageService {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public MyPageService(UserRepository userRepository){
-        this.userRepository=userRepository;
+    public MyPageService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
 
@@ -34,7 +34,7 @@ public class MyPageService {
         return user;
     }
 
-    public User getUpdateMypage (Long USERNO) {
+    public User getUpdateMypage(Long USERNO) {
         User user = userRepository.findById(USERNO)
                 .orElseThrow(() -> new NoSuchElementException("사용자를 찾을 수 없습니다."));
 
@@ -57,7 +57,7 @@ public class MyPageService {
         return null;
     }
 
-    public User userget(long usernum){
+    public User userget(long usernum) {
         User user = userRepository.findByUSERNUM(usernum)
                 .orElseThrow(() -> new NoSuchElementException("존재하지 않는 사원입니다."));
         return user;
@@ -81,30 +81,36 @@ public class MyPageService {
         return updateMyPage;
     }
 
-    public boolean updatePassword(User user, String originPw, String changePw) {
-        // 입력한 기존 비밀번호가 맞는지 확인
-        if (!passwordEncoder.matches(originPw, user.getUSER_PWD())) {
-            return false;
-        }
-
-        // 새로운 비밀번호 저장
-        user.setUSER_PWD(passwordEncoder.encode(changePw));
-        userRepository.save(user);
-        return true;
-    }
-
-
-    public User originPwCheck(long usereno) {
+    public boolean changePw(long usereno, String encryptedOriginPw, String changePw) {
         Optional<User> userOptional = userRepository.findByUSERENO(usereno);
 
-        if(userOptional.isEmpty()) {
-            return null;
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            if (passwordEncoder.matches(encryptedOriginPw, user.getUSER_PWD())) {
+                // 새로운 비밀번호 저장
+                user.setUSER_PWD(passwordEncoder.encode(changePw));
+                userRepository.save(user);
+                return true;
+            }
         }
 
-        return userOptional.get();
+        return false;
     }
 
-    public void pwChange(User user) {
-        userRepository.save(user);
+
+    public User originPwCheck(long usereno, String encryptedOriginPw) {
+        Optional<User> userOptional = userRepository.findByUSERENO(usereno);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            if (passwordEncoder.matches(encryptedOriginPw, user.getUSER_PWD())) {
+                return user;
+            }
+        }
+
+        return null;
     }
+
 }
