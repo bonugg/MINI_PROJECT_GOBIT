@@ -1,6 +1,7 @@
 package com.gobit.minipj_gobit.boardDept.file;
 
-import com.gobit.minipj_gobit.Entity.User;
+
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
@@ -29,12 +30,12 @@ public class excepController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    @GetMapping("/excel")
+    @GetMapping("/memberSign")
     public String main() { // 1
-        return "boardDept/excel";
+        return "AdminPage";
     }
 
-    @PostMapping("/excel/read")
+    @PostMapping("/memberSign")
     public String readExcel(@RequestParam("file") MultipartFile file)
             throws IOException { // 2
 
@@ -83,9 +84,7 @@ public class excepController {
             userRepository.save(data);
         }
 
-//        model.addAttribute("datas", dataList); // 5
-
-        return "boardDept/excel";
+        return "AdminPage";
 
     }
 }

@@ -1,6 +1,6 @@
 package com.gobit.minipj_gobit.configuration;
 
-import com.gobit.minipj_gobit.Entity.UserOnOffEntityListener;
+import com.gobit.minipj_gobit.entity.UserOnOffEntityListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.WebSocketHandler;

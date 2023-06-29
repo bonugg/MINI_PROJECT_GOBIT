@@ -1,13 +1,11 @@
 package com.gobit.minipj_gobit.repository;
 
-import com.gobit.minipj_gobit.Entity.UserOnOff;
+import com.gobit.minipj_gobit.entity.UserOnOff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Repository
 public interface UserOnOffRepository extends JpaRepository<UserOnOff, Long> {
