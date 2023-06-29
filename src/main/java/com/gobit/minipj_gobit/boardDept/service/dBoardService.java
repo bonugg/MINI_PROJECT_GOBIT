@@ -3,7 +3,9 @@ package com.gobit.minipj_gobit.boardDept.service;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.boardDept.entity.Like;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
+import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
 import com.gobit.minipj_gobit.boardDept.repository.LikeRepository;
+import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import java.util.List;
 public class dBoardService {
     private final dBoardRepository dBoardRepository;
     private final LikeRepository likeRepository;
+    private final dBoardFileRepository boardFileRepository;
 
     public Page<dBoard> getList(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
@@ -40,16 +43,13 @@ public class dBoardService {
         this.dBoardRepository.save(board);
     }
 
-    public void create(dBoard board, User user) {
-        dBoard b = new dBoard();
-        b.setTitle(board.getTitle());
-        b.setContent(board.getContent());
-        b.setCreateDate(LocalDateTime.now());
-        b.setModifyDate(LocalDateTime.now());
-        b.setCnt(0);
-        b.setLike(0);
-        b.setUser(user);
-        this.dBoardRepository.save(b);
+    public void create(dBoard board, List<dBoardFile> fileList) {
+        dBoardRepository.save(board);
+        dBoardRepository.flush();
+        for (dBoardFile file : fileList) {
+            file.setBoard(board);
+            boardFileRepository.save(file);
+        }
     }
 
     public void modify(dBoard board, String title, String content) {

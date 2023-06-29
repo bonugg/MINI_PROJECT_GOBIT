@@ -47,7 +47,7 @@
 
                         <!-- 내용 -->
                         <div class="div-content">
-                            <div class="board-content" th:text="${board.content}"></div>
+                            <div class="board-content" th:utext="${@commonUtil.markdown(board.content)}"></div>
                         </div>
                         <!-- 내용 -->
 
@@ -61,11 +61,18 @@
                             <div class="cnt" th:text="${board.cnt}"></div>
                             <div class="like-cnt" th:text="${board.like}"></div>
 
-                            <div class="files">
-                                첨부파일
-                            </div>
                         </div>
                         <!-- 작성 관련 내용 -->
+
+                        <!-- 첨부 파일들 -->
+                        <div class="div-files">
+                            첨부파일
+                            <div th:if="${board.fileList}" th:each="file : ${board.fileList}">
+                                <a class="downlink" th:id="${file.id}"
+                                   th:text="${file.originalName}"></a>
+                            </div>
+                        </div>
+                        <!-- 첨부 파일들 -->
 
 
                         <!-- 버튼들 -->
@@ -74,13 +81,13 @@
                                th:href="@{|/boardDept/modify/${board.id}|}"
                                class="modify">수정</a>
 
-                            <a th:if="${#authentication.getName() == board.user.USERENO}"
+                            <a th:if="${#authentication.getName() == #strings.toString(board.user.USERENO)}"
                                 href="javascript:void(0);" th:data-uri="@{|/boardDept/delete/${board.id}|}"
                                 class="delete">삭제</a>
 
                             <a href="/boardDept/list" class="list">목록</a>
 
-                            <a th:if="${#authentication.getName() != board.user.USERENO}"
+                            <a th:if="${#authentication.getName() != #strings.toString(board.user.USERENO)}"
                                href="javascript:void(0);" th:data-uri="@{|/boardDept/like/${board.id}|}"
                                class="like">추천</a>
                         </div>
@@ -125,7 +132,7 @@
                                             <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></span>
                                         </p>
                                         <div class="reply-btns">
-                                            <button th:if="${#authentication.getName() == reply.user.USERENO}"
+                                            <button th:if="${#authentication.getName() == #strings.toString(reply.user.USERENO)}"
                                                     href="javascript:void(0);" th:data-uri="@{|/reply/delete/${reply.id}|}"
                                                     type="button" class="reply-fbtn delete">삭제</button>
                                         </div>
@@ -158,6 +165,15 @@
 </div>
 
 <script>
+    const down_elements = document.getElementsByClassName("downlink");
+    Array.from(down_elements).forEach(function (ele){
+       ele.addEventListener('click', function (){
+         ele.preventDefault();
+         var fileName = $(this).attr("href");
+         location.href = "fileDown.do?fileName=" + fileName;
+       });
+    });
+
     const delete_elements = document.getElementsByClassName("delete");
     Array.from(delete_elements).forEach(function(ele) {
         ele.addEventListener('click', function() {

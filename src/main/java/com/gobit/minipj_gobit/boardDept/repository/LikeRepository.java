@@ -5,6 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LikeRepository extends JpaRepository<Like, Long> {
     Like findByBoardIdAndUserId(Long boardId, Long userId);
-
     Integer countByBoardId(Long boardId);
 }

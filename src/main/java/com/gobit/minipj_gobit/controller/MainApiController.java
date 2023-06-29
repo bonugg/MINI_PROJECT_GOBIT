@@ -1,9 +1,11 @@
 package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.entity.Calendar;
+import com.gobit.minipj_gobit.entity.Testentity;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.entity.UserOnOff;
 import com.gobit.minipj_gobit.repository.CalendarRepository;
+import com.gobit.minipj_gobit.repository.TestRepository;
 import com.gobit.minipj_gobit.repository.UserOnOffRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class MainApiController {
     private HttpSession httpSession;
     private final UserOnOffRepository userOnOffRepository;
     private final CalendarRepository calendarRepository;
+    private final TestRepository testRepository;
 
     @PostMapping(value = "/onadd")
     public String onadd() throws Exception {
@@ -48,6 +51,11 @@ public class MainApiController {
         userOnOffRepository.flush();
         calendarRepository.save(calendar);
         calendarRepository.flush();
+
+        Testentity testentity = new Testentity();
+        testentity.setUser(user);
+        testentity.setCheck("미승인");
+        testRepository.save(testentity);
 
         return outputDateString;
     }
@@ -97,6 +105,10 @@ public class MainApiController {
         userOnOffRepository.flush();
         calendarRepository.save(calendar);
         calendarRepository.flush();
+
+        Testentity testentity = testRepository.findByUser(user).get();
+        testentity.setCheck("승인");
+        testRepository.save(testentity);
 
         return outputDateString;
     }
