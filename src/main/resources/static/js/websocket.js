@@ -14,8 +14,8 @@ $(function () {
         };
 
         socket.onmessage = (event) => {
-            console.log("123");
             let jsonObj = JSON.parse(event.data);
+            $('#hid').text(jsonObj.testcnt);
             if (userDept == jsonObj.userdept) {
                 if (jsonObj.end == 0) {
                     if (window.location.pathname === "/") {
@@ -45,6 +45,12 @@ $(function () {
                     message = jsonObj.username + `님이 퇴근하였습니다.`;
                 }
                 showNotification(message);
+            }
+            if(jsonObj.testusernum == userNum){
+                if( $('#hid').text() != 0){
+                    $('#hid_1').css("display","block");
+                    $('#hid').css("display","block").text(jsonObj.testcnt);
+                }
             }
         };
 

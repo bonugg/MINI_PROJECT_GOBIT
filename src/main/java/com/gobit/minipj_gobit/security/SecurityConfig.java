@@ -44,7 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/login", "/signup", "/signup").permitAll()
                         .requestMatchers("/polling", "/onadd", "/offadd", "/main/calendar").permitAll()
-                        .requestMatchers("/memberSign", "/memberSign").hasRole("ADMIN")
+                        .requestMatchers("/memberSign", "/memberSigns").hasRole("ADMIN")
                         .anyRequest().hasAnyRole("USER", "MANAGER")
                 )
                 .formLogin(formLogin -> formLogin

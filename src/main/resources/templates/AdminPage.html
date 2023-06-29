@@ -7,6 +7,9 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="/css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&family=Orbit&family=Russo+One&display=swap" rel="stylesheet">
 </head>
 <body>
 <div id="fullscreen">
@@ -16,13 +19,40 @@
                 <img src="img/1.png" id="logo_img2">
             </div>
         </div>
-        <form action="/memberSign" method="post" enctype="multipart/form-data">
-            <div id="div_form">
-                <input type="file" th:name="file">
-                <input th:type="submit" value="제출"/>
+        <div id="file_div">
+            <div id="text_div">
+                <div id="text_div2">
+                <p>엑셀파일을 첨부하여 회원을 추가하세요.</p>
+                </div>
+                <div id="file_div2">
+                    <form action="/memberSigns" method="post" enctype="multipart/form-data" id="file_form">
+                        <div class="div_form">
+                            <label for="file" id="file_label">파일첨부</label>
+                            <input class="upload-name" value="">
+                            <input type="file" name="file" id="file">
+                            <input type="button" value="제출" id="submit_btn"/>
+                        </div>
+                    </form>
+                </div>
+                <div id="file_div3">
+                    <div id="file_div4">
+                        <p>회원가입 상태 &nbsp;&nbsp;: &nbsp;&nbsp;</p>
+                        <p id="status_text">(파일첨부 후에 제출버튼을 눌러주세요.)</p>
+                    </div>
+                </div>
+                <div id="logout_div">
+                    <div id="logout_div2">
+                    <form action="/logout" method="post">
+                        <button type="submit" id="logout">관리자 로그아웃</button>
+                    </form>
+                    </div>
+                </div>
             </div>
-        </form>
+        </div>
+
     </div>
 </div>
 </body>
+<script src="js/jquery-3.7.0.min.js"></script>
+<script src="/js/admin.js"></script>
 </html>
