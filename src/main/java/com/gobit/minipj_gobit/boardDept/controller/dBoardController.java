@@ -5,8 +5,6 @@ import com.gobit.minipj_gobit.boardDept.entity.BoardForm;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
 import com.gobit.minipj_gobit.boardDept.file.FileHandler;
-import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
-import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
 import com.gobit.minipj_gobit.boardDept.service.dBoardService;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -29,8 +25,6 @@ public class dBoardController {
 
     private final dBoardService dBoardService;
     private final UserRepository userRepository;
-    private final dBoardRepository boardRepository;
-    private final dBoardFileRepository boardFileRepository;
     private final FileHandler fileHandler;
 
     @GetMapping("/list")

@@ -1,9 +1,6 @@
 package com.gobit.minipj_gobit.boardDept.file;
 
-import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
-import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -16,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public class FileHandler {
-    private final dBoardFileRepository boardFileRepository;
     String absolutePath = "/Users/minje/Desktop/upload/";
     public List<dBoardFile> parseFileInfo(List<MultipartFile> multipartFiles) throws Exception{
 
