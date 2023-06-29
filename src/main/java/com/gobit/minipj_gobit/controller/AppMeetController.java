@@ -1,23 +1,20 @@
 package com.gobit.minipj_gobit.controller;
 
-import com.gobit.minipj_gobit.dto.AppMeetingDTO;
+import com.gobit.minipj_gobit.dto.ApprovalDTO;
 import com.gobit.minipj_gobit.dto.ResponseDTO;
+import com.gobit.minipj_gobit.entity.AppMeeting;
 import com.gobit.minipj_gobit.service.AppMeetService;
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -30,9 +27,11 @@ public class AppMeetController {
     public AppMeetController(AppMeetService appMeetService) {
         this.appMeetService = appMeetService;
     }
-
+    
+    
+    // 회의결재 신청 처리
     @PostMapping("/meet")
-    public ResponseEntity<?> saveAppMeet(AppMeetingDTO appMeetingDTO) {
+    public ResponseEntity<?> saveAppMeet(ApprovalDTO appMeetingDTO) {
         ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<>();
         try {
             //BoardEntity에 지정한 boardRegdate의 기본값은
@@ -53,6 +52,27 @@ public class AppMeetController {
             return ResponseEntity.badRequest().body(responseDTO);
         }
     }
+    
+    //상세 회의결재 불러오기
+//    @GetMapping("/meetView")
+//    public String getAppMeet(Model model, Integer metNum){
+//        model.addAttribute("appMeet", appMeetService.getAppMeet(metNum));
+//        return ""
+//
+//
+//    }
+
+    @GetMapping("/meet/{metNum}")
+    public ModelAndView getAppMeet(@PathVariable int metNum) {
+        ModelAndView mv = new ModelAndView();
+
+        AppMeeting appMeeting = appMeetService.getAppMeet(metNum);
+
+        mv.addObject("appMeet", appMeeting.toDTO());
+        mv.setViewName("/appMeetingEdit.html");
+        return mv;
+    }
+
 
 
 }

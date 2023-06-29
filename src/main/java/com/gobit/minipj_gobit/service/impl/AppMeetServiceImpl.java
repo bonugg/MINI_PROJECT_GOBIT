@@ -1,6 +1,5 @@
 package com.gobit.minipj_gobit.service.impl;
 
-import com.gobit.minipj_gobit.dto.AppMeetingDTO;
 import com.gobit.minipj_gobit.entity.AppMeeting;
 import com.gobit.minipj_gobit.repository.AppMeetRepository;
 import com.gobit.minipj_gobit.service.AppMeetService;
@@ -16,9 +15,15 @@ public class AppMeetServiceImpl implements AppMeetService {
         this.appMeetRepository = appMeetRepository;
     }
 
+    // 회의결재 신청 처리
     @Override
     public void saveAppMeet(AppMeeting appMeeting) {
         appMeetRepository.save(appMeeting);
         appMeetRepository.flush();
+    }
+
+    //특정 회의결재 불러오기
+    public AppMeeting getAppMeet(Integer metNum) {
+        return appMeetRepository.findById(metNum).get();
     }
 }
