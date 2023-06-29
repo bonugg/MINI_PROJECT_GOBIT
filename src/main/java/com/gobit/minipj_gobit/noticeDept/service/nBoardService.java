@@ -1,6 +1,6 @@
 package com.gobit.minipj_gobit.noticeDept.service;
 
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.noticeDept.dto.nBoardDto;
 import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
 import com.gobit.minipj_gobit.noticeDept.repository.nBoardRepository;

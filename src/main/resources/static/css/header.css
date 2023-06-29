@@ -25,11 +25,9 @@ body{
     height: 70px;
     position: fixed;
     top: 0;
-<<<<<<< HEAD
+    z-index: 100000000;
     z-index: 100000;
-=======
     z-index: 1000000;
->>>>>>> 77b1067df26d0f6d77bc18a5136f97e5537ffb19
 }
 #nav_cols{
     width: 100%;

@@ -74,12 +74,29 @@
     align-items: center;
 }
 
+.searchA-btn{
+    width: 120px;
+    height: 40px;
+    background-color: #525771;
+    color: #ffffff;
+    font-size: 14px;
+    border: none;
+    position: relative;
+    cursor: pointer;
+}
+
+#postcode, #addressSearch, #detailAddress, #extraAddress {
+    height: 38px;
+    width: 40%;
+    margin-top: 13px;
+}
+
 .profile1 {
     position: absolute;
     top: 150px;
     width: calc(100vw - 800px);
     left: 35vw;
-    height: 250px;
+    height: 350px;
     background-color: #ffffff;
     border: 0.2px solid #949393;
     border-radius: 3px;
@@ -87,14 +104,16 @@
 }
 
 .profile2 {
+    background: rgb(211, 211, 211);
+    font-size: 20px;
+    color: white;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    top: 450px;
+    top: 550px;
     position: absolute;
     width: calc(100vw - 800px);
-    height: 450px;
-    background-color: #ffffff;
+    height: 350px;
     border: 0.2px solid #949393;
     border-radius: 3px;
     left: 35vw;
@@ -106,33 +125,16 @@
     color: #949393;
 }
 
-.profile-imagespace {
-    width: 25%;
-}
-
-.nameUpdate {
+.emailUpdate {
     margin-top: 25px;
 }
 
-.nameUpdate, .phoneUpdate, .emailUpdate {
+.addressUpdate, .phoneUpdate, .emailUpdate {
     height: 35px;
     display: flex;
     padding: 5px;
     margin-bottom: 15px;
     width: 98%;
-}
-
-.profile2 {
-    background: rgb(211, 211, 211);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    color: white;
-}
-
-.tel, .email {
-    border-bottom: 0.2px solid #949393;
 }
 
 

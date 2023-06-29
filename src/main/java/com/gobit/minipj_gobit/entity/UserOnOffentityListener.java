@@ -10,7 +10,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 
 @Component
-public class UserOnOffEntityListener extends TextWebSocketHandler {
+public class UserOnOffentityListener extends TextWebSocketHandler {
     private UserOnOff uonof;
 
     @PostPersist
