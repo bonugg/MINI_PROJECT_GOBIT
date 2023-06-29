@@ -74,6 +74,8 @@ public class Approval {
     //휴가종류
     @Column(name="APP_VACTYPE")
     private String appVacType;
-
+    //알림 전송용 코드
+    @Column(name = "APP_ALARM")
+    private int appAlarm;
 
 }
