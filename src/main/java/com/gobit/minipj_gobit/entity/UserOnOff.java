@@ -1,25 +1,31 @@
-package com.gobit.minipj_gobit.Entity;
+package com.gobit.minipj_gobit.entity;
 
 
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+@Entity
 @Data
 @NoArgsConstructor
-@Entity
+@AllArgsConstructor
+@Builder
+@EntityListeners(UserOnOffEntityListener.class)
 @Table(name = "T_COMMUTE")
 public class UserOnOff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "COMMUTE_NUM")
     private long COMMUTENUM;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "USER_NUM")
+    @NotNull
     private User user;
     @Column(name = "GO_TO_WORK")
     private String START;

@@ -1,7 +1,6 @@
 package com.gobit.minipj_gobit.repository;
 
-import com.gobit.minipj_gobit.Entity.Calendar;
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.Calendar;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

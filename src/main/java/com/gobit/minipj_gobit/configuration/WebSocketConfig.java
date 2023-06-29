@@ -1,7 +1,7 @@
 package com.gobit.minipj_gobit.configuration;
 
-import com.gobit.minipj_gobit.Handler.DatabaseChangeHandler;
-import com.gobit.minipj_gobit.service.DatabaseWatcherService;
+import com.gobit.minipj_gobit.handler.WSHandler;
+import com.gobit.minipj_gobit.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,15 +10,12 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 @Configuration
 @EnableWebSocket
 @RequiredArgsConstructor
 public class WebSocketConfig  implements WebSocketConfigurer{
-    private final DatabaseWatcherService databaseWatcherService;
-    private final ScheduledExecutorService executor;
+    private final TestRepository testRepository;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
@@ -27,6 +24,6 @@ public class WebSocketConfig  implements WebSocketConfigurer{
     }
     @Bean
     public WebSocketHandler databaseChangeHandler() {
-        return new DatabaseChangeHandler(databaseWatcherService, executor);
+        return new WSHandler(testRepository);
     }
 }

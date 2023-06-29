@@ -20,123 +20,125 @@
         </div>
         <div id="_emt4">
             <div id="use_screen">
-                <!--헤더와 메뉴바를 제외한 영역 -->
-                <p class="page-name">회의 결제신청 페이지</p>
-                <div class="use_screen_form">
-                    <div class="leftSpace"></div>
-                    <div class="centerSpace">
-                        <!--데이터 입력부-->
-                        <section id="inputData-section">
-                            <div class="input-date">
-                                <div>회의날짜</div>
-                                <div class="input-date-form">
-                                    <input type="date" id="inputDate-start" required>
-                                    <p>~</p>
-                                    <input type="date" id="inputDate-end" required>
+                <form id="insertForm" action="/app/meet" method="post">
+                    <!--헤더와 메뉴바를 제외한 영역 -->
+                    <p class="page-name">회의 결제신청 페이지</p>
+                    <div class="use_screen_form">
+                        <div class="leftSpace"></div>
+                        <div class="centerSpace">
+                            <!--데이터 입력부-->
+                            <section id="inputData-section">
+                                <div class="input-date">
+                                    <div>회의날짜</div>
+                                    <div class="input-date-form">
+                                        <input type="date" id="inputDate-start" name="metStart" required onkeyup="printDateStart()">
+                                        <p>~</p>
+                                        <input type="date" id="inputDate-end" name="metEnd" required>
+                                    </div>
                                 </div>
+                                <div class="input-user">
+                                    <div>회의 참석자</div>
+                                    <div class="input-user-form">
+                                     <textarea id="inputPeople" name="metParticipant" style="resize:vertical" cols="50"
+                                               rows="1" required onkeyup="printPeople()"></textarea>
+                                    </div>
+                                </div>
+                                <div class="input-place">
+                                    <div>회의 장소</div>
+                                    <div class="input-place-form">
+                                        <input type="text" id="inputPlace" name="metLocation" required onkeyup="printPlace()">
+                                    </div>
+                                </div>
+                                <div class="input-text">
+                                    <div>회의 목적</div>
+                                    <div class="input-text-form">
+                            <textarea id="inputContent" name="metContent" style="resize:vertical" cols="50"
+                                      rows="1" required onkeyup="printContent()"></textarea>
+                                    </div>
+                                </div>
+                            </section>
+                            <!--데이터 표출부-->
+                            <section id="viewData-section">
+                                <div class="appForm1">
+                                    <div class="appInfo">
+                                        <table>
+                                            <tr>
+                                                <td>문서번호</td>
+                                                <td>123456</td>
+                                            </tr>
+                                            <tr>
+                                                <td>부서</td>
+                                                <td th:text="${session.user.USERDEPT}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>기안일</td>
+                                                <td>20230202</td>
+                                            </tr>
+                                            <tr>
+                                                <td>기안자</td>
+                                                <td th:text="${session.user.USERNAME}"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="appTitle">
+                                        <h3>출장 신청서</h3>
+                                    </div>
+                                    <div class="appConfirm">
+                                        <table>
+                                            <tr>
+                                                <td rowspan="4"> 결재</td>
+                                                <td>담당</td>
+                                                <td>팀장</td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="2">담당자 싸인</td>
+                                                <td rowspan="2">팀장 싸인</td>
+                                            </tr>
+                                            <tr>
+                                            </tr>
+                                            <tr>
+                                                <td>담당자 id</td>
+                                                <td>팀장 id</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="appForm2">
+                                    <div class="appData">
+                                        <table>
+                                            <tr>
+                                                <td>회의 날짜</td>
+                                                <td id="appData-dateStart"></td>
+                                                <td>출장 장소</td>
+                                                <td id="appData-Place"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>회의 참석자</td>
+                                                <td id="appData-people" colspan="3"></td>
+                                            </tr>
+                                            <tr class="appData-colspan">
+                                                <td>회의 목적</td>
+                                                <td colspan="3" id="appData-content"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+                            <div id="dataSubmit-section">
+                                <button id="btnSave">저장</button>
+                                <button id="btnDelete">삭제</button>
                             </div>
-                            <div class="input-user">
-                                <div>회의 참석자</div>
-                                <div class="input-user-form">
-                                     <textarea id="inputPeople" style="resize:vertical" cols="50"
-                                               rows="1" required></textarea>
-                                </div>
-                            </div>
-                            <div class="input-place">
-                                <div>회의 장소</div>
-                                <div class="input-place-form">
-                                    <input type="text" id="inputPlace" required>
-                                </div>
-                            </div>
-                            <div class="input-text">
-                                <div>회의 목적</div>
-                                <div class="input-text-form">
-                            <textarea id="inputContent" style="resize:vertical" cols="50"
-                                      rows="1" required></textarea>
-                                </div>
-                            </div>
-                        </section>
-                        <!--데이터 표출부-->
-                        <section id="viewData-section">
-                            <div class="appForm1">
-                                <div class="appInfo">
-                                    <table>
-                                        <tr>
-                                            <td>문서번호</td>
-                                            <td>123456</td>
-                                        </tr>
-                                        <tr>
-                                            <td>부서</td>
-                                            <td>OO부서</td>
-                                        </tr>
-                                        <tr>
-                                            <td>기안일</td>
-                                            <td>20230202</td>
-                                        </tr>
-                                        <tr>
-                                            <td>기안자</td>
-                                            <td>테스트</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="appTitle">
-                                    <h3>출장 신청서</h3>
-                                </div>
-                                <div class="appConfirm">
-                                    <table>
-                                        <tr>
-                                            <td rowspan="4"> 결재</td>
-                                            <td>담당</td>
-                                            <td>팀장</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="2">담당자 싸인</td>
-                                            <td rowspan="2">팀장 싸인</td>
-                                        </tr>
-                                        <tr>
-                                        </tr>
-                                        <tr>
-                                            <td>담당자 id</td>
-                                            <td>팀장 id</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="appForm2">
-                                <div class="appData">
-                                    <table>
-                                        <tr>
-                                            <td>회의 날짜</td>
-                                            <td id="appData-date">회의날짜 표출</td>
-                                            <td>출장 장소</td>
-                                            <td id="appData-space">회의장소 표출</td>
-                                        </tr>
-                                        <tr>
-                                            <td>회의 참석자</td>
-                                            <td id="appData-people" colspan="3">회의참석자 표출</td>
-                                        </tr>
-                                        <tr class="appData-colspan">
-                                            <td>회의 목적</td>
-                                            <td colspan="3" id="appData-content"></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </section>
-                        <div id="dataSubmit-section">
-                            <button id="save">저장</button>
-                            <button id="request">신청</button>
                         </div>
+                        <div class="rightSpace"></div>
                     </div>
-                    <div class="rightSpace"></div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 </body>
 <th:block layout:fragment="script">
-    <!--사용할 자바스크립트는 여기에 첨부 -->
-
+    <script src="js/appRequest.js"></script>
+    <script src="js/appMeeting.js"></script>
 </th:block>
 </html>

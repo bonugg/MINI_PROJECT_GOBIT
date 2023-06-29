@@ -1,6 +1,6 @@
 package com.gobit.minipj_gobit.security;
 
-import com.gobit.minipj_gobit.Entity.User;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -33,8 +32,9 @@ public class AuthProvider implements AuthenticationProvider {
         try {
             String ENO_STRING = (String) authentication.getPrincipal(); // 로그인 창에 입력한 id
             String PWD = (String) authentication.getCredentials(); // 로그인 창에 입력한 password
-            System.out.println(ENO_STRING);
-            System.out.println(PWD);
+            if(ENO_STRING.equals("관리자")){
+                ENO_STRING = "9874512";
+            }
             long ENO;
             try {
                 ENO = Long.parseLong(ENO_STRING);
@@ -49,10 +49,13 @@ public class AuthProvider implements AuthenticationProvider {
                 List<GrantedAuthority> roles = new ArrayList<>();
                 if(user.getUSER_POSITION().equals("팀장")){
                     roles.add(new SimpleGrantedAuthority("ROLE_MANAGER")); // 권한 부여
+                }else if (user.getUSER_POSITION().equals("관리자")){
+                    roles.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // 권한 부여
                 }else {
                     roles.add(new SimpleGrantedAuthority("ROLE_USER")); // 권한 부여
                 }
                 token = new UsernamePasswordAuthenticationToken(user.getUSERENO(), null, roles);
+//                SecurityContextHolder.getContext().setAuthentication(token);
                 httpSession.setAttribute("user", user);
 
                 return token;
