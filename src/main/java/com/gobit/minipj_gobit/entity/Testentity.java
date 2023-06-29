@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EntityListeners(TestEntityListener.class)
+@EntityListeners(TestentityListener.class)
 @Table(name = "T_TEST")
 public class Testentity {
     @Id
