@@ -32,8 +32,9 @@ public class AuthProvider implements AuthenticationProvider {
         try {
             String ENO_STRING = (String) authentication.getPrincipal(); // 로그인 창에 입력한 id
             String PWD = (String) authentication.getCredentials(); // 로그인 창에 입력한 password
-            System.out.println(ENO_STRING);
-            System.out.println(PWD);
+            if(ENO_STRING.equals("관리자")){
+                ENO_STRING = "9874512";
+            }
             long ENO;
             try {
                 ENO = Long.parseLong(ENO_STRING);

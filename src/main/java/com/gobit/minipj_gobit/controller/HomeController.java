@@ -1,6 +1,7 @@
 package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.entity.User;
+import com.gobit.minipj_gobit.repository.TestRepository;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import com.gobit.minipj_gobit.service.MainPageService;
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +25,7 @@ public class HomeController {
     private HttpSession httpSession;
     private final MainPageService mainPageService;
     private final UserRepository userRepository;
+    private final TestRepository testRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/")
