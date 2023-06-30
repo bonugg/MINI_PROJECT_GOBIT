@@ -150,6 +150,9 @@ a {
     margin: 3px;
     padding: 7px;
 }
+.active-page {
+    background-color: yellow; /* 원하는 배경색으로 변경 */
+}
 .page-link:hover{
     color: white;
     background-color: #62A9EB;

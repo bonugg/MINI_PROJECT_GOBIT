@@ -1,5 +1,6 @@
 package com.gobit.minipj_gobit.boardDept.controller;
 
+import com.gobit.minipj_gobit.boardDept.entity.Reply;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.boardDept.entity.BoardForm;
@@ -8,11 +9,13 @@ import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
 import com.gobit.minipj_gobit.boardDept.file.FileHandler;
 import com.gobit.minipj_gobit.boardDept.service.dBoardService;
 import com.gobit.minipj_gobit.repository.UserRepository;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.file.ConfigurationSource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +44,9 @@ public class dBoardController {
     private final dBoardFileRepository boardFileRepository;
 
     @GetMapping("/list")
-    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
-        Page<dBoard> paging = this.dBoardService.getList(page);
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String kw) {
+        Page<dBoard> paging = this.dBoardService.getList(page, kw);
         model.addAttribute("paging", paging);
         return "boardDept/dboardListPage";
     }
