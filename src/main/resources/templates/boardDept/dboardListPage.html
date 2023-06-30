@@ -61,8 +61,7 @@
                             </tr>
                             </thead>
                             <tbody><tr th:each="board, loop : ${paging}">
-<!--                                <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>-->
-                                <td th:text="${loop.count}"></td>
+                                <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
                                 <td class="table-title">
                                     <a th:href="@{|/boardDept/updateCnt/${board.id}|}"
                                     th:text="${board.title}"></a>
@@ -84,7 +83,7 @@
 
                                 <li th:if="${paging.hasPrevious()}" style="margin-right: 3px">
                                     <a class="page-link" th:href="@{|?page=${paging.number-1}|}">
-                                        <span>이전</span>
+                                        이전
                                     </a>
                                 </li>
                                  <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}" style="margin-right: 3px"
@@ -93,7 +92,7 @@
                                 </li>
                                 <li th:if="${paging.hasNext()}">
                                     <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
-                                        <span>다음</span>
+                                        다음
                                     </a>
                                 </li>
                             </ul>

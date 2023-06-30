@@ -145,6 +145,15 @@ a {
     list-style: none;
     flex-grow: 1;
 }
+.page-link {
+    border: 0.5px solid black;
+    margin: 3px;
+    padding: 7px;
+}
+.page-link:hover{
+    color: white;
+    background-color: #62A9EB;
+}
 
 .div-writeBtn {
     display: flex;

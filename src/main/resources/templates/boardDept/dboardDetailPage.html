@@ -68,7 +68,7 @@
                         <div class="div-files">
                             첨부파일
                             <div th:if="${board.fileList}" th:each="file : ${board.fileList}">
-                                <a class="downlink" th:id="${file.id}"
+                                <a class="downlink" th:id="${file.id}" th:href="@{'/boardDept/down/' + ${file.id}}"
                                    th:text="${file.originalName}"></a>
                             </div>
                         </div>

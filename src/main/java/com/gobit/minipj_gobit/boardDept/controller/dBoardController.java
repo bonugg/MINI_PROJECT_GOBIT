@@ -1,5 +1,6 @@
 package com.gobit.minipj_gobit.boardDept.controller;
 
+import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.boardDept.entity.BoardForm;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
@@ -8,12 +9,23 @@ import com.gobit.minipj_gobit.boardDept.file.FileHandler;
 import com.gobit.minipj_gobit.boardDept.service.dBoardService;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.file.ConfigurationSource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,6 +38,7 @@ public class dBoardController {
     private final dBoardService dBoardService;
     private final UserRepository userRepository;
     private final FileHandler fileHandler;
+    private final dBoardFileRepository boardFileRepository;
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
@@ -63,11 +76,12 @@ public class dBoardController {
 //    }
 
     @GetMapping("/modify/{id}")
-    public String modify(@PathVariable("id") Long id, BoardForm boardForm) {
+    public String modify(@PathVariable("id") Long id, BoardForm boardForm, List<MultipartFile> files) {
         dBoard board = this.dBoardService.getBoard(id);
 
         boardForm.setTitle(board.getTitle());
         boardForm.setContent(board.getContent());
+        boardForm.setFiles(files);
 
         return "boardDept/dboardWritePage";
     }
@@ -117,5 +131,18 @@ public class dBoardController {
 
 
         return "redirect:/boardDept/list";
+    }
+
+    @GetMapping("/down/{fileId}")
+    public ResponseEntity<Resource> fileDown(@PathVariable("fileId") Long fileId) throws IOException {
+        dBoardFile file = boardFileRepository.findById(fileId).get();
+        Path path = Paths.get(file.getSaveName());
+        Resource  resource = new InputStreamResource(Files.newInputStream(path));
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
+                        file.getOriginalName() + "\"")
+                .body(resource);
     }
 }
