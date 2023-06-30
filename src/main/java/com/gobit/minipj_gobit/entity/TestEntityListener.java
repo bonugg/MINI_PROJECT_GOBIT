@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Transactional
 @Component
-public class TestEntityListener {
+public class TestentityListener {
     private Testentity tste;
 
     @PostUpdate

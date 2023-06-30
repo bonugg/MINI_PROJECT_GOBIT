@@ -30,8 +30,9 @@
     display: flex;
 }
 .page-name{
-    top: 0;
-    left: 0;
+    margin-top: 40px;
+    margin-left: 40px;
+    font-size: 15px;
     color: grey;
 }
 
@@ -104,8 +105,7 @@
     display: inline-block;
 }
 
-#inputPlace{
-    width:100%;
+#input-appLocation{
     /*width: calc(100% - 2px);*/
     /*height: calc(100% - 2px);*/
     /*max-width: calc(100% - 2px);*/
@@ -113,7 +113,7 @@
     height: 100%;
 }
 
-#inputContent{
+#input-appContent{
     resize: vertical;
     align-items: center;
     /*width: calc(100% - 2px);*/
@@ -207,7 +207,7 @@ td{
     float: right;
 }
 
-#save, #request{
+#btnSave, #btnDelete{
     background-color: #181F42;
     color: #ffffff;
     border-radius: 3px;
@@ -215,4 +215,5 @@ td{
     width: 60px;
     height: 30px;
     margin-bottom: 30px;
+    cursor: pointer;
 }

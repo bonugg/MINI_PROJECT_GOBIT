@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EntityListeners(UserOnOffEntityListener.class)
+@EntityListeners(UserOnOffentityListener.class)
 @Table(name = "T_COMMUTE")
 public class UserOnOff {
     @Id

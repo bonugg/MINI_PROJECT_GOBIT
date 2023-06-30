@@ -30,8 +30,9 @@
     display: flex;
 }
 .page-name{
-    top: 0;
-    left: 0;
+    margin-top: 40px;
+    margin-left: 40px;
+    font-size: 15px;
     color: grey;
 }
 
@@ -104,7 +105,7 @@
     display: inline-block;
 }
 
-#inputPeople{
+#input-Participant{
     resize: vertical;
     align-items: center;
     width: 100%;
@@ -112,7 +113,7 @@
 
 }
 
-#inputPlace{
+#input-appLocation{
     width:100%;
     /*width: calc(100% - 2px);*/
     /*height: calc(100% - 2px);*/
@@ -121,7 +122,7 @@
     /*max-width: calc(100% - 2px);*/
 }
 
-#inputContent{
+#input-appContent{
     resize: vertical;
     align-items: center;
     /*width: calc(100% - 2px);*/
