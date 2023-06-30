@@ -32,18 +32,16 @@ public class Approval {
     @Column(name = "APP_SORT")
     private char appSort;
 
-<<<<<<< HEAD
     //결재신청자
 //    @ManyToOne(fetch = FetchType.LAZY)
     @ManyToOne
     @JoinColumn(name = "USER_NUM")
     private User userNum;
-=======
+
     //사원ID
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "APP_USER_NUM")
     private User user;
->>>>>>> 74ff7d4d1efad8a408fe0ff833795531e016375e
 
     //--------결제공통--------
     //결재 작성일
@@ -60,13 +58,9 @@ public class Approval {
     @Column(name = "APP_STATE_DATE")
     private LocalDateTime appStateDate = LocalDateTime.now();
 
-<<<<<<< HEAD
     //결재승인자이름
     @JoinColumn(name = "USER_NAME")
     private String userName;
-
-=======
->>>>>>> 74ff7d4d1efad8a408fe0ff833795531e016375e
 
     //--------결제상세--------
     //결재시작일
@@ -93,7 +87,6 @@ public class Approval {
     //알림 전송용 코드
     @Column(name = "APP_ALARM")
     private int appAlarm;
-<<<<<<< HEAD
 
     public ApprovalDTO toDTO(){
         char appSortChr = this.appSort;
@@ -115,7 +108,5 @@ public class Approval {
                 .build();
         return approvalDTO;
     }
-=======
->>>>>>> 74ff7d4d1efad8a408fe0ff833795531e016375e
 
 }
