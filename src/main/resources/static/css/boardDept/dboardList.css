@@ -76,6 +76,10 @@ a {
     background-color: transparent;
     cursor: pointer;
 }
+#btn_search:hover {
+    color: white;
+    background-color: #62A9EB;
+}
 /* 검색창 */
 
 
