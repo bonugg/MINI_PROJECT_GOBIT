@@ -23,6 +23,7 @@ $.ajax({
         console.log(obj);
         alert(obj.item.msg);
         // location.href = `/app/meet/{metNum}`;
+        location.href = '/appDetail';
     },
     error: (error) => {
         console.log(error);

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,55 +27,32 @@ public class AppRequestController {
 
     //회의 결재신청
     @PostMapping("/meeting")
-    public ResponseEntity<?> saveAppMeet(ApprovalDTO approvalDTO){
-        ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<>();
-        try{
-            approvalService.saveApproval(approvalDTO.toEntity());
-            Map<String, String> returnMap =
-                    new HashMap<String, String>();
-            returnMap.put("msg", "회의결재가 정상적으로 신청되었습니다.");
-            responseDTO.setItem(returnMap);
-            return ResponseEntity.ok().body(responseDTO);
-        }catch(Exception e){
-            responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
-            responseDTO.setErrorMessage(e.getMessage());
-            return ResponseEntity.badRequest().body(responseDTO);
-        }
-    }
+    public ModelAndView saveAppMeeting(ApprovalDTO approvalDTO){
+        ModelAndView mv =new ModelAndView();
+        approvalService.saveApproval(approvalDTO.toEntity());
+        mv.setViewName("/appDetailPage.html");
+        return mv;
 
-    //휴가 결재신청
-    @PostMapping("/vacation")
-    public ResponseEntity<?> saveAppVacation(ApprovalDTO approvalDTO){
-        ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<>();
-        try{
-            approvalService.saveApproval(approvalDTO.toEntity());
-            Map<String, String> returnMap =
-                    new HashMap<String, String>();
-            returnMap.put("msg", "휴가결재가 정상적으로 신청되었습니다.");
-            responseDTO.setItem(returnMap);
-            return ResponseEntity.ok().body(responseDTO);
-        }catch(Exception e){
-            responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
-            responseDTO.setErrorMessage(e.getMessage());
-            return ResponseEntity.badRequest().body(responseDTO);
-        }
     }
 
     //출장 결재신청
     @PostMapping("/buisness")
-    public ResponseEntity<?> saveAppBuisness(ApprovalDTO approvalDTO){
-        ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<>();
-        try{
-            approvalService.saveApproval(approvalDTO.toEntity());
-            Map<String, String> returnMap =
-                    new HashMap<String, String>();
-            returnMap.put("msg", "출장결재가 정상적으로 신청되었습니다.");
-            responseDTO.setItem(returnMap);
-            return ResponseEntity.ok().body(responseDTO);
-        }catch(Exception e){
-            responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
-            responseDTO.setErrorMessage(e.getMessage());
-            return ResponseEntity.badRequest().body(responseDTO);
-        }
+    public ModelAndView saveAppBuisness(ApprovalDTO approvalDTO){
+        ModelAndView mv =new ModelAndView();
+        approvalService.saveApproval(approvalDTO.toEntity());
+        mv.setViewName("/appDetailPage.html");
+        return mv;
+
+    }
+
+    //휴가 결재신청
+    @PostMapping("/vacation")
+
+    public ModelAndView saveAppVacation(ApprovalDTO approvalDTO){
+        ModelAndView mv =new ModelAndView();
+        approvalService.saveApproval(approvalDTO.toEntity());
+        mv.setViewName("/appDetailPage.html");
+        return mv;
+
     }
 }
