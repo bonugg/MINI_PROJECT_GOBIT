@@ -25,6 +25,7 @@ $.ajax({
         alert(obj.item.msg);
         // window.location.href= 'appDetailPage.html';
         // location.href = `/app/meet/{metNum}`;
+        location.href = '/appDetail';
     },
     error: (error) => {
         console.log(error);
