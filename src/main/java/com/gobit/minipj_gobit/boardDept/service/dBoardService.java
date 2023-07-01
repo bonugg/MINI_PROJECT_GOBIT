@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,24 +48,39 @@ public class dBoardService {
         this.dBoardRepository.save(board);
     }
 
-    public void create(dBoard board, List<dBoardFile> fileList) {
+    public Long create(String title, String content, User user) {
+        dBoard board = dBoard.builder()
+                .title(title)
+                .content(content)
+                .createDate(LocalDateTime.now())
+                .modifyDate(LocalDateTime.now())
+                .cnt(0)
+                .like(0)
+                .user(user)
+                .build();
         dBoardRepository.save(board);
-        dBoardRepository.flush();
-        for (dBoardFile file : fileList) {
-            file.setBoard(board);
-            boardFileRepository.save(file);
-        }
+        return board.getId();
     }
 
-    public void modify(dBoard board, String title, String content) {
-        board.setTitle(title);
-        board.setContent(content);
-        board.setCreateDate(board.getCreateDate());
-        board.setModifyDate(LocalDateTime.now());
-        this.dBoardRepository.save(board);
+    public void modify(dBoard board) {
+        dBoard modifyBoard = dBoardRepository.findById(board.getId()).get();
+
+        modifyBoard.setTitle(board.getTitle());
+        modifyBoard.setContent(board.getContent());
+        this.dBoardRepository.save(modifyBoard);
     }
 
     public void delete(dBoard board) {
+        List<dBoardFile> fileList = boardFileRepository.findAllByBoardId(board.getId());
+
+        for (dBoardFile file : fileList) {
+            String saveName = file.getSaveName();
+            File deleteFile = new File(saveName);
+            if (deleteFile.exists()) {
+                deleteFile.delete();
+            }
+        }
+        boardFileRepository.deleteAll(fileList);
         this.dBoardRepository.delete(board);
     }
 
