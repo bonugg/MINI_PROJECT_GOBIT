@@ -74,6 +74,7 @@ public class MyPageService {
 
         if (imageFile != null && !imageFile.isEmpty()) {
             updateMyPage.setImagePath(user.getImagePath());
+            updateMyPage.setUSERIMAGE(user.getUSERIMAGE());
         }
 
         userRepository.save(updateMyPage);
