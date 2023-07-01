@@ -83,7 +83,7 @@
         <form action="/myPage/update" method="post" enctype="multipart/form-data">
           <input type="hidden" name="USERNUM" th:value="${user.USERNUM}"/>
           <section class="profile-card">
-            <img id="profile-imageL"  th:src="${user.imagePath}" alt="프로필 사진">
+            <img id="profile-imageL" th:src="@{'/upload/' + ${user.USERIMAGE}}" alt="프로필 사진">
             <input type="file" id="profileImageLInput" name="imageFile" value="사진 선택">
             <button type="submit" class="btnUpdate">프로필 변경사항 저장</button>
           </section>

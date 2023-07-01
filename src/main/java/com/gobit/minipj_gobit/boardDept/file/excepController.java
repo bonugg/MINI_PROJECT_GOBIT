@@ -35,7 +35,7 @@ public class excepController {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @GetMapping("/memberSign")
     public String main() { // 1
-        return "AdminPage";
+        return "/admin/AdminPage";
     }
 
     @ResponseBody
@@ -80,6 +80,8 @@ public class excepController {
                 data.setUSER_PHONE(row.getCell(6).getStringCellValue());
                 data.setUSER_JOIN(joinStr);
                 dataList.add(data);
+                data.setImagePath("C:/tmp/upload/");
+                data.setUSERIMAGE("user.png");
 
 
                 userRepository.save(data);

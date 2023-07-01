@@ -42,9 +42,11 @@ public class SecurityConfig {
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/img/**").permitAll()
+                        .requestMatchers("/upload/**").permitAll()
                         .requestMatchers("/login", "/signup", "/signup").permitAll()
                         .requestMatchers("/polling", "/onadd", "/offadd", "/main/calendar").permitAll()
-                        .requestMatchers("/memberSign", "/memberSigns").hasRole("ADMIN")
+                        .requestMatchers("/memberSign", "/memberSigns","/admin/main","/admin/changePosition"
+                        ,"/admin/deleteUser","/admin/listDept","/admin/searchDept").hasRole("ADMIN")
                         .anyRequest().hasAnyRole("USER", "MANAGER")
                 )
                 .formLogin(formLogin -> formLogin

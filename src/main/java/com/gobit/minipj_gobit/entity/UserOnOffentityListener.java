@@ -10,11 +10,13 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 
 @Component
-public class UserOnOffEntityListener extends TextWebSocketHandler {
+public class UserOnOffentityListener extends TextWebSocketHandler {
+    private UserOnOff uonof;
 
     @PostPersist
     @PostUpdate
     public void onUserOnOffUpdate(UserOnOff userOnOff) {
+        uonof = userOnOff;
         WSHandler websocketHandler = BeanUtils.getBean(WSHandler.class);
         websocketHandler.handleDatabaseChanges(userOnOff);
     }

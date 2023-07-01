@@ -9,6 +9,7 @@
                 <div></div>
                 <div></div>
                 <div></div>
+                <div id="hid_2"></div>
             </section>
         </section>
         <ul>
@@ -26,11 +27,11 @@
                     <div id="hid_1"></div>
                 </a>
                 <ul>
-                    <li class="menu_li_li"><a href="/appBuisness-view" class="menu_text">출장 전자결재 신청</a></li>
-                    <li class="menu_li_li"><a href="/appVacation-view" class="menu_text">휴가 전자결재 신청</a></li>
-                    <li class="menu_li_li"><a href="/appMeeting-view" class="menu_text">회의 전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="/appBuisness" class="menu_text">출장 전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="/appVacation" class="menu_text">휴가 전자결재 신청</a></li>
+                    <li class="menu_li_li"><a href="/appMeeting" class="menu_text">회의 전자결재 신청</a></li>
                     <li class="menu_li_li"><a href="/approvalList" class="menu_text" id="menu_text2">전자결재 요청 목록
-                        <div id="hid">0</div>
+                        <div id="hid" th:text="${hidtext}">0</div>
                     </a></li>
                     <li class="menu_li_li"><a href="/appDetail" class="menu_text">전자결재 상세 목록</a></li>
                 </ul>
@@ -72,8 +73,6 @@
                                     <li class="submenu_item">
                                         <div class="menu_text_div">
                                             <form action="/logout" method="post">
-                                                <input type="hidden" th:name="${_csrf.parameterName}"
-                                                       th:value="${_csrf.token}"/>
                                                 <button type="button" id="logout_text" onclick="this.form.submit();">
                                                     로그아웃
                                                 </button>
