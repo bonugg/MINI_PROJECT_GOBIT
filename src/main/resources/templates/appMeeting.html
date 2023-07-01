@@ -20,39 +20,46 @@
         </div>
         <div id="_emt4">
             <div id="use_screen">
-                <form id="insertForm" action="/app/meet" method="post">
-                    <!--헤더와 메뉴바를 제외한 영역 -->
-                    <p class="page-name">회의 결제신청 페이지</p>
-                    <div class="use_screen_form">
-                        <div class="leftSpace"></div>
-                        <div class="centerSpace">
-                            <!--데이터 입력부-->
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <p class="page-name">회의 결제신청 페이지</p>
+                <div class="use_screen_form">
+                    <div class="leftSpace"></div>
+                    <div class="centerSpace">
+                        <!--데이터 입력부-->
+                        <form id="insertForm" action="/appRequest/meeting" method="post">
+                            <input type="hidden" name="appSort" value='M'>
+                            <input type="hidden" name="appState" value="미승인">
+                            <input type="hidden" name="userNum" th:value="${session.user.USERNUM}">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>회의날짜</div>
                                     <div class="input-date-form">
-                                        <input type="date" id="inputDate-start" name="metStart" required onselect="printDate()">
+                                        <input type="datetime-local" id="inputDate-start" name="appStart" required
+                                               onselect="printDate()">
                                         <p>~</p>
-                                        <input type="date" id="inputDate-end" name="metEnd" required onselect="printDate()">
+                                        <input type="datetime-local" id="inputDate-end" name="appEnd" required
+                                               onselect="printDate()">
                                     </div>
                                 </div>
                                 <div class="input-user">
                                     <div>회의 참석자</div>
                                     <div class="input-user-form">
-                                     <textarea id="inputPeople" name="metParticipant" style="resize:vertical" cols="50"
+                                     <textarea id="input-Participant" name="appParticipant" style="resize:vertical"
+                                               cols="50"
                                                rows="1" required onkeyup="printPeople()"></textarea>
                                     </div>
                                 </div>
                                 <div class="input-place">
                                     <div>회의 장소</div>
                                     <div class="input-place-form">
-                                        <input type="text" id="inputPlace" name="metLocation" required onkeyup="printPlace()">
+                                        <input type="text" id="input-appLocation" name="appLocation" required
+                                               onkeyup="printPlace()">
                                     </div>
                                 </div>
                                 <div class="input-text">
                                     <div>회의 목적</div>
                                     <div class="input-text-form">
-                            <textarea id="inputContent" name="metContent" style="resize:vertical" cols="50"
+                            <textarea id="input-appContent" name="appContent" style="resize:vertical" cols="50"
                                       rows="1" required onkeyup="printContent()"></textarea>
                                     </div>
                                 </div>
@@ -128,9 +135,9 @@
                                 <button id="btnSave">저장</button>
                                 <button id="btnDelete">삭제</button>
                             </div>
-                        </div>
-                        <div class="rightSpace"></div>
                     </div>
+                    <div class="rightSpace"></div>
+                </div>
                 </form>
             </div>
         </div>
@@ -138,7 +145,6 @@
 </div>
 </body>
 <th:block layout:fragment="script">
-    <script src="js/appRequest.js"></script>
     <script src="js/appMeeting.js"></script>
 </th:block>
 </html>

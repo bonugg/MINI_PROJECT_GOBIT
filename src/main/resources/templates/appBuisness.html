@@ -26,32 +26,35 @@
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="insertForm" action="/app/buisness" method="post">
+                        <form id="insertForm" action="/appRequest/buisness" method="post">
+                            <input type="hidden" name="appSort" value="B">
+                            <input type="hidden" name="appState" value="미승인">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>출장날짜</div>
                                     <div class="input-date-form">
-                                        <input type="date" id="inputDate-start" required onselect="printDate()">
+                                        <input type="datetime-local" id="input-appStart" name="appStart" required onselect="printDate()">
                                         <p>~</p>
-                                        <input type="date" id="inputDate-end" required onselect="printDate()">
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onselect="printDate()">
                                     </div>
                                 </div>
                                 <div class="input-user">
                                     <div>신청자</div>
                                     <div class="input-user-form">
+                                        <input type="hidden" name="userNum" th:value="${session.user.USERNUM}">
                                         <p th:text="${session.user.USERNAME}"></p>
                                     </div>
                                 </div>
                                 <div class="input-place">
                                     <div>출장 장소</div>
                                     <div class="input-place-form">
-                                        <input type="text" id="inputPlace" required onkeyup="printPlace()">
+                                        <input type="text" id="input-appLocation" name="appLocation" required onkeyup="printPlace()">
                                     </div>
                                 </div>
                                 <div class="input-text">
                                     <div>출장 목적</div>
                                     <div class="input-text-form">
-                            <textarea id="inputContent" style="resize:vertical" cols="50"
+                            <textarea id="input-appContent" name="appContent" style="resize:vertical" cols="50"
                                       rows="1" required onkeyup="printContent()"></textarea>
                                     </div>
                                 </div>
@@ -133,7 +136,6 @@
 </div>
 </body>
 <th:block layout:fragment="script">
-    <script src="js/appRequest.js"></script>
     <script src="js/appBuisness.js"></script>
 </th:block>
 </html>
