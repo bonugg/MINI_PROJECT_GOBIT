@@ -67,7 +67,7 @@
                         <!-- 첨부 파일들 -->
                         <div class="div-files">
                             첨부파일
-                            <div th:if="${board.files}" th:each="file : ${board.files}">
+                            <div th:if="${board.files}" th:each="file : ${board.files}" class="div-file-list" style="display: flex">
                                 <a class="downlink" th:id="${file.id}" th:href="@{/boardDept/down/{fileId}(fileId=${file.id})}"
                                    th:text="${file.originalName}"></a>
                             </div>

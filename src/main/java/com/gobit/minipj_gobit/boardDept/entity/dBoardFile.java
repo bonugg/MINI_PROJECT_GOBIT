@@ -28,10 +28,4 @@ public class dBoardFile {
         this.size = size;
         this.createDate = LocalDateTime.now();
     }
-
-    public void setPostId(dBoard board) {
-        this.board = board;
-    }
-
-
 }

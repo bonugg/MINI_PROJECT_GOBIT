@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -34,6 +35,14 @@ public class dBoardService {
         sorts.add(Sort.Order.desc("modifyDate"));
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         Specification<dBoard> spec = search(kw);
+        return this.dBoardRepository.findAll(spec, pageable);
+    }
+
+    public Page<dBoard> getListByCategory(int page, String category, String kw) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("modifyDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Specification<dBoard> spec = searchByCategory(category, kw);
         return this.dBoardRepository.findAll(spec, pageable);
     }
 
@@ -62,11 +71,10 @@ public class dBoardService {
         return board.getId();
     }
 
-    public void modify(dBoard board) {
-        dBoard modifyBoard = dBoardRepository.findById(board.getId()).get();
-
-        modifyBoard.setTitle(board.getTitle());
-        modifyBoard.setContent(board.getContent());
+    public void modify(Long id, String title, String content) {
+        dBoard modifyBoard = dBoardRepository.findById(id).get();
+        modifyBoard.setTitle(title);
+        modifyBoard.setContent(content);
         this.dBoardRepository.save(modifyBoard);
     }
 
@@ -116,4 +124,23 @@ public class dBoardService {
             }
         };
     }
+
+    private Specification<dBoard> searchByCategory(String category, String kw) {
+        return (b, query, cb) -> {
+            query.distinct(true);
+            Join<dBoard, User> u1 = b.join("user", JoinType.LEFT);
+            Join<dBoard, Reply> a = b.join("replyList", JoinType.LEFT);
+            switch (category) {
+                case "제목":
+                    return cb.like(b.get("title"), "%" + kw + "%");
+                case "내용":
+                    return cb.like(b.get("content"), "%" + kw + "%");
+                case "작성자":
+                    return cb.like(u1.get("USERNAME"), "%" + kw + "%");
+            }
+            // 기본적으로 null을 반환하거나 다른 조건을 추가하여 반환할 수 있습니다.
+            return null;
+        };
+    }
+
 }

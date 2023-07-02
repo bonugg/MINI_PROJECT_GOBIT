@@ -86,7 +86,6 @@ form {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     display: flex;
     padding: 5px;
-    /*align-items: center;*/
 }
 
 .div-files {
@@ -94,7 +93,7 @@ form {
 }
 
 .file_list > div {
-    display: flex;
+    /*display: flex;*/
     margin-top: 10px;
 }
 .file_del_btn, .fn_add_btn {

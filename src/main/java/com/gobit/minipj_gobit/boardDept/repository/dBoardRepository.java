@@ -1,6 +1,7 @@
 package com.gobit.minipj_gobit.boardDept.repository;
 
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
+import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

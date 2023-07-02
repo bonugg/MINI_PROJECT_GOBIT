@@ -43,8 +43,15 @@ public class dBoardController {
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "category", defaultValue = "전체") String category,
                        @RequestParam(value = "kw", defaultValue = "") String kw) {
-        Page<dBoard> paging = this.dBoardService.getList(page, kw);
+        System.out.println("category: " + category);
+        Page<dBoard> paging;
+        if (category.equals("전체")) {
+            paging = this.dBoardService.getList(page, kw);
+        } else {
+            paging = this.dBoardService.getListByCategory(page, category, kw);
+        }
         model.addAttribute("paging", paging);
         return "boardDept/dboardListPage";
     }
@@ -80,8 +87,36 @@ public class dBoardController {
     }
 
     @PostMapping("/modify")
-    public String modifyPost(@ModelAttribute dBoard board) {
-        this.dBoardService.modify(board);
+    public String modifyPost(@RequestParam("id") Long id,
+                             @RequestParam("title") String title,
+                             @RequestParam("content") String content,
+                             @RequestParam("files") List<MultipartFile> multipartFiles) {
+        //게시글 수정
+        this.dBoardService.modify(id, title, content);
+        //수정할 파일 리스트
+        List<dBoardFile> uploadFiles = fileUtils.uploadFiles(multipartFiles);
+        //기존 파일 리스트
+        List<dBoardFile> deleteFiles = dBoardService.getBoard(id).getFiles();
+
+        if (uploadFiles.isEmpty()) {
+            this.fileService.saveFiles(id, deleteFiles);
+        } else {
+            this.fileService.saveFiles(id, uploadFiles);
+        }
+
+        return "redirect:/boardDept/list";
+    }
+
+    @PostMapping("/create")
+    public String fileCreate(@RequestParam("title") String title,
+                             @RequestParam("content") String content,
+                             @RequestParam("files") List<MultipartFile> multipartFiles,
+                             Principal principal) {
+        User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
+        Long id = dBoardService.create(title, content, user);
+        List<dBoardFile> files = fileUtils.uploadFiles(multipartFiles);
+        fileService.saveFiles(id, files);
+
         return "redirect:/boardDept/list";
     }
 
@@ -100,26 +135,13 @@ public class dBoardController {
         return "redirect:/boardDept/detail/" + id;
     }
 
-    @PostMapping("/create")
-    public String fileCreate(@RequestParam("title") String title,
-                             @RequestParam("content") String content,
-                             @RequestParam("files") List<MultipartFile> multipartFiles,
-                             Principal principal) {
-        User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
-        Long id = dBoardService.create(title, content, user);
-        List<dBoardFile> files = fileUtils.uploadFiles(multipartFiles);
-        fileService.saveFiles(id, files);
-
-        return "redirect:/boardDept/list";
-    }
-
     @GetMapping("/down/{fileId}")
     public void fileDown(@PathVariable("fileId") Long fileId, HttpServletResponse response) throws IOException {
         dBoardFile file = fileService.findById(fileId);
         Resource resource = fileUtils.readFileAsResource(file);
 
-        String originalFilename = file.getOriginalName();
-        String encodedFilename = URLEncoder.encode(originalFilename, StandardCharsets.UTF_8.toString());
+//        String originalFilename = file.getOriginalName();
+//        String encodedFilename = URLEncoder.encode(originalFilename, StandardCharsets.UTF_8.toString());
 
         try {
             String filename = URLEncoder.encode(file.getOriginalName(), "UTF-8");
