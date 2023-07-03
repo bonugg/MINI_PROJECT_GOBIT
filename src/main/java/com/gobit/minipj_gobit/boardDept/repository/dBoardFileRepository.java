@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface dBoardFileRepository extends JpaRepository<dBoardFile, Long> {
-    List<dBoardFile> findAllByBoardId(Long boardId);
+    List<dBoardFile> findAllByBoard(dBoard board);
 
     void deleteAllByBoard(dBoard board);
 }

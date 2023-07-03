@@ -75,11 +75,12 @@ public class dBoardService {
         dBoard modifyBoard = dBoardRepository.findById(id).get();
         modifyBoard.setTitle(title);
         modifyBoard.setContent(content);
+        modifyBoard.setModifyDate(LocalDateTime.now());
         this.dBoardRepository.save(modifyBoard);
     }
 
     public void delete(dBoard board) {
-        List<dBoardFile> fileList = boardFileRepository.findAllByBoardId(board.getId());
+        List<dBoardFile> fileList = boardFileRepository.findAllByBoard(board);
 
         for (dBoardFile file : fileList) {
             String saveName = file.getSaveName();
@@ -141,6 +142,14 @@ public class dBoardService {
             // 기본적으로 null을 반환하거나 다른 조건을 추가하여 반환할 수 있습니다.
             return null;
         };
+    }
+
+    public Page<dBoard> getAllPostsSortedByCnt(Pageable pageable) {
+        return dBoardRepository.findAllByOrderByCntDesc(pageable);
+    }
+
+    public Page<dBoard> getAllPostsSortedByLike(Pageable pageable) {
+        return dBoardRepository.findAllByOrderByLikeDesc(pageable);
     }
 
 }

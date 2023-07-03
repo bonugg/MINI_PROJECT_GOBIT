@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @Entity
@@ -20,7 +22,6 @@ public class dBoardFile {
     private LocalDateTime createDate;
     @ManyToOne
     private dBoard board;
-
     @Builder
     public dBoardFile(String originalName, String saveName, long size) {
         this.originalName = originalName;

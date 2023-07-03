@@ -5,7 +5,7 @@ html {
 body {
     width: 100vw;
     min-width: 1200px;
-    background-color: #F6F8FF;
+    background: #F6F8FF;
 }
 
 a {
@@ -77,9 +77,24 @@ a {
 /* 작성 관련 내용 부분 */
 
 /*첨부파일 내용 부분*/
-.div-files {
-    width: 90%;
-    justify-content: flex-start;
+.label-hover {
+    margin-top: 10px;
+}
+
+.label-hover:hover + .files-hov,
+.label-hover + .files-hov:hover {
+    transition-duration: 1s;
+    display: block;
+}
+
+.files-hov {
+    text-align: center;
+    display: none;
+    /* 추가적인 스타일 설정 */
+}
+
+.div-file-list > a:hover{
+    color: #62A9EB;
 }
 /*첨부파일 내용 부분*/
 
@@ -171,7 +186,7 @@ a {
     width: 70px;
     border: none;
     color: white;
-    background: skyblue;
+    background: #62A9EB;
     position: absolute; /* 절대적인 위치 설정 */
     top: 50%; /* 부모 요소의 50% 위치로 이동 */
     left: 50%; /* 부모 요소의 50% 위치로 이동 */

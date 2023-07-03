@@ -7,10 +7,10 @@ import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class FileService {
@@ -20,27 +20,18 @@ public class FileService {
     @Transactional
     public void saveFiles(final Long boardId, final List<dBoardFile> files) {
         dBoard board = boardRepository.findById(boardId).get();
-        if (CollectionUtils.isEmpty(files)) {
-            return;
-        }
         for (dBoardFile file : files) {
             file.setBoard(board);
         }
         fileRepository.saveAll(files);
     }
-    /**
-     * 파일 리스트 조회
-     * @param postId - 게시글 번호 (FK)
-     * @return 파일 리스트
-     */
-    public List<dBoardFile> findAllFileByPostId(final Long postId) {
-        return fileRepository.findAllByBoardId(postId);
+
+    public List<Map<String, Object>> findAllFileByBoardId(Long boardId) {
+        dBoard board = boardRepository.findById(boardId).get();
+        List<dBoardFile> fileList = fileRepository.findAllByBoard(board);
+        return changeListMap(fileList);
     }
 
-    /**
-     * 파일 삭제 (from Database)
-     * @param ids - PK 리스트
-     */
     @Transactional
     public void deleteAllFile(dBoard board) {
         fileRepository.deleteAllByBoard(board);
@@ -48,5 +39,19 @@ public class FileService {
 
     public dBoardFile findById(Long id) {
         return fileRepository.findById(id).get();
+    }
+
+    List<Map<String, Object>> changeListMap(List<dBoardFile> fileList) {
+        List<Map<String, Object>> returnListMap = fileList.stream().map(file -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", file.getId());
+            map.put("originalName", file.getOriginalName());
+            map.put("saveName", file.getSaveName());
+            map.put("size", file.getSize());
+            map.put("createDate", file.getCreateDate());
+            return map;
+        }).collect(Collectors.toList());
+
+        return returnListMap;
     }
 }

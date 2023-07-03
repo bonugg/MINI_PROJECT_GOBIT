@@ -12,6 +12,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -56,6 +59,22 @@ public class dBoardController {
         return "boardDept/dboardListPage";
     }
 
+    @GetMapping("/sorted-by-cnt")
+    public String getAllPostsSortedByCnt(Pageable pageable, Model model) {
+        Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), 10);
+        Page<dBoard> paging = dBoardService.getAllPostsSortedByCnt(pageRequest);
+        model.addAttribute("paging", paging);
+        return "boardDept/dboardListPage";
+    }
+
+    @GetMapping("/sorted-by-like")
+    public String getAllPostsSortedByLike(Pageable pageable, Model model) {
+        Pageable pageRequest = PageRequest.of(pageable.getPageNumber(), 10);
+        Page<dBoard> paging = dBoardService.getAllPostsSortedByLike(pageRequest);
+        model.addAttribute("paging", paging);
+        return "boardDept/dboardListPage";
+    }
+
     @GetMapping("/updateCnt/{id}")
     public String updateCnt(@PathVariable("id") Long id) {
 
@@ -93,15 +112,15 @@ public class dBoardController {
                              @RequestParam("files") List<MultipartFile> multipartFiles) {
         //게시글 수정
         this.dBoardService.modify(id, title, content);
-        //수정할 파일 리스트
-        List<dBoardFile> uploadFiles = fileUtils.uploadFiles(multipartFiles);
-        //기존 파일 리스트
-        List<dBoardFile> deleteFiles = dBoardService.getBoard(id).getFiles();
 
-        if (uploadFiles.isEmpty()) {
-            this.fileService.saveFiles(id, deleteFiles);
-        } else {
-            this.fileService.saveFiles(id, uploadFiles);
+        if (!multipartFiles.isEmpty()) {
+
+            //기존 파일 리스트
+            List<dBoardFile> existingFiles = dBoardService.getBoard(id).getFiles();
+
+            List<dBoardFile> modifyFiles = fileUtils.uploadFiles(multipartFiles);
+
+            fileService.saveFiles(id, modifyFiles);
         }
 
         return "redirect:/boardDept/list";

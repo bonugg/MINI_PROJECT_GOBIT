@@ -1,6 +1,9 @@
 package com.gobit.minipj_gobit;
 
+import com.gobit.minipj_gobit.boardDept.controller.FileController;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
+import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
+import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.UserRepository;
@@ -10,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 class MinipjGobitApplicationTests {
@@ -18,6 +22,8 @@ class MinipjGobitApplicationTests {
     dBoardRepository dBoardRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    dBoardFileRepository fileRepository;
     @Test
     void contextLoads() {
     }
@@ -50,5 +56,12 @@ class MinipjGobitApplicationTests {
         if (deleteFile.exists()) {
             System.out.println("삭제했는지" + deleteFile.delete()); // 파일 삭제
         }
+    }
+
+    @Test
+    void 파일리스트_확인() {
+        dBoard board = dBoardRepository.findById(Long.valueOf(297)).get();
+        List<dBoardFile> files = fileRepository.findAllByBoard(board);
+        System.out.println(files.get(0).getOriginalName());
     }
 }
