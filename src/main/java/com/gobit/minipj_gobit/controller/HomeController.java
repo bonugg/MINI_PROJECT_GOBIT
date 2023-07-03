@@ -31,13 +31,17 @@ public class HomeController {
     @GetMapping("/")
     public String homePage(Model model, Principal principal) throws ParseException {
         long userNum = Long.parseLong(principal.getName());
-        User user = (User) httpSession.getAttribute("user");
-        if (user.getUSER_POSITION().equals("관리자")) {
-            return "redirect:/memberSign";
-        }
+        User user = userRepository.findByUSERENO(userNum).get();
+        model.addAttribute("user", user);
         model.addAttribute("userMap", mainPageService.UserOnOffList(userNum));
         return "mainPage";
     }
+
+    @GetMapping("/empty")
+    public String empty() {
+        return "emptyPage";
+    }
+
 
     //(06.20 17:26) 결재 요청 리스트 페이지로 이동
     @GetMapping("/approvalList")
@@ -55,7 +59,7 @@ public class HomeController {
         if (httpSession.getAttribute("user") != null) {
             User user = (User) httpSession.getAttribute("user");
             if (user.getUSER_POSITION().equals("관리자")) {
-                return "redirect:/memberSign";
+                return "redirect:/admin/main";
             } else {
                 return "redirect:/";
             }

@@ -24,7 +24,7 @@
             <div id="use_screen">
                 <p class="mypage-title">마이페이지</p>
                 <section class="profile-card">
-                    <img id="profile-imageL" th:src="${user.imagePath}" alt="프로필 사진">
+                    <img id="profile-imageL" th:src="@{'/upload/' + ${user.USERIMAGE}}" alt="프로필 사진">
                     <a href="/myPageUpdate11">
                         <button class="btnUpdate">내 프로필 수정</button>
                     </a>
@@ -38,6 +38,7 @@
                         <table class="profile1-table">
                             <tr>
                                 <td class="profile-imagespace"  rowspan="4">
+                                    <img class="profile-imageR" th:src="@{'/upload/' + ${user.USERIMAGE}}" alt="프로필 사진">
                                 </td>
                                 <td class="name" th:text="${user.USERNAME}"></td>
                             </tr>

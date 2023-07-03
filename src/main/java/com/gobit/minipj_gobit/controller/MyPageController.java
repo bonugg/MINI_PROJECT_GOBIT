@@ -9,6 +9,7 @@ import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.service.MyPageService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,6 +32,9 @@ import java.util.Optional;
 
 @Controller
 public class MyPageController {
+    @Value("${file.path}")
+    private String[] filePaths;
+
     @Autowired
     private MyPageService myPageService;
     @Autowired
@@ -63,16 +68,17 @@ public class MyPageController {
 
             String fileName = userNum + "_" + imageFile.getOriginalFilename();
             String imagesDirectory = "src/main/resources/static/img/user/";
-            Path path = Paths.get(imagesDirectory, fileName);
-            try {
-                Files.write(path, imageFile.getBytes());
-
-                user.setImagePath("img/user/" + fileName);
-            } catch (IOException ex) {
-                ex.getStackTrace();
+            File directory = new File(filePaths[1]);
+            if(!directory.exists()) {
+                directory.mkdir();
             }
+            File uploadFile = new File(filePaths[1] + fileName);
+            imageFile.transferTo(uploadFile);
+                user.setImagePath(filePaths[1]);
+                user.setUSERIMAGE(fileName);
+            System.out.println(user.getUSERNAME());
         } else {
-            user.setImagePath("img/user/user.png");
+            user.setImagePath(filePaths[1]);
         }
 
         myPageService.updateMyPage(user, userNum, imageFile);

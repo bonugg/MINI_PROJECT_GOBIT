@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<header th:fragment="header_admin">
+    <header id="header_cols">
+        <nav id="nav_cols">
+            <ul id="ul_cols">
+                <li id="emt_li"></li>
+                <li id="logo_li">
+                    <div id="logo_div">
+                        <a href="/">
+                            <img src="/img/logo_white.png" id="logo_img">
+                        </a>
+                    </div>
+                </li>
+                <li id="my_li">
+                    <div id="my_div">
+                        <div id="my_div_2">
+                            <h6 th:text="${session.user.USERNAME + '님'}"></h6>
+                            <div class="nav_div">
+                                <div id="nav_img_div">
+                                    <img src="/img/nav_white.png" id="nav_img">
+                                </div>
+                                <ul class="submenu">
+                                    <li class="submenu_item">
+                                        <div class="menu_text_div">
+                                            <a class="menu_text_user" href="/memberSign">사원추가</a>
+                                        </div>
+                                    </li>
+                                    <li class="submenu_item">
+                                        <div class="menu_text_div">
+                                            <form action="/logout" method="post">
+                                                <button type="button" id="logout_text" onclick="this.form.submit();">
+                                                    로그아웃
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</header>
+</html>

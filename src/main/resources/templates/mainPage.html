@@ -35,7 +35,7 @@
                                             <tr>
                                                 <td rowspan="3" id="img_td">
                                                     <div id="user_img_div">
-                                                        <img src="img/user.png" id="user_img">
+                                                        <img th:src="@{'/upload/' + ${user.USERIMAGE}}" alt="프로필 사진" id="user_img">
                                                     </div>
                                                 </td>
                                                 <td class="userinfo_div_th">이름</td>
@@ -116,15 +116,12 @@
                                     <div id="cal_btn_div">
                                         <button class="cal_btn" id="all">출근</button>
                                         <button class="cal_btn" id="vacation">
-                                            <div id="circle_vacation"></div>
                                             휴가
                                         </button>
                                         <button class="cal_btn" id="meeting">
-                                            <div id="circle_meeting"></div>
                                             회의
                                         </button>
                                         <button class="cal_btn" id="business">
-                                            <div id="circle_business"></div>
                                             출장
                                         </button>
                                     </div>
@@ -149,7 +146,7 @@
                                                 <tr>
                                                     <td rowspan="2" class="img_td">
                                                         <div class="img_td_div">
-                                                            <img src="img/user.png" alt="유저 프로필 이미지"
+                                                            <img th:src="@{'/upload/' + ${item.get('user').USERIMAGE}}"alt="유저 프로필 이미지"
                                                                  class="img_list"/>
                                                         </div>
                                                     </td>

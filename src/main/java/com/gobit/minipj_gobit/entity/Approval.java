@@ -53,7 +53,7 @@ public class Approval {
     @NotNull
     @Column(name = "APP_STATE")
     private String appState;
-    
+
     //결재상태확정날짜
     @Column(name = "APP_STATE_DATE")
     private LocalDateTime appStateDate = LocalDateTime.now();

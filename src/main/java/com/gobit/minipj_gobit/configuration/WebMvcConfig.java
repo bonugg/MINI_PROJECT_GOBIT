@@ -1,15 +1,31 @@
 package com.gobit.minipj_gobit.configuration;
 
 
+import com.gobit.minipj_gobit.repository.TestRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
+    private final TestRepository testRepository;
+
+    @Value("${file.resource}")
+    private String filePath;
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry) {
+        resourceHandlerRegistry.addResourceHandler("/upload/**")
+                .addResourceLocations(filePath);
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new TeamLeaderInterceptor())
+        registry.addInterceptor(new TeamLeaderInterceptor(testRepository))
                 .excludePathPatterns("/login")    // 로그인 관련 요청은 제외
                 .excludePathPatterns("/login/**")    // 로그인 관련 요청은 제외
                 .excludePathPatterns("/signup")    // 회원가입 관련 요청은 제외

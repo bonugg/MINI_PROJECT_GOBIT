@@ -9,7 +9,7 @@ $(function() {
             // Specify the configuration items and data for the chart
             let option1 = {
                 title: {
-                    text: (result.yearChart / 8) * 100 + '%',
+                    text: ((result.yearChart / 8) * 100).toFixed(1) + '%',
                     left: 'center',
                     top: 'center',
                     a: '1'
@@ -58,7 +58,7 @@ $(function() {
             // Specify the configuration items and data for the chart
             let option2 = {
                 title: {
-                    text: (result.yearMonthChart / 8) * 100 + '%',
+                    text: ((result.yearMonthChart / 8) * 100).toFixed(1) + '%',
                     left: 'center',
                     top: 'center',
                     a: '2'
