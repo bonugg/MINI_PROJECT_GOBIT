@@ -34,8 +34,14 @@
                         </div>
                         <div class="com_search">
                             <div class="search_div">
+                                <select name="user_position" id="tag_IT" class="search_tag">
+                                    <option value="" selected disabled hidden>직급 선택</option>
+                                    <option value="">선택 없음</option>
+                                    <option value="신입">신입</option>
+                                    <option value="팀장">팀장</option>
+                                </select>
                                 <div class="search_input">
-                                    <input type="text" class="search_input_text" id="search_IT">
+                                    <input type="text" class="search_input_text" id="search_IT" placeholder="사원이름을 입력해주세요.">
                                 </div>
                                 <div class="search_btn">
                                     <button type="button" class="search_input_btn" th:data-userdept="IT">검색</button>
@@ -50,6 +56,18 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="com_chk">
+                            <div class="user_check_form_IT">
+                                <button type="button" class="check-all" th:data-userdept="IT">모두 체크</button>
+                                <button type="button" class="uncheck-all" th:data-userdept="IT">체크 해제</button>
+                                <select name="user_position" class="search_tag2" id="chk_tag_IT">
+                                    <option value="" selected disabled hidden>직급 선택</option>
+                                    <option value="신입">신입</option>
+                                    <option value="팀장">팀장</option>
+                                </select>
+                                <button type="button" id="btn_text_IT" class="chk_btn_submit" th:data-userdept="IT">변경</button>
                             </div>
                         </div>
                     </div>
@@ -69,8 +87,14 @@
                         </div>
                         <div class="com_search">
                             <div class="search_div">
+                                <select name="user_position" id="tag_디자인" class="search_tag">
+                                    <option value="" selected disabled hidden>직급 선택</option>
+                                    <option value="">선택 없음</option>
+                                    <option value="신입">신입</option>
+                                    <option value="팀장">팀장</option>
+                                </select>
                                 <div class="search_input">
-                                    <input type="text" class="search_input_text" id="search_디자인">
+                                    <input type="text" class="search_input_text" id="search_디자인" placeholder="사원이름을 입력해주세요.">
                                 </div>
                                 <div class="search_btn">
                                     <button type="button" class="search_input_btn" th:data-userdept="디자인">검색</button>
@@ -81,12 +105,22 @@
                             <div class="board">
                                 <div class="user_div">
                                     <div class="user-grid-container">
-                                        <div class="notice_item">
-                                            <div class="notice_item" id="userListWrapper디자인">
-                                            </div>
+                                        <div class="notice_item" id="userListWrapper디자인">
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="com_chk">
+                            <div class="user_check_form_디자인">
+                                <button type="button" class="check-all" th:data-userdept="디자인">모두 체크</button>
+                                <button type="button" class="uncheck-all" th:data-userdept="디자인">체크 해제</button>
+                                <select name="user_position" class="search_tag2" id="chk_tag_디자인">
+                                    <option value="" selected disabled hidden>직급 선택</option>
+                                    <option value="신입">신입</option>
+                                    <option value="팀장">팀장</option>
+                                </select>
+                                <button type="button" id="btn_text_디자인" class="chk_btn_submit" th:data-userdept="디자인">변경</button>
                             </div>
                         </div>
                     </div>
@@ -106,8 +140,14 @@
                         </div>
                         <div class="com_search">
                             <div class="search_div">
+                                <select name="user_position" id="tag_경영" class="search_tag">
+                                    <option value="" selected disabled hidden>직급 선택</option>
+                                    <option value="">선택 없음</option>
+                                    <option value="신입">신입</option>
+                                    <option value="팀장">팀장</option>
+                                </select>
                                 <div class="search_input">
-                                    <input type="text" class="search_input_text" id="search_경영">
+                                    <input type="text" class="search_input_text" id="search_경영" placeholder="사원이름을 입력해주세요.">
                                 </div>
                                 <div class="search_btn">
                                     <button type="button" class="search_input_btn" th:data-userdept="경영">검색</button>
@@ -122,6 +162,18 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="com_chk">
+                            <div class="user_check_form_경영">
+                                <button type="button" class="check-all" th:data-userdept="경영">모두 체크</button>
+                                <button type="button" class="uncheck-all" th:data-userdept="경영">체크 해제</button>
+                                <select name="user_position" class="search_tag2" id="chk_tag_경영">
+                                    <option value="" selected disabled hidden>직급 선택</option>
+                                    <option value="신입">신입</option>
+                                    <option value="팀장">팀장</option>
+                                </select>
+                                <button type="button" id="btn_text_경영" class="chk_btn_submit" th:data-userdept="경영">변경</button>
                             </div>
                         </div>
                     </div>
@@ -141,8 +193,14 @@
                         </div>
                         <div class="com_search">
                             <div class="search_div">
+                                <select name="user_position" id="tag_개발" class="search_tag">
+                                    <option value="" selected disabled hidden>직급 선택</option>
+                                    <option value="">선택 없음</option>
+                                    <option value="신입">신입</option>
+                                    <option value="팀장">팀장</option>
+                                </select>
                                 <div class="search_input">
-                                    <input type="text" class="search_input_text" id="search_개발">
+                                    <input type="text" class="search_input_text" id="search_개발" placeholder="사원이름을 입력해주세요.">
                                 </div>
                                 <div class="search_btn">
                                     <button type="button" class="search_input_btn" th:data-userdept="개발">검색</button>
@@ -159,6 +217,19 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="com_chk">
+                            <div class="user_check_form_개발">
+                                <button type="button" class="check-all" th:data-userdept="개발">모두 체크</button>
+                                <button type="button" class="uncheck-all" th:data-userdept="개발">체크 해제</button>
+                                <select name="user_position" class="search_tag2" id="chk_tag_개발">
+                                    <option value="" selected disabled hidden>직급 선택</option>
+                                    <option value="신입">신입</option>
+                                    <option value="팀장">팀장</option>
+                                </select>
+                                <button type="button" id="btn_text_개발" class="chk_btn_submit" th:data-userdept="개발">변경
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,240 +239,6 @@
 </body>
 <th:block layout:fragment="script">
     <!--사용할 자바스크립트는 여기에 첨부 -->
-    <script>
-        $(function () {
-            listGetIt("IT");
-            listGetIt("디자인");
-            listGetIt("경영");
-            listGetIt("개발");
-            $(".all_list").click(function () {//리스트 전체보기
-                let userdept = $(this).data("userdept");
-                listGetIt(userdept);
-            });
-
-            $(".search_input_btn").click(function () {
-                let userdept = $(this).data("userdept");
-                let searchText = $('#search_'+userdept).val();
-                $.ajax({
-                    type: "GET",
-                    url: "/admin/searchDept",
-                    data: {
-                        searchText: searchText,
-                        userdept : userdept
-                    }, // 검색어를 서버에 전달
-                    success: function (response) {
-                        console.log(response);
-                        // 검색 결과 처리 로직 (예: 검색 결과를 테이블로 동적 생성 등)
-                        if (response.length == 0) {
-                            $('#userListWrapper'+userdept).html('검색 결과가 없습니다.');
-                        } else {
-                            let userListHTML = '';
-                            for (let i = 0; i < response.length; i++) {
-                                let item = response[i];
-                                userListHTML += `
-                                    <table class="notice_table">
-                        <tr>
-                            <td rowspan="4" class="user_Img_td">
-                                <div class="user_Img_div">
-                                    <img src="/upload/${item.userImage}" alt="프로필 사진" class="user_Img">
-                                </div>
-                            </td>
-                            <th class="user_Name_th">
-                                <div class="user_Name_div">
-                                    <div class="user_Name_div2">이름</div>
-                                </div>
-                            </th>
-                            <td class="user_Name" id="${'una' + item.userNum}">${item.userName}</td>
-                            <td rowspan="2" class="user_position_td">
-                                <div class="user_position_div">
-                                    <div class="user_position_div2">
-                                        <select name="user_position" id="${'ups' + item.userNum}">
-                                            <option value="" selected disabled hidden>직급 변경</option>
-                                            <option value="신입">신입</option>
-                                            <option value="팀장">팀장</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </td>
-                            <td rowspan="4" class="user_delete_td">
-                                <div class="user_delete_div">
-                                    <div class="user_delete_div2">${item.userNum}</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="user_Name_th">
-                                <div class="user_Name_div">
-                                    <div class="user_Name_div2">사번</div>
-                                </div>
-                            </th>
-                            <td class="user_Name">${item.userEno}</td>
-                        </tr>
-                        <tr>
-                            <th class="user_Name_th">
-                                <div class="user_Name_div">
-                                    <div class="user_Name_div2">직급</div>
-                                </div>
-                            </th>
-                            <td class="user_Name" id="${'uname' + item.userNum}">${item.userPo}</td>
-                            <td rowspan="2" class="user_position_td">
-                                <div class="user_position_div">
-                                    <div class="user_position_div2">
-                                        <button type="button" class="up_btn" data-usernum="${item.userNum}">변경</button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="user_Name_th">
-                                <div class="user_Name_div">
-                                    <div class="user_Name_div2">퇴사여부</div>
-                                </div>
-                            </th>
-                            <td class="user_Name_N">${item.userExitChk}</td>
-                        </tr>
-                    </table>
-                                    `;
-                            }
-                            $('#userListWrapper'+userdept).html(userListHTML);
-                        }
-                    }
-                });
-            });
-
-            function listGetIt(dept) {
-                $.ajax({
-                        type: "GET",
-                        url: "/admin/listDept",
-                        data : {
-                            dept : dept
-                        },
-                        success: function (response) {
-                            console.log(response);
-                            // Ajax 요청이 성공하면 호출되는 함수
-                            if (response.length == 0) {
-                                $('#userListWrapper'+dept).html(dept+'부서에 속한 사원이 없습니다.');
-                            } else {
-                                // userList가 있을 경우
-                                $('#cnt_'+dept).text("총 인원 : "+ response.length);
-                                let userListHTML = '';
-                                for (let i = 0; i < response.length; i++) {
-                                    let item = response[i];
-                                    userListHTML += `
-                                    <table class="notice_table">
-                        <tr>
-                            <td rowspan="4" class="user_Img_td">
-                                <div class="user_Img_div">
-                                    <img src="/upload/${item.userImage}" alt="프로필 사진" class="user_Img">
-                                </div>
-                            </td>
-                            <th class="user_Name_th">
-                                <div class="user_Name_div">
-                                    <div class="user_Name_div2">이름</div>
-                                </div>
-                            </th>
-                            <td class="user_Name" id="${'una' + item.userNum}">${item.userName}</td>
-                            <td rowspan="2" class="user_position_td">
-                                <div class="user_position_div">
-                                    <div class="user_position_div2">
-                                        <select name="user_position" id="${'ups' + item.userNum}">
-                                            <option value="" selected disabled hidden>직급 변경</option>
-                                            <option value="신입">신입</option>
-                                            <option value="팀장">팀장</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </td>
-                            <td rowspan="4" class="user_delete_td">
-                                <div class="user_delete_div">
-                                    <div class="user_delete_div2">${item.userNum}</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="user_Name_th">
-                                <div class="user_Name_div">
-                                    <div class="user_Name_div2">사번</div>
-                                </div>
-                            </th>
-                            <td class="user_Name">${item.userEno}</td>
-                        </tr>
-                        <tr>
-                            <th class="user_Name_th">
-                                <div class="user_Name_div">
-                                    <div class="user_Name_div2">직급</div>
-                                </div>
-                            </th>
-                            <td class="user_Name" id="${'uname' + item.userNum}">${item.userPo}</td>
-                            <td rowspan="2" class="user_position_td">
-                                <div class="user_position_div">
-                                    <div class="user_position_div2">
-                                        <button type="button" class="up_btn" data-usernum="${item.userNum}">변경</button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="user_Name_th">
-                                <div class="user_Name_div">
-                                    <div class="user_Name_div2">퇴사여부</div>
-                                </div>
-                            </th>
-                            <td class="user_Name_N">${item.userExitChk}</td>
-                        </tr>
-                    </table>
-                                    `;
-                                }
-                                $('#userListWrapper'+dept).html(userListHTML);
-                            }
-                        }
-                    }
-                );
-            }
-            $(document).on("click", ".user_delete_div2", function() {
-                let usernum = $(this).text();
-                if (confirm($('#una' + usernum).text() + "님을 정말 삭제하시겠습니까?")) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "/admin/deleteUser",
-                        data: {
-                            usernum: usernum
-                        },
-                        success: function (response) {
-                            // Ajax 요청이 성공하면 호출되는 함수
-                            if (response.item.msg == "정상적으로 삭제되었습니다.") {
-                                alert($('#una' + usernum).text() + "님을 삭제했습니다.");
-                                listGetIt(response.item.dept);
-                            }else {
-                                alert("삭제 실패");
-                            }
-                        }
-                    });
-                }
-            });
-            $(document).on("click", ".up_btn", function() {
-                console.log(1);
-                let usernum = $(this).data("usernum");
-                let position = $("#ups" + usernum).val();
-                console.log(usernum);
-
-                $.ajax({
-                    type: "POST",
-                    url: "/admin/changePosition",
-                    data: {
-                        usernum: usernum,
-                        position: position
-                    },
-                    success: function (response) {
-                        // Ajax 요청이 성공하면 호출되는 함수
-                        if (response == "성공") {
-                            $('#uname' + usernum).text(position);
-                        }
-                    }
-                });
-            });
-        })
-        ;
-    </script>
+    <script src="/js/admin_main.js"></script>
 </th:block>
 </html>

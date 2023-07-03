@@ -47,9 +47,9 @@ public class AuthProvider implements AuthenticationProvider {
 
             if (user != null && passwordEncoder.matches(PWD, user.getUSER_PWD())) { // 일치하는 user 정보가 있는지 확인
                 List<GrantedAuthority> roles = new ArrayList<>();
-                if(user.getUSER_POSITION().equals("팀장")){
+                if(user.getUSERPOSITION().equals("팀장")){
                     roles.add(new SimpleGrantedAuthority("ROLE_MANAGER")); // 권한 부여
-                }else if (user.getUSER_POSITION().equals("관리자")){
+                }else if (user.getUSERPOSITION().equals("관리자")){
                     roles.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // 권한 부여
                 }else {
                     roles.add(new SimpleGrantedAuthority("ROLE_USER")); // 권한 부여

@@ -45,8 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("/upload/**").permitAll()
                         .requestMatchers("/login", "/signup", "/signup").permitAll()
                         .requestMatchers("/polling", "/onadd", "/offadd", "/main/calendar").permitAll()
-                        .requestMatchers("/memberSign", "/memberSigns","/admin/main","/admin/changePosition"
-                        ,"/admin/deleteUser","/admin/listDept","/admin/searchDept").hasRole("ADMIN")
+                        .requestMatchers("/memberSign", "/memberSigns","/admin/**").hasRole("ADMIN")
                         .anyRequest().hasAnyRole("USER", "MANAGER")
                 )
                 .formLogin(formLogin -> formLogin
