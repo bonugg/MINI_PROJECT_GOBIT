@@ -35,10 +35,10 @@
                                     <div>회의날짜</div>
                                     <div class="input-date-form">
                                         <input type="datetime-local" id="inputDate-start" name="appStart" required
-                                               onselect="printDate()">
+                                               onchange="printDate()">
                                         <p>~</p>
                                         <input type="datetime-local" id="inputDate-end" name="appEnd" required
-                                               onselect="printDate()">
+                                               onchange="printDate()">
                                     </div>
                                 </div>
                                 <div class="input-user">
@@ -115,7 +115,7 @@
                                         <table>
                                             <tr>
                                                 <td>회의 날짜</td>
-                                                <td id="appData-dateStart"></td>
+                                                <td id="appData-date"></td>
                                                 <td>출장 장소</td>
                                                 <td id="appData-Place"></td>
                                             </tr>

@@ -1,12 +1,12 @@
 function printDate(){
-    const dateStart = document.getElementById('input-appStart').value;
-    const dateEnd = document.getElementById('input-appEnd').value;
+    const dateStart = document.getElementById('inputDate-start').value;
+    const dateEnd = document.getElementById('inputDate-end').value;
     document.getElementById('appData-date').innerText = `${dateStart} ~ ${dateEnd}`;
 }
 
 function printPlace(){
     const place = document.getElementById('input-appLocation').value;
-    document.getElementById('appData-place').innerText = place;
+    document.getElementById('appData-Place').innerText = place;
 }
 
 function printContent(){

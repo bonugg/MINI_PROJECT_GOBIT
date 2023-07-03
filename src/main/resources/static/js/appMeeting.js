@@ -1,7 +1,7 @@
 function printDate(){
     const dateStart = document.getElementById('inputDate-start').value;
     const dateEnd = document.getElementById('inputDate-end').value;
-    document.getElementById('appData-Place').innerText = `${dateStart} ~ ${dateEnd}`;
+    document.getElementById('appData-date').innerText = `${dateStart} ~ ${dateEnd}`;
 }
 
 function printPlace(){
