@@ -25,16 +25,15 @@
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
                 <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
-                <p style="margin-left: 40px; margin-top: 40px; font-size: 15px; color: gray">부서게시판</p>
                 <div>
                     <!-- 머리부분 -->
-<!--                    <div class="heead">-->
-<!--                        <div class="div-title">-->
-<!--                            <div class="title">-->
-<!--                                <h1>부서게시판</h1>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="heead">
+                        <div class="div-title">
+                            <div class="title">
+                                <h1>부서게시판</h1>
+                            </div>
+                        </div>
+                    </div>
                     <!-- 머리부분 -->
 
 
@@ -42,11 +41,12 @@
                     <div class="boody">
 
 
-                        <form method="post" enctype="multipart/form-data">
+                        <form action="/boardDept/modify" method="post" name="board" enctype="multipart/form-data">
+                            <input type="hidden" th:value="${board.id}" th:name="id" id="boardId">
                             <!-- 제목 -->
                             <div class="div-botitle">
                                 <div class="board-title">
-                                    <input type="text" name="title" placeholder="여기에 제목을 입력하세요.">
+                                    <input type="text" name="title" th:value="${board.title}" placeholder="여기에 제목을 입력하세요.">
                                 </div>
                             </div>
                             <!-- 제목 -->
@@ -54,8 +54,8 @@
 
                             <!-- 내용 -->
                             <div class="div-content">
-                                <div class="board-content" for="content">
-                                    <textarea id="summernote" name="content" placeholder="여기에 내용을 입력하세요."></textarea>
+                                <div class="board-content">
+                                    <textarea id="summernote" name="content" th:text="${board.content}" placeholder="여기에 내용을 입력하세요."></textarea>
                                 </div>
                             </div>
                             <!-- 내용 -->
@@ -65,21 +65,17 @@
                             <div class="div-values">
                                 <label>첨부파일</label>
                                 <div class="file_list">
-                                    <div class="file_select">
+                                    <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>추가</span></button>
+                                    <div th:each="file : ${board.files}">
                                         <div class="file_input">
-                                            <label class="file_input" for="file_input_label">
-                                                <input type="text" readonly id="file_input_label_text"/>
-                                                <label id="file_input_label_btn">첨부파일
-                                                    <input type="file" name="files" id="file_input_label" onchange="selectFile(this);" />
-                                                </label>
-                                            </label>
+                                            <input type="text" readonly class="file_origin_name" id="file_input_label_text" name="items" th:value="${file.originalName}"/>
                                         </div>
                                         <button type="button" onclick="removeFile(this);" class="file_del_btn"><span>삭제</span></button>
-                                        <button type="button" onclick="addFile();" class="fn_add_btn"><span>추가</span></button>
                                     </div>
                                 </div>
                             </div>
                             <!-- 첨부파일 -->
+
 
 
                             <!-- 버튼들 -->
@@ -99,29 +95,8 @@
     </div>
 </div>
 <script>
-    //에디터 https://summernote.org/
-    $(document).ready(function() {
-        //여기 아래 부분
-        $('#summernote').summernote({
-            height: 300,                 // 에디터 높이
-            focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-            lang: "ko-KR",					// 한글 설정
-            placeholder: '최대 2048자까지 쓸 수 있습니다',
-            toolbar: [
-                // [groupName, [list of button]]
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']]
-            ],
-            theme: 'yeti'
-        });
-    });
-
     // 파일 선택
-    function selectFile(element) {
+    function selectFile(element, id) {
 
         const file = element.files[0];
         const filename = element.closest('.file_input').firstElementChild;
@@ -143,8 +118,12 @@
 
         // 3. 파일명 지정
         filename.value = file.name;
-    }
 
+        // 4. 삭제할 파일 id 추가
+        if (id) {
+            removeFileId.add(id);
+        }
+    }
 
     // 파일 추가
     function addFile() {
@@ -161,9 +140,15 @@
         document.querySelector('.file_list').appendChild(fileDiv);
     }
 
-
     // 파일 삭제
-    function removeFile(element) {
+    function removeFile(element, id) {
+
+        // 1. 삭제할 파일 id 추가
+        if (id) {
+            removeFileId.add(id);
+        }
+
+        // 2. 파일 영역 초기화 & 삭제
         const fileAddBtn = element.nextElementSibling;
         if (fileAddBtn) {
             const inputs = element.previousElementSibling.querySelectorAll('input');
@@ -172,6 +157,28 @@
         }
         element.parentElement.remove();
     }
+
+    //에디터 https://summernote.org/
+    $(document).ready(function() {
+        //여기 아래 부분
+        $('#summernote').summernote({
+            height: 300,                 // 에디터 높이
+            focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+            lang: "ko-KR",					// 한글 설정
+            placeholder: '최대 2048자까지 쓸 수 있습니다',
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ],
+            theme: 'yeti'
+        });
+        console.log(originFiles)
+    });
 
     const cancel_elements = document.getElementsByClassName("cancel");
     Array.from(cancel_elements).forEach(function(ele) {

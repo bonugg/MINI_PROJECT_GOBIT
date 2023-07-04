@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,5 +48,5 @@ public class dBoard {
     private List<Reply> replyList;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
-    private List<dBoardFile> fileList;
+    private List<dBoardFile> files;
 }
