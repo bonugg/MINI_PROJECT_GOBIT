@@ -66,8 +66,11 @@
                                 <div class="file_list">
                                     <div class="file_select">
                                         <div class="file_input">
-                                            <label>
-                                                <input type="file" name="files" onchange="selectFile(this);" />
+                                            <label class="file_input" for="file_input_label">
+                                                <input type="text" readonly id="file_input_label_text"/>
+                                                <label id="file_input_label_btn">첨부파일
+                                                    <input type="file" name="files" id="file_input_label" onchange="selectFile(this);" />
+                                                </label>
                                             </label>
                                         </div>
                                         <button type="button" onclick="removeFile(this);" class="file_del_btn"><span>삭제</span></button>
@@ -146,9 +149,10 @@
     function addFile() {
         const fileDiv = document.createElement('div');
         fileDiv.innerHTML =`
-            <div class="file_input">
-                <label>
-                    <input type="file" name="files" onchange="selectFile(this);" />
+            <div class="file_input" for="file_input_label">
+                <input type="text" readonly id="file_input_label_text"/>
+                <label id="file_input_label_btn">첨부파일
+                    <input type="file" name="files" onchange="selectFile(this);" id="file_input_label"/>
                 </label>
             </div>
             <button type="button" onclick="removeFile(this);" class="file_del_btn"><span>삭제</span></button>

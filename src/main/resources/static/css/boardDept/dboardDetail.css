@@ -77,34 +77,57 @@ a {
 /* 작성 관련 내용 부분 */
 
 /*첨부파일 내용 부분*/
-.label-hover {
-    margin-top: 10px;
+.div-files {
+    position: relative;
 }
 
 .label-hover:hover + .files-hov,
 .label-hover + .files-hov:hover {
-    transition-duration: 1s;
     display: block;
 }
 
+.label-hover {
+    cursor: pointer;
+}
+
 .files-hov {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 150px;
     text-align: center;
     display: none;
-    /* 추가적인 스타일 설정 */
+    max-height: 150px; /* 원하는 높이로 조정 */
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    padding: 10px;
 }
 
-.div-files {
-    text-align: center;
+.files-hov .div-file-list {
+    display: flex;
+    align-items: center;
     justify-content: center;
-}
-.div-file-list {
-    text-align: center;
-    justify-content: center;
+    margin-bottom: 10px;
 }
 
-.div-file-list > a:hover{
-    color: #62A9EB;
+.files-hov .div-file-list:last-child {
+    margin-bottom: 0;
 }
+
+.files-hov .div-file-list a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.files-hov .div-file-list a:hover {
+    background-color: #f0f0f0;
+}
+
 /*첨부파일 내용 부분*/
 
 

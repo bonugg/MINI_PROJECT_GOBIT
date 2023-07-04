@@ -68,9 +68,9 @@
                                     <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>추가</span></button>
                                     <div th:each="file : ${board.files}">
                                         <div class="file_input">
-                                            <input type="text" readonly class="file_origin_name" name="items" th:value="${file.originalName}"/>
+                                            <input type="text" readonly class="file_origin_name" id="file_input_label_text" name="items" th:value="${file.originalName}"/>
                                         </div>
-                                        <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+                                        <button type="button" onclick="removeFile(this);" class="file_del_btn"><span>삭제</span></button>
                                     </div>
                                 </div>
                             </div>
@@ -129,13 +129,13 @@
     function addFile() {
         const fileDiv = document.createElement('div');
         fileDiv.innerHTML =`
-            <div class="file_input">
-                <input type="text" readonly />
-                <label>
-                    <input type="file" name="files" onchange="selectFile(this);" />
+            <div class="file_input" for="file_input_label">
+                <input type="text" readonly id="file_input_label_text"/>
+                <label id="file_input_label_btn">첨부파일
+                    <input type="file" name="files" onchange="selectFile(this);" id="file_input_label"/>
                 </label>
             </div>
-            <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+            <button type="button" onclick="removeFile(this);" class="file_del_btn"><span>삭제</span></button>
         `;
         document.querySelector('.file_list').appendChild(fileDiv);
     }

@@ -113,6 +113,29 @@ form {
     color: white;
     background: #fa6362;
 }
+
+#file_input_label {
+    display: none;
+}
+#file_input_label_btn {
+    border:  1px solid black;
+    padding: 3px;
+    cursor: pointer;
+    background: #181F42;
+    color: whitesmoke;
+}
+
+#file_input_label_text{
+    border: 1px solid black;
+    padding: 3px;
+    width: 200px;
+}
+#file_input_label_btn:hover{
+    color: #181F42;
+    background: #8c8c8c;
+}
+
+
 /* 첨부파일 */
         
 

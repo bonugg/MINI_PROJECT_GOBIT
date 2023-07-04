@@ -11,6 +11,7 @@ import java.util.Map;
 
 @Data
 @Entity
+@Table(name = "T_BOARD_DEPT_FILE")
 @NoArgsConstructor
 public class dBoardFile {
     @Id
