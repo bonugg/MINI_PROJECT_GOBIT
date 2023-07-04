@@ -18,11 +18,11 @@ import java.time.LocalDateTime;
 public class ApprovalDTO {
     //--------결제식별--------
     private long appNum;                //결재번호
-    private String appSort;               //결재종류: V/M/B
+    private String appSort;             //결재종류: V/M/B
     private User userNum;               //결재신청자
     //--------결제공통--------
     private LocalDateTime appWriDate;   //결재작성일
-    private String appState;     //결재상태
+    private String appState;            //결재상태
     private LocalDateTime appStateDate; //결재상태확정날짜
     private String userName;            //결재승인자이름
 

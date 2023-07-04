@@ -1,13 +1,14 @@
 function printDate(){
-    const dateStart = document.getElementById('inputDate-start').value;
-    const dateEnd = document.getElementById('inputDate-end').value;
-    document.getElementById('appData-date').innerText = `${dateStart} ~ ${dateEnd}`;
+    const dateStart = document.getElementById('input-appStart').value;
+    const dateEnd = document.getElementById('input-appEnd').value;
+    document.getElementById('appData-vacationDate').innerText = `${dateStart} ~ ${dateEnd}`;
 }
 
-function printPlace(){
-    const place = document.getElementById('input-appLocation').value;
-    document.getElementById('appData-Place').innerText = place;
+function printType(){
+    const type = document.getElementById('input-appVacType').value;
+    document.getElementById('appData-vacationType').innerText = type;
 }
+
 
 function printContent(){
     const content = document.getElementById('input-appContent').value;
@@ -15,13 +16,14 @@ function printContent(){
 }
 
 $.ajax({
-    url: "/appRequest/buisness",
+    url: "/appRequest/vacation",
     type: "post",
     data: $("#insertForm").serialize(),
     success: (obj) => {
         alert("저장되었습니다.");
         console.log(obj);
         alert(obj.item.msg);
+        // window.location.href= 'appDetailPage.html';
         // location.href = `/app/meet/{metNum}`;
         location.href = '/appDetail';
     },
