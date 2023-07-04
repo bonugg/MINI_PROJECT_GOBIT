@@ -18,445 +18,259 @@
         <div id="_emt3">
         </div>
         <div id="_emt4">
-            <div class="a_screen1"></div>
-            <div id="a_screen2">
-                <div id="b_screen">
-                    <div id="b_screen_1">
-                        <div id="b_screen_1_1">
-                            <div class="shadow">
-                                <div class="com_title">
-                                    <div class="title">
-                                        <h4 class="title_text">출퇴근</h4>
-                                    </div>
-                                </div>
-                                <div id="com_content_on_off">
-                                    <div id="user_on_off_div">
-                                        <table id="usertable">
-                                            <tr>
-                                                <td rowspan="3" id="img_td">
-                                                    <div id="user_img_div">
-                                                        <img th:src="@{'/upload/' + ${user.USERIMAGE}}" alt="프로필 사진" id="user_img">
-                                                    </div>
-                                                </td>
-                                                <td class="userinfo_div_th">이름</td>
-                                                <td class="userinfo_div_td" th:text="${session.user.USERNAME}"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="userinfo_div_th">사번</td>
-                                                <td class="userinfo_div_td" th:text="${session.user.USERENO}"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="userinfo_div_th">부서</td>
-                                                <td class="userinfo_div_td" th:text="${session.user.USERDEPT}"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" class="on_off_div">
-                                                    <div class="on_off_btn_div1">
-                                                        <div class="on_off_btn_div2">
-                                                            <button id="on" class="onoff_btn">출근</button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" class="on_off_div">
-                                                    <div class="on_off_btn_div1">
-                                                        <div class="on_off_btn_div2">
-                                                            <button id="off" class="onoff_btn">퇴근</button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" class="on_off_div" id="on_text">출근 시각</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" class="on_off_div" id="off_text">퇴근 시각</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="b_screen_2">
-                        <div class="shadow">
-                            <div class="com_title">
-                                <div class="title">
-                                    <h4 class="title_text">업무 시간</h4>
-                                </div>
-                            </div>
-                            <div class="com_content">
-                                <div id="b_screen_2_1">
-                                    <div id="chart_btn">
-                                        <div id="chart_btn1">
-                                            <span id="chart_title">월간 근무 시간</span>
-                                        </div>
-                                        <div id="chart_btn2">
-                                            <button id="changeChart">차트 변경</button>
+                <div class="a_screen1" id="a_screen1"></div>
+                <div id="a_screen2">
+                    <div id="b_screen">
+                        <div id="b_screen_1">
+                            <div id="b_screen_1_1">
+                                <div class="shadow">
+                                    <div class="com_title">
+                                        <div class="title">
+                                            <div class="title_1">
+                                            </div>
+                                            <div class="title_2">
+                                                <h4 class="title_text">출퇴근</h4>
+                                            </div>
+                                            <div class="title_3">
+                                                <button type="button" class="btn_more">출퇴근</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div id="chart_div">
-                                        <div id="main"></div>
-                                        <div id="hoverInfo"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="b_screen_3">
-                        <div class="shadow">
-                            <div class="com_title">
-                                <div class="title" style="background-color: #181F42">
-                                    <h4 class="title_text" style="color: white">캘린더</h4>
-                                </div>
-                            </div>
-                            <div class="com_content">
-                                <div id="calendar_div">
-                                    <div id="cal_btn_div">
-                                        <button class="cal_btn" id="all">출근</button>
-                                        <button class="cal_btn" id="vacation">
-                                            휴가
-                                        </button>
-                                        <button class="cal_btn" id="meeting">
-                                            회의
-                                        </button>
-                                        <button class="cal_btn" id="business">
-                                            출장
-                                        </button>
-                                    </div>
-                                    <div id="cal_div">
-                                        <div id='calendar'></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <div id="c_screen">
-                    <div id="d_screen">
-                        <div class="shadow">
-                            <div id="b_screen_1_2_1">
-                                <div id="on_off_check">
-                                    <div id="onoff-grid-container" th:each="item : ${userMap}">
-                                        <div class="item">
-                                            <table class="onoff_table" th:id="${item.get('user').USERNUM}">
+                                    <div id="com_content_on_off">
+                                        <div id="user_on_off_div">
+                                            <table id="usertable">
                                                 <tr>
-                                                    <td rowspan="2" class="img_td">
-                                                        <div class="img_td_div">
-                                                            <img th:src="@{'/upload/' + ${item.get('user').USERIMAGE}}"alt="유저 프로필 이미지"
-                                                                 class="img_list"/>
+                                                    <td rowspan="3" id="img_td">
+                                                        <div id="user_img_div">
+                                                            <img th:src="@{'/upload/' + ${user.USERIMAGE}}"
+                                                                 alt="프로필 사진" id="user_img">
                                                         </div>
                                                     </td>
-                                                    <td class="name_list"
-                                                        th:text="${item.get('user').USERNAME}"></td>
-                                                    <td class="name_list2">출근</td>
-                                                    <td class="name_list2">퇴근</td>
+                                                    <td class="userinfo_div_th">이름</td>
+                                                    <td class="userinfo_div_td"
+                                                        th:text="${session.user.USERNAME}"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="cno_list"
-                                                        th:text="${item.get('user').USERENO}"></td>
-                                                    <td class="cno_list">
-                                                        <div class="on_div"
-                                                             th:data-check="${item.get('oncheck')}">
-                                                            <div class="on_img">
-                                                                <input type="hidden"  th:value="${item.get('userontime')}" th:id="${'ontime'+item.get('user').USERNUM}">
-                                                                <div class="tooltip"></div>
+                                                    <td class="userinfo_div_th">사번</td>
+                                                    <td class="userinfo_div_td"
+                                                        th:text="${session.user.USERENO}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="userinfo_div_th">부서</td>
+                                                    <td class="userinfo_div_td"
+                                                        th:text="${session.user.USERDEPT}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="on_off_div">
+                                                        <div class="on_off_btn_div1">
+                                                            <div class="on_off_btn_div2">
+                                                                <button id="on" class="onoff_btn">출근</button>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="cno_list">
-                                                        <div class="off_div"
-                                                             th:data-check="${item.get('offcheck')}">
-                                                            <div class="off_img">
-                                                                <input type="hidden"  th:value="${item.get('userofftime')}" th:id="${'offtime'+item.get('user').USERNUM}">
-                                                                <div class="tooltip"></div>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="on_off_div">
+                                                        <div class="on_off_btn_div1">
+                                                            <div class="on_off_btn_div2">
+                                                                <button id="off" class="onoff_btn">퇴근</button>
                                                             </div>
                                                         </div>
                                                     </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="on_off_div" id="on_text">출근 시각</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="on_off_div" id="off_text">퇴근 시각</td>
                                                 </tr>
                                             </table>
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="e_screen">
-                        <div class="shadow">
-                            <div class="com_title">
-                                <div class="title">
-                                    <div class="title_1">
-                                    </div>
-                                    <div class="title_2">
-                                        <h4 class="title_text">공지 게시판</h4>
-                                    </div>
-                                    <div class="title_3">
-                                        <a class="more_text" href="/">+ 더보기</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="com_content">
-                                <div class="board">
-                                    <div id="notice_div">
-                                        <div id="notice-grid-container">
-                                            <div class="notice_item">
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">전체</div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td2">김부장</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2">
-                                                            <div class="notice_img_div">
-                                                                <div class="notice_img_div2">
-                                                                    <img class="img"
-                                                                         src="data:image/png;base64,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B57826df3PryyyfVQPDz+cl/+mpSXZlUJylhABG/eFXmHi4+EPYMcM+19MP/9fTp10+efB0IVr/+2Ve3b1fPv61OTkYCwUDs7W++/ubz315gTHPdldzdkj0mFD568tunT7/5BgBf/c/XJkFee+325GuR2yoQfw2IX99i9pRvrwk56davv/73z2Kx6vLyV1//V+j27duhUPX27c9/AYj4/eenTy+Yewu414QffAx9DX/4Qp187cYfbqNMvjb5WvF/v5+lXwX+7LNXpRYn/OXvPnuarVaDqjqf+8Pk7dt/oJgroLAq/Tb+0z9+0NqE5q0nv8sG3v54cvL2hV9BH/Tlv17DPqki4h87Wpvwg//+05/ffLP0pzfffPNP/+fNVcnhy58H8PX/ftTihH+6ePHinW8v3rkDr3fg+uLdi3D51zt371z89ru7F+/e+a7FCT/6f4j17YU7f8kB4V/ufnvxbgRh775599s7JaRveUJop4t3v/3LnYvfAeF32IbfAeGf7+YA9q/f/eXbi9990uKE//3Xi3f/+mfQU+C8e/civoNuvnkXryHg7t1vf9PShMyBjt9cAMf7wpe3Xm2UCxfoK71ubS3FxQlTNg/gNzHlBjEbXve4AC9uJWorxyd2VfbX2lpffvyE/x8IiEwefhjAlQAAAABJRU5ErkJggg==">
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td colspan="4" rowspan="2" class="notice_content_td">
-                                                            <div class="notice_content_div">
-                                                                <div class="notice_content_div2">
-                                                                    <span>안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여 안녕하세요 안녕하세여
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">전체</div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td2">김부장</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2">
-                                                            <div class="notice_img_div">
-                                                                <div class="notice_img_div2">
-                                                                    <img class="img"
-                                                                         src="data:image/png;base64,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B57826df3PryyyfVQPDz+cl/+mpSXZlUJylhABG/eFXmHi4+EPYMcM+19MP/9fTp10+efB0IVr/+2Ve3b1fPv61OTkYCwUDs7W++/ubz315gTHPdldzdkj0mFD568tunT7/5BgBf/c/XJkFee+325GuR2yoQfw2IX99i9pRvrwk56davv/73z2Kx6vLyV1//V+j27duhUPX27c9/AYj4/eenTy+Yewu414QffAx9DX/4Qp187cYfbqNMvjb5WvF/v5+lXwX+7LNXpRYn/OXvPnuarVaDqjqf+8Pk7dt/oJgroLAq/Tb+0z9+0NqE5q0nv8sG3v54cvL2hV9BH/Tlv17DPqki4h87Wpvwg//+05/ffLP0pzfffPNP/+fNVcnhy58H8PX/ftTihH+6ePHinW8v3rkDr3fg+uLdi3D51zt371z89ru7F+/e+a7FCT/6f4j17YU7f8kB4V/ufnvxbgRh775599s7JaRveUJop4t3v/3LnYvfAeF32IbfAeGf7+YA9q/f/eXbi9990uKE//3Xi3f/+mfQU+C8e/civoNuvnkXryHg7t1vf9PShMyBjt9cAMf7wpe3Xm2UCxfoK71ubS3FxQlTNg/gNzHlBjEbXve4AC9uJWorxyd2VfbX2lpffvyE/x8IiEwefhjAlQAAAABJRU5ErkJggg==">
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td colspan="4" rowspan="2" class="notice_content_td">
-                                                            <div class="notice_content_div">
-                                                                <div class="notice_content_div2">
-                                                                    <span>안녕하세요 안녕하세여 안녕하세요
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">전체</div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td2">김부장</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2">
-                                                            <div class="notice_img_div">
-                                                                <div class="notice_img_div2">
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td colspan="4" rowspan="2" class="notice_content_td">
-                                                            <div class="notice_content_div">
-                                                                <div class="notice_content_div2">
-                                                                    <span>안녕하세요
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">전체</div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td2">김부장</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2">
-                                                            <div class="notice_img_div">
-                                                                <div class="notice_img_div2">
-
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td colspan="4" rowspan="2" class="notice_content_td">
-                                                            <div class="notice_content_div">
-                                                                <div class="notice_content_div2">
-                                                                    <span>안녕하세요 안녕하세여
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="f_screen">
-                        <div class="shadow">
-                            <div class="com_title">
-                                <div class="title">
+                        <div id="b_screen_2">
+                            <div class="shadow" id="chart_shw">
+                                <div class="com_title">
                                     <div class="title">
-                                        <div class="title_1">
+                                        <h4 class="title_text">업무 시간</h4>
+                                    </div>
+                                </div>
+                                <div class="com_content">
+                                    <div id="b_screen_2_1">
+                                        <div id="chart_btn">
+                                            <div id="chart_btn1">
+                                                <span id="chart_title">월간 근무 시간</span>
+                                            </div>
+                                            <div id="chart_btn2">
+                                                <button id="changeChart">차트 변경</button>
+                                            </div>
                                         </div>
-                                        <div class="title_2">
-                                            <h4 class="title_text">부서 게시판</h4>
-                                        </div>
-                                        <div class="title_3">
-                                            <a class="more_text" href="/">+ 더보기</a>
+                                        <div id="chart_div">
+                                            <div id="main"></div>
+                                            <div id="hoverInfo"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="com_content">
-                                <div class="board">
-                                    <div id="notice_div">
-                                        <div id="notice-grid-container">
-                                            <div class="notice_item">
-                                                <table class="notice_table">
+                        </div>
+                        <div id="b_screen_3">
+                            <div class="shadow" id="cal_shw">
+                                <div class="com_title">
+                                    <div class="title" id="cal_title">
+                                        <h4 class="title_text" id="cal_text">캘린더</h4>
+                                    </div>
+                                </div>
+                                <div class="com_content">
+                                    <div id="calendar_div">
+                                        <div id="cal_btn_div">
+                                            <button class="cal_btn" id="all">출근</button>
+                                            <button class="cal_btn" id="vacation">
+                                                휴가
+                                            </button>
+                                            <button class="cal_btn" id="meeting">
+                                                회의
+                                            </button>
+                                            <button class="cal_btn" id="business">
+                                                출장
+                                            </button>
+                                        </div>
+                                        <div id="cal_div">
+                                            <div id='calendar'></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div id="c_screen">
+                        <div id="d_screen">
+                            <div class="shadow" id="onoff_shw">
+                                <div id="b_screen_1_2_1">
+                                    <div id="on_off_check">
+                                        <div id="onoff-grid-container" th:each="item : ${userMap}">
+                                            <div class="item">
+                                                <table class="onoff_table" th:id="${item.get('user').USERNUM}">
                                                     <tr>
-                                                        <td class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">전체</div>
+                                                        <td rowspan="2" class="img_td">
+                                                            <div class="img_td_div">
+                                                                <img th:src="@{'/upload/' + ${item.get('user').USERIMAGE}}"
+                                                                     alt="유저 프로필 이미지"
+                                                                     class="img_list"/>
                                                             </div>
                                                         </td>
-                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td2">김부장</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
+                                                        <td class="name_list"
+                                                            th:text="${item.get('user').USERNAME}"></td>
+                                                        <td class="name_list2">출근</td>
+                                                        <td class="name_list2">퇴근</td>
                                                     </tr>
                                                     <tr>
-                                                        <td rowspan="2">
-                                                            <div class="notice_img_div">
-                                                                <div class="notice_img_div2">
-                                                                    <img class="img"
-                                                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa-RvZUd171ZJ9FsZO_d0FZPOgJQVlsudMIw&usqp=CAU">
+                                                        <td class="cno_list"
+                                                            th:text="${item.get('user').USERENO}"></td>
+                                                        <td class="cno_list">
+                                                            <div class="on_div"
+                                                                 th:data-check="${item.get('oncheck')}">
+                                                                <div class="on_img">
+                                                                    <input type="hidden"
+                                                                           th:value="${item.get('userontime')}"
+                                                                           th:id="${'ontime'+item.get('user').USERNUM}">
+                                                                    <div class="tooltip"></div>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td colspan="4" rowspan="2" class="notice_content_td">
-                                                            <div class="notice_content_div">
-                                                                <div class="notice_content_div2">
-                                                                    <span>안녕하세요
-                                                                    </span>
+                                                        <td class="cno_list">
+                                                            <div class="off_div"
+                                                                 th:data-check="${item.get('offcheck')}">
+                                                                <div class="off_img">
+                                                                    <input type="hidden"
+                                                                           th:value="${item.get('userofftime')}"
+                                                                           th:id="${'offtime'+item.get('user').USERNUM}">
+                                                                    <div class="tooltip"></div>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
                                                     </tr>
                                                 </table>
-                                                <table class="notice_table">
-                                                    <tr>
-                                                        <td class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">전체</div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="notice_title_td">하반기 교육 참여자 명단 ...</td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td2">김부장</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                        <td class="notice_writer_cnt_td2" id="bcnt">122</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2">
-                                                            <div class="notice_img_div">
-                                                                <div class="notice_img_div2">
-                                                                    <img class="img"
-                                                                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa-RvZUd171ZJ9FsZO_d0FZPOgJQVlsudMIw&usqp=CAU">
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td colspan="4" rowspan="2" class="notice_content_td">
-                                                            <div class="notice_content_div">
-                                                                <div class="notice_content_div2">
-                                                                    <span>안녕하세요
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div id="e_f_screen">
+                            <div id="e_screen">
+                                <div class="shadow" id="nboard_shw">
+                                    <div class="com_title">
+                                        <div class="title">
+                                            <div class="title_1">
+                                            </div>
+                                            <div class="title_2">
+                                                <h4 class="title_text">공지 게시판</h4>
+                                            </div>
+                                            <div class="title_3">
+                                                <a class="more_text" href="/noticeDept/list">+ 더보기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="com_content">
+                                        <div class="board">
+                                            <div id="notice_div">
+                                                <div id="notice-grid-container">
+                                                    <div class="notice_item" id="nboardList">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="f_screen">
+                                <div class="shadow" id="dboard_shw">
+                                    <div class="com_title">
+                                        <div class="title">
+                                            <div class="title">
+                                                <div class="title_1">
+                                                </div>
+                                                <div class="title_2">
+                                                    <h4 class="title_text">부서 게시판</h4>
+                                                </div>
+                                                <div class="title_3">
+                                                    <a class="more_text" href="/boardDept/list">+ 더보기</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="com_content">
+                                        <div class="board">
+                                            <div id="notice_div">
+                                                <div id="notice-grid-container">
+                                                    <div class="notice_item" ID="dboardList">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="h_screen">
+                        <div id="h_screen_1">
+
+                        </div>
+                        <div id="h_screen_2">
+
                         </div>
                     </div>
                 </div>
+                <div class="a_screen1" id="a_screen1_1"></div>
+            <div id="div1200">
+
             </div>
-            <div class="a_screen1"></div>
         </div>
     </div>
     <div class="popup_layer" id="popup_layer">
@@ -492,13 +306,134 @@
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js'></script>
     <script src='js/locales/ko.global.min.js'></script>
-    <script src="js/slide.js"></script>
     <script src="js/chart.js"></script>
     <script src="js/main.js"></script>
-    <script th:inline="javascript">
-        const userDept = [[${session.user.USERDEPT}]];
-        const userNum = [[${session.user.USERNUM}]];
+    <script>
+        // $(function (){
+        //     $(".btn_more").on("click", () => {
+        //         $('#div1200').css("display", "none");
+        //         com_content_on_off
+        //     }
+        //
+        //
+        //     });
+        function moveShadow() {
+            let windowWidth = window.innerWidth;
+            let bScreen2 = document.getElementById('b_screen_2');
+            let dScreen = document.getElementById('d_screen');
+            let bScreen3 = document.getElementById('b_screen_3');
+            let hScreen = document.getElementById('h_screen');
+            let eScreen = document.getElementById('e_screen');
+            let fScreen = document.getElementById('f_screen');
+            let hScreen2 = document.getElementById('h_screen_1');
+            let hScreen3 = document.getElementById('h_screen_2');
+            let div1200 = document.getElementById('div1200');
+            let emt4 = document.getElementById('_emt4');
+
+            $('#div1200').css("display", "none");
+            let shadow1 = document.querySelector('#div1200 #a_screen1');
+            if (shadow1) {
+                emt4.appendChild(shadow1);
+            }
+            let shadow2 = document.querySelector('#div1200 #a_screen2');
+            if (shadow2) {
+                emt4.appendChild(shadow2);
+            }
+            let shadow3 = document.querySelector('#div1200 #a_screen1_1');
+            if (shadow3) {
+                emt4.appendChild(shadow3);
+            }
+
+            if (windowWidth <= 1290) {
+                let shadow1 = document.querySelector('#_emt4 #a_screen1');
+                if (shadow1) {
+                    div1200.appendChild(shadow1);
+                }
+                let shadow2 = document.querySelector('#_emt4 #a_screen2');
+                if (shadow2) {
+                    div1200.appendChild(shadow2);
+                }
+                let shadow3 = document.querySelector('#_emt4 #a_screen1_1');
+                if (shadow3) {
+                    div1200.appendChild(shadow3);
+                }
+                $('#div1200').css("display", "");
+
+                let shadow = document.querySelector('#d_screen #chart_shw');
+                if (shadow) {
+                    bScreen3.appendChild(shadow);
+                }
+                let shadow4= document.querySelector('#b_screen_2 #chart_shw');
+                if (shadow4) {
+                    bScreen3.appendChild(shadow4);
+                }
+
+                let shadow5= document.querySelector('#b_screen_3 #cal_shw');
+                if (shadow5) {
+                    dScreen.appendChild(shadow5);
+                }
+
+                let nboard= document.querySelector('#e_screen #nboard_shw');
+                if (nboard) {
+                    hScreen2.appendChild(nboard);
+                }
+                let dboard= document.querySelector('#f_screen #dboard_shw');
+                if (dboard) {
+                    hScreen3.appendChild(dboard);
+                }
+
+
+
+            }else if (windowWidth <= 1600) {
+                let shadow = document.querySelector('#b_screen_2 #chart_shw');
+                if (shadow) {
+                    dScreen.appendChild(shadow);
+                }
+                let shadow2 = document.querySelector('#b_screen_3 #chart_shw');
+                if (shadow2) {
+                    dScreen.appendChild(shadow2);
+                }
+
+                let shadow5= document.querySelector('#d_screen #cal_shw');
+                if (shadow5) {
+                    bScreen3.appendChild(shadow5);
+                }
+
+                let nboard= document.querySelector('#h_screen_1 #nboard_shw');
+                if (nboard) {
+                    eScreen.appendChild(nboard);
+                }
+
+                let dboard= document.querySelector('#h_screen_2 #dboard_shw');
+                if (dboard) {
+                    fScreen.appendChild(dboard);
+                }
+
+            } else {
+                let shadow = document.querySelector('#d_screen #chart_shw');
+                if (shadow) {
+                    bScreen2.appendChild(shadow);
+                }
+                let shadow2 = document.querySelector('#b_screen_3 #chart_shw');
+                if (shadow2) {
+                    bScreen2.appendChild(shadow2);
+                }
+                let shadow3= document.querySelector('#d_screen #cal_shw');
+                if (shadow3) {
+                    bScreen3.appendChild(shadow3);
+                }
+                let nboard= document.querySelector('#h_screen_1 #nboard_shw');
+                if (nboard) {
+                    eScreen.appendChild(nboard);
+                }
+                let dboard= document.querySelector('#h_screen_2 #dboard_shw');
+                if (dboard) {
+                    fScreen.appendChild(dboard);
+                }
+            }
+        }
+        window.addEventListener('load', moveShadow);
+        window.addEventListener('resize', moveShadow);
     </script>
-    <script th:src="@{/js/websocket.js}"></script>
 </th:block>
 </html>

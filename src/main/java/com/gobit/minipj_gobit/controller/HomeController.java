@@ -1,7 +1,6 @@
 package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.entity.User;
-import com.gobit.minipj_gobit.repository.TestRepository;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import com.gobit.minipj_gobit.service.MainPageService;
 import jakarta.servlet.http.HttpSession;
@@ -12,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
 import java.text.ParseException;
@@ -25,7 +23,6 @@ public class HomeController {
     private HttpSession httpSession;
     private final MainPageService mainPageService;
     private final UserRepository userRepository;
-    private final TestRepository testRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/")
@@ -55,15 +52,19 @@ public class HomeController {
     }
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "exception", required = false) String exception,
+                            Model model) {
         if (httpSession.getAttribute("user") != null) {
             User user = (User) httpSession.getAttribute("user");
-            if (user.getUSER_POSITION().equals("관리자")) {
+            if (user.getUSERPOSITION().equals("관리자")) {
                 return "redirect:/admin/main";
             } else {
                 return "redirect:/";
             }
         }
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
         return "loginPage";
     }
 

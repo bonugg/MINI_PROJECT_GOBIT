@@ -1,9 +1,9 @@
 package com.gobit.minipj_gobit.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gobit.minipj_gobit.entity.Testentity;
+import com.gobit.minipj_gobit.entity.Approval;
 import com.gobit.minipj_gobit.entity.UserOnOff;
-import com.gobit.minipj_gobit.repository.TestRepository;
+import com.gobit.minipj_gobit.repository.ApprovalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -19,12 +19,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @RequiredArgsConstructor
 public class WSHandler extends TextWebSocketHandler {
-    private final TestRepository testRepository;
+    private final ApprovalRepository approvalRepository;
 
     private static List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
     public void handleDatabaseChanges(Object o) {
-        System.out.println(o+ "=========");
         for (WebSocketSession currentSession : sessions) {
             if (currentSession.isOpen()) {
                 CompletableFuture.runAsync(() -> {
@@ -55,10 +54,10 @@ public class WSHandler extends TextWebSocketHandler {
             result.put("userdept", userOnOff.getUser().getUSERDEPT());
             result.put("start", userOnOff.getSTART());
             result.put("end", userOnOff.getEND());
-        }else if(o instanceof Testentity){
-            Testentity testentity = (Testentity) o;
-            result.put("testcnt", testRepository.findByCheckCnt(testentity.getUser().getUSERNUM()));
-            result.put("testusernum", testentity.getUser().getUSERNUM());
+        }else if(o instanceof Approval){
+            Approval approval = (Approval) o;
+            result.put("testcnt", approvalRepository.findByCntUserApp(approval.getUser()));
+            result.put("testusernum", approval.getUser().getUSERNUM());
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
