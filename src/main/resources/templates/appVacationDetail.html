@@ -8,8 +8,7 @@
     <title>Empty</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
-        <link rel="stylesheet" type="text/css" href="css/appVacation.css">
-
+        <link rel="stylesheet" type="text/css" href="/css/appVacationDetail.css">
     </th:block>
 </head>
 <body layout:fragment="content">
@@ -21,12 +20,12 @@
         <div id="_emt4">
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
-                <p class="page-name">휴가 결제신청 페이지</p>
+                <p class="page-name">휴가 결제 페이지</p>
                 <div class="use_screen_form">
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="insertForm" action="/appRequest/vacation" method="post">
+                        <form id="updateForm" action="/appDetail" method="post">
                             <input type="hidden" name="appSort" value="V">
                             <input type="hidden" name="appState" value="미승인">
                             <section id="inputData-section">
@@ -49,12 +48,12 @@
                                 <div class="input-type">
                                     <div>휴가 종류</div>
                                     <div class="input-place-form">
-                                            <select id="input-appVacType" name="appVacType" required onchange="printType()">
-                                                <option value="morningOff">오전반차</option>
-                                                <option value="afternoonOff">오후반차</option>
-                                                <option value="dayOff">연차</option>
-                                                <option value="sickDay">병가</option>
-                                            </select>
+                                        <select id="input-appVacType" name="appVacType" required onchange="printType()">
+                                            <option value="morningOff">오전반차</option>
+                                            <option value="afternoonOff">오후반차</option>
+                                            <option value="dayOff">연차</option>
+                                            <option value="sickDay">병가</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="input-text">
@@ -152,6 +151,7 @@
 </div>
 </body>
 <th:block layout:fragment="script">
-    <script src="js/appVacation.js"></script>
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+
 </th:block>
 </html>

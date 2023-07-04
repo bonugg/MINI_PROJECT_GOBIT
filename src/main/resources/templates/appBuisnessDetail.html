@@ -5,11 +5,10 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Empty</title>
+    <title>출장결재</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
-        <link rel="stylesheet" type="text/css" href="css/appVacation.css">
-
+        <link rel="stylesheet" type="text/css" href="/css/appBuisnessDetail.css">
     </th:block>
 </head>
 <body layout:fragment="content">
@@ -21,22 +20,25 @@
         <div id="_emt4">
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
-                <p class="page-name">휴가 결제신청 페이지</p>
+                <p class="page-name">출장 결제 페이지</p>
                 <div class="use_screen_form">
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="insertForm" action="/appRequest/vacation" method="post">
-                            <input type="hidden" name="appSort" value="V">
+                        <form id="updateForm" action="/appDetail" method="post">
+                            <input type="hidden" name="appSort" value="B">
                             <input type="hidden" name="appState" value="미승인">
                             <section id="inputData-section">
                                 <div class="input-date">
-                                    <div>휴가날짜</div>
+                                    <div>출장날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="input-appStart" name="appStart" required onchange="printDate()">
-                                        <p>~</p>
-                                        <!--inputDate-end"-->
-                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onchange="printDate()">
+                                        <div class="input-date-form">
+                                            <input type="datetime-local" id="inputDate-start" name="appStart" required
+                                                   onchange="printDate()">
+                                            <p>~</p>
+                                            <input type="datetime-local" id="inputDate-end" name="appEnd" required
+                                                   onchange="printDate()">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="input-user">
@@ -46,19 +48,14 @@
                                         <p th:text="${session.user.USERNAME}"></p>
                                     </div>
                                 </div>
-                                <div class="input-type">
-                                    <div>휴가 종류</div>
+                                <div class="input-place">
+                                    <div>출장 장소</div>
                                     <div class="input-place-form">
-                                            <select id="input-appVacType" name="appVacType" required onchange="printType()">
-                                                <option value="morningOff">오전반차</option>
-                                                <option value="afternoonOff">오후반차</option>
-                                                <option value="dayOff">연차</option>
-                                                <option value="sickDay">병가</option>
-                                            </select>
+                                        <input type="text" id="input-appLocation" name="appLocation" required onkeyup="printPlace()">
                                     </div>
                                 </div>
                                 <div class="input-text">
-                                    <div>휴가 사유</div>
+                                    <div>출장 목적</div>
                                     <div class="input-text-form">
                             <textarea id="input-appContent" name="appContent" style="resize:vertical" cols="50"
                                       rows="1" required onkeyup="printContent()"></textarea>
@@ -89,7 +86,7 @@
                                         </table>
                                     </div>
                                     <div class="appTitle">
-                                        <h3>휴가 신청서</h3>
+                                        <h3>출장 신청서</h3>
                                     </div>
                                     <div class="appConfirm">
                                         <table>
@@ -115,24 +112,14 @@
                                     <div class="appData">
                                         <table>
                                             <tr>
-                                                <td>총 연차</td>
-                                                <td id="appData-totalOff">총연차 데이터 표출</td>
-                                                <td>사용 일수</td>
-                                                <td id="appData-vacationUsed">사용일수 표출</td>
-                                                <td>잔여 연차</td>
-                                                <td id="appData-vacationLeft">잔여연차 표출</td>
-                                            </tr>
-                                            <tr>
-                                                <td>휴가 날짜</td>
-                                                <td id="appData-vacationDate" colspan="2"></td>
-                                                <td>사용 일수</td>
-                                                <td id="appData-vacationDateCnt">휴가날짜수 표출</td>
-                                                <td>휴가종류</td>
-                                                <td id="appData-vacationType"></td>
+                                                <td>출장 날짜</td>
+                                                <td id="appData-date"></td>
+                                                <td>출장 장소</td>
+                                                <td id="appData-place"></td>
                                             </tr>
                                             <tr class="appData-colspan">
                                                 <td>출장 목적</td>
-                                                <td colspan="6" id="appData-content"></td>
+                                                <td colspan="3" id="appData-content"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -152,6 +139,7 @@
 </div>
 </body>
 <th:block layout:fragment="script">
-    <script src="js/appVacation.js"></script>
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+
 </th:block>
 </html>

@@ -52,7 +52,7 @@ public class Approval {
     //결재상태: 미승인, 반려, 승인
     @NotNull
     @Column(name = "APP_STATE")
-    private String appState;
+    private String appState = "미승인";
 
     //결재상태확정날짜
     @Column(name = "APP_STATE_DATE")

@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Empty</title>
+    <title>회의 결재신청</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="css/appMeeting.css">
@@ -88,7 +88,7 @@
                                         </table>
                                     </div>
                                     <div class="appTitle">
-                                        <h3>출장 신청서</h3>
+                                        <h3>회의 신청서</h3>
                                     </div>
                                     <div class="appConfirm">
                                         <table>
@@ -133,12 +133,12 @@
                             </section>
                             <div id="dataSubmit-section">
                                 <button id="btnSave">저장</button>
-                                <button id="btnDelete">삭제</button>
+                                <button type="reset" id="btnDelete">취소</button>
                             </div>
+                        </form>
                     </div>
                     <div class="rightSpace"></div>
                 </div>
-                </form>
             </div>
         </div>
     </div>

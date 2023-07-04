@@ -23,7 +23,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 
     //특정 결재 불러오기
     @Override
-    public Approval getApproval(Integer appNum) {
-        return approvalRepository.findById(appNum).get();
+    public Approval getApproval(long appNum) {
+        if(approvalRepository.findByAppNum(appNum).isEmpty()){
+            return null;
+        }
+        return approvalRepository.findByAppNum(appNum).get();
     }
 }

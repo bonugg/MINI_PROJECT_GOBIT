@@ -5,6 +5,6 @@ import com.gobit.minipj_gobit.entity.Approval;
 public interface ApprovalService {
     void saveApproval(Approval approval);
 
-    Approval getApproval(Integer appNum);
+    Approval getApproval(long appNum);
     
 }

@@ -5,11 +5,10 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Empty</title>
+    <title>회의결재</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
-        <link rel="stylesheet" type="text/css" href="css/appMeeting.css">
-
+        <link rel="stylesheet" type="text/css" href="/css/appMeetingDetail.css">
     </th:block>
 </head>
 <body layout:fragment="content">
@@ -20,40 +19,48 @@
         </div>
         <div id="_emt4">
             <div id="use_screen">
-                <form id="insertForm" action="/app/meet" method="post">
-                    <!--헤더와 메뉴바를 제외한 영역 -->
-                    <p class="page-name">회의 결제신청 페이지</p>
-                    <div class="use_screen_form">
-                        <div class="leftSpace"></div>
-                        <div class="centerSpace">
-                            <!--데이터 입력부-->
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <p class="page-name">회의 결제 페이지</p>
+                <div class="use_screen_form">
+                    <div class="leftSpace"></div>
+                    <div class="centerSpace">
+                        <!--데이터 입력부-->
+                        <form id="updateForm" action="/appDetail" method="post">
+                            <input type="hidden" name="appSort" th:value="${approval.appSort}">
+                            <input type="hidden" name="appState" th:value="${approval.appState}">
+                            <input type="hidden" name="appWriDate" th:value="${approval.appWriDate}">
+                            <input type="hidden" name="userNum" th:value="${approval.userNum}">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>회의날짜</div>
                                     <div class="input-date-form">
-                                        <input type="date" id="inputDate-start" name="metStart" required onselect="printDate()">
+                                        <input type="datetime-local" id="inputDate-start" name="appStart" th:value="${approval.appStart}" required
+                                               onchange="printDate()">
                                         <p>~</p>
-                                        <input type="date" id="inputDate-end" name="metEnd" required onselect="printDate()">
+                                        <input type="datetime-local" id="inputDate-end" name="appEnd" th:value="${approval.appEnd}" required
+                                               onchange="printDate()">
                                     </div>
                                 </div>
                                 <div class="input-user">
                                     <div>회의 참석자</div>
                                     <div class="input-user-form">
-                                     <textarea id="inputPeople" name="metParticipant" style="resize:vertical" cols="50"
-                                               rows="1" required onkeyup="printPeople()"></textarea>
+                                     <textarea id="input-Participant" name="appParticipant" style="resize:vertical"
+                                               cols="50"
+                                               rows="1" required th:value="${approval.appParticipant}" onkeyup="printPeople()"></textarea>
                                     </div>
                                 </div>
                                 <div class="input-place">
                                     <div>회의 장소</div>
                                     <div class="input-place-form">
-                                        <input type="text" id="inputPlace" name="metLocation" required onkeyup="printPlace()">
+                                        <input type="text" id="input-appLocation" name="appLocation" required th:value="${approval.appLocation}"
+                                               onkeyup="printPlace()">
                                     </div>
                                 </div>
                                 <div class="input-text">
                                     <div>회의 목적</div>
                                     <div class="input-text-form">
-                            <textarea id="inputContent" name="metContent" style="resize:vertical" cols="50"
-                                      rows="1" required onkeyup="printContent()"></textarea>
+                            <textarea id="input-appContent" name="appContent" style="resize:vertical" cols="50"
+                                      rows="1" required th:text="${approval.appContent}" onkeyup="printContent()"></textarea>
                                     </div>
                                 </div>
                             </section>
@@ -64,19 +71,19 @@
                                         <table>
                                             <tr>
                                                 <td>문서번호</td>
-                                                <td th:value="${metNum}"></td>
+                                                <td th:text="${approval.appNum}"></td>
                                             </tr>
                                             <tr>
                                                 <td>부서</td>
-                                                <td th:text="${session.user.USERDEPT}"></td>
+                                                <td th:text="${approval.userNum.User.USERDEPT}">부서임시</td>
                                             </tr>
                                             <tr>
                                                 <td>기안일</td>
-                                                <td>20230202</td>
+                                                <td th:text="${#strings.substring(approval.appWriDate, 0, 10)}">기안일임시</td>
                                             </tr>
                                             <tr>
                                                 <td>기안자</td>
-                                                <td th:text="${session.user.USERNAME}"></td>
+                                                <td th:text="${approval.userNum.User.USERNAME}">기안자임시</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -108,17 +115,17 @@
                                         <table>
                                             <tr>
                                                 <td>회의 날짜</td>
-                                                <td id="appData-dateStart" th:value="${appMeet.metStart}"></td>
+                                                <td id="appData-date" th:text="${approval.appStart} ~ ${approval.appEnd}"></td>
                                                 <td>출장 장소</td>
-                                                <td id="appData-Place" th:value="${metLocation}"></td>
+                                                <td id="appData-Place" th:text="${approval.appLocation}"></td>
                                             </tr>
                                             <tr>
                                                 <td>회의 참석자</td>
-                                                <td id="appData-people" colspan="3" th:value="${metParticipant}"></td>
+                                                <td id="appData-people" colspan="3" th:text="${approval.appParticipant}"></td>
                                             </tr>
                                             <tr class="appData-colspan">
                                                 <td>회의 목적</td>
-                                                <td colspan="3" id="appData-content" th:value="${metContent}"></td>
+                                                <td colspan="3" id="appData-content" th:text="${approval.appContent}"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -128,17 +135,18 @@
                                 <button id="btnSave">저장</button>
                                 <button id="btnDelete">삭제</button>
                             </div>
-                        </div>
-                        <div class="rightSpace"></div>
+                        </form>
                     </div>
-                </form>
+                    <div class="rightSpace"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 </body>
 <th:block layout:fragment="script">
-    <script src="js/appRequest.js"></script>
-    <script src="js/appMeeting.js"></script>
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+
 </th:block>
 </html>
