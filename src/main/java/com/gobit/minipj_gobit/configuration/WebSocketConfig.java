@@ -1,7 +1,7 @@
 package com.gobit.minipj_gobit.configuration;
 
 import com.gobit.minipj_gobit.handler.WSHandler;
-import com.gobit.minipj_gobit.repository.TestRepository;
+import com.gobit.minipj_gobit.repository.ApprovalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 @RequiredArgsConstructor
 public class WebSocketConfig  implements WebSocketConfigurer{
-    private final TestRepository testRepository;
+    private final ApprovalRepository approvalRepository;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
@@ -24,6 +24,6 @@ public class WebSocketConfig  implements WebSocketConfigurer{
     }
     @Bean
     public WebSocketHandler databaseChangeHandler() {
-        return new WSHandler(testRepository);
+        return new WSHandler(approvalRepository);
     }
 }

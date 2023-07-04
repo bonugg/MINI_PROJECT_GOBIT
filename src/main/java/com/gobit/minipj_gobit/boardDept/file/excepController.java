@@ -74,7 +74,7 @@ public class excepController {
                 data.setUSERENO((long) row.getCell(0).getNumericCellValue());
                 data.setUSERNAME(row.getCell(1).getStringCellValue());
                 data.setUSERDEPT(row.getCell(2).getStringCellValue());
-                data.setUSER_POSITION(row.getCell(3).getStringCellValue());
+                data.setUSERPOSITION(row.getCell(3).getStringCellValue());
                 data.setUSER_PWD(passwordEncoder.encode(pwd));
                 data.setUSER_EMAIL(row.getCell(5).getStringCellValue());
                 data.setUSER_PHONE(row.getCell(6).getStringCellValue());

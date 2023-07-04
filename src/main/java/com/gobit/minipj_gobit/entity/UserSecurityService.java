@@ -27,7 +27,7 @@ public class UserSecurityService implements UserDetailsService {
         User user = _user.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if(user.getUSER_POSITION().equals("팀장")){
+        if(user.getUSERPOSITION().equals("팀장")){
             authorities.add(new SimpleGrantedAuthority("ROLE_MANAGER")); // 권한 부여
         }else {
             authorities.add(new SimpleGrantedAuthority("ROLE_USER")); // 권한 부여

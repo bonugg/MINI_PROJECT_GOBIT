@@ -28,8 +28,8 @@ public class User {
     @Column(name = "USER_DEPT")
     private String USERDEPT;
     @NotNull
-    @Column
-    private String USER_POSITION;
+    @Column(name = "USER_POSITION")
+    private String USERPOSITION;
     @NotNull
     @Column
     private String USER_PWD;
@@ -65,9 +65,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Calendar> calendarList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Testentity> testentityList = new ArrayList<>();
-
     @Override
     public String toString() {
         return "User{" +
@@ -75,7 +72,7 @@ public class User {
                 ", USERENO=" + USERENO +
                 ", USERNAME='" + USERNAME + '\'' +
                 ", USERDEPT='" + USERDEPT + '\'' +
-                ", USER_POSITION='" + USER_POSITION + '\'' +
+                ", USER_POSITION='" + USERPOSITION + '\'' +
                 ", USER_PWD='" + USER_PWD + '\'' +
                 ", USER_EMAIL='" + USER_EMAIL + '\'' +
                 ", USER_PHONE='" + USER_PHONE + '\'' +
