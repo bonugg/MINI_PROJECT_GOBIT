@@ -73,20 +73,72 @@ form {
 }
 /* 내용 부분 */
 
-
-
-/* 첨부파일 */
 .div-values {
     width: 100%;
     height: 100%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    /*display: flex;*/
-    /*align-items: center;*/
+    display: flex;
+    padding: 5px;
+}
+
+
+/* 첨부파일 */
+.div-values > label{
+    padding: 10px;
 }
 
 .div-files {
     width: 100%;
 }
+
+.file_list > div {
+    display: flex;
+    margin-top: 10px;
+}
+.file_del_btn, .fn_add_btn {
+    margin-left: 5px;
+    cursor: pointer;
+    border: 1px solid black;
+    width: 50px;
+    height: 30px;
+    background: transparent;
+}
+
+.fn_add_btn:hover {
+    color: white;
+    background: #62A9EB;
+    transition: background-color 0.3s ease;
+}
+
+.file_del_btn:hover {
+    color: white;
+    background: #fa6362;
+    transition: background-color 0.3s ease;
+}
+
+#file_input_label {
+    display: none;
+}
+#file_input_label_btn {
+    border:  1px solid black;
+    padding: 3px;
+    cursor: pointer;
+    background: #181F42;
+    color: whitesmoke;
+}
+
+#file_input_label_text{
+    border: 1px solid black;
+    padding: 3px;
+    width: 200px;
+}
+#file_input_label_btn:hover{
+    color: black;
+    background-color: #8c8c8c;
+    transition: background-color 0.3s ease;
+}
+
+
 /* 첨부파일 */
         
 
