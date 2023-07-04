@@ -1,7 +1,10 @@
 package com.gobit.minipj_gobit.entity;
 
+import com.gobit.minipj_gobit.dto.PasswordChangeRequestDTO;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -11,8 +14,10 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "T_MEMBER")
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,14 +58,6 @@ public class User {
     @ColumnDefault("'img/user/user.png'")
     private String imagePath;
 
-    @Lob
-    @Column(name = "USER_IMAGE", columnDefinition = "LONGBLOB", nullable = true)
-    private byte[] USERIMAGE = getDefaultImage();
-
-    @Lob
-    @Column(name = "default_image")
-    private byte[] defaultImage;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<UserOnOff> userOnOffList = new ArrayList<>();
 
@@ -69,4 +66,16 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Testentity> testentityList = new ArrayList<>();
+
+
+
+    public PasswordChangeRequestDTO EntityToDTO() {
+        PasswordChangeRequestDTO PCDTO = PasswordChangeRequestDTO.builder()
+                .USERNUM(this.USERNUM)
+                .originPw(this.USER_PWD)
+                .build();
+
+        return PCDTO;
+    }
+
 }

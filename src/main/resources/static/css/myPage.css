@@ -26,11 +26,11 @@
 }
 
 .mypage-title {
-    font-size: 13px;
+    font-size: 15px;
     color: #949393;
     position: absolute;
-    left: 200px;
-    top: 130px;
+    margin-left: 40px;
+    margin-top: 40px;
 }
 
 .pwChangeLink {
