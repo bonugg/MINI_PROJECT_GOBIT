@@ -15,11 +15,11 @@ function printContent(){
 }
 
 $.ajax({
-    url: "/appRequest/buisness",
-    type: "post",
-    data: $("#insertForm").serialize(),
+    url: "/appDetail",
+    type: "PUT",
+    data: $("#updateForm").serialize(),
     success: (obj) => {
-        alert("저장되었습니다.");
+        alert("수정되었습니다.");
         console.log(obj);
         alert(obj.item.msg);
         // location.href = `/app/meet/{metNum}`;
