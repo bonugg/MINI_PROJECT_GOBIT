@@ -61,7 +61,7 @@
                             <div class="cnt" th:text="${board.cnt}"></div>
                             <div class="like-cnt" th:text="${board.like}"></div>
 
-                            <div class="div-files" th:if="${board.files}">
+                            <div class="div-files" th:if="${!board.files.isEmpty()}">
                                 <label class="label-hover">첨부파일</label>
                                 <div class="files-hov">
                                     <div th:each="file : ${board.files}" class="div-file-list" style="display: flex">

@@ -93,6 +93,15 @@ a {
     /* 추가적인 스타일 설정 */
 }
 
+.div-files {
+    text-align: center;
+    justify-content: center;
+}
+.div-file-list {
+    text-align: center;
+    justify-content: center;
+}
+
 .div-file-list > a:hover{
     color: #62A9EB;
 }
