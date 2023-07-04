@@ -52,7 +52,9 @@ public class HomeController {
     }
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "exception", required = false) String exception,
+                            Model model) {
         if (httpSession.getAttribute("user") != null) {
             User user = (User) httpSession.getAttribute("user");
             if (user.getUSERPOSITION().equals("관리자")) {
@@ -61,6 +63,8 @@ public class HomeController {
                 return "redirect:/";
             }
         }
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
         return "loginPage";
     }
 

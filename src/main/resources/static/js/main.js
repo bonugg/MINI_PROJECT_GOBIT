@@ -10,6 +10,123 @@ $(function () {
 
     let formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd 형식으로 날짜를 표현합니다.
 
+    $.ajax({
+        type: 'get',
+        url : '/dboardList',
+        data: {
+            dept : userDept
+        },
+        success: function (obj){
+            console.log(obj);
+            if (obj.length == 0) {
+                $('#dboardList').html('부서게시판 글이 없습니다.');
+            } else {
+                let userListHTML = '';
+                for (let i = 0; i < obj.length; i++) {
+                    let item = obj[i];
+                    userListHTML += `
+                                         <table class="notice_table" onclick="location.href='/boardDept/updateCnt/${item.dboardNum}'">
+                                                    <tr>
+                                                        <td class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">${item.dboardDept}</div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="notice_title_td">${item.dboardTitle}</td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td2">${item.dboardWriter}</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                        <td class="notice_writer_cnt_td2" id="bcnt">${item.dboardCnt}</td>
+                                                    </tr>
+                                                    <tr class="tr1410">
+                                                        <td rowspan="2">
+                                                            <div class="notice_img_div">
+                                                                <div class="notice_img_div2">
+                                                                    <img class="img"
+                                                                       src="https://i.ibb.co/60TZMPY/noimage.png">                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td colspan="4" rowspan="2" class="notice_content_td">
+                                                            <div class="notice_content_div">
+                                                                <div class="notice_content_div2">
+                                                                    <span>${item.dboardContent}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr class="tr1410">
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                    `;
+                }
+                $('#dboardList').html(userListHTML);
+            }
+        },
+        error: function (err){
+            console.log(err);
+        }
+    });
+    $.ajax({
+        type: 'get',
+        url : '/nboardList',
+        success: function (obj){
+            console.log(obj);
+            if (obj.length == 0) {
+                $('#nboardList').html('공지게시판 글이 없습니다.');
+            } else {
+                let userListHTML = '';
+                for (let i = 0; i < obj.length; i++) {
+                    let item = obj[i];
+                    userListHTML += `
+                                         <table class="notice_table" onclick="location.href='/noticeDept/updateCnt/${item.nboardNum}'">
+                                                    <tr>
+                                                        <td class="notice_td">
+                                                            <div class="notice_td_div">
+                                                                <div class="notice_type">전체</div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="notice_title_td">${item.nboardTitle}</td>
+                                                        <td class="notice_writer_cnt_td">작성자</td>
+                                                        <td class="notice_writer_cnt_td2">${item.nboardWriter}</td>
+                                                        <td class="notice_writer_cnt_td">조회수</td>
+                                                        <td class="notice_writer_cnt_td2" id="bcnt">${item.nboardCnt}</td>
+                                                    </tr>
+                                                    <tr class="tr1410">
+                                                        <td rowspan="2">
+                                                            <div class="notice_img_div">
+                                                                <div class="notice_img_div2">
+                                                                    <img class="img"
+                                                                         src="https://i.ibb.co/60TZMPY/noimage.png">
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td colspan="4" rowspan="2" class="notice_content_td">
+                                                            <div class="notice_content_div">
+                                                                <div class="notice_content_div2">
+                                                                    <span>${item.nboardContent}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr class="tr1410">
+                                                        <td></td>
+                                                    </tr>
+                                                </table>
+                                    `;
+                }
+                $('#nboardList').html(userListHTML);
+            }
+        },
+        error: function (err){
+            console.log(err);
+        }
+    });
+
     document.querySelectorAll('.off_img').forEach(function(div) {
         div.addEventListener('mouseover', function(event) {
             let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
@@ -255,6 +372,7 @@ $(function () {
                     dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
                     eventClick: function (info) {
                         popupLayer.style.display = "block";
+                        console.log(info.event.extendedProps.classify);
 
                         if (info.event.extendedProps.classify == '휴가') {
                             $('#popup_vacationtype_div').text(info.event.extendedProps.title).show();
@@ -262,6 +380,13 @@ $(function () {
                         } else {
                             $('#popup_vacationtype_div').hide();
                             $('#popup_desc_div').css("height", "73%");
+                        }
+                        if(info.event.extendedProps.classify == '출퇴근'){
+                            $('.popup_box').css("height", "200px");
+                            $('.popup_cont_1').css("height", "50%");
+                            $('.popup_cont_2').css("height", "50%");
+                            $('#popup_date').css("font-size", "15px");
+                            $('.popup_cont_3').css("display", "none");
                         }
                         $('#popup_title').text(info.event.title);
                         $('#popup_desc').text(info.event.extendedProps.description);

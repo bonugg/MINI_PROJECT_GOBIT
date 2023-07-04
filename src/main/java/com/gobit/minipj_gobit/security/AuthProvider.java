@@ -62,7 +62,7 @@ public class AuthProvider implements AuthenticationProvider {
             }
         }catch (NoSuchElementException ne){
         }
-        throw new BadCredentialsException("");
+        throw new BadCredentialsException("아이디 또는 비밀번호를 찾을 수 없습니다");
     }
 
     @Override

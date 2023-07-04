@@ -18,230 +18,252 @@
         <div id="_emt3">
         </div>
         <div id="_emt4">
-            <div class="a_screen1"></div>
-            <div id="a_screen2">
-                <div id="b_screen">
-                    <div id="b_screen_1">
-                        <div id="b_screen_1_1">
-                            <div class="shadow">
-                                <div class="com_title">
-                                    <div class="title">
-                                        <h4 class="title_text">출퇴근</h4>
-                                    </div>
-                                </div>
-                                <div id="com_content_on_off">
-                                    <div id="user_on_off_div">
-                                        <table id="usertable">
-                                            <tr>
-                                                <td rowspan="3" id="img_td">
-                                                    <div id="user_img_div">
-                                                        <img th:src="@{'/upload/' + ${user.USERIMAGE}}" alt="프로필 사진" id="user_img">
-                                                    </div>
-                                                </td>
-                                                <td class="userinfo_div_th">이름</td>
-                                                <td class="userinfo_div_td" th:text="${session.user.USERNAME}"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="userinfo_div_th">사번</td>
-                                                <td class="userinfo_div_td" th:text="${session.user.USERENO}"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="userinfo_div_th">부서</td>
-                                                <td class="userinfo_div_td" th:text="${session.user.USERDEPT}"></td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" class="on_off_div">
-                                                    <div class="on_off_btn_div1">
-                                                        <div class="on_off_btn_div2">
-                                                            <button id="on" class="onoff_btn">출근</button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" class="on_off_div">
-                                                    <div class="on_off_btn_div1">
-                                                        <div class="on_off_btn_div2">
-                                                            <button id="off" class="onoff_btn">퇴근</button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" class="on_off_div" id="on_text">출근 시각</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" class="on_off_div" id="off_text">퇴근 시각</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="b_screen_2">
-                        <div class="shadow">
-                            <div class="com_title">
-                                <div class="title">
-                                    <h4 class="title_text">업무 시간</h4>
-                                </div>
-                            </div>
-                            <div class="com_content">
-                                <div id="b_screen_2_1">
-                                    <div id="chart_btn">
-                                        <div id="chart_btn1">
-                                            <span id="chart_title">월간 근무 시간</span>
-                                        </div>
-                                        <div id="chart_btn2">
-                                            <button id="changeChart">차트 변경</button>
+                <div class="a_screen1" id="a_screen1"></div>
+                <div id="a_screen2">
+                    <div id="b_screen">
+                        <div id="b_screen_1">
+                            <div id="b_screen_1_1">
+                                <div class="shadow">
+                                    <div class="com_title">
+                                        <div class="title">
+                                            <h4 class="title_text">출퇴근</h4>
                                         </div>
                                     </div>
-                                    <div id="chart_div">
-                                        <div id="main"></div>
-                                        <div id="hoverInfo"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="b_screen_3">
-                        <div class="shadow">
-                            <div class="com_title">
-                                <div class="title" style="background-color: #181F42">
-                                    <h4 class="title_text" style="color: white">캘린더</h4>
-                                </div>
-                            </div>
-                            <div class="com_content">
-                                <div id="calendar_div">
-                                    <div id="cal_btn_div">
-                                        <button class="cal_btn" id="all">출근</button>
-                                        <button class="cal_btn" id="vacation">
-                                            휴가
-                                        </button>
-                                        <button class="cal_btn" id="meeting">
-                                            회의
-                                        </button>
-                                        <button class="cal_btn" id="business">
-                                            출장
-                                        </button>
-                                    </div>
-                                    <div id="cal_div">
-                                        <div id='calendar'></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <div id="c_screen">
-                    <div id="d_screen">
-                        <div class="shadow">
-                            <div id="b_screen_1_2_1">
-                                <div id="on_off_check">
-                                    <div id="onoff-grid-container" th:each="item : ${userMap}">
-                                        <div class="item">
-                                            <table class="onoff_table" th:id="${item.get('user').USERNUM}">
+                                    <div id="com_content_on_off">
+                                        <div id="user_on_off_div">
+                                            <table id="usertable">
                                                 <tr>
-                                                    <td rowspan="2" class="img_td">
-                                                        <div class="img_td_div">
-                                                            <img th:src="@{'/upload/' + ${item.get('user').USERIMAGE}}"alt="유저 프로필 이미지"
-                                                                 class="img_list"/>
+                                                    <td rowspan="3" id="img_td">
+                                                        <div id="user_img_div">
+                                                            <img th:src="@{'/upload/' + ${user.USERIMAGE}}"
+                                                                 alt="프로필 사진" id="user_img">
                                                         </div>
                                                     </td>
-                                                    <td class="name_list"
-                                                        th:text="${item.get('user').USERNAME}"></td>
-                                                    <td class="name_list2">출근</td>
-                                                    <td class="name_list2">퇴근</td>
+                                                    <td class="userinfo_div_th">이름</td>
+                                                    <td class="userinfo_div_td"
+                                                        th:text="${session.user.USERNAME}"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="cno_list"
-                                                        th:text="${item.get('user').USERENO}"></td>
-                                                    <td class="cno_list">
-                                                        <div class="on_div"
-                                                             th:data-check="${item.get('oncheck')}">
-                                                            <div class="on_img">
-                                                                <input type="hidden"  th:value="${item.get('userontime')}" th:id="${'ontime'+item.get('user').USERNUM}">
-                                                                <div class="tooltip"></div>
+                                                    <td class="userinfo_div_th">사번</td>
+                                                    <td class="userinfo_div_td"
+                                                        th:text="${session.user.USERENO}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="userinfo_div_th">부서</td>
+                                                    <td class="userinfo_div_td"
+                                                        th:text="${session.user.USERDEPT}"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="on_off_div">
+                                                        <div class="on_off_btn_div1">
+                                                            <div class="on_off_btn_div2">
+                                                                <button id="on" class="onoff_btn">출근</button>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="cno_list">
-                                                        <div class="off_div"
-                                                             th:data-check="${item.get('offcheck')}">
-                                                            <div class="off_img">
-                                                                <input type="hidden"  th:value="${item.get('userofftime')}" th:id="${'offtime'+item.get('user').USERNUM}">
-                                                                <div class="tooltip"></div>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="on_off_div">
+                                                        <div class="on_off_btn_div1">
+                                                            <div class="on_off_btn_div2">
+                                                                <button id="off" class="onoff_btn">퇴근</button>
                                                             </div>
                                                         </div>
                                                     </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="on_off_div" id="on_text">출근 시각</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" class="on_off_div" id="off_text">퇴근 시각</td>
                                                 </tr>
                                             </table>
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="e_screen">
-                        <div class="shadow">
-                            <div class="com_title">
-                                <div class="title">
-                                    <div class="title_1">
-                                    </div>
-                                    <div class="title_2">
-                                        <h4 class="title_text">공지 게시판</h4>
-                                    </div>
-                                    <div class="title_3">
-                                        <a class="more_text" href="/noticeDept/list">+ 더보기</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="com_content">
-                                <div class="board">
-                                    <div id="notice_div">
-                                        <div id="notice-grid-container">
-                                            <div class="notice_item" id="nboardList">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="f_screen">
-                        <div class="shadow">
-                            <div class="com_title">
-                                <div class="title">
+                        <div id="b_screen_2">
+                            <div class="shadow" id="chart_shw">
+                                <div class="com_title">
                                     <div class="title">
-                                        <div class="title_1">
+                                        <h4 class="title_text">업무 시간</h4>
+                                    </div>
+                                </div>
+                                <div class="com_content">
+                                    <div id="b_screen_2_1">
+                                        <div id="chart_btn">
+                                            <div id="chart_btn1">
+                                                <span id="chart_title">월간 근무 시간</span>
+                                            </div>
+                                            <div id="chart_btn2">
+                                                <button id="changeChart">차트 변경</button>
+                                            </div>
                                         </div>
-                                        <div class="title_2">
-                                            <h4 class="title_text">부서 게시판</h4>
-                                        </div>
-                                        <div class="title_3">
-                                            <a class="more_text" href="/boardDept/list">+ 더보기</a>
+                                        <div id="chart_div">
+                                            <div id="main"></div>
+                                            <div id="hoverInfo"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="com_content">
-                                <div class="board">
-                                    <div id="notice_div">
-                                        <div id="notice-grid-container">
-                                            <div class="notice_item" ID="dboardList">
+                        </div>
+                        <div id="b_screen_3">
+                            <div class="shadow" id="cal_shw">
+                                <div class="com_title">
+                                    <div class="title" id="cal_title">
+                                        <h4 class="title_text" id="cal_text">캘린더</h4>
+                                    </div>
+                                </div>
+                                <div class="com_content">
+                                    <div id="calendar_div">
+                                        <div id="cal_btn_div">
+                                            <button class="cal_btn" id="all">출근</button>
+                                            <button class="cal_btn" id="vacation">
+                                                휴가
+                                            </button>
+                                            <button class="cal_btn" id="meeting">
+                                                회의
+                                            </button>
+                                            <button class="cal_btn" id="business">
+                                                출장
+                                            </button>
+                                        </div>
+                                        <div id="cal_div">
+                                            <div id='calendar'></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div id="c_screen">
+                        <div id="d_screen">
+                            <div class="shadow" id="onoff_shw">
+                                <div id="b_screen_1_2_1">
+                                    <div id="on_off_check">
+                                        <div id="onoff-grid-container" th:each="item : ${userMap}">
+                                            <div class="item">
+                                                <table class="onoff_table" th:id="${item.get('user').USERNUM}">
+                                                    <tr>
+                                                        <td rowspan="2" class="img_td">
+                                                            <div class="img_td_div">
+                                                                <img th:src="@{'/upload/' + ${item.get('user').USERIMAGE}}"
+                                                                     alt="유저 프로필 이미지"
+                                                                     class="img_list"/>
+                                                            </div>
+                                                        </td>
+                                                        <td class="name_list"
+                                                            th:text="${item.get('user').USERNAME}"></td>
+                                                        <td class="name_list2">출근</td>
+                                                        <td class="name_list2">퇴근</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="cno_list"
+                                                            th:text="${item.get('user').USERENO}"></td>
+                                                        <td class="cno_list">
+                                                            <div class="on_div"
+                                                                 th:data-check="${item.get('oncheck')}">
+                                                                <div class="on_img">
+                                                                    <input type="hidden"
+                                                                           th:value="${item.get('userontime')}"
+                                                                           th:id="${'ontime'+item.get('user').USERNUM}">
+                                                                    <div class="tooltip"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="cno_list">
+                                                            <div class="off_div"
+                                                                 th:data-check="${item.get('offcheck')}">
+                                                                <div class="off_img">
+                                                                    <input type="hidden"
+                                                                           th:value="${item.get('userofftime')}"
+                                                                           th:id="${'offtime'+item.get('user').USERNUM}">
+                                                                    <div class="tooltip"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div id="e_f_screen">
+                            <div id="e_screen">
+                                <div class="shadow" id="nboard_shw">
+                                    <div class="com_title">
+                                        <div class="title">
+                                            <div class="title_1">
+                                            </div>
+                                            <div class="title_2">
+                                                <h4 class="title_text">공지 게시판</h4>
+                                            </div>
+                                            <div class="title_3">
+                                                <a class="more_text" href="/noticeDept/list">+ 더보기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="com_content">
+                                        <div class="board">
+                                            <div id="notice_div">
+                                                <div id="notice-grid-container">
+                                                    <div class="notice_item" id="nboardList">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="f_screen">
+                                <div class="shadow" id="dboard_shw">
+                                    <div class="com_title">
+                                        <div class="title">
+                                            <div class="title">
+                                                <div class="title_1">
+                                                </div>
+                                                <div class="title_2">
+                                                    <h4 class="title_text">부서 게시판</h4>
+                                                </div>
+                                                <div class="title_3">
+                                                    <a class="more_text" href="/boardDept/list">+ 더보기</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="com_content">
+                                        <div class="board">
+                                            <div id="notice_div">
+                                                <div id="notice-grid-container">
+                                                    <div class="notice_item" ID="dboardList">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="h_screen">
+                        <div id="h_screen_1">
+
+                        </div>
+                        <div id="h_screen_2">
+
                         </div>
                     </div>
                 </div>
+                <div class="a_screen1" id="a_screen1_1"></div>
+            <div id="div1200">
+
             </div>
-            <div class="a_screen1"></div>
         </div>
     </div>
     <div class="popup_layer" id="popup_layer">
@@ -280,124 +302,123 @@
     <script src="js/chart.js"></script>
     <script src="js/main.js"></script>
     <script>
-        $(function (){
-            $.ajax({
-                type: 'get',
-                url : '/dboardList',
-                data: {
-                    dept : userDept
-                },
-                success: function (obj){
-                    console.log(obj);
-                    if (obj.length == 0) {
-                        $('#dboardList').html('부서게시판 글이 없습니다.');
-                    } else {
-                        let userListHTML = '';
-                        for (let i = 0; i < obj.length; i++) {
-                            let item = obj[i];
-                            userListHTML += `
-                                         <table class="notice_table" onclick="location.href='/boardDept/updateCnt/${item.dboardNum}'">
-                                                    <tr>
-                                                        <td class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">${item.dboardDept}</div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="notice_title_td">${item.dboardTitle}</td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td2">${item.dboardWriter}</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                        <td class="notice_writer_cnt_td2" id="bcnt">${item.dboardCnt}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2">
-                                                            <div class="notice_img_div">
-                                                                <div class="notice_img_div2">
-                                                                    <img class="img"
-                                                                       src="https://i.ibb.co/60TZMPY/noimage.png">                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td colspan="4" rowspan="2" class="notice_content_td">
-                                                            <div class="notice_content_div">
-                                                                <div class="notice_content_div2">
-                                                                    <span>${item.dboardContent}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                    `;
-                        }
-                        $('#dboardList').html(userListHTML);
-                    }
-                },
-                error: function (err){
-                    console.log(err);
+        function moveShadow() {
+            let windowWidth = window.innerWidth;
+            let bScreen2 = document.getElementById('b_screen_2');
+            let dScreen = document.getElementById('d_screen');
+            let bScreen3 = document.getElementById('b_screen_3');
+            let hScreen = document.getElementById('h_screen');
+            let eScreen = document.getElementById('e_screen');
+            let fScreen = document.getElementById('f_screen');
+            let hScreen2 = document.getElementById('h_screen_1');
+            let hScreen3 = document.getElementById('h_screen_2');
+            let div1200 = document.getElementById('div1200');
+            let emt4 = document.getElementById('_emt4');
+
+            $('#div1200').css("display", "none");
+            let shadow1 = document.querySelector('#div1200 #a_screen1');
+            if (shadow1) {
+                emt4.appendChild(shadow1);
+            }
+            let shadow2 = document.querySelector('#div1200 #a_screen2');
+            if (shadow2) {
+                emt4.appendChild(shadow2);
+            }
+            let shadow3 = document.querySelector('#div1200 #a_screen1_1');
+            if (shadow3) {
+                emt4.appendChild(shadow3);
+            }
+
+            if (windowWidth <= 1290) {
+                let shadow1 = document.querySelector('#_emt4 #a_screen1');
+                if (shadow1) {
+                    div1200.appendChild(shadow1);
                 }
-            });
-            $.ajax({
-                type: 'get',
-                url : '/nboardList',
-                success: function (obj){
-                    console.log(obj);
-                    if (obj.length == 0) {
-                        $('#nboardList').html('공지게시판 글이 없습니다.');
-                    } else {
-                        let userListHTML = '';
-                        for (let i = 0; i < obj.length; i++) {
-                            let item = obj[i];
-                            userListHTML += `
-                                         <table class="notice_table" onclick="location.href='/noticeDept/updateCnt/${item.nboardNum}'">
-                                                    <tr>
-                                                        <td class="notice_td">
-                                                            <div class="notice_td_div">
-                                                                <div class="notice_type">전체</div>
-                                                            </div>
-                                                        </td>
-                                                        <td class="notice_title_td">${item.nboardTitle}</td>
-                                                        <td class="notice_writer_cnt_td">작성자</td>
-                                                        <td class="notice_writer_cnt_td2">${item.nboardWriter}</td>
-                                                        <td class="notice_writer_cnt_td">조회수</td>
-                                                        <td class="notice_writer_cnt_td2" id="bcnt">${item.nboardCnt}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2">
-                                                            <div class="notice_img_div">
-                                                                <div class="notice_img_div2">
-                                                                    <img class="img"
-                                                                         src="https://i.ibb.co/60TZMPY/noimage.png">
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td colspan="4" rowspan="2" class="notice_content_td">
-                                                            <div class="notice_content_div">
-                                                                <div class="notice_content_div2">
-                                                                    <span>${item.nboardContent}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                    `;
-                        }
-                        $('#nboardList').html(userListHTML);
-                    }
-                },
-                error: function (err){
-                    console.log(err);
+                let shadow2 = document.querySelector('#_emt4 #a_screen2');
+                if (shadow2) {
+                    div1200.appendChild(shadow2);
                 }
-            });
-            });
+                let shadow3 = document.querySelector('#_emt4 #a_screen1_1');
+                if (shadow3) {
+                    div1200.appendChild(shadow3);
+                }
+                $('#div1200').css("display", "");
+
+                let shadow = document.querySelector('#d_screen #chart_shw');
+                if (shadow) {
+                    bScreen3.appendChild(shadow);
+                }
+                let shadow4= document.querySelector('#b_screen_2 #chart_shw');
+                if (shadow4) {
+                    bScreen3.appendChild(shadow4);
+                }
+
+                let shadow5= document.querySelector('#b_screen_3 #cal_shw');
+                if (shadow5) {
+                    dScreen.appendChild(shadow5);
+                }
+
+                let nboard= document.querySelector('#e_screen #nboard_shw');
+                if (nboard) {
+                    hScreen2.appendChild(nboard);
+                }
+                let dboard= document.querySelector('#f_screen #dboard_shw');
+                if (dboard) {
+                    hScreen3.appendChild(dboard);
+                }
+
+
+
+            }else if (windowWidth <= 1600) {
+                let shadow = document.querySelector('#b_screen_2 #chart_shw');
+                if (shadow) {
+                    dScreen.appendChild(shadow);
+                }
+                let shadow2 = document.querySelector('#b_screen_3 #chart_shw');
+                if (shadow2) {
+                    dScreen.appendChild(shadow2);
+                }
+
+                let shadow5= document.querySelector('#d_screen #cal_shw');
+                if (shadow5) {
+                    bScreen3.appendChild(shadow5);
+                }
+
+                let nboard= document.querySelector('#h_screen_1 #nboard_shw');
+                if (nboard) {
+                    eScreen.appendChild(nboard);
+                }
+
+                let dboard= document.querySelector('#h_screen_2 #dboard_shw');
+                if (dboard) {
+                    fScreen.appendChild(dboard);
+                }
+
+            } else {
+                let shadow = document.querySelector('#d_screen #chart_shw');
+                if (shadow) {
+                    bScreen2.appendChild(shadow);
+                }
+                let shadow2 = document.querySelector('#b_screen_3 #chart_shw');
+                if (shadow2) {
+                    bScreen2.appendChild(shadow2);
+                }
+                let shadow3= document.querySelector('#d_screen #cal_shw');
+                if (shadow3) {
+                    bScreen3.appendChild(shadow3);
+                }
+                let nboard= document.querySelector('#h_screen_1 #nboard_shw');
+                if (nboard) {
+                    eScreen.appendChild(nboard);
+                }
+                let dboard= document.querySelector('#h_screen_2 #dboard_shw');
+                if (dboard) {
+                    fScreen.appendChild(dboard);
+                }
+            }
+        }
+        window.addEventListener('load', moveShadow);
+        window.addEventListener('resize', moveShadow);
     </script>
 </th:block>
 </html>
