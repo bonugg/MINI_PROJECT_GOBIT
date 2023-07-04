@@ -44,6 +44,7 @@ a {
 .sort-btn:hover{
     color: white;
     background-color: #62A9EB;
+    transition: background-color 0.3s ease;
 }
 /* 정렬 버튼 */
 
@@ -99,6 +100,7 @@ a {
 #btn_search:hover {
     color: white;
     background-color: #62A9EB;
+    transition: background-color 0.3s ease;
 }
 /* 검색창 */
 
@@ -148,8 +150,8 @@ a {
     width: 10%;
 }
 .table-title > a:hover {
-    color: white;
-    background-color: #62A9EB;
+    transition: background-color 0.3s ease;
+    background-color: #f0f0f0;
 }
 /* 게시판 테이블 */
 
@@ -183,6 +185,7 @@ a {
 .page-link:hover{
     color: white;
     background-color: #62A9EB;
+    transition: background-color 0.3s ease;
 }
 
 .div-writeBtn {
@@ -197,6 +200,7 @@ a {
 .div-writeBtn:hover {
     color: white;
     background-color: #62A9EB;
+    transition: background-color 0.3s ease;
 }
 
 /* 페이징 박스 */

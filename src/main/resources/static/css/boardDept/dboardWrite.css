@@ -107,11 +107,13 @@ form {
 .fn_add_btn:hover {
     color: white;
     background: #62A9EB;
+    transition: background-color 0.3s ease;
 }
 
 .file_del_btn:hover {
     color: white;
     background: #fa6362;
+    transition: background-color 0.3s ease;
 }
 
 #file_input_label {
@@ -131,8 +133,9 @@ form {
     width: 200px;
 }
 #file_input_label_btn:hover{
-    color: #181F42;
-    background: #8c8c8c;
+    color: black;
+    background-color: #8c8c8c;
+    transition: background-color 0.3s ease;
 }
 
 

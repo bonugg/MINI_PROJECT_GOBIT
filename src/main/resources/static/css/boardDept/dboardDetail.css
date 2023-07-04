@@ -154,6 +154,7 @@ a {
 .div-board-btns > *:hover{
     color: white;
     background-color: #62A9EB;
+    transition: background-color 0.3s ease;
 }
 /* 버튼들 */
 
@@ -219,6 +220,7 @@ a {
     border: none;
     color: white;
     background: #62A9EB;
+    transition: background-color 0.3s ease;
     position: absolute; /* 절대적인 위치 설정 */
     top: 50%; /* 부모 요소의 50% 위치로 이동 */
     left: 50%; /* 부모 요소의 50% 위치로 이동 */
