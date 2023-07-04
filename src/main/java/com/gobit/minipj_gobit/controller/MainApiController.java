@@ -1,11 +1,13 @@
 package com.gobit.minipj_gobit.controller;
 
+import com.gobit.minipj_gobit.boardDept.entity.dBoard;
+import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
+import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
+import com.gobit.minipj_gobit.noticeDept.repository.nBoardRepository;
 import com.gobit.minipj_gobit.entity.Calendar;
-import com.gobit.minipj_gobit.entity.Testentity;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.entity.UserOnOff;
 import com.gobit.minipj_gobit.repository.CalendarRepository;
-import com.gobit.minipj_gobit.repository.TestRepository;
 import com.gobit.minipj_gobit.repository.UserOnOffRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +27,8 @@ public class MainApiController {
     private HttpSession httpSession;
     private final UserOnOffRepository userOnOffRepository;
     private final CalendarRepository calendarRepository;
-    private final TestRepository testRepository;
+    private final dBoardRepository dBoardRepository;
+    private final nBoardRepository nBoardRepository;
 
     @PostMapping(value = "/onadd")
     public String onadd() throws Exception {
@@ -51,11 +52,6 @@ public class MainApiController {
         userOnOffRepository.flush();
         calendarRepository.save(calendar);
         calendarRepository.flush();
-
-        Testentity testentity = new Testentity();
-        testentity.setUser(user);
-        testentity.setCheck("미승인");
-        testRepository.save(testentity);
 
         return outputDateString;
     }
@@ -106,10 +102,6 @@ public class MainApiController {
         calendarRepository.save(calendar);
         calendarRepository.flush();
 
-        Testentity testentity = testRepository.findByUser(user).get();
-        testentity.setCheck("승인");
-        testRepository.save(testentity);
-
         return outputDateString;
     }
 
@@ -144,5 +136,36 @@ public class MainApiController {
         result.put("yearChart", yearChartValue);
 
         return result;
+    }
+
+    @GetMapping("/dboardList")
+    public List<Map<String, Object>> dBoardListGet(@RequestParam("dept") String dept){
+        List<dBoard> dBoardList = dBoardRepository.findBydBoardDept(dept);
+        List<Map<String, Object>> dBoardListmap = dBoardList.stream().map(dboard -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("dboardNum", dboard.getId());
+            map.put("dboardDept", dboard.getUser().getUSERDEPT());
+            map.put("dboardTitle", dboard.getTitle());
+            map.put("dboardContent", dboard.getContent());
+            map.put("dboardWriter", dboard.getUser().getUSERNAME());
+            map.put("dboardCnt", dboard.getCnt());
+            return map;
+        }).collect(Collectors.toList());
+        return dBoardListmap;
+    }
+
+    @GetMapping("/nboardList")
+    public List<Map<String, Object>> nBoardListGet(){
+        List<nBoard> nBoardList = nBoardRepository.findBynBoardTop5();
+        List<Map<String, Object>> nBoardListmap = nBoardList.stream().map(nboard -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("nboardNum", nboard.getId());
+            map.put("nboardTitle", nboard.getTitle());
+            map.put("nboardContent", nboard.getContent());
+            map.put("nboardWriter", nboard.getUser().getUSERNAME());
+            map.put("nboardCnt", nboard.getCnt());
+            return map;
+        }).collect(Collectors.toList());
+        return nBoardListmap;
     }
 }

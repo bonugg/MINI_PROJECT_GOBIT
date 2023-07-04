@@ -1,18 +1,14 @@
 package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.dto.ResponseDTO;
-import com.gobit.minipj_gobit.entity.Calendar;
+import com.gobit.minipj_gobit.entity.ApprovalListener;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
+import jakarta.persistence.EntityListeners;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,6 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@EntityListeners(ApprovalListener.class)
 public class AdminController {
 
     private final UserRepository userRepository;
@@ -38,12 +35,33 @@ public class AdminController {
     @PostMapping("/changePosition")
     public String changePosition(@RequestParam("usernum") long usernum,
                                  @RequestParam("position") String position) {
-        if (position.equals(null)) {
+        if (position.equals("")) {
             return "실패";
         } else {
             User user = userRepository.findById(usernum).get();
-            user.setUSER_POSITION(position);
+            user.setUSERPOSITION(position);
             userRepository.save(user);
+            return "성공";
+        }
+    }
+
+    @PostMapping("/chkmodify")
+    public String changePositionChk(HttpServletRequest req,
+                                    @RequestParam("userposition") String userposition) {
+        // ajax를 통해 넘어온 배열 데이터 선언
+        String[] usernums = req.getParameterValues("usernums");
+        if (userposition.equals("")) {
+            return "직급없음";
+        }else if(usernums[0].equals("데이터없음")){
+            return "체크없음";
+        } else {
+            for (int i = 0; i< usernums.length; i++){
+                User user = userRepository.findById(Long.valueOf(usernums[i])).get();
+                if(!(user.getUSERPOSITION().equals(userposition))){
+                    user.setUSERPOSITION(userposition);
+                    userRepository.save(user);
+                }
+            }
             return "성공";
         }
     }
@@ -70,15 +88,15 @@ public class AdminController {
 
     @GetMapping("/searchDept")
     public List<Map<String, Object>> searchit(@RequestParam("searchText") String searchText
-    ,@RequestParam("userdept") String userdept){
+    ,@RequestParam("userdept") String userdept, @RequestParam("searchTag") String searchTag){
         System.out.println(searchText);
-        List<User> userList = userRepository.findByUSERNAMEContainingAndUSERDEPT(searchText, userdept);
+        List<User> userList = userRepository.findByUSERNAMEContainingAndUSERPOSITIONContainingAndUSERDEPT(searchText, searchTag, userdept);
         List<Map<String, Object>> searchuserListmap = userList.stream().map(user -> {
             Map<String, Object> map = new HashMap<>();
             map.put("userNum", user.getUSERNUM());
             map.put("userName", user.getUSERNAME());
             map.put("userEno", user.getUSERENO());
-            map.put("userPo", user.getUSER_POSITION());
+            map.put("userPo", user.getUSERPOSITION());
             map.put("userImage", user.getUSERIMAGE());
             map.put("userExitChk", user.getUSER_EXIT_CHK());
             return map;
@@ -95,7 +113,7 @@ public class AdminController {
             map.put("userNum", user.getUSERNUM());
             map.put("userName", user.getUSERNAME());
             map.put("userEno", user.getUSERENO());
-            map.put("userPo", user.getUSER_POSITION());
+            map.put("userPo", user.getUSERPOSITION());
             map.put("userImage", user.getUSERIMAGE());
             map.put("userExitChk", user.getUSER_EXIT_CHK());
             return map;

@@ -2,7 +2,7 @@ $(function () {
     if ($('#hid').text() != 0) {
         $('#hid_1').css("display", "block");
         $('#hid_2').css("display", "block");
-        $('#hid').css("display", "block").text(jsonObj.testcnt);
+        $('#hid').css("display", "block");
     }
 // 현재 페이지 URL이 /main 인 경우에만 웹소켓 연결을 시작합니다.
     window.onload = () => {
@@ -120,12 +120,3 @@ $(function () {
         }, 3000);
     }
 });
-
-function formatDatesec(dateString) {
-    let date = new Date(dateString);
-    let hours = date.getHours();
-    let minutes = ('0' + date.getMinutes()).slice(-2);
-    let sec = ('0' + date.getSeconds()).slice(-2);
-
-    return `${hours}시 ${minutes}분 ${sec}초`;
-}

@@ -15,8 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUSERNUM(long usernum);
 
-    int countByUSERDEPT(String dept);
-
-    List<User> findByUSERNAMEContainingAndUSERDEPT(String searchText, String userdept);
+    List<User> findByUSERNAMEContainingAndUSERPOSITIONContainingAndUSERDEPT(String searchText,String searchTag, String userdept);
 
 }

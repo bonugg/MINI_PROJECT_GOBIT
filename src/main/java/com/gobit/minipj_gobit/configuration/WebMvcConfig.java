@@ -1,7 +1,7 @@
 package com.gobit.minipj_gobit.configuration;
 
 
-import com.gobit.minipj_gobit.repository.TestRepository;
+import com.gobit.minipj_gobit.repository.ApprovalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
-    private final TestRepository testRepository;
+    private final ApprovalRepository approvalRepository;
 
     @Value("${file.resource}")
     private String filePath;
@@ -25,7 +25,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new TeamLeaderInterceptor(testRepository))
+        registry.addInterceptor(new TeamLeaderInterceptor(approvalRepository))
                 .excludePathPatterns("/login")    // 로그인 관련 요청은 제외
                 .excludePathPatterns("/login/**")    // 로그인 관련 요청은 제외
                 .excludePathPatterns("/signup")    // 회원가입 관련 요청은 제외
