@@ -216,7 +216,7 @@ td{
     float: right;
 }
 
-#btnSave, #btnDelete{
+#btnUpdate, #btnDelete{
     background-color: #181F42;
     color: #ffffff;
     border-radius: 3px;
