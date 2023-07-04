@@ -8,8 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.gobit.minipj_gobit.boardDept.file.FileUtils.UPLOAD_PATH;
 
 @Service
 @RequiredArgsConstructor
@@ -32,11 +38,6 @@ public class FileService {
         return changeListMap(fileList);
     }
 
-    @Transactional
-    public void deleteAllFile(dBoard board) {
-        fileRepository.deleteAllByBoard(board);
-    }
-
     public dBoardFile findById(Long id) {
         return fileRepository.findById(id).get();
     }
@@ -54,4 +55,55 @@ public class FileService {
 
         return returnListMap;
     }
+
+    public List<dBoardFile> findByFiles(Long boardId) {
+        dBoard board = boardRepository.findById(boardId).get();
+        List<dBoardFile> fileList = fileRepository.findAllByBoard(board);
+        return fileList;
+    }
+
+    public void modifyFiles(List<String> existingFiles, List<dBoardFile> modifiedFiles) {
+        List<dBoardFile> newFiles = new ArrayList<>();
+
+        for (dBoardFile file : modifiedFiles) {
+            boolean isExisting = false;
+
+            for (String str : existingFiles) {
+                if (str.equals(file.getOriginalName())) {
+                    isExisting = true;
+                    break;
+                }
+            }
+
+            if (!isExisting) {
+                newFiles.add(file);
+            }
+        }
+
+        for (dBoardFile file : newFiles) {
+            deleteFile(file);
+            fileRepository.delete(file);
+        }
+    }
+
+    public void deleteFile(dBoardFile file) {
+        String uploadedDate = file.getCreateDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyMMdd"));
+        String filename = file.getSaveName();
+        Path filePath = Paths.get(UPLOAD_PATH, uploadedDate, filename);
+
+        try {
+            // 파일 삭제
+            Files.deleteIfExists(filePath);
+
+            // 파일이 삭제되었는지 확인
+            if (Files.exists(filePath)) {
+                System.out.println("파일 삭제에 실패하였습니다.");
+            } else {
+                System.out.println("파일이 성공적으로 삭제되었습니다.");
+            }
+        } catch (Exception e) {
+            System.out.println("파일 삭제 중 오류가 발생하였습니다: " + e.getMessage());
+        }
+    }
+
 }

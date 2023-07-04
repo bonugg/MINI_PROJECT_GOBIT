@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface dBoardFileRepository extends JpaRepository<dBoardFile, Long> {
     List<dBoardFile> findAllByBoard(dBoard board);
-
-    void deleteAllByBoard(dBoard board);
 }

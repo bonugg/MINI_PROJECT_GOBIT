@@ -109,19 +109,22 @@ public class dBoardController {
     public String modifyPost(@RequestParam("id") Long id,
                              @RequestParam("title") String title,
                              @RequestParam("content") String content,
+                             @RequestParam(value = "items", required = false, defaultValue = "null") List<String> exFilesStr,
                              @RequestParam("files") List<MultipartFile> multipartFiles) {
         //게시글 수정
         this.dBoardService.modify(id, title, content);
 
-        if (!multipartFiles.isEmpty()) {
+        if (exFilesStr != null) {
+            //기존 파일리스트 조회
+            List<dBoardFile> exFiles = fileService.findByFiles(id);
 
-            //기존 파일 리스트
-            List<dBoardFile> existingFiles = dBoardService.getBoard(id).getFiles();
-
-            List<dBoardFile> modifyFiles = fileUtils.uploadFiles(multipartFiles);
-
-            fileService.saveFiles(id, modifyFiles);
+            //수정된 파일 삭제
+            fileService.modifyFiles(exFilesStr, exFiles);
         }
+
+        //새로운 파일 저장
+        List<dBoardFile> files = fileUtils.uploadFiles(multipartFiles);
+        fileService.saveFiles(id, files);
 
         return "redirect:/boardDept/list";
     }

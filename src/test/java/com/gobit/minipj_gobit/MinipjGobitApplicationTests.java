@@ -62,6 +62,8 @@ class MinipjGobitApplicationTests {
     void 파일리스트_확인() {
         dBoard board = dBoardRepository.findById(Long.valueOf(297)).get();
         List<dBoardFile> files = fileRepository.findAllByBoard(board);
-        System.out.println(files.get(0).getOriginalName());
+        for (dBoardFile file : files) {
+            System.out.println(file.getOriginalName());
+        }
     }
 }

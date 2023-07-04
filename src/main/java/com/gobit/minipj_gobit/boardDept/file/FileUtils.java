@@ -21,7 +21,7 @@ import java.util.UUID;
 @Component
 public class FileUtils {
 
-    private final  String uploadPath = "/Users/minje/Desktop/upload";
+    public static final  String UPLOAD_PATH = "/Users/minje/Desktop/upload";
 
     /**
      * 다중 파일 업로드
@@ -83,7 +83,7 @@ public class FileUtils {
      * @return 업로드 경로
      */
     private String getUploadPath() {
-        return makeDirectories(uploadPath);
+        return makeDirectories(UPLOAD_PATH);
     }
 
     /**
@@ -92,7 +92,7 @@ public class FileUtils {
      * @return 업로드 경로
      */
     private String getUploadPath(final String addPath) {
-        return makeDirectories(uploadPath + File.separator + addPath);
+        return makeDirectories(UPLOAD_PATH + File.separator + addPath);
     }
 
     /**
@@ -111,7 +111,7 @@ public class FileUtils {
     public Resource readFileAsResource(final dBoardFile file) {
         String uploadedDate = file.getCreateDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyMMdd"));
         String filename = file.getSaveName();
-        Path filePath = Paths.get(uploadPath, uploadedDate, filename);
+        Path filePath = Paths.get(UPLOAD_PATH, uploadedDate, filename);
         try {
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() == false || resource.isFile() == false) {

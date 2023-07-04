@@ -67,11 +67,8 @@
                                 <div class="file_list">
                                     <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>추가</span></button>
                                     <div th:each="file : ${board.files}">
-                                        <div class="file_input" >
-                                            <input type="text" readonly class="file_origin_name" th:value="${file.originalName}"/>
-                                            <label>
-                                                <input type="file" onchange="selectFile(this);" />
-                                            </label>
+                                        <div class="file_input">
+                                            <input type="text" readonly class="file_origin_name" name="items" th:value="${file.originalName}"/>
                                         </div>
                                         <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
                                     </div>
@@ -83,7 +80,6 @@
 
                             <!-- 버튼들 -->
                             <div class="div-board-btns">
-                                <button type="button" class="upload">수정</button>
                                 <button type="submit">완료</button>
                                 <button type="button" class="cancel" data-uri="/boardDept/list">취소</button>
                             </div>
@@ -136,7 +132,7 @@
             <div class="file_input">
                 <input type="text" readonly />
                 <label>
-                    <input type="file" name="files" class="new_files" onchange="selectFile(this);" />
+                    <input type="file" name="files" onchange="selectFile(this);" />
                 </label>
             </div>
             <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
