@@ -25,15 +25,16 @@
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
                 <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
+                <p style="margin-left: 40px; margin-top: 40px; font-size: 15px; color: gray">부서게시판</p>
                 <div>
                     <!-- 머리부분 -->
-                    <div class="heead">
-                        <div class="div-title">
-                            <div class="title">
-                                <h1>부서게시판</h1>
-                            </div>
-                        </div>
-                    </div>
+<!--                    <div class="heead">-->
+<!--                        <div class="div-title">-->
+<!--                            <div class="title">-->
+<!--                                <h1>부서게시판</h1>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <!-- 머리부분 -->
 
 
@@ -41,12 +42,11 @@
                     <div class="boody">
 
 
-                        <form th:object="${boardForm}" method="post" enctype="multipart/form-data">
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <form method="post" enctype="multipart/form-data">
                             <!-- 제목 -->
                             <div class="div-botitle">
-                                <div class="board-title" for="title">
-                                    <input type="text" name="title" th:field="*{title}" placeholder="여기에 제목을 입력하세요.">
+                                <div class="board-title">
+                                    <input type="text" name="title" placeholder="여기에 제목을 입력하세요.">
                                 </div>
                             </div>
                             <!-- 제목 -->
@@ -55,7 +55,7 @@
                             <!-- 내용 -->
                             <div class="div-content">
                                 <div class="board-content" for="content">
-                                    <textarea id="summernote" name="content" th:field="*{content}" placeholder="여기에 내용을 입력하세요."></textarea>
+                                    <textarea id="summernote" name="content" placeholder="여기에 내용을 입력하세요."></textarea>
                                 </div>
                             </div>
                             <!-- 내용 -->
@@ -63,20 +63,21 @@
 
                             <!-- 첨부파일 -->
                             <div class="div-values">
-
+                                <label>첨부파일</label>
                                 <div class="file_list">
-                                    <div>
+                                    <div class="file_select">
                                         <div class="file_input">
-                                            <input type="text" readonly />
-                                            <label>
-                                                <input type="file" name="files" onchange="selectFile(this);" />
+                                            <label class="file_input" for="file_input_label">
+                                                <input type="text" readonly id="file_input_label_text"/>
+                                                <label id="file_input_label_btn">첨부파일
+                                                    <input type="file" name="files" id="file_input_label" onchange="selectFile(this);" />
+                                                </label>
                                             </label>
                                         </div>
                                         <button type="button" onclick="removeFile(this);" class="file_del_btn"><span>삭제</span></button>
-                                        <button type="button" onclick="addFile();" class="fn_add_btn"><span>파일 추가</span></button>
+                                        <button type="button" onclick="addFile();" class="fn_add_btn"><span>추가</span></button>
                                     </div>
                                 </div>
-
                             </div>
                             <!-- 첨부파일 -->
 
@@ -149,10 +150,10 @@
     function addFile() {
         const fileDiv = document.createElement('div');
         fileDiv.innerHTML =`
-            <div class="file_input">
-                <input type="text" readonly />
-                <label>
-                    <input type="file" name="files" onchange="selectFile(this);" />
+            <div class="file_input" for="file_input_label">
+                <input type="text" readonly id="file_input_label_text"/>
+                <label id="file_input_label_btn">첨부파일
+                    <input type="file" name="files" onchange="selectFile(this);" id="file_input_label"/>
                 </label>
             </div>
             <button type="button" onclick="removeFile(this);" class="file_del_btn"><span>삭제</span></button>

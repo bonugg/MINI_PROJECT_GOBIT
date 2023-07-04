@@ -4,9 +4,8 @@ html {
 
 body {
     width: 100vw;
-    height: 100vh;
     min-width: 1200px;
-    background-color: #F6F8FF;
+    background: #F6F8FF;
 }
 
 a {
@@ -31,7 +30,6 @@ a {
     background-color: white;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
     width: 70%;
     margin: 0 auto;
 }
@@ -80,9 +78,58 @@ a {
 
 /*첨부파일 내용 부분*/
 .div-files {
-    width: 90%;
-    justify-content: flex-start;
+    position: relative;
 }
+
+.label-hover:hover + .files-hov,
+.label-hover + .files-hov:hover {
+    display: block;
+}
+
+.label-hover {
+    cursor: pointer;
+}
+
+.files-hov {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 150px;
+    text-align: center;
+    display: none;
+    max-height: 150px; /* 원하는 높이로 조정 */
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.files-hov .div-file-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.files-hov .div-file-list:last-child {
+    margin-bottom: 0;
+}
+
+.files-hov .div-file-list a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.files-hov .div-file-list a:hover {
+    background-color: #f0f0f0;
+}
+
 /*첨부파일 내용 부분*/
 
 
@@ -109,6 +156,7 @@ a {
 .div-board-btns > *:hover{
     color: white;
     background-color: #62A9EB;
+    transition: background-color 0.3s ease;
 }
 /* 버튼들 */
 
@@ -173,7 +221,8 @@ a {
     width: 70px;
     border: none;
     color: white;
-    background: skyblue;
+    background: #62A9EB;
+    transition: background-color 0.3s ease;
     position: absolute; /* 절대적인 위치 설정 */
     top: 50%; /* 부모 요소의 50% 위치로 이동 */
     left: 50%; /* 부모 요소의 50% 위치로 이동 */

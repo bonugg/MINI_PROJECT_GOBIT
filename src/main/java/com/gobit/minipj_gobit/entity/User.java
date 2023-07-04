@@ -52,21 +52,23 @@ public class User {
     private String USER_BIRTH;
     @Column
     private String USER_EXIT;
-    @Column
+    @Column(columnDefinition = "char default 'N'")
     private char USER_EXIT_CHK;
     @Column
-    @ColumnDefault("'img/user/user.png'")
     private String imagePath;
+
+    @Column(name = "USER_IMAGE")
+    private String USERIMAGE;
+
+    @Lob
+    @Column(name = "default_image")
+    private byte[] defaultImage;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<UserOnOff> userOnOffList = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Calendar> calendarList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Testentity> testentityList = new ArrayList<>();
-
 
 
     public PasswordChangeRequestDTO EntityToDTO() {
@@ -78,4 +80,24 @@ public class User {
         return PCDTO;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "USERNUM=" + USERNUM +
+                ", USERENO=" + USERENO +
+                ", USERNAME='" + USERNAME + '\'' +
+                ", USERDEPT='" + USERDEPT + '\'' +
+                ", USER_POSITION='" + USER_POSITION + '\'' +
+                ", USER_PWD='" + USER_PWD + '\'' +
+                ", USER_EMAIL='" + USER_EMAIL + '\'' +
+                ", USER_PHONE='" + USER_PHONE + '\'' +
+                ", USER_ADDRESS='" + USER_ADDRESS + '\'' +
+                ", USER_JOIN='" + USER_JOIN + '\'' +
+                ", USER_BIRTH='" + USER_BIRTH + '\'' +
+                ", USER_EXIT='" + USER_EXIT + '\'' +
+                ", USER_EXIT_CHK=" + USER_EXIT_CHK +
+                ", imagePath='" + imagePath + '\'' +
+                ", USERIMAGE='" + USERIMAGE + '\'' +
+                '}';
+    }
 }

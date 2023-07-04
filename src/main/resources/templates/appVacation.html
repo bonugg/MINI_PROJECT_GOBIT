@@ -26,39 +26,41 @@
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="insertForm" action="/app/vacation" method="post">
+                        <form id="insertForm" action="/appRequest/vacation" method="post">
+                            <input type="hidden" name="appSort" value="V">
+                            <input type="hidden" name="appState" value="미승인">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>휴가날짜</div>
                                     <div class="input-date-form">
-                                        <input type="date" id="inputDate-start" required onselect="printDate()">
+                                        <input type="datetime-local" id="input-appStart" name="appStart" required onselect="printDate()">
                                         <p>~</p>
-                                        <input type="date" id="inputDate-end" required onselect="printDate()">
+                                        <!--inputDate-end"-->
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onselect="printDate()">
                                     </div>
                                 </div>
                                 <div class="input-user">
                                     <div>신청자</div>
                                     <div class="input-user-form">
+                                        <input type="hidden" name="userNum" th:value="${session.user.USERNUM}">
                                         <p th:text="${session.user.USERNAME}"></p>
                                     </div>
                                 </div>
                                 <div class="input-type">
                                     <div>휴가 종류</div>
                                     <div class="input-place-form">
-                                        <form action="#" name="inputType" method="post">
-                                            <select id="vacationType" required onselect="printType()">
+                                            <select id="input-appVacType" name="appVacType" required onselect="printType()">
                                                 <option value="morningOff">오전반차</option>
                                                 <option value="afternoonOff">오후반차</option>
                                                 <option value="dayOff">연차</option>
                                                 <option value="sickDay">병가</option>
                                             </select>
-                                        </form>
                                     </div>
                                 </div>
                                 <div class="input-text">
                                     <div>휴가 사유</div>
                                     <div class="input-text-form">
-                            <textarea id="inputContent" style="resize:vertical" cols="50"
+                            <textarea id="input-appContent" name="appContent" style="resize:vertical" cols="50"
                                       rows="1" required onkeyup="printContent()"></textarea>
                                     </div>
                                 </div>
@@ -70,7 +72,7 @@
                                         <table>
                                             <tr>
                                                 <td>문서번호</td>
-                                                <td>123456</td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td>부서</td>
@@ -78,7 +80,7 @@
                                             </tr>
                                             <tr>
                                                 <td>기안일</td>
-                                                <td>20230202</td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td>기안자</td>
@@ -150,7 +152,6 @@
 </div>
 </body>
 <th:block layout:fragment="script">
-    <script src="js/appRequest.js"></script>
     <script src="js/appVacation.js"></script>
 </th:block>
 </html>
