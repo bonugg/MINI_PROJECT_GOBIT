@@ -42,7 +42,6 @@ public class SecurityConfig {
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/img/**").permitAll()
-                        .requestMatchers("/file/**").permitAll()
                         .requestMatchers("/login", "/signup", "/signup").permitAll()
                         .requestMatchers("/polling", "/onadd", "/offadd", "/main/calendar").permitAll()
                         .requestMatchers("/memberSign", "/memberSign").hasRole("ADMIN")
