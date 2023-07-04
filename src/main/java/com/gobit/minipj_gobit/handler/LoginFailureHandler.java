@@ -3,6 +3,7 @@ package com.gobit.minipj_gobit.handler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,24 +16,19 @@ import java.net.URLEncoder;
 @Component
 public class LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request,
-                                        HttpServletResponse response,
-                                        AuthenticationException exception)
-            throws IOException, ServletException {
-        System.out.println(exception.getMessage());
-
-        String errorMessage = getExceptionMessage(exception);
-        errorMessage = URLEncoder.encode(errorMessage, "UTF-8");
-
-        setDefaultFailureUrl("/login?error=true&errorMsg=" + errorMessage);
-        super.onAuthenticationFailure(request, response, exception);
-    }
-
-    private String getExceptionMessage(AuthenticationException exception) {
-        if(exception instanceof BadCredentialsException) {
-            return "아이디 또는 비밀번호 오류";
-        }else {
-            return "확인되지 않은 에러";
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                        AuthenticationException exception) throws IOException, ServletException {
+        String errorMessage;
+        if (exception instanceof BadCredentialsException) {
+            errorMessage = "아이디 또는 비밀번호가 맞지 않습니다. 다시 확인해 주세요.";
+        } else if (exception instanceof AuthenticationCredentialsNotFoundException) {
+            errorMessage = "인증 요청이 거부되었습니다.";
+        } else {
+            errorMessage = "에러";
         }
+        errorMessage = URLEncoder.encode(errorMessage, "UTF-8");
+        setDefaultFailureUrl("/login?error=true&exception="+ errorMessage);
+
+        super.onAuthenticationFailure(request, response, exception);
     }
 }

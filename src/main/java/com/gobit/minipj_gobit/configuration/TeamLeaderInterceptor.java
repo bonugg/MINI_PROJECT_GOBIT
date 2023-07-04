@@ -1,21 +1,17 @@
 package com.gobit.minipj_gobit.configuration;
 
 import com.gobit.minipj_gobit.entity.User;
-import com.gobit.minipj_gobit.repository.TestRepository;
+import com.gobit.minipj_gobit.repository.ApprovalRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
-
 @RequiredArgsConstructor
 public class TeamLeaderInterceptor implements HandlerInterceptor {
-    private final TestRepository testRepository;
+    private final ApprovalRepository approvalRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -45,7 +41,7 @@ public class TeamLeaderInterceptor implements HandlerInterceptor {
         HttpSession httpSession = request.getSession();
         if (modelAndView != null) {
             User user = (User) httpSession.getAttribute("user");
-            modelAndView.addObject("hidtext", testRepository.findByCheckCnt(user.getUSERNUM()));
+            modelAndView.addObject("hidtext", approvalRepository.findByCntUserApp(user));
         }
     }
 }

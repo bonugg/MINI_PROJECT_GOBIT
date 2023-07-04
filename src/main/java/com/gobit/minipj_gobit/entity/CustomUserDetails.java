@@ -22,7 +22,7 @@ public class CustomUserDetails implements UserDetails {
                 new GrantedAuthority() {
                     @Override
                     public String getAuthority() {
-                        return user.getUSER_POSITION();
+                        return user.getUSERPOSITION();
                     }
                 }
         );
