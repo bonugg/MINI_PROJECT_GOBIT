@@ -25,17 +25,16 @@
                 <section class="notice">
                         <div class="page-title">
                             <div class="container">
-                            <strong>공지사항</strong>
+                            <p>공지 게시판</p>
                             </div>
                         </div>
                 <!-- board seach area -->
                 <div id="board-search">
                     <div class="container">
                         <div class="search-window">
-                            <form action="">
+                            <form th:action="@{/noticeDept/list}" method="get">
                                 <div class="search-wrap">
-                                <label for="search" class="blind">공지사항 내용 검색</label>
-                                <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">
+                                <input type="text" name="searchKeyword" placeholder="검색어를 입력해주세요." th:value="${searchKeyword}">
                                 <button type="submit" class="btn btn-dark">검색</button>
                                 </div>
                             </form>
@@ -73,25 +72,14 @@
                     </div>
                 </section>
                 <!-- paging-->
-                <div class="page_wrap">
-                    <div class="page_nation">
-                        <a class="arrow pprev" href="#"></a>
-                        <a class="arrow prev"  href="#"></a>
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#">6</a>
-                        <a href="#">7</a>
-                        <a href="#">8</a>
-                        <a href="#">9</a>
-                        <a href="#">10</a>
-                        <a class="arrow next" href="#"></a>
-                        <a class="arrow nnext" href="#"></a>
-                    </div>
+                <div class="pagenation" style="text-align: center">
+                    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                        <th:block th:if="${page > 0}">
+                            <a th:if="${page != nowPage}" th:href="@{/noticeDept/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text ="${page}"></a>
+                            <strong th:if="${page == nowPage}" th:text ="${page}" style="color:darkblue"></strong>
+                        </th:block>
+                    </th:block>
                 </div>
-
                 <div class="bt_wrap">
                 <a href="/noticeDept/noticeWrite" class="on">등록</a>
                 </div>
