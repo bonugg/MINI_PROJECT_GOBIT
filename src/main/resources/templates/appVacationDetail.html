@@ -9,6 +9,7 @@
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/appVacationDetail.css">
+
     </th:block>
 </head>
 <body layout:fragment="content">
@@ -20,12 +21,12 @@
         <div id="_emt4">
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
-                <p class="page-name">휴가 결제 페이지</p>
+                <p class="page-name">휴가 결제신청 페이지</p>
                 <div class="use_screen_form">
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="updateForm" action="/appDetail" method="post">
+                        <form id="insertForm" action="/appRequest/vacation" method="post">
                             <input type="hidden" name="appSort" value="V">
                             <input type="hidden" name="appState" value="미승인">
                             <section id="inputData-section">
@@ -151,7 +152,6 @@
 </div>
 </body>
 <th:block layout:fragment="script">
-    <!--사용할 자바스크립트는 여기에 첨부 -->
-
+    <script src="/js/appVacationDetail.js"></script>
 </th:block>
 </html>
