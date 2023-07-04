@@ -11,7 +11,7 @@ import java.util.List;
 public interface dBoardRepository extends JpaRepository<dBoard, Long> {
     Page<dBoard> findAll(Pageable pageable);
 
-    @Query(value = "select d from dBoard d where d.user.USERDEPT = :dept order by d.createDate desc limit 5")
+    @Query(value = "select d from dBoard d where d.user.USERDEPT = :dept order by d.createDate desc limit 6")
     List<dBoard> findBydBoardDept(String dept);
 
 }

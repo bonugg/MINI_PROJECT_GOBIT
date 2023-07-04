@@ -15,6 +15,6 @@ public interface nBoardRepository extends JpaRepository<nBoard, Long> {
 
     Page<nBoard> findAll(Pageable pageable);
 
-    @Query(value = "select n from nBoard n order by n.regDate desc limit 5")
+    @Query(value = "select n from nBoard n order by n.regDate desc limit 6")
     List<nBoard> findBynBoardTop5();
 }
