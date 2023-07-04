@@ -61,17 +61,21 @@
                             <div class="cnt" th:text="${board.cnt}"></div>
                             <div class="like-cnt" th:text="${board.like}"></div>
 
+                            <div class="div-files" th:if="${!board.files.isEmpty()}">
+                                <label class="label-hover">첨부파일</label>
+                                <div class="files-hov">
+                                    <div th:each="file : ${board.files}" class="div-file-list" style="display: flex">
+                                        <a class="downlink" th:id="${file.id}" th:href="@{/boardDept/down/{fileId}(fileId=${file.id})}"
+                                           th:text="${file.originalName}"></a>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <!-- 작성 관련 내용 -->
 
                         <!-- 첨부 파일들 -->
-                        <div class="div-files">
-                            첨부파일
-                            <div th:if="${board.fileList}" th:each="file : ${board.fileList}">
-                                <a class="downlink" th:id="${file.id}"
-                                   th:text="${file.originalName}"></a>
-                            </div>
-                        </div>
+
                         <!-- 첨부 파일들 -->
 
 
@@ -205,5 +209,6 @@
 </body>
 <th:block layout:fragment="script">
     <!--사용할 자바스크립트는 여기에 첨부 -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </th:block>
 </html>
