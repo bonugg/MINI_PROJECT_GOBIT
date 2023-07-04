@@ -1,20 +1,12 @@
 package com.gobit.minipj_gobit.noticeDept.service;
 
 import com.gobit.minipj_gobit.entity.User;
-import com.gobit.minipj_gobit.noticeDept.dto.nBoardDto;
 import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
 import com.gobit.minipj_gobit.noticeDept.repository.nBoardRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class nBoardService {
@@ -61,11 +53,9 @@ public class nBoardService {
 //
 //    }
 
-    public Page<nBoard> getNoticeList(int page) {
-        List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("updateDate"));
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return boardRepository.findAll(pageable);
+    public Page<nBoard> getNoticeList(Pageable pageable) {
+
+            return boardRepository.findAll(pageable);
     }
 
 
@@ -82,5 +72,9 @@ public class nBoardService {
         existingBoard.setContent(board.getContent());
 
         return boardRepository.save(existingBoard);
+    }
+
+    public Page<nBoard> searchBoard(String searchKeyword, String keyword, Pageable pageable) {
+        return boardRepository.findByContentContainingOrTitleContaining(searchKeyword, keyword,pageable);
     }
 }

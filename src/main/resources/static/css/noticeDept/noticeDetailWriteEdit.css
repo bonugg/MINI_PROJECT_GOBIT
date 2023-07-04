@@ -185,3 +185,10 @@ a {
     border: 0;
     resize: none;
 }
+
+.noticeTitle {
+    margin-top: 40px;
+    margin-left: 40px;
+    font-size: 15px;
+    color: grey;
+}
