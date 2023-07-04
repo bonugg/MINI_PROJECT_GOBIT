@@ -4,6 +4,8 @@ import com.gobit.minipj_gobit.entity.Approval;
 import com.gobit.minipj_gobit.repository.ApprovalRepository;
 import com.gobit.minipj_gobit.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +25,15 @@ public class ApprovalServiceImpl implements ApprovalService {
 
     //특정 결재 불러오기
     @Override
-    public Approval getApproval(Integer appNum) {
-        return approvalRepository.findById(appNum).get();
+    public Approval getApproval(long appNum) {
+        if(approvalRepository.findByAppNum(appNum).isEmpty()){
+            return null;
+        }
+        return approvalRepository.findByAppNum(appNum).get();
+    }
+
+    //결재리스트 불러오기
+    public Page<Approval> getApprovalList(Pageable pageable) {
+        return approvalRepository.findAll(pageable);
     }
 }
