@@ -71,19 +71,19 @@
                                         <table>
                                             <tr>
                                                 <td>문서번호</td>
-                                                <td>123456</td>
+                                                <td th:text="${approval.appNum}"></td>
                                             </tr>
                                             <tr>
                                                 <td>부서</td>
-                                                <td th:text="${session.user.USERDEPT}"></td>
+                                                <td th:text="${approval.userNum.USERDEPT}"></td>
                                             </tr>
                                             <tr>
                                                 <td>기안일</td>
-                                                <td>20230202</td>
+                                                <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
                                             </tr>
                                             <tr>
                                                 <td>기안자</td>
-                                                <td th:text="${session.user.USERNAME}"></td>
+                                                <td th:text="${approval.userNum.USERNAME}"></td>
                                             </tr>
                                         </table>
                                     </div>
