@@ -1,7 +1,7 @@
 body {
     width: 100vw;
     height: 100vh;
-    background-color: #F6F8FF;
+    background-color: whitesmoke;
 }
 
 a {
@@ -18,7 +18,12 @@ a {
 }
 /* 머리부분 끝 */
 
-
+.title > label {
+    margin-top: 40px;
+    margin-left: 40px;
+    font-size: 15px;
+    color: grey;
+}
 
 /* 몸통 부분 */
 .boody {
@@ -42,8 +47,8 @@ a {
     margin: 10px;
 }
 .sort-btn:hover{
-    color: white;
-    background-color: #62A9EB;
+    background: #181F42;
+    color: whitesmoke;
     transition: background-color 0.3s ease;
 }
 /* 정렬 버튼 */
@@ -98,8 +103,8 @@ a {
     cursor: pointer;
 }
 #btn_search:hover {
-    color: white;
-    background-color: #62A9EB;
+    background: #181F42;
+    color: whitesmoke;
     transition: background-color 0.3s ease;
 }
 /* 검색창 */
@@ -183,8 +188,8 @@ a {
     background-color: yellow; /* 원하는 배경색으로 변경 */
 }
 .page-link:hover{
-    color: white;
-    background-color: #62A9EB;
+    background: #181F42;
+    color: whitesmoke;
     transition: background-color 0.3s ease;
 }
 
@@ -198,8 +203,8 @@ a {
 }
 
 .div-writeBtn:hover {
-    color: white;
-    background-color: #62A9EB;
+    background: #181F42;
+    color: whitesmoke;
     transition: background-color 0.3s ease;
 }
 
