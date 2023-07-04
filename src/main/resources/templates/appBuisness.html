@@ -8,7 +8,7 @@
     <title>Empty</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
-        <link rel="stylesheet" type="text/css" href="css/appBuisness.css">
+        <link rel="stylesheet" type="text/css" href="/css/appBuisness.css">
 
     </th:block>
 </head>
@@ -33,9 +33,13 @@
                                 <div class="input-date">
                                     <div>출장날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="input-appStart" name="appStart" required onselect="printDate()">
-                                        <p>~</p>
-                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onselect="printDate()">
+                                        <div class="input-date-form">
+                                            <input type="datetime-local" id="inputDate-start" name="appStart" required
+                                                   onchange="printDate()">
+                                            <p>~</p>
+                                            <input type="datetime-local" id="inputDate-end" name="appEnd" required
+                                                   onchange="printDate()">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="input-user">
@@ -109,10 +113,10 @@
                                     <div class="appData">
                                         <table>
                                             <tr>
-                                                <td>출장 장소</td>
-                                                <td id="appData-place"></td>
                                                 <td>출장 날짜</td>
                                                 <td id="appData-date"></td>
+                                                <td>출장 장소</td>
+                                                <td id="appData-place"></td>
                                             </tr>
                                             <tr class="appData-colspan">
                                                 <td>출장 목적</td>
@@ -124,7 +128,7 @@
                             </section>
                             <div id="dataSubmit-section">
                                 <button id="btnSave">저장</button>
-                                <button id="btnDelete">삭제</button>
+                                <button type="reset" id="btnDelete">취소</button>
                             </div>
                         </form>
                     </div>
@@ -136,6 +140,6 @@
 </div>
 </body>
 <th:block layout:fragment="script">
-    <script src="js/appBuisness.js"></script>
+    <script src="/js/appBuisness.js"></script>
 </th:block>
 </html>

@@ -8,7 +8,7 @@
     <title>Empty</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
-        <link rel="stylesheet" type="text/css" href="css/appVacation.css">
+        <link rel="stylesheet" type="text/css" href="/css/appVacation.css">
 
     </th:block>
 </head>
@@ -33,10 +33,10 @@
                                 <div class="input-date">
                                     <div>휴가날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="input-appStart" name="appStart" required onselect="printDate()">
+                                        <input type="datetime-local" id="input-appStart" name="appStart" required onchange="printDate()">
                                         <p>~</p>
                                         <!--inputDate-end"-->
-                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onselect="printDate()">
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onchange="printDate()">
                                     </div>
                                 </div>
                                 <div class="input-user">
@@ -49,7 +49,7 @@
                                 <div class="input-type">
                                     <div>휴가 종류</div>
                                     <div class="input-place-form">
-                                            <select id="input-appVacType" name="appVacType" required onselect="printType()">
+                                            <select id="input-appVacType" name="appVacType" required onchange="printType()">
                                                 <option value="morningOff">오전반차</option>
                                                 <option value="afternoonOff">오후반차</option>
                                                 <option value="dayOff">연차</option>
@@ -140,7 +140,7 @@
                             </section>
                             <div id="dataSubmit-section">
                                 <button id="btnSave">저장</button>
-                                <button id="btnDelete">삭제</button>
+                                <button type="reset" id="btnDelete">취소</button>
                             </div>
                         </form>
                     </div>
@@ -152,6 +152,6 @@
 </div>
 </body>
 <th:block layout:fragment="script">
-    <script src="js/appVacation.js"></script>
+    <script src="/js/appVacation.js"></script>
 </th:block>
 </html>
