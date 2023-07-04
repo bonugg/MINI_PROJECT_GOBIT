@@ -67,7 +67,8 @@
                             </tr>
                             </thead>
                             <tbody><tr th:each="board, loop : ${paging}">
-                                <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+<!--                                <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>-->
+                                <td th:text="${board.id}"></td>
                                 <td class="table-title">
                                     <a th:href="@{|/boardDept/updateCnt/${board.id}|}"
                                     th:text="${board.title}"></a>
