@@ -26,10 +26,11 @@
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="updateForm" action="/appDetail" method="post">
+                        <form id="updateForm" name="approval" action="/appDetail/approval" method="post">
+                            <input type="hidden" name="appNum" th:value="${approval.appNum}">
                             <input type="hidden" name="appAlarm" th:value="${approval.appAlarm}">
                             <input type="hidden" name="appSort" th:value="${approval.appSort}">
-                            <input type="hidden" name="appState" th:value="${approval.appState}">
+                            <input type="hidden" name="appState" value="미승인">
                             <input type="hidden" name="appWriDate" th:value="${approval.appWriDate}">
                             <section id="inputData-section">
                                 <div class="input-date">
@@ -129,8 +130,8 @@
                                 </div>
                             </section>
                             <div id="dataSubmit-section">
-                                <button id="btnUpdate">수정</button>
-                                <button id="btnDelete">삭제</button>
+                                <button th:if="${#authentication.getName() == #strings.toString(approval.userNum.USERENO)}" id="btnUpdate">수정</button>
+                                <button th:if="${#authentication.getName() == #strings.toString(approval.userNum.USERENO)}" id="btnDelete">삭제</button>
                             </div>
                         </form>
                     </div>

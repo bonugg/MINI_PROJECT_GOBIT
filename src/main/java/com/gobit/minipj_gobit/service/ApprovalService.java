@@ -10,4 +10,8 @@ public interface ApprovalService {
     Approval getApproval(long appNum);
 
     Page<Approval> getApprovalList(Pageable pageable);
+
+    void updateApproval(Approval approval);
+
+    void deleteApproval(long appNum);
 }

@@ -6,7 +6,7 @@ function printDate(){
 
 function printPlace(){
     const place = document.getElementById('input-appLocation').value;
-    document.getElementById('appData-Place').innerText = place;
+    document.getElementById('appData-place').innerText = place;
 }
 
 function printContent(){
@@ -19,7 +19,7 @@ $.ajax({
     type: "post",
     data: $("#insertForm").serialize(),
     success: (obj) => {
-        alert("저장되었습니다.");
+        alert("정상적으로 저장되었습니다.");
         console.log(obj);
         alert(obj.item.msg);
         // location.href = `/app/meet/{metNum}`;

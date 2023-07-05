@@ -36,4 +36,16 @@ public class ApprovalServiceImpl implements ApprovalService {
     public Page<Approval> getApprovalList(Pageable pageable) {
         return approvalRepository.findAll(pageable);
     }
+
+    @Override
+    public void updateApproval(Approval approval) {
+        approvalRepository.save(approval);
+        approvalRepository.flush();
+    }
+
+    @Override
+    public void deleteApproval(long appNum) {
+        approvalRepository.deleteById(appNum);
+        approvalRepository.flush();
+    }
 }

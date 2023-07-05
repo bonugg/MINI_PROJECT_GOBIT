@@ -14,18 +14,39 @@ function printContent(){
     document.getElementById('appData-content').innerText = content;
 }
 
-$.ajax({
-    url: "/appDetail",
-    type: "PUT",
-    data: $("#updateForm").serialize(),
-    success: (obj) => {
-        alert("수정되었습니다.");
-        console.log(obj);
-        alert(obj.item.msg);
-        // location.href = `/app/meet/{metNum}`;
-        location.href = '/appDetail';
-    },
-    error: (error) => {
-        console.log(error);
-    }
+$("#btnUpdate").on("click", () => {
+    $.ajax({
+        url: "/appDetail/approval",
+        type: "post",
+        data: $("#updateForm").serialize(),
+        success: (obj) => {
+            // location.href = `/app/meet/{metNum}`;
+            location.href = '/appDetail';
+            alert("수정되었습니다.");
+            console.log(obj);
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+});
+
+$("#btnDelete").on("click", () => {
+    $.ajax({
+        url: "/appDetail/approval",
+        type: "delete",
+        data: {
+            appNum: $("#appNum").val()
+        },
+        success: (obj) => {
+            alert("삭제되었습니다.");
+            console.log(obj);
+            alert(obj.item.msg);
+            // location.href = `/app/meet/{metNum}`;
+            // location.href = '/appDetail';
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
 });

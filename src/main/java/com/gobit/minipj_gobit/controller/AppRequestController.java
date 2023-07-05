@@ -47,7 +47,6 @@ public class AppRequestController {
 
     //휴가 결재신청
     @PostMapping("/vacation")
-
     public ModelAndView saveAppVacation(ApprovalDTO approvalDTO){
         ModelAndView mv =new ModelAndView();
         approvalService.saveApproval(approvalDTO.toEntity());
