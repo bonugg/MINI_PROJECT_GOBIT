@@ -62,9 +62,10 @@ public class excepController {
             Sheet worksheet = workbook.getSheetAt(0);
 
             for (int i = 1; i < worksheet.getPhysicalNumberOfRows(); i++) { // 4
-
                 Row row = worksheet.getRow(i);
-
+                if(row == null){
+                    break;
+                }
                 User data = new User();
 
                 String pwd = String.valueOf((int)row.getCell(4).getNumericCellValue());
@@ -79,14 +80,13 @@ public class excepController {
                 data.setUSER_EMAIL(row.getCell(5).getStringCellValue());
                 data.setUSER_PHONE(row.getCell(6).getStringCellValue());
                 data.setUSER_JOIN(joinStr);
+                data.setUSER_EXIT_CHK('N');
                 dataList.add(data);
                 data.setImagePath("C:/tmp/upload/");
                 data.setUSERIMAGE("user.png");
 
-
                 userRepository.save(data);
             }
-
             return ResponseEntity.ok().body("회원가입 완료");
         } catch (DataIntegrityViolationException dve){
             return ResponseEntity.badRequest().body("데이터베이스 저장 오류");
