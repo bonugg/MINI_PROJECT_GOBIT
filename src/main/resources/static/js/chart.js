@@ -5,7 +5,6 @@ $(function() {
         success: function (result) {
             // Initialize the echarts instance based on the prepared dom
             let myChart = echarts.init(document.getElementById('main'));
-
             // Specify the configuration items and data for the chart
             let option1 = {
                 title: {
@@ -20,14 +19,14 @@ $(function() {
                         data: [
                             {
                                 value: result.yearChart,
-                                name: result.yearChart + '시간',
+                                name: Number(result.yearChart.toFixed(1)) + '시간',
                                 itemStyle: {
                                     color: '#253170'
                                 }
                             },
                             {
                                 value: 8 - result.yearChart,
-                                name: 8 - result.yearChart + '시간',
+                                name: Number(8 - result.yearChart.toFixed(1)).toFixed(1) + '시간',
                                 itemStyle: {
                                     color: '#E3E3E3'
                                 }
@@ -69,14 +68,14 @@ $(function() {
                         data: [
                             {
                                 value: result.yearMonthChart,
-                                name: result.yearMonthChart + '시간',
+                                name: Number(result.yearMonthChart.toFixed(1)) + '시간',
                                 itemStyle: {
                                     color: '#181F42'
                                 }
                             },
                             {
                                 value: 8 - result.yearMonthChart,
-                                name: 8 - result.yearMonthChart + '시간',
+                                name: Number(8 - result.yearMonthChart.toFixed(1)).toFixed(1) + '시간',
                                 itemStyle: {
                                     color: '#E3E3E3'
                                 }
@@ -88,9 +87,7 @@ $(function() {
             };
             // Display the chart using the configuration items and data just specified.
             myChart.setOption(option2);
-            window.addEventListener('resize', function () {
-                myChart.resize();
-            });
+
             let currentOption = myChart.getOption().title[0].a;
             document.getElementById('changeChart').addEventListener('click', () => {
                 if (currentOption == myChart.getOption(option1).title[0].a) {
@@ -103,6 +100,9 @@ $(function() {
                     myChart.setOption(option2);
 
                 }
+            });
+            window.addEventListener('resize', function () {
+                myChart.resize();
             });
         },
         error: function(error) {
