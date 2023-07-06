@@ -1,13 +1,14 @@
 package com.gobit.minipj_gobit.noticeDept.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "T_BOARD_NOTICE_FILE")
 public class nBoardNoticeFile {
@@ -29,5 +30,14 @@ public class nBoardNoticeFile {
     @ManyToOne
     @JoinColumn(name = "NBOARD_NUM")
     private nBoard board;
+
+    @Builder
+    public nBoardNoticeFile(nBoard board, Long nfileNo, String nfileName, String nfileOrigin, String nfilePath) {
+        this.board = board;
+        this.nfileNo = nfileNo;
+        this.nfileName = nfileName;
+        this.nfileOrigin = nfileOrigin;
+        this.nfilePath = nfilePath;
+    }
 
 }
