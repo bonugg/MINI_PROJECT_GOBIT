@@ -25,9 +25,11 @@ public class AppRequestController {
         this.approvalService =approvalService;
     }
 
-    //회의 결재신청
-    @PostMapping("/meeting")
-    public ModelAndView saveAppMeeting(ApprovalDTO approvalDTO){
+    //휴가, 출장, 회의 결재신청
+    @PostMapping("/approval")
+    public ModelAndView saveApproval(ApprovalDTO approvalDTO){
+        System.out.println("=======================save result=======================");
+        System.out.println("approvalDTO 출력 결과:" + approvalDTO);
         ModelAndView mv =new ModelAndView();
         approvalService.saveApproval(approvalDTO.toEntity());
         mv.setViewName("/appDetailPage.html");
@@ -35,24 +37,4 @@ public class AppRequestController {
 
     }
 
-    //출장 결재신청
-    @PostMapping("/buisness")
-    public ModelAndView saveAppBuisness(ApprovalDTO approvalDTO){
-        ModelAndView mv =new ModelAndView();
-        approvalService.saveApproval(approvalDTO.toEntity());
-        mv.setViewName("/appDetailPage.html");
-        return mv;
-
-    }
-
-    //휴가 결재신청
-    @PostMapping("/vacation")
-
-    public ModelAndView saveAppVacation(ApprovalDTO approvalDTO){
-        ModelAndView mv =new ModelAndView();
-        approvalService.saveApproval(approvalDTO.toEntity());
-        mv.setViewName("/appDetailPage.html");
-        return mv;
-
-    }
 }

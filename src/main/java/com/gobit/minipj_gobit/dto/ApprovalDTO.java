@@ -19,12 +19,14 @@ public class ApprovalDTO {
     //--------결제식별--------
     private long appNum;                //결재번호
     private String appSort;             //결재종류: V/M/B
-    private User userNum;               //결재신청자
+    private User userNum;               //결재신청자Id
+    private User appUserNum;            //결재승인자Id
     //--------결제공통--------
     private LocalDateTime appWriDate;   //결재작성일
     private String appState;            //결재상태
     private LocalDateTime appStateDate; //결재상태확정날짜
     private String userName;            //결재승인자이름
+    private String userDept;            //결재신청자부서
 
     //--------결제상세--------
     private LocalDateTime appStart;     //결재_시작일
@@ -43,9 +45,11 @@ public class ApprovalDTO {
                 .appNum(this.appNum)
                 .appSort(appSortChr)
                 .userNum(this.userNum)
+                .appUserNum(this.appUserNum)
                 .appWriDate(LocalDateTime.now())
                 .appState(this.appState)
                 .userName(this.userName)
+                .userDept(this.userDept)
                 .appStart(this.appStart)
                 .appEnd(this.appEnd)
                 .appContent(this.appContent)
