@@ -17,7 +17,7 @@ public class Reply {
     @Column(name = "REPLY_NUM")
     private Long id;
 
-    @Column(name = "REPLY_CONTENT")
+    @Column(name = "REPLY_CONTENT", length = 1000)
     private String content;
 
     @Column(name = "REPLY_REGDATE")

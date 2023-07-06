@@ -62,12 +62,13 @@ a {
 /* 내용 부분 */
 .div-content {
     width: 90%;
-    height: 400px;
+    height: 100%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .board-content {
     margin: 30px 30px 30px 30px;
-    white-space: pre-wrap;
+    word-break: break-all;
+
 }
 /* 내용 부분 */
 
