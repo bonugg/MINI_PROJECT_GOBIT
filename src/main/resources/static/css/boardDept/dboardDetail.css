@@ -22,7 +22,7 @@ a {
 }
 /* 머리부분 끝 */
 
-.title > label {
+.title > p {
     margin-top: 40px;
     margin-left: 40px;
     font-size: 15px;

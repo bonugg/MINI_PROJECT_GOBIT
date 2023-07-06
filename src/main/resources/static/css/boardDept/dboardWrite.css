@@ -10,7 +10,7 @@ input, textarea:focus {
     box-shadow: none !important;
 }
 
-.title > label {
+.title > p {
     margin-top: 40px;
     margin-left: 40px;
     font-size: 15px;
