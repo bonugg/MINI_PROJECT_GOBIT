@@ -3,8 +3,10 @@ package com.gobit.minipj_gobit.noticeDept.entity;
 import com.gobit.minipj_gobit.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Data
@@ -36,6 +38,9 @@ public class nBoard {
     @ManyToOne
     @JoinColumn(name = "USER_NUM")
     private User user;
+
+    @OneToMany(mappedBy = "board" , cascade = CascadeType.REMOVE)
+    private List<nBoardNoticeFile> files;
 
     @Builder
     public nBoard(Long id, String title, String content, LocalDateTime regDate, LocalDateTime updateDate, int cnt) {

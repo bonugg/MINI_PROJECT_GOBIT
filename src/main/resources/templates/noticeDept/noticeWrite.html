@@ -27,7 +27,7 @@
         </div>
         <div class="board_wrap">
           <div class="board_write_wrap">
-            <form action="/noticeDept/noticeWrite" method="post">
+            <form action="/noticeDept/noticeWrite" method="post" enctype="multipart/form-data">
               <div class="board_write">
                 <div class="title">
                   <dl>
@@ -38,9 +38,9 @@
                 <div class="info">
                   <dl>
                     <dt>첨부파일</dt>
-                    <dd>
-                        <input type="file" name="profile" enctype="multipart/form-data">
-                    </dd>
+                      <dd>
+                          <input type="file" multiple="multiple" name="files">
+                      </dd>
                   </dl>
                 </div>
                 <div class="cont">
