@@ -1,31 +1,22 @@
 package com.gobit.minipj_gobit.security;
 
-import com.gobit.minipj_gobit.handler.LoginFailureHandler;
-import com.gobit.minipj_gobit.handler.LoginSuccessHandler;
-import com.gobit.minipj_gobit.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import com.gobit.minipj_gobit.handler.CustomAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
-
-import java.util.logging.Filter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     @Autowired
-    private LoginFailureHandler loginFailureHandler;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     @Autowired
-    private LoginSuccessHandler loginSuccessHandler;
+    private AuthProvider authProvider;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -53,8 +44,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/auth")
                         .usernameParameter("ENO")
                         .passwordParameter("PWD")
-                        .failureHandler(loginFailureHandler)
-                        .successHandler(loginSuccessHandler)
+                        .successHandler(customAuthenticationSuccessHandler)
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -62,6 +52,8 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .invalidateHttpSession(true)
                 )
+                .authenticationProvider(authProvider)
+                //ajax로그인 처리
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedPage("/login")
                 );
