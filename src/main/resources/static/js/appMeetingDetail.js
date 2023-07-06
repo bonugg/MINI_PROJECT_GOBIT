@@ -39,8 +39,8 @@ $("#btnUpdate").on("click", () => {
 
 $("#btnDelete").on("click", () => {
     $.ajax({
-        url: "/appDetail/approval",
-        type: "delete",
+        url: '/appDetail/approval',
+        type: 'delete',
         data: {
             appNum: $("#appNum").val()
         },

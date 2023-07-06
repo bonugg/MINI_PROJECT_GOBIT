@@ -14,4 +14,5 @@ public interface ApprovalService {
     void updateApproval(Approval approval);
 
     void deleteApproval(long appNum);
+
 }

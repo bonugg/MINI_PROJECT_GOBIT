@@ -26,8 +26,6 @@ public class AppDetailController {
     public ModelAndView getApproval(@PathVariable long appNum) {
         ModelAndView mv = new ModelAndView();
         Approval approval = approvalService.getApproval(appNum);
-        System.out.println("<<<----------------------체크---------------------->>>");
-        System.out.println(approval.getAppSort());
         if(approval.getAppSort() == 'M'){
             mv.setViewName("appMeetingDetail.html");
         }
@@ -39,22 +37,27 @@ public class AppDetailController {
             System.out.println("다음 종류를 찾지 못했습니다.");
         }
         ApprovalDTO approvalDTO = approval.toDTO();
-        System.out.println("===========approvalDTO 정보 출력===========");
-        System.out.println(approvalDTO);
         mv.addObject("approval", approvalDTO);
         return mv;
     }
 
+//    @PutMapping("/approval")
+
     @PostMapping("/approval")
     public ModelAndView updateApproval(ApprovalDTO approvalDTO) {
+        System.out.println("=======================update result=======================");
+        System.out.println("approvalDTO 출력 결과:" + approvalDTO);
         ModelAndView mv = new ModelAndView();
         approvalService.updateApproval(approvalDTO.toEntity());
         mv.setViewName("appDetailPage.html");
         return mv;
     }
 
-    @DeleteMapping("/approval")
-    public ModelAndView deleteApproval(long appNum){
+    @PostMapping("/approval/{appNum}")
+    public ModelAndView deleteApproval(@PathVariable long appNum){
+        System.out.println("=======================delete result=======================");
+        System.out.println("approvalDTO 출력 결과:" + appNum);
+//        System.out.println("approvalDTO.getAppNum() 결과: " + approvalDTO.getAppNum());
         ModelAndView mv = new ModelAndView();
         approvalService.deleteApproval(appNum);
         mv.setViewName("appDetailPage.html");
