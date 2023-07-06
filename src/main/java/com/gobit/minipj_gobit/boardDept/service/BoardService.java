@@ -42,6 +42,24 @@ public class BoardService {
         return change(boardPage);
     }
 
+    public Page<BoardDTO> getList(String dept, int page, String kw) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("modifyDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Specification<dBoard> spec = search(kw);
+        Page<dBoard> boardPage = boardRepository.findAllByUserUSERDEPT(dept, pageable);
+        return change(boardPage);
+    }
+
+    public Page<BoardDTO> getListByCategory(String dept, int page, String category, String kw) {
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("modifyDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Specification<dBoard> spec = searchByCategory(category, kw);
+        Page<dBoard> boardPage = boardRepository.findAllByUserUSERDEPT(dept, pageable);
+        return change(boardPage);
+    }
+
     private Specification<dBoard> search(String kw) {
         return (b, query, cb) -> {
             query.distinct(true);

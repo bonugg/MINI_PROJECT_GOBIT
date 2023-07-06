@@ -30,4 +30,21 @@ public class boardApiController {
         return ResponseEntity.ok(boardDeptPage);
     }
 
+    @GetMapping("/list/dept")
+    public ResponseEntity<Page<BoardDTO>> getBoardDeptList(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "전체") String category,
+            @RequestParam(defaultValue = "") String kw,
+            @RequestParam(defaultValue = "IT") String dept) {
+        Page<BoardDTO> boardDeptPage;
+
+        if (category.equals("전체")) {
+            boardDeptPage = boardService.getList(dept, page, kw);
+        } else {
+            boardDeptPage = boardService.getListByCategory(dept, page, category, kw);
+        }
+
+        return ResponseEntity.ok(boardDeptPage);
+    }
+
 }
