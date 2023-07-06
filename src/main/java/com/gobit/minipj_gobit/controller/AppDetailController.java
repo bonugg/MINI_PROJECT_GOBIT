@@ -4,10 +4,7 @@ import com.gobit.minipj_gobit.dto.ApprovalDTO;
 import com.gobit.minipj_gobit.entity.Approval;
 import com.gobit.minipj_gobit.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -26,11 +23,9 @@ public class AppDetailController {
     
     //결재 상세페이지로 이동
     @GetMapping("/{appNum}")
-    public ModelAndView getBoard(@PathVariable long appNum) {
+    public ModelAndView getApproval(@PathVariable long appNum) {
         ModelAndView mv = new ModelAndView();
         Approval approval = approvalService.getApproval(appNum);
-        System.out.println("<<<----------------------체크---------------------->>>");
-        System.out.println(approval.getAppSort());
         if(approval.getAppSort() == 'M'){
             mv.setViewName("appMeetingDetail.html");
         }
@@ -42,9 +37,30 @@ public class AppDetailController {
             System.out.println("다음 종류를 찾지 못했습니다.");
         }
         ApprovalDTO approvalDTO = approval.toDTO();
-        System.out.println("===========approvalDTO 정보 출력===========");
-        System.out.println(approvalDTO);
         mv.addObject("approval", approvalDTO);
+        return mv;
+    }
+
+//    @PutMapping("/approval")
+
+    @PostMapping("/approval")
+    public ModelAndView updateApproval(ApprovalDTO approvalDTO) {
+        System.out.println("=======================update result=======================");
+        System.out.println("approvalDTO 출력 결과:" + approvalDTO);
+        ModelAndView mv = new ModelAndView();
+        approvalService.updateApproval(approvalDTO.toEntity());
+        mv.setViewName("appDetailPage.html");
+        return mv;
+    }
+
+    @PostMapping("/approval/{appNum}")
+    public ModelAndView deleteApproval(@PathVariable long appNum){
+        System.out.println("=======================delete result=======================");
+        System.out.println("approvalDTO 출력 결과:" + appNum);
+//        System.out.println("approvalDTO.getAppNum() 결과: " + approvalDTO.getAppNum());
+        ModelAndView mv = new ModelAndView();
+        approvalService.deleteApproval(appNum);
+        mv.setViewName("appDetailPage.html");
         return mv;
     }
 
