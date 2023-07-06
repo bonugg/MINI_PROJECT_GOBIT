@@ -33,7 +33,7 @@ public class AdminController {
         mv.setViewName("admin/adminMemberPage");
         return mv;
     }
-
+//dasdasdasda
     @PostMapping("/changePosition")
     public String changePosition(@RequestParam("usernum") long usernum,
                                  @RequestParam("position") String position) {
