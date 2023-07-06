@@ -179,15 +179,14 @@ a {
     list-style: none;
     flex-grow: 1;
 }
-.page-link {
+.page_link {
     border: 0.5px solid black;
     margin: 3px;
     padding: 7px;
+    cursor: pointer;
 }
-.active-page {
-    background-color: yellow; /* 원하는 배경색으로 변경 */
-}
-.page-link:hover{
+
+.page_link:hover{
     background: #181F42;
     color: whitesmoke;
     transition: background-color 0.3s ease;
@@ -206,6 +205,10 @@ a {
     background: #181F42;
     color: whitesmoke;
     transition: background-color 0.3s ease;
+}
+
+.board_ul {
+    display: flex;
 }
 
 /* 페이징 박스 */

@@ -272,6 +272,7 @@ a {
 .reply-content {
     margin-top: 5px;
     margin-bottom: 5px;
+    overflow-y: auto;
 }
 
 .reply-content-hr {

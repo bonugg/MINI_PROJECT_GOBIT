@@ -66,18 +66,19 @@
                                 <th class="table-like">추천수</th>
                             </tr>
                             </thead>
-                            <tbody><tr th:each="board, loop : ${paging}">
-<!--                                <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>-->
-                                <td th:text="${board.id}"></td>
-                                <td class="table-title">
-                                    <a th:href="@{|/boardDept/updateCnt/${board.id}|}"
-                                    th:text="${board.title}"></a>
-                                </td>
-                                <td class="table-name" th:if="${board.user != null}" th:text="${board.user.USERNAME}"></td>
-                                <td class="table-date" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
-                                <td class="table-cnt" th:text="${board.cnt}"></td>
-                                <td class="table-like" th:text="${board.like}"></td>
-                            </tr>
+                            <tbody>
+                                <tr th:each="board, loop : ${paging}">
+    <!--                                <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>-->
+                                    <td th:text="${board.id}"></td>
+                                    <td class="table-title">
+                                        <a th:href="@{|/boardDept/updateCnt/${board.id}|}"
+                                        th:text="${board.title}"></a>
+                                    </td>
+                                    <td class="table-name" th:if="${board.user != null}" th:text="${board.user.USERNAME}"></td>
+                                    <td class="table-date" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td class="table-cnt" th:text="${board.cnt}"></td>
+                                    <td class="table-like" th:text="${board.like}"></td>
+                                </tr>
 
                             </tbody>
                         </table>
@@ -86,28 +87,29 @@
 
                         <!-- 페이징처리 시작 -->
                         <div class="paging" th:if="${!paging.isEmpty()}">
-                            <ul>
+                            <ul class="board_ul">
 
                                 <li th:if="${paging.hasPrevious()}" style="margin-right: 3px">
-                                    <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number-1}">
+                                    <a class="page_link" href="javascript:void(0)" th:data-page="${paging.number-1}">
                                         이전
                                     </a>
                                 </li>
-                                 <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}" style="margin-right: 3px"
-                                     th:if="${page >= paging.number-2 and page <= paging.number+2}"
-                                     th:class="${page+1 == currentPage ? 'active-page' : ''}">
-                                    <a th:text="${page+1}" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
+                                <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}" style="margin-right: 3px"
+                                    th:if="${page >= paging.number-2 and page <= paging.number+2}"
+                                    th:class="${page+1 == currentPage ? 'active-page' : ''}">
+                                    <a th:text="${page+1}" class="page_link" href="javascript:void(0)" th:data-page="${page}"></a>
                                 </li>
                                 <li th:if="${paging.hasNext()}">
-                                    <a class="page-link" href="javascript:void(0)" th:data-page="${paging.number+1}">
+                                    <a class="page_link" href="javascript:void(0)" th:data-page="${paging.number+1}">
                                         다음
                                     </a>
                                 </li>
                             </ul>
+                            <div class="div-writeBtn">
+                                <a href="/boardDept/create">글쓰기</a>
+                            </div>
                         </div>
-                        <div class="div-writeBtn">
-                            <a href="/boardDept/create">글쓰기</a>
-                        </div>
+
 
                         <!-- 페이징처리 끝 -->
                     </div>
@@ -124,13 +126,111 @@
     </div>
 </div>
 <script>
-    const page_elements = document.getElementsByClassName("page-link");
-    Array.from(page_elements).forEach(function(element) {
-        element.addEventListener('click', function() {
-            document.getElementById('page').value = this.dataset.page;
-            document.getElementById('searchForm').submit();
+$(document).ready(function () {
+    const page_elements = document.getElementsByClassName("page_link");
+
+    function clickPageBtn() {
+        var page = this.dataset.page;
+        var category = document.getElementById("search_category").value;
+        var kw = document.getElementById("search_kw").value;
+
+        $.ajax({
+            url: "/api/list",
+            type: "GET",
+            data: {
+                page: page,
+                category: category,
+                kw: kw
+            },
+            success: function(response) {
+                // Update the table body with the new data
+                var tbodyHtml = "";
+                response.content.forEach(function(boardDTO) {
+                    tbodyHtml += '<tr>';
+                    tbodyHtml += '<td>' + boardDTO.id + '</td>';
+                    tbodyHtml += '<td class="table-title">';
+                    tbodyHtml += '<a href="/boardDept/updateCnt/' + boardDTO.id + '">' + boardDTO.title + '</a>';
+                    tbodyHtml += '</td>';
+                    tbodyHtml += '<td class="table-name">' + boardDTO.username + '</td>';
+                    tbodyHtml += '<td class="table-date">' + formatDate(boardDTO.createDate) + '</td>';
+                    tbodyHtml += '<td class="table-cnt">' + boardDTO.cnt + '</td>';
+                    tbodyHtml += '<td class="table-like">' + boardDTO.like + '</td>';
+                    tbodyHtml += '</tr>';
+                });
+
+                var tbody = document.querySelector("tbody");
+                tbody.innerHTML = tbodyHtml;
+
+                console.log(response);
+
+                var currentPage = response.number;
+                var totalPages = response.totalPages;
+
+                var pagingButtons = generatePagingButtons(currentPage, totalPages);
+
+                // 페이징 버튼 업데이트
+                $(".paging").html(pagingButtons);
+
+                // 기존 페이지 버튼에 이벤트 리스너 제거
+                $(".page_link").off("click");
+
+                // 새로 생성된 페이지 버튼에 클릭 이벤트 리스너 추가
+                $(".page_link").click(clickPageBtn);
+            },
+            error: function() {
+                console.log("Error occurred during AJAX request.");
+            }
         });
+    }
+
+    Array.from(page_elements).forEach(function(element) {
+        element.addEventListener('click', clickPageBtn);
     });
+
+
+
+    function generatePagingButtons(currentPage, totalPages) {
+        const previousButton = `<li><a class="page_link" data-page="${currentPage - 1}">이전</a></li>`;
+        const nextButton = `<li><a class="page_link" data-page="${currentPage + 1}">다음</a></li>`;
+        let pageButtons = "";
+
+        const startPage = Math.max(currentPage - 2, 0); // 현재 페이지의 앞에서 2페이지까지 생성
+        const endPage = Math.min(currentPage + 2, totalPages - 1); // 현재 페이지의 뒤에서 2페이지까지 생성
+
+        for (let page = startPage; page <= endPage; page++) {
+            const activeClass = page === currentPage ? "active-page" : "";
+            const backgroundColor = page === currentPage ? "background-color: #181F42;" : ""; // 현재 페이지 배경색
+            const color = page === currentPage ? "color: white;" : ""; // 현재 페이지 글자색
+            pageButtons += `<li class="${activeClass}"><a class="page_link" data-page="${page}" style="${backgroundColor}${color}">${page + 1}</a></li>`;
+        }
+
+        const pagingHTML = `
+    <ul class="board_ul">
+      ${currentPage > 0 ? previousButton : ""}
+      ${pageButtons}
+      ${currentPage < totalPages - 1 ? nextButton : ""}
+    </ul>
+    <div class="div-writeBtn">
+                                <a href="/boardDept/create">글쓰기</a>
+    </div>
+  `;
+
+        return pagingHTML;
+    }
+
+
+
+
+    function formatDate(dateStr) {
+        var date = new Date(dateStr);
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, "0");
+        var day = date.getDate().toString().padStart(2, "0");
+        var hour = date.getHours().toString().padStart(2, "0");
+        var minute = date.getMinutes().toString().padStart(2, "0");
+        return year + "-" + month + "-" + day + " " + hour + ":" + minute;
+    }
+
     const btn_search = document.getElementById("btn_search");
     btn_search.addEventListener('click', function() {
         document.getElementById('category').value = document.getElementById('search_category').value;
@@ -138,10 +238,11 @@
         document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
         document.getElementById('searchForm').submit();
     });
+});
 </script>
 </body>
 <th:block layout:fragment="script">
     <!--사용할 자바스크립트는 여기에 첨부 -->
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </th:block>
 </html>

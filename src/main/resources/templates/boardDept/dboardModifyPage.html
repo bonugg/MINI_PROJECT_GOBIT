@@ -15,7 +15,7 @@
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     </th:block>
 </head>
-<body layout:fragment="content">
+<body layout:fragment="content" style="background: whitesmoke">
 <div id="fullscreen">
     <div id="_emt1"></div>
     <div id="_emt2">
@@ -30,7 +30,7 @@
                     <div class="heead">
                         <div class="div-title">
                             <div class="title">
-                                <h1>부서게시판</h1>
+                                <label>부서게시판</label>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                             <div class="div-values">
                                 <label>첨부파일</label>
                                 <div class="file_list">
-                                    <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>추가</span></button>
+                                    <button type="button" onclick="addFile();" class="btns fn_add_btn" style="margin-top: 5px"><span>추가</span></button>
                                     <div th:each="file : ${board.files}">
                                         <div class="file_input">
                                             <input type="text" readonly class="file_origin_name" id="file_input_label_text" name="items" th:value="${file.originalName}"/>
@@ -160,6 +160,7 @@
 
     //에디터 https://summernote.org/
     $(document).ready(function() {
+        var MAX_LENGTH = 2048;
         //여기 아래 부분
         $('#summernote').summernote({
             height: 300,                 // 에디터 높이
@@ -175,9 +176,30 @@
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['height', ['height']]
             ],
-            theme: 'yeti'
+            theme: 'yeti',
+            callbacks: {
+                onKeyup: function(e) {
+                    var content = $(this).summernote('getText');
+                    if (content.length > MAX_LENGTH) {
+                        $(this).summernote('editor').snippet.remove({
+                            contents: function() {
+                                return this.getLength() > MAX_LENGTH;
+                            }
+                        });
+                    }
+                },
+                onPaste: function(e) {
+                    var content = $(this).summernote('getText');
+                    if (content.length > MAX_LENGTH) {
+                        $(this).summernote('editor').snippet.remove({
+                            contents: function() {
+                                return this.getLength() > MAX_LENGTH;
+                            }
+                        });
+                    }
+                }
+            }
         });
-        console.log(originFiles)
     });
 
     const cancel_elements = document.getElementsByClassName("cancel");
