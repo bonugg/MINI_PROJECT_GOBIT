@@ -41,6 +41,12 @@ public class AuthProvider implements AuthenticationProvider {
             } catch (NumberFormatException e) {
                 ENO = 0;
             }
+            System.out.println("----------------");
+            System.out.println(ENO);
+            System.out.println("----------------");
+            System.out.println("=================");
+            System.out.println(PWD);
+            System.out.println("=================");
             PasswordEncoder passwordEncoder = passwordEncoder();
             UsernamePasswordAuthenticationToken token;
             User user = userRepository.findByUSERENO(ENO).get();

@@ -18,12 +18,13 @@
         <div id="_emt3">
         </div>
         <div id="_emt4">
+            <div id="div1290">
                 <div class="a_screen1" id="a_screen1"></div>
                 <div id="a_screen2">
                     <div id="b_screen">
                         <div id="b_screen_1">
                             <div id="b_screen_1_1">
-                                <div class="shadow">
+                                <div class="shadow" id="user_shw">
                                     <div class="com_title">
                                         <div class="title">
                                             <div class="title_1">
@@ -32,7 +33,7 @@
                                                 <h4 class="title_text">출퇴근</h4>
                                             </div>
                                             <div class="title_3">
-                                                <button type="button" class="btn_more">출퇴근</button>
+                                                <button type="button" class="btn_more">출퇴근 상태</button>
                                             </div>
                                         </div>
                                     </div>
@@ -268,6 +269,7 @@
                     </div>
                 </div>
                 <div class="a_screen1" id="a_screen1_1"></div>
+            </div>
             <div id="div1200">
 
             </div>
@@ -309,131 +311,174 @@
     <script src="js/chart.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // $(function (){
-        //     $(".btn_more").on("click", () => {
-        //         $('#div1200').css("display", "none");
-        //         com_content_on_off
-        //     }
-        //
-        //
-        //     });
-        function moveShadow() {
-            let windowWidth = window.innerWidth;
-            let bScreen2 = document.getElementById('b_screen_2');
-            let dScreen = document.getElementById('d_screen');
-            let bScreen3 = document.getElementById('b_screen_3');
-            let hScreen = document.getElementById('h_screen');
-            let eScreen = document.getElementById('e_screen');
-            let fScreen = document.getElementById('f_screen');
-            let hScreen2 = document.getElementById('h_screen_1');
-            let hScreen3 = document.getElementById('h_screen_2');
-            let div1200 = document.getElementById('div1200');
-            let emt4 = document.getElementById('_emt4');
+        $(function () {
+            let isBtn = true;
+            $(".btn_more").on("click", () => {
+                if (isBtn) {
+                    $('#onoff_shw').css("display", "");
+                    $('#user_on_off_div').css("display", "none");
+                    $(".btn_more").text("내 정보");
+                    isBtn = false;
+                } else {
+                    $('#onoff_shw').css("display", "none");
+                    $('#user_on_off_div').css("display", "");
+                    $(".btn_more").text("출퇴근 상태");
+                    isBtn = true;
+                }
+            });
 
-            $('#div1200').css("display", "none");
-            let shadow1 = document.querySelector('#div1200 #a_screen1');
-            if (shadow1) {
-                emt4.appendChild(shadow1);
-            }
-            let shadow2 = document.querySelector('#div1200 #a_screen2');
-            if (shadow2) {
-                emt4.appendChild(shadow2);
-            }
-            let shadow3 = document.querySelector('#div1200 #a_screen1_1');
-            if (shadow3) {
-                emt4.appendChild(shadow3);
-            }
+            function moveShadow() {
+                let windowWidth = window.innerWidth;
+                let bScreen2 = document.getElementById('b_screen_2');
+                let dScreen = document.getElementById('d_screen');
+                let bScreen3 = document.getElementById('b_screen_3');
+                let hScreen = document.getElementById('h_screen');
+                let eScreen = document.getElementById('e_screen');
+                let fScreen = document.getElementById('f_screen');
+                let hScreen2 = document.getElementById('h_screen_1');
+                let hScreen3 = document.getElementById('h_screen_2');
+                let div1200 = document.getElementById('div1200');
+                let div1290 = document.getElementById('div1290');
+                let bScreen1_1 = document.getElementById('com_content_on_off');
 
-            if (windowWidth <= 1290) {
-                let shadow1 = document.querySelector('#_emt4 #a_screen1');
+                $('#div1200').css("display", "none");
+                let shadow1 = document.querySelector('#div1200 #a_screen1');
                 if (shadow1) {
-                    div1200.appendChild(shadow1);
+                    div1290.appendChild(shadow1);
                 }
-                let shadow2 = document.querySelector('#_emt4 #a_screen2');
+                let shadow2 = document.querySelector('#div1200 #a_screen2');
                 if (shadow2) {
-                    div1200.appendChild(shadow2);
+                    div1290.appendChild(shadow2);
                 }
-                let shadow3 = document.querySelector('#_emt4 #a_screen1_1');
+                let shadow3 = document.querySelector('#div1200 #a_screen1_1');
                 if (shadow3) {
-                    div1200.appendChild(shadow3);
-                }
-                $('#div1200').css("display", "");
-
-                let shadow = document.querySelector('#d_screen #chart_shw');
-                if (shadow) {
-                    bScreen3.appendChild(shadow);
-                }
-                let shadow4= document.querySelector('#b_screen_2 #chart_shw');
-                if (shadow4) {
-                    bScreen3.appendChild(shadow4);
+                    div1290.appendChild(shadow3);
                 }
 
-                let shadow5= document.querySelector('#b_screen_3 #cal_shw');
-                if (shadow5) {
-                    dScreen.appendChild(shadow5);
-                }
+                if (windowWidth <= 1290) {
+                    $('#onoff_shw').css("display", "none");
+                    if (isBtn) {
+                        $('#onoff_shw').css("display", "none");
+                        $('#user_on_off_div').css("display", "");
+                    } else {
+                        $('#onoff_shw').css("display", "");
+                        $('#user_on_off_div').css("display", "none");
+                    }
+                    let onoff = document.querySelector('#d_screen #onoff_shw');
+                    if (onoff) {
+                        bScreen1_1.appendChild(onoff);
+                    }
+                    let shadow1 = document.querySelector('#div1290 #a_screen1');
+                    if (shadow1) {
+                        div1200.appendChild(shadow1);
+                    }
+                    let shadow2 = document.querySelector('#div1290 #a_screen2');
+                    if (shadow2) {
+                        div1200.appendChild(shadow2);
+                    }
+                    let shadow3 = document.querySelector('#div1290 #a_screen1_1');
+                    if (shadow3) {
+                        div1200.appendChild(shadow3);
+                    }
+                    $('#div1200').css("display", "");
 
-                let nboard= document.querySelector('#e_screen #nboard_shw');
-                if (nboard) {
-                    hScreen2.appendChild(nboard);
-                }
-                let dboard= document.querySelector('#f_screen #dboard_shw');
-                if (dboard) {
-                    hScreen3.appendChild(dboard);
-                }
+                    let shadow = document.querySelector('#d_screen #chart_shw');
+                    if (shadow) {
+                        bScreen3.appendChild(shadow);
+                    }
+                    let shadow4 = document.querySelector('#b_screen_2 #chart_shw');
+                    if (shadow4) {
+                        bScreen3.appendChild(shadow4);
+                    }
+
+                    let shadow5 = document.querySelector('#b_screen_3 #cal_shw');
+                    if (shadow5) {
+                        dScreen.appendChild(shadow5);
+                    }
+
+                    let nboard = document.querySelector('#e_screen #nboard_shw');
+                    if (nboard) {
+                        hScreen2.appendChild(nboard);
+                    }
+                    let dboard = document.querySelector('#f_screen #dboard_shw');
+                    if (dboard) {
+                        hScreen3.appendChild(dboard);
+                    }
 
 
+                } else if (windowWidth <= 1600) {
+                    $('#onoff_shw').css("display", "none");
+                    if (isBtn) {
+                        $('#onoff_shw').css("display", "none");
+                        $('#user_on_off_div').css("display", "");
+                    } else {
+                        $('#onoff_shw').css("display", "");
+                        $('#user_on_off_div').css("display", "none");
+                    }
+                    let onoff = document.querySelector('#d_screen #onoff_shw');
+                    if (onoff) {
+                        bScreen1_1.appendChild(onoff);
+                    }
+                    let shadow = document.querySelector('#b_screen_2 #chart_shw');
+                    if (shadow) {
+                        dScreen.appendChild(shadow);
+                    }
+                    let shadow2 = document.querySelector('#b_screen_3 #chart_shw');
+                    if (shadow2) {
+                        dScreen.appendChild(shadow2);
+                    }
 
-            }else if (windowWidth <= 1600) {
-                let shadow = document.querySelector('#b_screen_2 #chart_shw');
-                if (shadow) {
-                    dScreen.appendChild(shadow);
-                }
-                let shadow2 = document.querySelector('#b_screen_3 #chart_shw');
-                if (shadow2) {
-                    dScreen.appendChild(shadow2);
-                }
+                    let shadow5 = document.querySelector('#d_screen #cal_shw');
+                    if (shadow5) {
+                        bScreen3.appendChild(shadow5);
+                    }
 
-                let shadow5= document.querySelector('#d_screen #cal_shw');
-                if (shadow5) {
-                    bScreen3.appendChild(shadow5);
-                }
+                    let nboard = document.querySelector('#h_screen_1 #nboard_shw');
+                    if (nboard) {
+                        eScreen.appendChild(nboard);
+                    }
 
-                let nboard= document.querySelector('#h_screen_1 #nboard_shw');
-                if (nboard) {
-                    eScreen.appendChild(nboard);
-                }
+                    let dboard = document.querySelector('#h_screen_2 #dboard_shw');
+                    if (dboard) {
+                        fScreen.appendChild(dboard);
+                    }
 
-                let dboard= document.querySelector('#h_screen_2 #dboard_shw');
-                if (dboard) {
-                    fScreen.appendChild(dboard);
-                }
-
-            } else {
-                let shadow = document.querySelector('#d_screen #chart_shw');
-                if (shadow) {
-                    bScreen2.appendChild(shadow);
-                }
-                let shadow2 = document.querySelector('#b_screen_3 #chart_shw');
-                if (shadow2) {
-                    bScreen2.appendChild(shadow2);
-                }
-                let shadow3= document.querySelector('#d_screen #cal_shw');
-                if (shadow3) {
-                    bScreen3.appendChild(shadow3);
-                }
-                let nboard= document.querySelector('#h_screen_1 #nboard_shw');
-                if (nboard) {
-                    eScreen.appendChild(nboard);
-                }
-                let dboard= document.querySelector('#h_screen_2 #dboard_shw');
-                if (dboard) {
-                    fScreen.appendChild(dboard);
+                } else {
+                    $('#onoff_shw').css("display", "");
+                    if (!isBtn) {
+                        $(".btn_more").click();
+                        $('#onoff_shw').css("display", "");
+                    }
+                    let shadow1 = document.querySelector('#b_screen_1_1 #onoff_shw');
+                    if (shadow1) {
+                        dScreen.appendChild(shadow1);
+                    }
+                    let shadow = document.querySelector('#d_screen #chart_shw');
+                    if (shadow) {
+                        bScreen2.appendChild(shadow);
+                    }
+                    let shadow2 = document.querySelector('#b_screen_3 #chart_shw');
+                    if (shadow2) {
+                        bScreen2.appendChild(shadow2);
+                    }
+                    let shadow3 = document.querySelector('#d_screen #cal_shw');
+                    if (shadow3) {
+                        bScreen3.appendChild(shadow3);
+                    }
+                    let nboard = document.querySelector('#h_screen_1 #nboard_shw');
+                    if (nboard) {
+                        eScreen.appendChild(nboard);
+                    }
+                    let dboard = document.querySelector('#h_screen_2 #dboard_shw');
+                    if (dboard) {
+                        fScreen.appendChild(dboard);
+                    }
                 }
             }
-        }
-        window.addEventListener('load', moveShadow);
-        window.addEventListener('resize', moveShadow);
+
+            window.addEventListener('load', moveShadow);
+            window.addEventListener('resize', moveShadow);
+        });
     </script>
 </th:block>
 </html>

@@ -7,6 +7,19 @@ body{
     width: 100vw;
     background-color: whitesmoke;
     overflow-x: hidden;
+    overflow-y: auto;
+}
+body::-webkit-scrollbar {
+    background-color: #181F42;
+    width: 8px;
+    height: 0px;
+}
+body::-webkit-scrollbar-thumb {
+    background: rgb(255, 255, 255, 0.5);
+}
+
+body::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255, 0.5);
 }
 #logout_text{
     background-color: transparent;
@@ -145,4 +158,9 @@ h6{
 a {
     color: inherit;   	    /* 부모 엘리먼트의 값을 물려받는다 */
     text-decoration: none;
+}
+@media (max-width: 1380px) {
+    #header_cols{
+        width: 1380px;
+    }
 }

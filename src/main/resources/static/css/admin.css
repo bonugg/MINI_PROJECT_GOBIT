@@ -182,14 +182,29 @@ body{
     box-sizing: border-box;
 }
 #back_div2{
-    width: 70%;
+    width: 50%;
     height: 45px;
-    margin: 40px auto 10px;
+    margin: 40px auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #logout_div3{
     width: 70%;
     height: 45px;
     margin: auto;
+}
+.div_btn2{
+    color: #4c4c4c;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    outline: none;
+    border: 0px;
+}
+.div_btn2:hover{
+    color: #6c6c6c;
+    cursor: pointer;
 }
 .div_btn{
     width: 100%;
