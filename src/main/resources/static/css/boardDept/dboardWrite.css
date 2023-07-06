@@ -10,6 +10,13 @@ input, textarea:focus {
     box-shadow: none !important;
 }
 
+.title > p {
+    margin-top: 40px;
+    margin-left: 40px;
+    font-size: 15px;
+    color: grey;
+}
+
 
 /* 몸통 부분 */
 .boody {
@@ -105,8 +112,8 @@ form {
 }
 
 .fn_add_btn:hover {
-    color: white;
-    background: #62A9EB;
+    background: #181F42;
+    color: whitesmoke;
     transition: background-color 0.3s ease;
 }
 
@@ -161,8 +168,14 @@ form {
     background: transparent;
 }
 
-.div-board-btns > button:hover {
+.sub_btn:hover {
+    background: #181F42;
+    color: whitesmoke;
+    transition: background-color 0.3s ease;
+}
+.cancel:hover {
     color: white;
-    background: #62A9EB;
+    background: #fa6362;
+    transition: background-color 0.3s ease;
 }
 /* 버튼들 */            

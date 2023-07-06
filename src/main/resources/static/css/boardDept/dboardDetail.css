@@ -5,7 +5,7 @@ html {
 body {
     width: 100vw;
     min-width: 1200px;
-    background: #F6F8FF;
+    background: whitesmoke;
 }
 
 a {
@@ -22,6 +22,12 @@ a {
 }
 /* 머리부분 끝 */
 
+.title > p {
+    margin-top: 40px;
+    margin-left: 40px;
+    font-size: 15px;
+    color: grey;
+}
 
 
 /* 몸통 부분 */
@@ -56,12 +62,13 @@ a {
 /* 내용 부분 */
 .div-content {
     width: 90%;
-    height: 400px;
+    height: 100%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .board-content {
     margin: 30px 30px 30px 30px;
-    white-space: pre-wrap;
+    word-break: break-all;
+
 }
 /* 내용 부분 */
 
@@ -154,8 +161,14 @@ a {
 }
 
 .div-board-btns > *:hover{
+    background: #181F42;
+    color: whitesmoke;
+    transition: background-color 0.3s ease;
+}
+
+.delete:hover {
     color: white;
-    background-color: #62A9EB;
+    background: #fa6362;
     transition: background-color 0.3s ease;
 }
 /* 버튼들 */
@@ -220,8 +233,8 @@ a {
     height: 100%;
     width: 70px;
     border: none;
-    color: white;
-    background: #62A9EB;
+    background: #181F42;
+    color: whitesmoke;
     transition: background-color 0.3s ease;
     position: absolute; /* 절대적인 위치 설정 */
     top: 50%; /* 부모 요소의 50% 위치로 이동 */
@@ -235,7 +248,8 @@ a {
 }
 
 .reply-input:hover{
-    background: #181F42;
+    background: fuchsia;
+    color: black;
 }
 
 /* 댓글 작성 */
@@ -259,6 +273,7 @@ a {
 .reply-content {
     margin-top: 5px;
     margin-bottom: 5px;
+    overflow-y: auto;
 }
 
 .reply-content-hr {
