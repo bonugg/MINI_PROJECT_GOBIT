@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Empty</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/empty.css">
+        <link rel="stylesheet" type="text/css" href="/css/boardDept/dboardList.css">
+
+    </th:block>
+</head>
+<body layout:fragment="content">
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
+                <div>
+                    <div class="heead">
+                        <div class="div-title">
+                            <div class="title">
+                                <p>전사게시판</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="boody">
+                        <!-- 검색 창 -->
+                        <div class="div-search">
+                            <div class="div-sort">
+                                <a class="sort-btn" href="/boardDept/sorted-by-cnt">조회순</a>
+                                <a class="sort-btn" href="/boardDept/sorted-by-like">인기순</a>
+                            </div>
+
+                            <div class="search-value">
+                                <select class="search-select" th:value="${category}" id="search_category">
+                                    <option value="전체">전체</option>
+                                    <option value="제목">제목</option>
+                                    <option value="내용">내용</option>
+                                    <option value="작성자">작성자</option>
+                                </select>
+                                <input class="search-input" type="text" th:value="${kw}" id="search_kw" placeholder="검색어를 입력하세요.">
+                                <button class="search-btn" type="button" id="btn_search">검색</button>
+
+                            </div>
+                        </div>
+                        <!-- 검색 창 -->
+
+                        <!-- 게시판 테이블 -->
+                        <table class="board-table">
+                            <thead>
+                            <tr>
+                                <th class="table-no">번호</th>
+                                <th class="table-title">제목</th>
+                                <th class="table-name">이름</th>
+                                <th class="table-date">작성일자</th>
+                                <th class="table-cnt">조회수</th>
+                                <th class="table-like">추천수</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="board, loop : ${paging}">
+    <!--                                <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>-->
+                                    <td th:text="${board.id}"></td>
+                                    <td class="table-title">
+                                        <a th:href="@{|/boardDept/updateCnt/${board.id}|}"
+                                        th:text="${board.title}"></a>
+                                    </td>
+                                    <td class="table-name" th:if="${board.user != null}" th:text="${board.user.USERNAME}"></td>
+                                    <td class="table-date" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td class="table-cnt" th:text="${board.cnt}"></td>
+                                    <td class="table-like" th:text="${board.like}"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <!-- 게시판 테이블 -->
+
+
+                        <!-- 페이징처리 시작 -->
+                        <div class="paging" th:if="${!paging.isEmpty()}">
+                            <ul class="board_ul">
+
+                                <li th:if="${paging.hasPrevious()}" style="margin-right: 3px">
+                                    <a class="page_link" href="javascript:void(0)" th:data-page="${paging.number-1}">
+                                        이전
+                                    </a>
+                                </li>
+                                <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}" style="margin-right: 3px"
+                                    th:if="${page >= paging.number-2 and page <= paging.number+2}"
+                                    th:class="${page+1 == currentPage ? 'active-page' : ''}">
+                                    <a th:text="${page+1}" class="page_link" href="javascript:void(0)" th:data-page="${page}"></a>
+                                </li>
+                                <li th:if="${paging.hasNext()}">
+                                    <a class="page_link" href="javascript:void(0)" th:data-page="${paging.number+1}">
+                                        다음
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="div-writeBtn">
+                                <a href="/boardDept/create">글쓰기</a>
+                            </div>
+                        </div>
+
+
+                        <!-- 페이징처리 끝 -->
+                    </div>
+                    <form th:action="@{/boardDept/list}" method="get" id="searchForm">
+                        <input type="hidden" id="category" name="category" th:value="${category}">
+                        <input type="hidden" id="kw" name="kw" th:value="${kw}">
+                        <input type="hidden" id="page" name="page" th:value="${paging.number}">
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function () {
+    const page_elements = document.getElementsByClassName("page_link");
+
+    function clickPageBtn() {
+        var page = this.dataset.page;
+        var category = document.getElementById("search_category").value;
+        var kw = document.getElementById("search_kw").value;
+
+        $.ajax({
+            url: "/api/list",
+            type: "GET",
+            data: {
+                page: page,
+                category: category,
+                kw: kw,
+                dept: "IT"
+            },
+            success: function(response) {
+                // Update the table body with the new data
+                var tbodyHtml = "";
+                response.content.forEach(function(boardDTO) {
+                    tbodyHtml += '<tr>';
+                    tbodyHtml += '<td>' + boardDTO.id + '</td>';
+                    tbodyHtml += '<td class="table-title">';
+                    tbodyHtml += '<a href="/boardDept/updateCnt/' + boardDTO.id + '">' + boardDTO.title + '</a>';
+                    tbodyHtml += '</td>';
+                    tbodyHtml += '<td class="table-name">' + boardDTO.username + '</td>';
+                    tbodyHtml += '<td class="table-date">' + formatDate(boardDTO.createDate) + '</td>';
+                    tbodyHtml += '<td class="table-cnt">' + boardDTO.cnt + '</td>';
+                    tbodyHtml += '<td class="table-like">' + boardDTO.like + '</td>';
+                    tbodyHtml += '</tr>';
+                });
+
+                var tbody = document.querySelector("tbody");
+                tbody.innerHTML = tbodyHtml;
+
+                console.log(response);
+
+                var currentPage = response.number;
+                var totalPages = response.totalPages;
+
+                var pagingButtons = generatePagingButtons(currentPage, totalPages);
+
+                // 페이징 버튼 업데이트
+                $(".paging").html(pagingButtons);
+
+                // 기존 페이지 버튼에 이벤트 리스너 제거
+                $(".page_link").off("click");
+
+                // 새로 생성된 페이지 버튼에 클릭 이벤트 리스너 추가
+                $(".page_link").click(clickPageBtn);
+            },
+            error: function() {
+                console.log("Error occurred during AJAX request.");
+            }
+        });
+    }
+
+    Array.from(page_elements).forEach(function(element) {
+        element.addEventListener('click', clickPageBtn);
+    });
+
+
+
+    function generatePagingButtons(currentPage, totalPages) {
+        const previousButton = `<li><a class="page_link" data-page="${currentPage - 1}">이전</a></li>`;
+        const nextButton = `<li><a class="page_link" data-page="${currentPage + 1}">다음</a></li>`;
+        let pageButtons = "";
+
+        const startPage = Math.max(currentPage - 2, 0); // 현재 페이지의 앞에서 2페이지까지 생성
+        const endPage = Math.min(currentPage + 2, totalPages - 1); // 현재 페이지의 뒤에서 2페이지까지 생성
+
+        for (let page = startPage; page <= endPage; page++) {
+            const activeClass = page === currentPage ? "active-page" : "";
+            const backgroundColor = page === currentPage ? "background-color: #181F42;" : ""; // 현재 페이지 배경색
+            const color = page === currentPage ? "color: white;" : ""; // 현재 페이지 글자색
+            pageButtons += `<li class="${activeClass}"><a class="page_link" data-page="${page}" style="${backgroundColor}${color}">${page + 1}</a></li>`;
+        }
+
+        const pagingHTML = `
+    <ul class="board_ul">
+      ${currentPage > 0 ? previousButton : ""}
+      ${pageButtons}
+      ${currentPage < totalPages - 1 ? nextButton : ""}
+    </ul>
+    <div class="div-writeBtn">
+                                <a href="/boardDept/create">글쓰기</a>
+    </div>
+  `;
+
+        return pagingHTML;
+    }
+
+
+
+
+    function formatDate(dateStr) {
+        var date = new Date(dateStr);
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, "0");
+        var day = date.getDate().toString().padStart(2, "0");
+        var hour = date.getHours().toString().padStart(2, "0");
+        var minute = date.getMinutes().toString().padStart(2, "0");
+        return year + "-" + month + "-" + day + " " + hour + ":" + minute;
+    }
+
+    const btn_search = document.getElementById("btn_search");
+    btn_search.addEventListener('click', function() {
+        document.getElementById('category').value = document.getElementById('search_category').value;
+        document.getElementById('kw').value = document.getElementById('search_kw').value;
+        document.getElementById('page').value = 0;  // 검색버튼을 클릭할 경우 0페이지부터 조회한다.
+        document.getElementById('searchForm').submit();
+    });
+});
+</script>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</th:block>
+</html>

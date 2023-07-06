@@ -1,0 +1,60 @@
+#fullscreen{
+    width: 100vw;
+    height: 100vh;
+}
+#_emt1{
+    width: 100%;
+    height: 70px;
+}
+#_emt2{
+    width: 100%;
+    height: calc(100% - 70px);
+    display: flex;
+}
+#_emt3{
+    width: 100px;
+    height: 100%;
+}
+#_emt4{
+    width: calc(100% - 100px);
+    height: 100%;
+    display: flex;
+}
+#use_screen{
+    width: 100%;
+    height: 100%;
+}
+
+.pwChange-title {
+    font-size: 15px;
+    color: #949393;
+    position: absolute;
+    margin-left: 40px;
+    margin-top: 40px;
+}
+
+#changePwForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30vh;
+}
+
+#changePwForm input[type="password"] {
+    margin-bottom: 20px;
+    width: 250px;
+    height: 70px;
+    border: 0.2px;
+}
+
+#btnChange {
+    width: 150px;
+    height: 50px;
+    background-color: #878BA0;
+    color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    justify-content: center;
+    border: none;
+}

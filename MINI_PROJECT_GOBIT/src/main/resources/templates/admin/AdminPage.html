@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="/css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&family=Orbit&family=Russo+One&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="fullscreen">
+    <div id="screen1">
+        <div id="logo_div">
+            <div id="logo_div2">
+                <img src="img/1.png" id="logo_img2">
+            </div>
+        </div>
+        <div id="file_div">
+            <div id="text_div">
+                <div id="text_div2">
+                <p>엑셀파일을 첨부하여 회원을 추가하세요.</p>
+                </div>
+                <div id="file_div2">
+                    <form action="/memberSigns" method="post" enctype="multipart/form-data" id="file_form">
+                        <div class="div_form">
+                            <label for="file" id="file_label">파일첨부</label>
+                            <input class="upload-name" value="">
+                            <input type="file" name="file" id="file">
+                            <input type="button" value="제출" id="submit_btn"/>
+                        </div>
+                    </form>
+                </div>
+                <div id="file_div3">
+                    <div id="file_div4">
+                        <p>회원가입 상태 &nbsp;&nbsp;: &nbsp;&nbsp;</p>
+                        <p id="status_text">(파일첨부 후에 제출버튼을 눌러주세요.)</p>
+                    </div>
+                </div>
+                <div id="logout_div">
+                    <div id="back_div2">
+                        <a class="div_btn2" onclick="location.href='/admin/main'">사원 관리 페이지로 이동</a>
+                    </div>
+                    <div id="logout_div3">
+                    <form action="/logout" method="post">
+                        <button type="submit" class="div_btn">관리자 로그아웃</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+<script src="js/jquery-3.7.0.min.js"></script>
+<script src="/js/admin.js"></script>
+</html>
