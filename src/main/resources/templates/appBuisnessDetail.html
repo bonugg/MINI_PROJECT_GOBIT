@@ -26,18 +26,21 @@
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="insertForm" action="/appRequest/buisness" method="post">
-                            <input type="hidden" name="appSort" value="B">
-                            <input type="hidden" name="appState" value="미승인">
+                        <form id="updateForm" name="approval" action="/appDetail/approval" method="post">
+                            <input type="hidden" id="appNum" name="appNum" th:value="${approval.appNum}">
+                            <input type="hidden" id="appAlarm" name="appAlarm" th:value="${approval.appAlarm}">
+                            <input type="hidden" id="appSort" name="appSort" th:value="${approval.appSort}">
+                            <input type="hidden" id="appState" name="appState" value="미승인">
+                            <input type="hidden" id="appWriDate" name="appWriDate" th:value="${approval.appWriDate}">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>출장날짜</div>
                                     <div class="input-date-form">
                                         <div class="input-date-form">
-                                            <input type="datetime-local" id="inputDate-start" name="appStart" required
+                                            <input type="datetime-local" id="inputDate-start" name="appStart" th:value="${approval.appStart}" required
                                                    onchange="printDate()">
                                             <p>~</p>
-                                            <input type="datetime-local" id="inputDate-end" name="appEnd" required
+                                            <input type="datetime-local" id="inputDate-end" name="appEnd" th:value="${approval.appEnd}" required
                                                    onchange="printDate()">
                                         </div>
                                     </div>
@@ -45,21 +48,21 @@
                                 <div class="input-user">
                                     <div>신청자</div>
                                     <div class="input-user-form">
-                                        <input type="hidden" name="userNum" th:value="${session.user.USERNUM}">
-                                        <p th:text="${session.user.USERNAME}"></p>
+                                        <input type="hidden" name="userNum" th:value="${approval.userNum.USERNUM}">
+                                        <p th:text="${approval.userNum.USERNAME}"></p>
                                     </div>
                                 </div>
                                 <div class="input-place">
                                     <div>출장 장소</div>
                                     <div class="input-place-form">
-                                        <input type="text" id="input-appLocation" name="appLocation" required onkeyup="printPlace()">
+                                        <input type="text" id="input-appLocation" name="appLocation" th:value="${approval.appLocation}" required onkeyup="printPlace()">
                                     </div>
                                 </div>
                                 <div class="input-text">
                                     <div>출장 목적</div>
                                     <div class="input-text-form">
-                            <textarea id="input-appContent" name="appContent" style="resize:vertical" cols="50"
-                                      rows="1" required onkeyup="printContent()"></textarea>
+                            <textarea id="input-appContent" name="appContent" th:text="${approval.appContent}"
+                                      style="resize:vertical" cols="50" rows="1" required onkeyup="printContent()"></textarea>
                                     </div>
                                 </div>
                             </section>
@@ -70,19 +73,19 @@
                                         <table>
                                             <tr>
                                                 <td>문서번호</td>
-                                                <td></td>
+                                                <td th:text="${approval.appNum}"></td>
                                             </tr>
                                             <tr>
                                                 <td>부서</td>
-                                                <td th:text="${session.user.USERDEPT}"></td>
+                                                <td th:text="${approval.userNum.USERDEPT}"></td>
                                             </tr>
                                             <tr>
                                                 <td>기안일</td>
-                                                <td></td>
+                                                <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
                                             </tr>
                                             <tr>
                                                 <td>기안자</td>
-                                                <td th:text="${session.user.USERNAME}"></td>
+                                                <td th:text="${approval.userNum.USERNAME}"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -114,21 +117,21 @@
                                         <table>
                                             <tr>
                                                 <td>출장 날짜</td>
-                                                <td id="appData-date"></td>
+                                                <td id="appData-date" th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}"></td>
                                                 <td>출장 장소</td>
-                                                <td id="appData-place"></td>
+                                                <td id="appData-place" th:text="${approval.appLocation}"></td>
                                             </tr>
                                             <tr class="appData-colspan">
                                                 <td>출장 목적</td>
-                                                <td colspan="3" id="appData-content"></td>
+                                                <td colspan="3" id="appData-content" th:text="${approval.appContent}"></td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
                             </section>
                             <div id="dataSubmit-section">
-                                <button id="btnSave">저장</button>
-                                <button type="reset" id="btnDelete">취소</button>
+                                <button type="button" id="btnUpdate">수정</button>
+                                <button type="button" id="btnDelete">삭제</button>
                             </div>
                         </form>
                     </div>
@@ -140,6 +143,7 @@
 </div>
 </body>
 <th:block layout:fragment="script">
+    <script src="/js/jquery-3.7.0.min.js"></script>
     <script src="/js/appBuisnessDetail.js"></script>
 </th:block>
 </html>
