@@ -38,10 +38,10 @@ public class Approval {
     @JoinColumn(name = "USER_NUM")
     private User userNum;
 
-    //사원ID
+    //결재승인자ID
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "APP_USER_NUM")
-    private User user;
+    private User appUserNum;
 
     //--------결제공통--------
     //결재 작성일
@@ -61,6 +61,10 @@ public class Approval {
     //결재승인자이름
     @JoinColumn(name = "USER_NAME")
     private String userName;
+
+    //결재승인자부서
+    @JoinColumn(name="USER_DEPT")
+    private String userDept;
 
     //--------결제상세--------
     //결재시작일
@@ -95,9 +99,11 @@ public class Approval {
                 .appNum(this.appNum)
                 .appSort(appSortString)
                 .userNum(this.userNum)
+                .appUserNum(this.appUserNum)
                 .appWriDate(this.appWriDate)
                 .appState(this.appState)
                 .userName(this.userName)
+                .userDept(this.userDept)
                 .appStart(this.appStart)
                 .appEnd(this.appEnd)
                 .appContent(this.appContent)

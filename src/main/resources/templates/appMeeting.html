@@ -26,10 +26,11 @@
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="insertForm" action="/appRequest/meeting" method="post">
+                        <form id="insertForm" action="/appRequest/approval" method="post">
                             <input type="hidden" name="appSort" value='M'>
                             <input type="hidden" name="appState" value="미승인">
                             <input type="hidden" name="userNum" th:value="${session.user.USERNUM}">
+                            <input type="hidden" name="userDept" th:value="${session.user.USERDEPT}">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>회의날짜</div>
@@ -117,7 +118,7 @@
                                                 <td>회의 날짜</td>
                                                 <td id="appData-date"></td>
                                                 <td>출장 장소</td>
-                                                <td id="appData-Place"></td>
+                                                <td id="appData-place"></td>
                                             </tr>
                                             <tr>
                                                 <td>회의 참석자</td>
@@ -132,7 +133,7 @@
                                 </div>
                             </section>
                             <div id="dataSubmit-section">
-                                <button id="btnSave">저장</button>
+                                <button type="button" id="btnSave">저장</button>
                                 <button type="reset" id="btnDelete">취소</button>
                             </div>
                         </form>

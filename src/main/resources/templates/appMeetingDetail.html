@@ -121,7 +121,7 @@
                                                 <!--<td id="appData-date" th:value="${approval.appStart}"></td>-->
                                                 <td id="appData-date" th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}"></td>
                                                 <td>출장 장소</td>
-                                                <td id="appData-Place" th:text="${approval.appLocation}"></td>
+                                                <td id="appData-place" th:text="${approval.appLocation}"></td>
                                             </tr>
                                             <tr>
                                                 <td>회의 참석자</td>
@@ -136,8 +136,8 @@
                                 </div>
                             </section>
                             <div id="dataSubmit-section">
-                                <button th:if="${#authentication.getName() == #strings.toString(approval.userNum.USERENO)}" id="btnUpdate">수정</button>
-                                <button th:if="${#authentication.getName() == #strings.toString(approval.userNum.USERENO)}" id="btnDelete">삭제</button>
+                                <button type="button" th:if="${#authentication.getName() == #strings.toString(approval.userNum.USERENO)}" id="btnUpdate">수정</button>
+                                <button type="button" id="btnDelete">삭제</button>
                             </div>
                         </form>
                     </div>

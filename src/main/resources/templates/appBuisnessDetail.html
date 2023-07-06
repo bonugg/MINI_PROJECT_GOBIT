@@ -119,7 +119,7 @@
                                                 <td>출장 날짜</td>
                                                 <td id="appData-date" th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}"></td>
                                                 <td>출장 장소</td>
-                                                <td id="appData-Place" th:text="${approval.appLocation}"></td>
+                                                <td id="appData-place" th:text="${approval.appLocation}"></td>
                                             </tr>
                                             <tr class="appData-colspan">
                                                 <td>출장 목적</td>
@@ -130,7 +130,7 @@
                                 </div>
                             </section>
                             <div id="dataSubmit-section">
-                                <button id="btnUpdate">수정</button>
+                                <button type="button" id="btnUpdate">수정</button>
                                 <button type="button" id="btnDelete">삭제</button>
                             </div>
                         </form>
