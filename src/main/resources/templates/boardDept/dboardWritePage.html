@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Empty</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/empty.css">
+        <link rel="stylesheet" type="text/css" href="/css/boardDept/dboardWrite.css">
+
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    </th:block>
+</head>
+<body layout:fragment="content" style="background: whitesmoke">
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
+                <div>
+                    <!-- 머리부분 -->
+                    <div class="heead">
+                        <div class="div-title">
+                            <div class="title">
+                                <p>전사게시판</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 머리부분 -->
+
+
+                    <!-- 몸통 부분 -->
+                    <div class="boody">
+
+
+                        <form method="post" enctype="multipart/form-data">
+                            <!-- 제목 -->
+                            <div class="div-botitle">
+                                <div class="board-title">
+                                    <input type="text" name="title" placeholder="여기에 제목을 입력하세요.">
+                                </div>
+                            </div>
+                            <!-- 제목 -->
+
+
+                            <!-- 내용 -->
+                            <div class="div-content">
+                                <div class="board-content" for="content">
+                                    <textarea id="summernote" name="content" placeholder="여기에 내용을 입력하세요."></textarea>
+                                </div>
+                            </div>
+                            <!-- 내용 -->
+
+
+                            <!-- 첨부파일 -->
+                            <div class="div-values">
+                                <label>첨부파일</label>
+                                <div class="file_list">
+                                    <div class="file_select">
+                                        <div class="file_input">
+                                            <label class="file_input" for="file_input_label">
+                                                <input type="text" readonly id="file_input_label_text"/>
+                                                <label id="file_input_label_btn">첨부파일
+                                                    <input type="file" name="files" id="file_input_label" onchange="selectFile(this);" />
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <button type="button" onclick="removeFile(this);" class="file_del_btn"><span>삭제</span></button>
+                                        <button type="button" onclick="addFile();" class="fn_add_btn"><span>추가</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 첨부파일 -->
+
+
+                            <!-- 버튼들 -->
+                            <div class="div-board-btns">
+                                <button type="submit">완료</button>
+                                <button type="button" class="cancel" data-uri="/boardDept/list">취소</button>
+                            </div>
+                            <!-- 버튼들 -->
+                        </form>
+                    </div>
+                    <!-- 몸통 부분 -->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //에디터 https://summernote.org/
+    $(document).ready(function() {
+        //여기 아래 부분
+        $('#summernote').summernote({
+            height: 300,                 // 에디터 높이
+            focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+            lang: "ko-KR",					// 한글 설정
+            placeholder: '최대 2048자까지 쓸 수 있습니다',
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']]
+            ],
+            theme: 'yeti'
+        });
+    });
+
+    // 파일 선택
+    function selectFile(element) {
+
+        const file = element.files[0];
+        const filename = element.closest('.file_input').firstElementChild;
+
+        // 1. 파일 선택 창에서 취소 버튼이 클릭된 경우
+        if ( !file ) {
+            filename.value = '';
+            return false;
+        }
+
+        // 2. 파일 크기가 10MB를 초과하는 경우
+        const fileSize = Math.floor(file.size / 1024 / 1024);
+        if (fileSize > 10) {
+            alert('10MB 이하의 파일로 업로드해 주세요.');
+            filename.value = '';
+            element.value = '';
+            return false;
+        }
+
+        // 3. 파일명 지정
+        filename.value = file.name;
+    }
+
+
+    // 파일 추가
+    function addFile() {
+        const fileDiv = document.createElement('div');
+        fileDiv.innerHTML =`
+            <div class="file_input" for="file_input_label">
+                <input type="text" readonly id="file_input_label_text"/>
+                <label id="file_input_label_btn">첨부파일
+                    <input type="file" name="files" onchange="selectFile(this);" id="file_input_label"/>
+                </label>
+            </div>
+            <button type="button" onclick="removeFile(this);" class="file_del_btn"><span>삭제</span></button>
+        `;
+        document.querySelector('.file_list').appendChild(fileDiv);
+    }
+
+
+    // 파일 삭제
+    function removeFile(element) {
+        const fileAddBtn = element.nextElementSibling;
+        if (fileAddBtn) {
+            const inputs = element.previousElementSibling.querySelectorAll('input');
+            inputs.forEach(input => input.value = '')
+            return false;
+        }
+        element.parentElement.remove();
+    }
+
+    const cancel_elements = document.getElementsByClassName("cancel");
+    Array.from(cancel_elements).forEach(function(ele) {
+        ele.addEventListener('click', function() {
+            if(confirm("정말로 작성을 취소하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+</script>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="/css/boardDept/summernote/summernote-ko-KR.js"></script>
+
+</th:block>
+</html>
