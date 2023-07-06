@@ -17,6 +17,7 @@ $(function() {
             contentType: false,
             processData: false,
             success: function(obj) {
+                console.log(obj);
                 if(obj == "회원가입 완료"){
                     $('#status_text').text(obj).css("color","cornflowerblue").hide().fadeIn(300);
                 }else {
@@ -24,6 +25,7 @@ $(function() {
                 }
             },
             error: (error) => {
+                console.log(error);
                 $('#status_text').text("회원가입 실패").css("color","indianred").addClass("shake-animation");
             }
         });

@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,8 +24,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @EntityListeners(ApprovalListener.class)
 public class AdminController {
-
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/main")
     public ModelAndView admin() {
@@ -120,5 +122,32 @@ public class AdminController {
         }).collect(Collectors.toList());
 
         return userListmap;
+    }
+
+    @GetMapping("/detailuser")
+    public Map<String, Object> detailuser(@RequestParam("id") long id) {
+        User user = userRepository.findById(id).get();
+        Map<String, Object> usermap = new HashMap<>();
+        usermap.put("userNum", user.getUSERNUM());
+        usermap.put("userName", user.getUSERNAME());
+        usermap.put("userEno", user.getUSERENO());
+        usermap.put("userPo", user.getUSERPOSITION());
+        usermap.put("userImage", user.getUSERIMAGE());
+        usermap.put("userJoinDate", user.getUSER_JOIN());
+        usermap.put("userPhone", user.getUSER_PHONE());
+        usermap.put("userDept", user.getUSERDEPT());
+        usermap.put("userEmail", user.getUSER_EMAIL());
+        usermap.put("userAddress", user.getUSER_ADDRESS());
+
+        return usermap;
+    }
+
+    @GetMapping("/changePwd")
+    public String changePwd(@RequestParam("id") long id) {
+        User user = userRepository.findById(id).get();
+        String user_pwd = String.valueOf(user.getUSERENO());
+        user.setUSER_PWD(passwordEncoder.encode(user_pwd));
+        userRepository.save(user);
+        return "성공";
     }
 }
