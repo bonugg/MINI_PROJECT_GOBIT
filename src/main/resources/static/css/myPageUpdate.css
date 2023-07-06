@@ -29,8 +29,8 @@
     font-size: 13px;
     color: #949393;
     position: absolute;
-    left: 200px;
-    top: 130px;
+    margin-left: 40px;
+    margin-top: 40px;
 }
 
 .profile-card {

@@ -1,8 +1,12 @@
 package com.gobit.minipj_gobit.service;
 
+import com.gobit.minipj_gobit.dto.PasswordChangeRequestDTO;
+import com.gobit.minipj_gobit.entity.CustomUserDetails;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,37 +28,6 @@ public class MyPageService {
     @Autowired
     public MyPageService(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-
-    public User getMyPage(Long USERNO) {
-        User user = userRepository.findById(USERNO)
-                .orElseThrow(() -> new NoSuchElementException("사용자를 찾을 수 없습니다."));
-
-        return user;
-    }
-
-    public User getUpdateMypage(Long USERNO) {
-        User user = userRepository.findById(USERNO)
-                .orElseThrow(() -> new NoSuchElementException("사용자를 찾을 수 없습니다."));
-
-        return user;
-    }
-
-    public byte[] convertImageToByteArray(String imagePath) throws IOException {
-        Path path = Paths.get(imagePath);
-        return Files.readAllBytes(path);
-    }
-
-    private byte[] getDefaultImage() {
-        try {
-            String defaultImagePath = "static/img/user.jpg";
-            Path path = Paths.get(defaultImagePath);
-            return Files.readAllBytes(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public User userget(long usernum) {
@@ -82,36 +55,25 @@ public class MyPageService {
         return updateMyPage;
     }
 
-    public boolean changePw(long usereno, String encryptedOriginPw, String changePw) {
-        Optional<User> userOptional = userRepository.findByUSERENO(usereno);
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-
-            if (passwordEncoder.matches(encryptedOriginPw, user.getUSER_PWD())) {
-                // 새로운 비밀번호 저장
-                user.setUSER_PWD(passwordEncoder.encode(changePw));
-                userRepository.save(user);
-                return true;
-            }
-        }
-
-        return false;
+    public User findById (long id) {
+        return userRepository.findById(id).get();
     }
 
+    public void changePw (User user) {
+        userRepository.save(user);
 
-    public User originPwCheck(long usereno, String encryptedOriginPw) {
-        Optional<User> userOptional = userRepository.findByUSERENO(usereno);
+    }
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
+    public UserDetails loadUserById (long ENO) throws UsernameNotFoundException{
+        Optional<User> userOptional = userRepository.findByUSERNUM(ENO);
 
-            if (passwordEncoder.matches(encryptedOriginPw, user.getUSER_PWD())) {
-                return user;
-            }
+        if (userOptional.isEmpty()) {
+            return null;
         }
 
-        return null;
+        return CustomUserDetails.builder()
+                .user(userOptional.get())
+                .build();
     }
 
 }
