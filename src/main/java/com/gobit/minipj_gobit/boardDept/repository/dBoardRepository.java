@@ -23,4 +23,7 @@ public interface dBoardRepository extends JpaRepository<dBoard, Long> {
     Page<dBoard> findAllByOrderByCntDesc(Pageable pageable);
 
     Page<dBoard> findAllByOrderByLikeDesc(Pageable pageable);
+
+    Page<dBoard> findAllByUserUSERDEPT(String dept, Pageable pageable);
+
 }
