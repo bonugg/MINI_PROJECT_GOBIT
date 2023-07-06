@@ -56,8 +56,8 @@ public class WSHandler extends TextWebSocketHandler {
             result.put("end", userOnOff.getEND());
         }else if(o instanceof Approval){
             Approval approval = (Approval) o;
-            result.put("testcnt", approvalRepository.findByCntUserApp(approval.getUser()));
-            result.put("testusernum", approval.getUser().getUSERNUM());
+            result.put("testcnt", approvalRepository.findByCntUserApp(approval.getAppUserNum()));
+            result.put("testusernum", approval.getAppUserNum().getUSERNUM());
         }
 
         ObjectMapper objectMapper = new ObjectMapper();

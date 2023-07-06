@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService {
@@ -35,5 +36,19 @@ public class ApprovalServiceImpl implements ApprovalService {
     //결재리스트 불러오기
     public Page<Approval> getApprovalList(Pageable pageable) {
         return approvalRepository.findAll(pageable);
+    }
+
+    @Override
+    public void updateApproval(Approval approval) {
+        approvalRepository.save(approval);
+        approvalRepository.flush();
+    }
+
+
+    @Override
+    public void deleteApproval(long appNum) {
+        approvalRepository.deleteById(appNum);
+        approvalRepository.deleteByAppNum(appNum);
+        approvalRepository.flush();
     }
 }
