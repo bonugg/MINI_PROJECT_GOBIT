@@ -10,6 +10,7 @@
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/admin_main.css">
     </th:block>
+
 </head>
 <body layout:fragment="content_admin">
 <div id="fullscreen">
@@ -17,220 +18,121 @@
     <div id="_emt2">
         <div id="_emt3">
             <div id="use_screen">
+                <div id="div_main">
                 <div id="dept_Div">
-                    <div class="dept_div1">
-                        <div class="com_title">
-                            <div class="title">
-                                <div class="title_1">
-                                    <a class="all_list" th:data-userdept="IT">전체 보기</a>
-                                </div>
-                                <div class="title_2">
-                                    <h4 class="title_text">IT</h4>
-                                </div>
-                                <div class="title_3">
-                                    <a class="more_text" id="cnt_IT"></a>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="dept_Div2">
+                        <button type="button" class="dept_btn" id="dept_btn_it" th:data-userdept="IT">IT</button>
+                        <button type="button" class="dept_btn" th:data-userdept="디자인">디자인</button>
+                        <button type="button" class="dept_btn" th:data-userdept="경영">경영</button>
+                        <button type="button" class="dept_btn" th:data-userdept="개발">개발</button>
+                    </div>
+                    <div id="dept_Div3">
                         <div class="com_search">
                             <div class="search_div">
-                                <select name="user_position" id="tag_IT" class="search_tag">
+                                <select name="user_position" id="tag" class="search_tag">
                                     <option value="" selected disabled hidden>직급 선택</option>
                                     <option value="">선택 없음</option>
                                     <option value="신입">신입</option>
                                     <option value="팀장">팀장</option>
                                 </select>
                                 <div class="search_input">
-                                    <input type="text" class="search_input_text" id="search_IT" placeholder="사원이름을 입력해주세요.">
+                                    <input type="text" class="search_input_text" id="search"
+                                           placeholder="사원이름을 입력해주세요.">
                                 </div>
                                 <div class="search_btn">
-                                    <button type="button" class="search_input_btn" th:data-userdept="IT">검색</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="com_content">
-                            <div class="board">
-                                <div class="user_div">
-                                    <div class="user-grid-container">
-                                        <div class="notice_item" id="userListWrapperIT">
-                                        </div>
-                                    </div>
+                                    <button type="button" class="search_input_btn" id="submit_search">검색</button>
                                 </div>
                             </div>
                         </div>
                         <div class="com_chk">
                             <div class="user_check_form_IT">
-                                <button type="button" class="check-all" th:data-userdept="IT">모두 체크</button>
-                                <button type="button" class="uncheck-all" th:data-userdept="IT">체크 해제</button>
-                                <select name="user_position" class="search_tag2" id="chk_tag_IT">
+                                <button type="button" class="check-all">모두 체크</button>
+                                <button type="button" class="uncheck-all">체크 해제</button>
+                                <select name="user_position" class="search_tag2" id="chk_tag">
                                     <option value="" selected disabled hidden>직급 선택</option>
                                     <option value="신입">신입</option>
                                     <option value="팀장">팀장</option>
                                 </select>
-                                <button type="button" id="btn_text_IT" class="chk_btn_submit" th:data-userdept="IT">변경</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dept_div1">
-                        <div class="com_title">
-                            <div class="title">
-                                <div class="title_1">
-                                    <a class="all_list" th:data-userdept="디자인">전체 보기</a>
-                                </div>
-                                <div class="title_2">
-                                    <h4 class="title_text">디자인</h4>
-                                </div>
-                                <div class="title_3">
-                                    <a class="more_text" id="cnt_디자인"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="com_search">
-                            <div class="search_div">
-                                <select name="user_position" id="tag_디자인" class="search_tag">
-                                    <option value="" selected disabled hidden>직급 선택</option>
-                                    <option value="">선택 없음</option>
-                                    <option value="신입">신입</option>
-                                    <option value="팀장">팀장</option>
-                                </select>
-                                <div class="search_input">
-                                    <input type="text" class="search_input_text" id="search_디자인" placeholder="사원이름을 입력해주세요.">
-                                </div>
-                                <div class="search_btn">
-                                    <button type="button" class="search_input_btn" th:data-userdept="디자인">검색</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="com_content">
-                            <div class="board">
-                                <div class="user_div">
-                                    <div class="user-grid-container">
-                                        <div class="notice_item" id="userListWrapper디자인">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="com_chk">
-                            <div class="user_check_form_디자인">
-                                <button type="button" class="check-all" th:data-userdept="디자인">모두 체크</button>
-                                <button type="button" class="uncheck-all" th:data-userdept="디자인">체크 해제</button>
-                                <select name="user_position" class="search_tag2" id="chk_tag_디자인">
-                                    <option value="" selected disabled hidden>직급 선택</option>
-                                    <option value="신입">신입</option>
-                                    <option value="팀장">팀장</option>
-                                </select>
-                                <button type="button" id="btn_text_디자인" class="chk_btn_submit" th:data-userdept="디자인">변경</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dept_div1">
-                        <div class="com_title">
-                            <div class="title">
-                                <div class="title_1">
-                                    <a class="all_list" th:data-userdept="경영">전체 보기</a>
-                                </div>
-                                <div class="title_2">
-                                    <h4 class="title_text">경영</h4>
-                                </div>
-                                <div class="title_3">
-                                    <a class="more_text" id="cnt_경영"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="com_search">
-                            <div class="search_div">
-                                <select name="user_position" id="tag_경영" class="search_tag">
-                                    <option value="" selected disabled hidden>직급 선택</option>
-                                    <option value="">선택 없음</option>
-                                    <option value="신입">신입</option>
-                                    <option value="팀장">팀장</option>
-                                </select>
-                                <div class="search_input">
-                                    <input type="text" class="search_input_text" id="search_경영" placeholder="사원이름을 입력해주세요.">
-                                </div>
-                                <div class="search_btn">
-                                    <button type="button" class="search_input_btn" th:data-userdept="경영">검색</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="com_content">
-                            <div class="board">
-                                <div class="user_div">
-                                    <div class="user-grid-container">
-                                        <div class="notice_item" id="userListWrapper경영">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="com_chk">
-                            <div class="user_check_form_경영">
-                                <button type="button" class="check-all" th:data-userdept="경영">모두 체크</button>
-                                <button type="button" class="uncheck-all" th:data-userdept="경영">체크 해제</button>
-                                <select name="user_position" class="search_tag2" id="chk_tag_경영">
-                                    <option value="" selected disabled hidden>직급 선택</option>
-                                    <option value="신입">신입</option>
-                                    <option value="팀장">팀장</option>
-                                </select>
-                                <button type="button" id="btn_text_경영" class="chk_btn_submit" th:data-userdept="경영">변경</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dept_div1">
-                        <div class="com_title">
-                            <div class="title">
-                                <div class="title_1">
-                                    <a class="all_list" th:data-userdept="개발">전체 보기</a>
-                                </div>
-                                <div class="title_2">
-                                    <h4 class="title_text">개발</h4>
-                                </div>
-                                <div class="title_3">
-                                    <a class="more_text" id="cnt_개발"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="com_search">
-                            <div class="search_div">
-                                <select name="user_position" id="tag_개발" class="search_tag">
-                                    <option value="" selected disabled hidden>직급 선택</option>
-                                    <option value="">선택 없음</option>
-                                    <option value="신입">신입</option>
-                                    <option value="팀장">팀장</option>
-                                </select>
-                                <div class="search_input">
-                                    <input type="text" class="search_input_text" id="search_개발" placeholder="사원이름을 입력해주세요.">
-                                </div>
-                                <div class="search_btn">
-                                    <button type="button" class="search_input_btn" th:data-userdept="개발">검색</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="com_content">
-                            <div class="board">
-                                <div class="user_div">
-                                    <div class="user-grid-container">
-                                        <div class="notice_item" id="userListWrapper개발">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="com_chk">
-                            <div class="user_check_form_개발">
-                                <button type="button" class="check-all" th:data-userdept="개발">모두 체크</button>
-                                <button type="button" class="uncheck-all" th:data-userdept="개발">체크 해제</button>
-                                <select name="user_position" class="search_tag2" id="chk_tag_개발">
-                                    <option value="" selected disabled hidden>직급 선택</option>
-                                    <option value="신입">신입</option>
-                                    <option value="팀장">팀장</option>
-                                </select>
-                                <button type="button" id="btn_text_개발" class="chk_btn_submit" th:data-userdept="개발">변경
+                                <button type="button" id="btn_text" class="chk_btn_submit">변경
                                 </button>
                             </div>
                         </div>
                     </div>
+                    <div id="dept_Div4">
+                        <div class="user_div">
+                            <div class="user-grid-container">
+                                <div class="notice_item" id="userListWrapper">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="user_Div">
+                    <div id="user_Div2">
+                        <div id="user_div_title">
+                            사원 상세보기
+                        </div>
+                        <div id="user_div_img">
+                            <div id="user_div_img2">
+                                <img src="/img/user.png" id="user_img">
+                            </div>
+                        </div>
+                        <div id="user_div_content">
+                            <div id="user_div_content2">
+                                <table id="user_div_content_table">
+                                    <tr>
+                                        <th>이름</th>
+                                        <td id="name">사원 이름</td>
+                                    </tr>
+                                    <tr>
+                                        <th>사번</th>
+                                        <td id="eno">사원 사번</td>
+                                    </tr>
+                                    <tr>
+                                        <th>부서</th>
+                                        <td id="dept">사원 부서</td>
+                                    </tr>
+                                    <tr>
+                                        <th>직급</th>
+                                        <td id="position">사원 직급</td>
+                                    </tr>
+                                    <tr>
+                                        <th>이메일</th>
+                                        <td id="email">사원 이메일</td>
+                                    </tr>
+                                    <tr>
+                                        <th>주소</th>
+                                        <td id="address">사원 주소</td>
+                                    </tr>
+                                    <tr>
+                                        <th>번호</th>
+                                        <td id="phone">사원 번호</td>
+                                    </tr>
+                                    <tr>
+                                        <th onclick="getId(1)">입사일</th>
+                                        <td id="joindate">사원 입사일</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="user_div_btn">
+                            <div id="user_div_btn2">
+                                <div class="user_position_div2">
+                                    <select name="user_position" class="user_po" id="all">
+                                        <option value="" selected disabled hidden>직급 변경</option>
+                                        <option value="신입">신입</option>
+                                        <option value="팀장">팀장</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="up_btn" id="all2" value="">변경</button>
+                                <button type="button" id="pwd_clean">패스워드 초기화</button>
+                                <button type="button" id="delete_user" class="user_delete_div2" value="">사원 삭제</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
                 </div>
             </div>
         </div>

@@ -7,6 +7,19 @@ body{
     width: 100vw;
     background-color: whitesmoke;
     overflow-x: hidden;
+    overflow-y: auto;
+}
+body::-webkit-scrollbar {
+    background-color: #181F42;
+    width: 8px;
+    height: 0px;
+}
+body::-webkit-scrollbar-thumb {
+    background: rgb(255, 255, 255, 0.5);
+}
+
+body::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255, 0.5);
 }
 #logout_text{
     background-color: transparent;
