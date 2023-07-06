@@ -24,8 +24,9 @@
             <div id="use_screen">
                 <p class="pwChange-title">비밀번호 변경</p>
                 <form method="post" id="changePwForm">
-                    <input type="password" name="USER_PWD" id="originPw" placeholder="기존 비밀번호"/>
-                    <input type="password" name="NEW_USER_PWD" id="changePw" placeholder="변경 비밀번호"/>
+                    <input type="password" name="originPw" id="originPw" placeholder="기존 비밀번호"/>
+
+                    <input type="password" name="USER_PWD" id="changePw" placeholder="변경 비밀번호"/>
                     <p id="pwValidation" style="color: red; font-size: 0.8rem;">
                         비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.
                     </p>
@@ -115,19 +116,10 @@
                     return;
                 }
 
-                const formData = $("#changePwForm").serializeArray();
-                const requestBody = {
-                    USERNUM: formData[1].value,
-                    originPw: formData[2].value,
-                    USER_PWD: formData[3].value
-                };
-
                 $.ajax({
                     url: '/changePw',
                     type: 'post',
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: JSON.stringify(requestBody),
+                    data: $("#changePwForm").serialize(),
                     success: (obj) => {
                         console.log(obj);
 

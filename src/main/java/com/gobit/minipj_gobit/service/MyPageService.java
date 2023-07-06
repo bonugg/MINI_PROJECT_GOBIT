@@ -59,20 +59,9 @@ public class MyPageService {
         return userRepository.findById(id).get();
     }
 
-    public void changePw (PasswordChangeRequestDTO pcrDTO) {
-        Optional<User> userOptional = userRepository.findByUSERNUM(pcrDTO.getUSERNUM());
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
+    public void changePw (User user) {
+        userRepository.save(user);
 
-            if (!passwordEncoder.matches(pcrDTO.getOriginPw(), user.getUSER_PWD())) {
-                throw new IllegalArgumentException("Incorrect original password");
-            }
-
-            user.setUSER_PWD(passwordEncoder.encode(pcrDTO.getUSER_PWD()));
-            userRepository.save(user);
-        } else {
-            throw new NoSuchElementException("User not found");
-        }
     }
 
     public UserDetails loadUserById (long ENO) throws UsernameNotFoundException{

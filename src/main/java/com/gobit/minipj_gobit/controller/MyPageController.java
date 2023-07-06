@@ -51,7 +51,7 @@ public class MyPageController {
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/myPage")
-    public String myPage(Model model){
+    public String myPage(Model model) {
         User user = (User) httpSession.getAttribute("user");
 
         model.addAttribute("user", myPageService.userget(user.getUSERNUM()));
@@ -78,13 +78,13 @@ public class MyPageController {
             String fileName = userNum + "_" + imageFile.getOriginalFilename();
             String imagesDirectory = "src/main/resources/static/img/user/";
             File directory = new File(filePaths[1]);
-            if(!directory.exists()) {
+            if (!directory.exists()) {
                 directory.mkdir();
             }
             File uploadFile = new File(filePaths[1] + fileName);
             imageFile.transferTo(uploadFile);
-                user.setImagePath(filePaths[1]);
-                user.setUSERIMAGE(fileName);
+            user.setImagePath(filePaths[1]);
+            user.setUSERIMAGE(fileName);
             System.out.println(user.getUSERNAME());
         } else {
             user.setImagePath(filePaths[1]);
@@ -103,69 +103,34 @@ public class MyPageController {
 
     @ResponseBody
     @PostMapping("/changePw")
-    public ResponseEntity<?> changePw (@RequestBody PasswordChangeRequestDTO pcrDTO, HttpSession session) {
+    public ResponseEntity<?> changePw (PasswordChangeRequestDTO pcrDTO) {
         ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<>();
-        System.out.printf(pcrDTO.getOriginPw());
-        System.out.printf(String.valueOf(pcrDTO.getUSERNUM()));
-        System.out.printf(pcrDTO.getUSER_PWD());
-
 
         try {
-            User user = myPageService.findById(pcrDTO.getUSERNUM());
+            User userlogin = (User) httpSession.getAttribute("user");
+            User user = myPageService.findById(userlogin.getUSERNUM());
 
             Map<String, String> returnMap = new HashMap<>();
 
             if (!passwordEncoder.matches(pcrDTO.getOriginPw(), user.getUSER_PWD())) {
                 returnMap.put("originPwCheckMsg", "wrongPw");
             } else {
-                User checkPw = null;
+                user.setUSER_PWD(passwordEncoder.encode(pcrDTO.getUSER_PWD()));
 
-                if(pcrDTO.getOriginPw() == null || pcrDTO.getOriginPw().equals("")) {
-                    checkPw = User.builder()
-                            .USERNUM(pcrDTO.getUSERNUM())
-                            .USER_PWD(passwordEncoder.encode(pcrDTO.getOriginPw())).build();
-
-                } else {
-                    checkPw = User.builder()
-                            .USERNUM(pcrDTO.getUSERNUM())
-                            .USER_PWD(passwordEncoder.encode(pcrDTO.getUSER_PWD()))
-                            .build();
-                }
-
-                myPageService.changePw(pcrDTO);
-
-                UserDetails userDetails = myPageService.loadUserById(pcrDTO.getUSERNUM());
-
-                Authentication authentication =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
-                SecurityContext securityContext =
-                        SecurityContextHolder.getContext();
-
-                securityContext.setAuthentication(authentication);
-
-                session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+                myPageService.changePw(user);
 
                 returnMap.put("originPwCheckMsg", "pwOK");
             }
 
-                responseDTO.setItem(returnMap);
-                responseDTO.setStatusCode(HttpStatus.OK.value());
+            responseDTO.setItem(returnMap);
+            responseDTO.setStatusCode(HttpStatus.OK.value());
 
-                return ResponseEntity.ok().body(responseDTO);
-        } catch (IllegalArgumentException e) {
-        responseDTO.setErrorMessage(e.getMessage());
-        responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
-        return ResponseEntity.badRequest().body(responseDTO);
-        } catch (NoSuchElementException e) {
-        responseDTO.setErrorMessage(e.getMessage());
-        responseDTO.setStatusCode(HttpStatus.NOT_FOUND.value());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseDTO);
+            return ResponseEntity.ok().body(responseDTO);
         } catch (Exception e) {
-        responseDTO.setErrorMessage(e.getMessage());
-        responseDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDTO);
-    }
+            responseDTO.setErrorMessage(e.getMessage());
+            responseDTO.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDTO);
+        }
     }
 
 
