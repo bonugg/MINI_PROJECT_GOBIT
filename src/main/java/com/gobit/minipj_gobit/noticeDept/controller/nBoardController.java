@@ -5,11 +5,15 @@ import com.gobit.minipj_gobit.boardDept.entity.BoardForm;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.noticeDept.dto.nBoardDto;
 import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
+import com.gobit.minipj_gobit.noticeDept.entity.nBoardNoticeFile;
 import com.gobit.minipj_gobit.noticeDept.repository.nBoardRepository;
 import com.gobit.minipj_gobit.noticeDept.service.NfileService;
+import com.gobit.minipj_gobit.noticeDept.service.nBoardImgService;
 import com.gobit.minipj_gobit.noticeDept.service.nBoardService;
 import com.gobit.minipj_gobit.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.monitor.FileEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.print.PageFormat;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -42,6 +47,9 @@ public class nBoardController {
 
     @Autowired
     private NfileService nfileService;
+
+    @Autowired
+    private nBoardImgService boardImgService;
 
 
     @GetMapping("/list")
@@ -79,25 +87,26 @@ public class nBoardController {
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
         nBoard board = this.boardService.getBoard(id);
+        List<nBoardNoticeFile> boardFileList = boardImgService.getBoardFiles(board);
+
         model.addAttribute("nBoard", board);
+        model.addAttribute("boardFiles", boardFileList);
         return "noticeDept/noticeDetail";
     }
 
     @PostMapping("/noticeWrite")
-    public String write(nBoard board, Principal principal, @RequestParam("nfileNo")MultipartFile file) {
+    @Transactional
+    public String write(nBoard board, Principal principal, MultipartFile[] files) {
         User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
-        boardService.write(board,user);
 
-        String fileOriginName = file.getOriginalFilename();
-        String fileOriginExt = fileOriginName.substring(fileOriginName.lastIndexOf("."));
-        String fileName = UUID.randomUUID().toString() + fileOriginExt  ;
-        String filePath = "C:/uploads";
+        boardService.write(board, user);
 
-        try {
-            Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        List<nBoardNoticeFile> boardNoticeFiles = nfileService.saveFiles(board, files);
+
+       for(nBoardNoticeFile boardNoticeFile : boardNoticeFiles) {
+           boardImgService.saveBoardFiles(boardNoticeFile);
+       }
+
         return "redirect:/noticeDept/list";
     }
 
