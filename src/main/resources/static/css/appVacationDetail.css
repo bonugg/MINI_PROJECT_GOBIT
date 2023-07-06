@@ -202,12 +202,18 @@ th, td, tr{
 }
 
 #btnUpdate, #btnDelete{
-    background-color: #181F42;
-    color: #ffffff;
-    border-radius: 3px;
-    border: none;
+    color: black;
+    background-color:  transparent;
+    border: 1px solid #181F42;
     width: 60px;
+    border-radius: 3px;
     height: 30px;
     margin-bottom: 30px;
     cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+#btnUpdate:hover, #btnDelete:hover {
+    color: white;
+    background-color: #181F42;
 }
