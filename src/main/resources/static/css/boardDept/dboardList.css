@@ -38,7 +38,7 @@ a {
 
 /* 정렬 버튼 */
 .div-sort {
-    margin-left: 43%;
+    margin-left: 42%;
 }
 .sort-btn{
     background-color: transparent;
@@ -61,6 +61,7 @@ a {
     height: 70px;
     display: flex;
     align-items: center;
+    margin-right: 30px;
 }
 .search-value{
     margin-left: auto;
@@ -98,9 +99,11 @@ a {
 
 .search-btn {
     border: 0.5px solid black;
+    border-radius: 3px;
     background-color: transparent;
-    padding: 3px;
     cursor: pointer;
+    width: 45px;
+    height: 25px;
 }
 #btn_search:hover {
     background: #181F42;
@@ -156,7 +159,9 @@ a {
 }
 .table-title > a:hover {
     transition: background-color 0.3s ease;
-    background-color: #f0f0f0;
+    background-color: rgba(105, 107, 122, 0.17);
+    border-radius: 3px;
+    padding: 5px;
 }
 /* 게시판 테이블 */
 
@@ -181,6 +186,7 @@ a {
 }
 .page_link {
     border: 0.5px solid black;
+    border-radius: 3px;
     margin: 3px;
     padding: 7px;
     cursor: pointer;
@@ -198,6 +204,7 @@ a {
     align-items: center;
     margin-right: 10px;
     border: 0.5px solid black;
+    border-radius: 3px;
     padding: 2px;
 }
 

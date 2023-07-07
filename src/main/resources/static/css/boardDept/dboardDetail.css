@@ -108,6 +108,7 @@ a {
     overflow-y: auto;
     background-color: #fff;
     border: 1px solid #ccc;
+    border-radius: 3px;
     padding: 10px;
 }
 
@@ -153,6 +154,7 @@ a {
     margin: 10px;
     cursor: pointer;
     border: 1px solid black;
+    border-radius: 3px;
     width: 50px;
     height: 30px;
     display: flex;
@@ -248,8 +250,9 @@ a {
 }
 
 .reply-input:hover{
-    background: fuchsia;
-    color: black;
+    background: #33ff33;
+    color: fuchsia;
+    font-weight: bolder;
 }
 
 /* 댓글 작성 */
