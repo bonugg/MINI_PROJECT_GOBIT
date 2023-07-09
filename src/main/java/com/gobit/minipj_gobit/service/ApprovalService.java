@@ -15,4 +15,12 @@ public interface ApprovalService {
 
     void deleteApproval(long appNum);
 
+    int cntTotalApp();
+
+    int cntWaitApp();
+
+    int cntRejectApp();
+
+    int cntFinApp();
+
 }

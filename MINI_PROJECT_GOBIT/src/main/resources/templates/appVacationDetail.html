@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Empty</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/appVacationDetail.css">
+
+    </th:block>
+</head>
+<body layout:fragment="content">
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <p class="page-name">휴가 결제신청 페이지</p>
+                <div class="use_screen_form">
+                    <div class="leftSpace"></div>
+                    <div class="centerSpace">
+                        <!--데이터 입력부-->
+                        <form id="updateForm" name="approval" action="/appDetail/approval" method="post">
+                            <input type="hidden" id="appNum" name="appNum" th:value="${approval.appNum}">
+                            <input type="hidden" name="appAlarm" th:value="${approval.appAlarm}">
+                            <input type="hidden" name="appSort" th:value="${approval.appSort}">
+                            <input type="hidden" name="appState" value="미승인">
+                            <input type="hidden" name="appWriDate" th:value="${approval.appWriDate}">
+                            <section id="inputData-section">
+                                <div class="input-date">
+                                    <div>휴가날짜</div>
+                                    <div class="input-date-form">
+                                        <input type="datetime-local" id="input-appStart" name="appStart" th:value="${approval.appStart}" required onchange="printDate()">
+                                        <p>~</p>
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" th:value="${approval.appEnd}" required onchange="printDate()">
+                                    </div>
+                                </div>
+                                <div class="input-user">
+                                    <div>신청자</div>
+                                    <div class="input-user-form">
+                                        <input type="hidden" name="userNum" th:value="${approval.userNum.USERNUM}">
+                                        <p th:text="${approval.userNum.USERNAME}"></p>
+                                    </div>
+                                </div>
+                                <div class="input-type">
+                                    <div>휴가 종류</div>
+                                    <div class="input-place-form">
+                                        <select id="input-appVacType" name="appVacType" th:value="${approval.appVacType}" required onchange="printType()">
+                                            <option value="morningOff">오전반차</option>
+                                            <option value="afternoonOff">오후반차</option>
+                                            <option value="dayOff">연차</option>
+                                            <option value="sickDay">병가</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="input-text">
+                                    <div>휴가 사유</div>
+                                    <div class="input-text-form">
+                            <textarea id="input-appContent" name="appContent" th:text="${approval.appContent}"
+                                      style="resize:vertical" cols="50" rows="1" required onkeyup="printContent()"></textarea>
+                                    </div>
+                                </div>
+                            </section>
+                            <!--데이터 표출부-->
+                            <section id="viewData-section">
+                                <div class="appForm1">
+                                    <div class="appInfo">
+                                        <table>
+                                            <tr>
+                                                <td>문서번호</td>
+                                                <td th:text="${approval.appNum}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>부서</td>
+                                                <td th:text="${approval.userNum.USERDEPT}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>기안일</td>
+                                                <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>기안자</td>
+                                                <td th:text="${approval.userNum.USERNAME}"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="appTitle">
+                                        <h3>휴가 신청서</h3>
+                                    </div>
+                                    <div class="appConfirm">
+                                        <table>
+                                            <tr>
+                                                <td rowspan="4"> 결재</td>
+                                                <td>담당</td>
+                                                <td>팀장</td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="2">담당자 싸인</td>
+                                                <td rowspan="2">팀장 싸인</td>
+                                            </tr>
+                                            <tr>
+                                            </tr>
+                                            <tr>
+                                                <td>담당자 id</td>
+                                                <td>팀장 id</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="appForm2">
+                                    <div class="appData">
+                                        <table>
+                                            <tr>
+                                                <td>총 연차</td>
+                                                <td id="appData-totalOff">데이터 표출</td>
+                                                <td>사용 일수</td>
+                                                <td id="appData-vacationUsed">데이터 표출</td>
+                                                <td>잔여 연차</td>
+                                                <td id="appData-vacationLeft">데이터 표출</td>
+                                            </tr>
+                                            <tr>
+                                                <td>휴가 날짜</td>
+                                                <td id="appData-date" th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}" colspan="2"></td>
+                                                <td>사용 일수</td>
+                                                <td id="appData-vacationDateCnt">데이터 표출</td>
+                                                <td>휴가종류</td>
+                                                <td id="appData-vacationType" th:text="${approval.appVacType}"></td>
+                                            </tr>
+                                            <tr class="appData-colspan">
+                                                <td>출장 목적</td>
+                                                <td colspan="6" id="appData-content" th:text="${approval.appContent}"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+                            <div id="dataSubmit-section">
+                                <button type="button" th:if="${#authentication.getName() == #strings.toString(approval.userNum.USERENO)}" id="btnUpdate">수정</button>
+                                <button type="button" id="btnDelete">삭제</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="rightSpace"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <script src="/js/jquery-3.7.0.min.js"></script>
+    <script src="/js/appVacationDetail.js"></script>
+</th:block>
+</html>

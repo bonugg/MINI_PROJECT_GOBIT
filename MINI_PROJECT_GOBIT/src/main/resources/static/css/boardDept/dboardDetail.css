@@ -1,0 +1,282 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100vw;
+    min-width: 1200px;
+    background: whitesmoke;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+/* 머리부분 시작 */
+.heead {
+    display: flex;
+    height: 78px;
+    /* border-top: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2); */
+}
+/* 머리부분 끝 */
+
+.title > p {
+    margin-top: 40px;
+    margin-left: 40px;
+    font-size: 15px;
+    color: grey;
+}
+
+
+/* 몸통 부분 */
+.boody {
+    display: flex;
+    background-color: white;
+    align-items: center;
+    flex-direction: column;
+    width: 70%;
+    margin: 0 auto;
+}
+/* 몸통 부분 */
+
+/* 제목 부분 */
+.div-botitle {
+    margin-top: 30px;
+    width: 90%;
+    height: 80px;
+    background-color: rgba(217, 217, 217, 0.3);
+    border-top: 1.5px solid rgba(0, 0, 0, 1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+}
+
+.board-title {
+    margin-left: 30px;
+    font-size: 24px; 
+}
+/* 제목 부분 */
+
+/* 내용 부분 */
+.div-content {
+    width: 90%;
+    height: 100%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.board-content {
+    margin: 30px 30px 30px 30px;
+    word-break: break-all;
+
+}
+/* 내용 부분 */
+
+/* 작성 관련 내용 부분 */
+.div-values {
+    display: flex;
+    width: 90%;
+    height: 50px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    justify-content: space-around;
+    align-items: center;
+}
+/* 작성 관련 내용 부분 */
+
+/*첨부파일 내용 부분*/
+.div-files {
+    position: relative;
+}
+
+.label-hover:hover + .files-hov,
+.label-hover + .files-hov:hover {
+    display: block;
+}
+
+.label-hover {
+    cursor: pointer;
+}
+
+.files-hov {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 150px;
+    text-align: center;
+    display: none;
+    max-height: 150px; /* 원하는 높이로 조정 */
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.files-hov .div-file-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.files-hov .div-file-list:last-child {
+    margin-bottom: 0;
+}
+
+.files-hov .div-file-list a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.files-hov .div-file-list a:hover {
+    background-color: #f0f0f0;
+}
+
+/*첨부파일 내용 부분*/
+
+
+/* 버튼들 */
+.div-board-btns {
+    display: flex;
+    width: 90%;
+    height: 70px;
+    align-items: center;
+    justify-content: center;
+}
+
+.div-board-btns > * {
+    margin: 10px;
+    cursor: pointer;
+    border: 1px solid black;
+    width: 50px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.div-board-btns > *:hover{
+    background: #181F42;
+    color: whitesmoke;
+    transition: background-color 0.3s ease;
+}
+
+.delete:hover {
+    color: white;
+    background: #fa6362;
+    transition: background-color 0.3s ease;
+}
+/* 버튼들 */
+
+
+/* 댓글 시작 */
+
+
+/* 댓글 구역 */
+.div-reply {
+    width: 90%;
+}
+/* 댓글 구역 */
+
+.reply-title {
+    margin-bottom: 10px;
+}
+
+/* 댓글 작성 */
+.reply-dform {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.reply-form {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.reply-area {
+    resize: none;
+    width: 100%;
+    height: 70px;
+    border: 0.5px solid #000;
+    border-bottom: none;
+    box-sizing: border-box;
+    margin-bottom: -10px;
+    outline: none !important;
+    padding: 10px;
+}
+
+.reply-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.5px solid #000;
+    padding: 5px;
+    box-sizing: border-box;
+    height: 40px;
+    position: relative; /* 부모 요소에 대한 상대적인 위치 설정 */
+}
+
+#reply-length {
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reply-input {
+    height: 100%;
+    width: 70px;
+    border: none;
+    background: #181F42;
+    color: whitesmoke;
+    transition: background-color 0.3s ease;
+    position: absolute; /* 절대적인 위치 설정 */
+    top: 50%; /* 부모 요소의 50% 위치로 이동 */
+    left: 50%; /* 부모 요소의 50% 위치로 이동 */
+    right: 0;
+    transform: translate(-50%, -50%); /* 중앙 정렬을 위한 위치 조정 */
+    margin-left: auto;
+    margin-right: -35px;
+    border-left: 0.5px solid black;
+    cursor: pointer;
+}
+
+.reply-input:hover{
+    background: fuchsia;
+    color: black;
+}
+
+/* 댓글 작성 */
+
+
+/* 댓글 반복 */
+.div-reply-for {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.reply-wri-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reply-writer {
+    margin-right: auto;
+}
+
+.reply-content {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    overflow-y: auto;
+}
+
+.reply-content-hr {
+    margin-bottom: 20px;
+}
+/* 댓글 반복 */
