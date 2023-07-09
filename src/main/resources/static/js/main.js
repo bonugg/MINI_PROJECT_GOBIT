@@ -17,13 +17,16 @@ $(function () {
             dept : userDept
         },
         success: function (obj){
+            console.log("-----");
             console.log(obj);
+            console.log("-----");
             if (obj.length == 0) {
                 $('#dboardList').html('부서게시판 글이 없습니다.');
             } else {
                 let userListHTML = '';
                 for (let i = 0; i < obj.length; i++) {
                     let item = obj[i];
+                    console.log(item)
                     userListHTML += `
                                          <table class="notice_table" onclick="location.href='/boardDept/updateCnt/${item.dboardNum}'">
                                                     <tr>

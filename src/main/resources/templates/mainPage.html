@@ -41,24 +41,26 @@
                                         <div id="user_on_off_div">
                                             <table id="usertable">
                                                 <tr>
-                                                    <td rowspan="3" id="img_td">
+                                                    <td rowspan="3" id="img_td" style="border: 1px solid darkgray; border-right-width: 0px; border-top-left-radius: 5px; border-bottom-left-radius: 5px">
                                                         <div id="user_img_div">
                                                             <img th:src="@{'/upload/' + ${user.USERIMAGE}}"
-                                                                 alt="프로필 사진" id="user_img">
+                                                                 alt="프로필 사진" id="user_img"
+                                                                 style="font-size: 0px"
+                                                            >
                                                         </div>
                                                     </td>
                                                     <td class="userinfo_div_th">이름</td>
-                                                    <td class="userinfo_div_td"
+                                                    <td class="userinfo_div_td" style="border-top-right-radius: 5px"
                                                         th:text="${session.user.USERNAME}"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="userinfo_div_th">사번</td>
+                                                    <td class="userinfo_div_th" style="border-top-width: 0px;">사번</td>
                                                     <td class="userinfo_div_td"
                                                         th:text="${session.user.USERENO}"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="userinfo_div_th">부서</td>
-                                                    <td class="userinfo_div_td"
+                                                    <td class="userinfo_div_th" style="border-bottom-width: 1px; border-top-width: 0px">부서</td>
+                                                    <td class="userinfo_div_td" style="border-bottom-width: 1px; border-bottom-right-radius: 5px"
                                                         th:text="${session.user.USERDEPT}"></td>
                                                 </tr>
                                                 <tr>
@@ -160,7 +162,9 @@
                                                             <div class="img_td_div">
                                                                 <img th:src="@{'/upload/' + ${item.get('user').USERIMAGE}}"
                                                                      alt="유저 프로필 이미지"
-                                                                     class="img_list"/>
+                                                                     class="img_list"
+                                                                     style="font-size: 0px"
+                                                                />
                                                             </div>
                                                         </td>
                                                         <td class="name_list"

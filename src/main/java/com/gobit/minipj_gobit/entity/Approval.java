@@ -92,6 +92,9 @@ public class Approval {
     @Column(name = "APP_ALARM")
     private int appAlarm;
 
+    @Column(name = "APP_SIGN")
+    private String appSign;
+
     public ApprovalDTO toDTO(){
         char appSortChr = this.appSort;
         String appSortString = String.valueOf(appSortChr);

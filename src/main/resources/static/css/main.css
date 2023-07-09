@@ -237,11 +237,13 @@
     width: 100%;
     height: 100%;
     border-spacing: 0;
-    border-collapse: collapse;
 }
 
-#usertable td {
+#usertable td{
     border: 1px solid darkgray;
+    border-left-width: 0px;
+    border-bottom-width: 0px;
+
 }
 
 #img_td {
@@ -255,12 +257,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: lightgrey;
+    background-color: #e3e3e3;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 #user_img {
     width: 100%;
     height: 100%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .userinfo_div_th {
@@ -276,7 +282,7 @@
 .userinfo_div_td {
     width: 40%;
     background-color: white;
-    color: black;
+    color: #4c4c4c;
     font-size: 15px;
     font-weight: bold;
     text-align: center;

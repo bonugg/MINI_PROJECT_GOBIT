@@ -216,6 +216,7 @@ $(function () {
                 id: id
             },
             success: function (response) {
+                $('#user_div_text').hide();
                 $('#user_div_btn').show();
                 $('.user_po').val("");
                 const userImage = document.getElementById('user_img');
@@ -326,6 +327,7 @@ $(function () {
                     if (response.item.msg == "정상적으로 삭제되었습니다.") {
                         alert($('#una' + usernum).text() + "님을 삭제했습니다.");
                         $('#user_div_btn').hide();
+                        $('#user_div_text').show();
                         const userImage = document.getElementById('user_img');
                         userImage.src = "/img/user.png";
                         $('#name').text("사원 이름").css("color", "");

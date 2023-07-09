@@ -2,17 +2,20 @@ package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
+import com.gobit.minipj_gobit.entity.Approval;
 import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
 import com.gobit.minipj_gobit.noticeDept.repository.nBoardRepository;
 import com.gobit.minipj_gobit.entity.Calendar;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.entity.UserOnOff;
+import com.gobit.minipj_gobit.repository.ApprovalRepository;
 import com.gobit.minipj_gobit.repository.CalendarRepository;
 import com.gobit.minipj_gobit.repository.UserOnOffRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -29,6 +32,17 @@ public class MainApiController {
     private final CalendarRepository calendarRepository;
     private final dBoardRepository dBoardRepository;
     private final nBoardRepository nBoardRepository;
+    private final ApprovalRepository approvalRepository;
+
+    @GetMapping("/approvalList/{appNum}")
+    public ModelAndView approvalListDetail(@PathVariable long appNum){
+        ModelAndView mv = new ModelAndView();
+        Approval approval = approvalRepository.findById(appNum).orElse(null);
+        System.out.println(approval);
+        mv.addObject("approval", approval);
+        mv.setViewName("approvalListDetail.html");
+       return mv;
+    }
 
     @PostMapping(value = "/onadd")
     public String onadd() throws Exception {

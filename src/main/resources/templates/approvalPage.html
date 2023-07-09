@@ -299,7 +299,7 @@
                                     </td>
 
                                     <!-- 문서제목.........우선 연결은 좀 나중에 2023.07.03 14:35 -->
-                                    <td><a href="#" th:text="${approval.appContent}"></a></td>
+                                    <td><a th:href="@{/approvalList/{appNum} (appNum=${approval.appNum})}" th:text="${approval.appContent}"></a></td>
 
                                     <!-- 결재 작성일 -->
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
