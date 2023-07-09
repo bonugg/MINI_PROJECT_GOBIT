@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService {
-    ApprovalRepository approvalRepository;
+    private ApprovalRepository approvalRepository;
 
     @Autowired
     public ApprovalServiceImpl(ApprovalRepository approvalRepository){
@@ -33,9 +33,14 @@ public class ApprovalServiceImpl implements ApprovalService {
         return approvalRepository.findByAppNum(appNum).get();
     }
 
-    //결재리스트 불러오기
+    @Override
     public Page<Approval> getApprovalList(Pageable pageable) {
         return approvalRepository.findAll(pageable);
+    }
+
+    //결재리스트 불러오기
+    public Page<Approval> getApprovalList(Pageable pageable, String dept) {
+        return approvalRepository.findByDept(pageable, dept);
     }
 
     @Override
@@ -51,4 +56,33 @@ public class ApprovalServiceImpl implements ApprovalService {
         approvalRepository.deleteByAppNum(appNum);
         approvalRepository.flush();
     }
+
+    // // 2023.07.05 전체 결재문서, 승인 대기 문서, 반려 문서, 승인 완료문서
+    @Override
+    public int cntTotalApp() {
+        return approvalRepository.cntTotalApp();
+    }
+
+    @Override
+    public int cntWaitApp() {
+        return approvalRepository.cntWaitApp();
+    }
+
+    @Override
+    public int cntRejectApp() {
+        return approvalRepository.cntRejectApp();
+    }
+
+    @Override
+    public int cntFinApp() {
+        return approvalRepository.cntFinApp();
+    }
+
+
+
+
+
+
+
+
 }

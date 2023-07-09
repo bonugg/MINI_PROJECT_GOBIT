@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Empty</title>
+
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/empty.css">
+        <link rel="stylesheet" type="text/css" href="css/myPage.css">
+    </th:block>
+</head>
+<body layout:fragment="content">
+
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <p class="mypage-title">마이페이지</p>
+                <div class="profile-card">
+                    <div class="profile-imagespace">
+                    <img id="profile-image" th:src="@{'/upload/' + ${user.USERIMAGE}}" alt="프로필 사진">
+                    </div>
+                    <ul class="changeLink">
+                        <li class="Update">
+                            <a href="/myPageUpdate11">
+                                내 프로필 수정
+                            </a>
+                        </li>
+                        <li class="pwChangeLink">
+                            <a href="/pwChange">
+                                비밀번호 변경
+                            </a>
+                        </li>
+                    </ul>
+                    <footer class="left_footer">
+                        <hr class="footer_line">
+                        <ul class="left_guide">
+                            <li class="help">
+                                도움말
+                            </li>
+                            <li class="customer_center">
+                               고객센터
+                            </li>
+                        </ul>
+                    </footer>
+                </div>
+                <section class="profile-info">
+                    <div class="profile1">
+                        <p class="basic-info">기본 정보</p>
+                        <table class="profile1-table">
+                            <tr>
+                                <td class="name" th:text="${user.USERNAME}"></td>
+                            </tr>
+                            <tr>
+                                <td class="mini-email" th:text="${user.USER_EMAIL}"></td>
+                            </tr>
+                            <tr>
+                                <td class="tel" th:text="${user.USER_PHONE}"></td>
+                            </tr>
+                            <tr>
+                                <td class="address" th:text="${user.USER_ADDRESS}"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="profile2">
+                        <table class="profile2-table">
+                            <tr>
+                                <td class="col1">사번</td>
+                                <td class="col2" th:text="${user.USERENO}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col1">직위</td>
+                                <td class="col2" th:text="${user.USERPOSITION}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col1">생년월일</td>
+                                <td class="col2" th:text="${user.USER_BIRTH}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col1">재직여부</td>
+                                <td class="col2" th:text="${user.USER_EXIT_CHK}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col1">부서</td>
+                                <td class="col2" th:text="${user.USERDEPT}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col1">입사일</td>
+                                <td class="col2" th:text="${user.USER_JOIN}"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+
+</th:block>
+</html>
