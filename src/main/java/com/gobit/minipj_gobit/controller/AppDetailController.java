@@ -7,6 +7,7 @@ import com.gobit.minipj_gobit.entity.Approval;
 import com.gobit.minipj_gobit.entity.Vacation;
 import com.gobit.minipj_gobit.service.ApprovalService;
 import com.gobit.minipj_gobit.service.VacationService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/appDetail")
 public class AppDetailController {
+
+    @Autowired
+    private HttpSession httpSession;
 
     private ApprovalService approvalService;
 
