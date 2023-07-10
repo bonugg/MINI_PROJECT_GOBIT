@@ -7,8 +7,193 @@ $(function () {
     let month = (today.getMonth() + 1).toString().padStart(2, '0'); // 월은 1월이 0으로 시작하므로 1을 더합니다.
     let day = today.getDate().toString().padStart(2, '0'); // 일자가 두 자리가 되도록 왼쪽에 0을 추가합니다.
     const pattern = "218.153.162.95";
-
+    let myChart = echarts.init(document.getElementById('main'));
     let formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd 형식으로 날짜를 표현합니다.
+    let changeChartHandlerAdded = true; //이벤트 리스너가 한번만 등록되도록 함
+
+    //----------차트------------------
+    charton();
+    function charton(){
+        $.ajax({
+            type: 'POST',
+            url: '/chart',
+            success: function (result) {
+                // Initialize the echarts instance based on the prepared dom
+
+                // Specify the configuration items and data for the chart
+                let option1 = {
+                    title: {
+                        text: ((result.yearChart / 8) * 100).toFixed(1) + '%',
+                        left: 'center',
+                        top: 'center',
+                        a: '1'
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            data: [
+                                {
+                                    value: result.yearChart,
+                                    name: Number(result.yearChart.toFixed(1)) + '시간',
+                                    itemStyle: {
+                                        color: '#253170'
+                                    }
+                                },
+                                {
+                                    value: 8 - result.yearChart,
+                                    name: Number(8 - result.yearChart.toFixed(1)).toFixed(1) + '시간',
+                                    itemStyle: {
+                                        color: '#E3E3E3'
+                                    }
+                                }
+                            ],
+                            radius: ['50%', '70%']
+                        }
+                    ]
+                };
+                // Display the chart using the configuration items and data just specified.
+                myChart.setOption(option1);
+                myChart.on('mouseover', function (params) {
+                    let hoverInfo = document.getElementById('hoverInfo');
+                    hoverInfo.innerHTML = params.name;
+                    hoverInfo.style.display = 'block';
+                });
+                let main = document.getElementById('main');
+                main.addEventListener('mousemove', function (event) {
+                    let hoverInfo = document.getElementById('hoverInfo');
+                    hoverInfo.style.left = event.clientX + 20 + 'px';
+                    hoverInfo.style.top = event.clientY - 30 + 'px';
+                });
+                myChart.on('mouseout', function () {
+                    let hoverInfo = document.getElementById('hoverInfo');
+                    hoverInfo.style.display = 'none';
+                });
+
+                // Specify the configuration items and data for the chart
+                let option2 = {
+                    title: {
+                        text: ((result.yearMonthChart / 8) * 100).toFixed(1) + '%',
+                        left: 'center',
+                        top: 'center',
+                        a: '2'
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            data: [
+                                {
+                                    value: result.yearMonthChart,
+                                    name: Number(result.yearMonthChart.toFixed(1)) + '시간',
+                                    itemStyle: {
+                                        color: '#181F42'
+                                    }
+                                },
+                                {
+                                    value: 8 - result.yearMonthChart,
+                                    name: Number(8 - result.yearMonthChart.toFixed(1)).toFixed(1) + '시간',
+                                    itemStyle: {
+                                        color: '#E3E3E3'
+                                    }
+                                }
+                            ],
+                            radius: ['50%', '70%']
+                        }
+                    ]
+                };
+                // Display the chart using the configuration items and data just specified.
+                myChart.setOption(option2);
+
+                let currentOption = myChart.getOption().title[0].a;
+                if (changeChartHandlerAdded) {
+                    document.getElementById('changeChart').addEventListener('click', () => {
+                        if (currentOption == myChart.getOption(option1).title[0].a) {
+                            $('#changeChart').css("backgroundColor", "#253170");
+                            $('#chart_title').text("년간 근무 시간");
+                            myChart.setOption(option1);
+                        } else {
+                            $('#changeChart').css("backgroundColor", "#181F42");
+                            $('#chart_title').text("월간 근무 시간");
+                            myChart.setOption(option2);
+
+                        }
+                    });
+                    changeChartHandlerAdded = false;
+                }
+                window.addEventListener('resize', function () {
+                    myChart.resize();
+                });
+            },
+            error: function(error) {
+                let myChart = echarts.init(document.getElementById('main'));
+
+                // Specify the configuration items and data for the chart
+                let option1 = {
+                    title: {
+                        text: '년간 평균 근무시간',
+                        left: 'center',
+                        top: 'center',
+                        a: '1'
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            data: [
+                                {
+                                    value: 0,
+                                    name: 0 + '시간',
+                                    itemStyle: {
+                                        color: '#E3E3E3'
+                                    }
+                                }
+                            ],
+                            radius: ['50%', '70%']
+                        }
+                    ]
+                };
+                // Display the chart using the configuration items and data just specified.
+                myChart.setOption(option1);
+
+                // Specify the configuration items and data for the chart
+                let option2 = {
+                    title: {
+                        text: '월간 평균 근무시간',
+                        left: 'center',
+                        top: 'center',
+                        a: '2'
+                    },
+                    series: [
+                        {
+                            type: 'pie',
+                            data: [
+                                {
+                                    value: 0,
+                                    name: 0 + '시간',
+                                    itemStyle: {
+                                        color: '#E3E3E3'
+                                    }
+                                }
+                            ],
+                            radius: ['50%', '70%']
+                        }
+                    ]
+                };
+                // Display the chart using the configuration items and data just specified.
+                myChart.setOption(option2);
+                let currentOption = myChart.getOption().title[0].a;
+                document.getElementById('changeChart').addEventListener('click', () => {
+                    if (currentOption == myChart.getOption(option1).title[0].a) {
+                        $('#changeChart').css("backgroundColor", "#253170");
+                        myChart.setOption(option1);
+                    } else {
+                        $('#changeChart').css("backgroundColor", "#181F42");
+                        myChart.setOption(option2);
+
+                    }
+                });
+            }
+        });
+    }
+    //-------------------------------
 
     $.ajax({
         type: 'get',
@@ -17,16 +202,12 @@ $(function () {
             dept : userDept
         },
         success: function (obj){
-            console.log("-----");
-            console.log(obj);
-            console.log("-----");
             if (obj.length == 0) {
                 $('#dboardList').html('부서게시판 글이 없습니다.');
             } else {
                 let userListHTML = '';
                 for (let i = 0; i < obj.length; i++) {
                     let item = obj[i];
-                    console.log(item)
                     userListHTML += `
                                          <table class="notice_table" onclick="location.href='/boardDept/updateCnt/${item.dboardNum}'">
                                                     <tr>
@@ -42,7 +223,7 @@ $(function () {
                                                         <td class="notice_writer_cnt_td2" id="bcnt">${item.dboardCnt}</td>
                                                     </tr>
                                                     <tr class="tr1410">
-                                                        <td rowspan="2">
+                                                        <td rowspan="2" class="board_img_td">
                                                             <div class="notice_img_div">
                                                                 <div class="notice_img_div2">
                                                                     <img class="img"
@@ -76,7 +257,6 @@ $(function () {
         type: 'get',
         url : '/nboardList',
         success: function (obj){
-            console.log(obj);
             if (obj.length == 0) {
                 $('#nboardList').html('공지게시판 글이 없습니다.');
             } else {
@@ -98,7 +278,7 @@ $(function () {
                                                         <td class="notice_writer_cnt_td2" id="bcnt">${item.nboardCnt}</td>
                                                     </tr>
                                                     <tr class="tr1410">
-                                                        <td rowspan="2">
+                                                        <td rowspan="2" class="board_img_td">
                                                             <div class="notice_img_div">
                                                                 <div class="notice_img_div2">
                                                                     <img class="img"
@@ -206,7 +386,6 @@ $(function () {
     function ipcheck(onoff) {
         $.getJSON('https://jsonip.com?format=json', function (data) {
             let ipAddress = data.ip;
-            console.log(ipAddress);
             if (pattern === ipAddress && onoff == on) {
                 $("#on").removeAttr("disabled");
             } else if (pattern === ipAddress && onoff == off) {
@@ -243,7 +422,6 @@ $(function () {
             start: formattedDate
         },
         success: function (startdate) {
-            console.log(startdate);
             if (startdate != "") {
                 let formattedStartDate = formatDateString(startdate);
                 $('#on').attr('disabled', true);
@@ -282,6 +460,7 @@ $(function () {
                 $('#off_text').text('퇴근 시각 : ' + formattedEndDate);
                 onContentLoaded();
                 $('#all').click();
+                charton();
             },
             error: function (xhr) {
                 if (xhr.status === 401) {
@@ -375,24 +554,54 @@ $(function () {
                     dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
                     eventClick: function (info) {
                         popupLayer.style.display = "block";
-                        console.log(info.event.extendedProps.classify);
-
-                        if (info.event.extendedProps.classify == '휴가') {
-                            $('#popup_vacationtype_div').text(info.event.extendedProps.title).show();
-                            $('#popup_desc_div').css("height", "64%");
-                        } else {
-                            $('#popup_vacationtype_div').hide();
-                            $('#popup_desc_div').css("height", "73%");
-                        }
+                        $('.popup_box').css("height", "");
                         if(info.event.extendedProps.classify == '출퇴근'){
                             $('.popup_box').css("height", "200px");
                             $('.popup_cont_1').css("height", "50%");
                             $('.popup_cont_2').css("height", "50%");
                             $('#popup_date').css("font-size", "15px");
                             $('.popup_cont_3').css("display", "none");
+                            $('.popup_cont_4').css("display", "none");
+                            $('.popup_cont_5').css("display", "none");
+                            $('#vacation_type').css("display", "none");
+                            $('#approve_name').css("display", "none");
+                        }else if(info.event.extendedProps.classify == 'V'){
+                            $('.popup_cont_1').css("height", "60px");
+                            $('.popup_cont_2').css("height", "60px");
+                            $('.popup_cont_3').css("height", "60px");
+                            $('.popup_cont_3').css("display", "");
+                            $('#vacation_type').css("display", "");
+                            $('#approve_name').css("display", "");
+                            $('.popup_cont_4').css("display", "none");
+                            $('.popup_cont_5').css("display", "none");
+                        }else if(info.event.extendedProps.classify == 'B'){
+                            $('.popup_cont_1').css("height", "60px");
+                            $('.popup_cont_2').css("height", "60px");
+                            $('.popup_cont_4').css("height", "60px");
+                            $('.popup_cont_3').css("height", "60px");
+                            $('.popup_cont_4').css("display", "");
+                            $('.popup_cont_3').css("display", "");
+                            $('#vacation_type').css("display", "");
+                            $('#approve_name').css("display", "");
+                            $('.popup_cont_5').css("display", "none");
+                        }else if(info.event.extendedProps.classify == 'M'){
+                            $('.popup_cont_1').css("height", "60px");
+                            $('.popup_cont_2').css("height", "60px");
+                            $('.popup_cont_4').css("height", "60px");
+                            $('.popup_cont_5').css("height", "60px");
+                            $('.popup_cont_3').css("height", "60px");
+                            $('.popup_cont_4').css("display", "");
+                            $('.popup_cont_5').css("display", "");
+                            $('.popup_cont_3').css("display", "");
+                            $('#vacation_type').css("display", "");
+                            $('#approve_name').css("display", "");
                         }
+                        $('#applocate').html("<b>장소 : </b>" + info.event.extendedProps.applocate);
+                        $('#meetingPT').html("<b>회의 참여자 : </b>" + info.event.extendedProps.meetingPT);
+                        $('#vacation_type').text(info.event.extendedProps.vacationtype);
+                        $('#approve_name').html("<b>승인자 </b>" + info.event.extendedProps.approvedName);
                         $('#popup_title').text(info.event.title);
-                        $('#popup_desc').text(info.event.extendedProps.description);
+                        $('#conetent').html("<b>내용 : </b>" + info.event.extendedProps.description);
 
 
                         let datedata = [];
@@ -427,7 +636,7 @@ $(function () {
                 // #vation 버튼 클릭 이벤트 핸들러 등록
                 $('#vacation').on('click', function () {
                     let filteredEvents = data.filter(function (event) {
-                        return event.classify === '휴가';
+                        return event.classify === 'V';
                     }).map(function (event) {
                         return {
                             ...event,
@@ -451,7 +660,7 @@ $(function () {
                 });
                 $('#meeting').on('click', function () {
                     let filteredEvents = data.filter(function (event) {
-                        return event.classify === '회의';
+                        return event.classify === 'M';
                     }).map(function (event) {
                         return {
                             ...event,
@@ -474,7 +683,7 @@ $(function () {
                 });
                 $('#business').on('click', function () {
                     let filteredEvents = data.filter(function (event) {
-                        return event.classify === '출장';
+                        return event.classify === 'B';
                     }).map(function (event) {
                         return {
                             ...event,

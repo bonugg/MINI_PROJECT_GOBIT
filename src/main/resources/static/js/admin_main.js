@@ -226,7 +226,7 @@ $(function () {
                 $('#dept').text(response.userDept).css("color", "#4c4c4c");
                 $('#position').text(response.userPo).css("color", "#4c4c4c");
                 $('#email').text(response.userEmail).css("color", "#4c4c4c");
-                $('#address').text(response.userAddress).css("color", "#4c4c4c");
+                $('#address_id').text(response.userAddress).css("color", "#4c4c4c");
                 $('#phone').text(response.userPhone).css("color", "#4c4c4c");
                 $('#joindate').text(response.userJoinDate).css("color", "#4c4c4c");
                 $('.user_po').attr('id', "ups"+response.userNum);
@@ -335,7 +335,7 @@ $(function () {
                         $('#dept').text("사원 부서").css("color", "");
                         $('#position').text("사원 직급").css("color", "");
                         $('#email').text("사원 이메일").css("color", "");
-                        $('#address').text("사원 주소").css("color", "");
+                        $('#address_id').text("사원 주소").css("color", "");
                         $('#phone').text("사원 번호").css("color", "");
                         $('#joindate').text("사원 입사일").css("color", "");
                         $('.user_po').attr('id', "no_val");

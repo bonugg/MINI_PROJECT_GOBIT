@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,13 +36,71 @@ public class MainApiController {
     private final ApprovalRepository approvalRepository;
 
     @GetMapping("/approvalList/{appNum}")
-    public ModelAndView approvalListDetail(@PathVariable long appNum){
+    public ModelAndView approvalListDetail(@PathVariable long appNum) {
         ModelAndView mv = new ModelAndView();
         Approval approval = approvalRepository.findById(appNum).orElse(null);
         System.out.println(approval);
         mv.addObject("approval", approval);
         mv.setViewName("approvalListDetail.html");
-       return mv;
+        return mv;
+    }
+
+    @PostMapping("/approvalList/submit")
+    public String approvalListDetailSubmit(@RequestParam("id") long id,
+                                           @RequestParam("sign") String sign) {
+        String caltype = "";
+        User user = (User) httpSession.getAttribute("user");
+        Approval approval = approvalRepository.findById(id).orElse(null);
+        approval.setAppUserNum(user);
+        approval.setAppState("승인");
+        approval.setAppSign(sign);
+        approval.setAppStateDate(LocalDateTime.now());
+        approvalRepository.save(approval);
+        approvalRepository.flush();
+        Calendar calendar = new Calendar();
+        calendar.setUser(approval.getUserNum());
+        calendar.setApproval(approval);
+        if (approval.getAppSort() == 'V') {
+            caltype = "휴가";
+        } else if (approval.getAppSort() == 'B') {
+            caltype = "출장";
+        } else if (approval.getAppSort() == 'M') {
+            caltype = "회의";
+        }
+        calendar.setCALTITLE(approval.getUserNum().getUSERNAME() + " " + caltype);
+        calendar.setCALSTART(String.valueOf(approval.getAppStart()));
+        calendar.setCALEND(String.valueOf(approval.getAppEnd()));
+        calendar.setCALTYPE(String.valueOf(approval.getAppSort()));
+        calendar.setCALCONTENT(approval.getAppContent());
+        calendarRepository.save(calendar);
+        calendarRepository.flush();
+        return "성공";
+    }
+
+    @PostMapping("/approvalList/cancle")
+    public String approvalListDetailCancle(@RequestParam("id") long id,
+                                           @RequestParam("sign") String sign) {
+        User user = (User) httpSession.getAttribute("user");
+        Approval approval = approvalRepository.findById(id).orElse(null);
+        approval.setAppUserNum(user);
+        approval.setAppState("반려");
+        approval.setAppSign(sign);
+        approval.setAppStateDate(LocalDateTime.now());
+        approvalRepository.save(approval);
+        approvalRepository.flush();
+        Optional<Calendar> calendar = Optional.ofNullable(calendarRepository.findByApproval(approval).orElse(null));
+        System.out.println("==================");
+        System.out.println(calendar);
+        System.out.println("==================");
+        if (calendar.isEmpty()) {
+            System.out.println("데이터 없음");
+            return "성공";
+        } else {
+            System.out.println("데이터 있음");
+            calendarRepository.delete(calendar.get());
+            calendarRepository.flush();
+            return "성공";
+        }
     }
 
     @PostMapping(value = "/onadd")
@@ -58,12 +117,13 @@ public class MainApiController {
         userOnOff.setUser(user);
         userOnOff.setSTART(outputDateString);
         userOnOff.setEND("0");
+        userOnOffRepository.save(userOnOff);
+        userOnOffRepository.flush();
         calendar.setUser(user);
+        calendar.setUserOnOff(userOnOff);
         calendar.setCALTYPE("출퇴근");
         calendar.setCALSTART(outputDateString);
         calendar.setCALEND("0");
-        userOnOffRepository.save(userOnOff);
-        userOnOffRepository.flush();
         calendarRepository.save(calendar);
         calendarRepository.flush();
 
@@ -73,8 +133,11 @@ public class MainApiController {
     @PostMapping(value = "/offadd")
     public String offadd(@RequestParam("start") String start) throws Exception {
         User user = (User) httpSession.getAttribute("user");
-        UserOnOff userOnOff = userOnOffRepository.findByUSERANDSTART(user.getUSERNUM(),start).get();
-        Calendar calendar = calendarRepository.findByUNandCS(user.getUSERNUM(),start).get();
+        UserOnOff userOnOff = userOnOffRepository.findByUSERANDSTART(user.getUSERNUM(), start).get();
+        System.out.println("----------------------");
+        System.out.println(userOnOff);
+        System.out.println("----------------------");
+        Calendar calendar = calendarRepository.findByUserOnOff(userOnOff).get();
         Date today = new Date();
         SimpleDateFormat inputDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
         Date inputDate = inputDateFormat.parse(String.valueOf(today));
@@ -101,13 +164,13 @@ public class MainApiController {
         if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
             userOnOff.setCOMMUTETYPE("출근");
             calendar.setCALTITLE("출근");
-        }else if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 18) {
+        } else if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) < 18) {
             userOnOff.setCOMMUTETYPE("조퇴");
             calendar.setCALTITLE("조퇴");
-        }else if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
+        } else if (startDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 9 && endDateCalendar.get(java.util.Calendar.HOUR_OF_DAY) >= 18) {
             userOnOff.setCOMMUTETYPE("지각");
             calendar.setCALTITLE("지각");
-        }else {
+        } else {
             userOnOff.setCOMMUTETYPE("결근");
             calendar.setCALTITLE("결근");
         }
@@ -122,14 +185,14 @@ public class MainApiController {
     @PostMapping(value = "/onaddcheck") //좋아요 체크 및 좋아요 수
     public String onaddcheck(@RequestParam("start") String start) throws Exception {
         User user = (User) httpSession.getAttribute("user");
-        String startdate = userOnOffRepository.findByCLASSIFYANDSTART(user.getUSERNUM(),start);
+        String startdate = userOnOffRepository.findByCLASSIFYANDSTART(user.getUSERNUM(), start);
         return startdate;
     }
 
     @PostMapping(value = "/offaddcheck") //좋아요 체크 및 좋아요 수
     public String offaddcheck(@RequestParam("end") String end) throws Exception {
         User user = (User) httpSession.getAttribute("user");
-        String enddate = userOnOffRepository.findByCLASSIFYANDEND(user.getUSERNUM(),end);
+        String enddate = userOnOffRepository.findByCLASSIFYANDEND(user.getUSERNUM(), end);
         return enddate;
     }
 
@@ -141,7 +204,7 @@ public class MainApiController {
         String yearMonth = today.format(DateTimeFormatter.ofPattern("yyyy-MM"));
         String year = today.format(DateTimeFormatter.ofPattern("yyyy"));
         Double yearMonthChart = userOnOffRepository.findByYearMonthChart(yearMonth, user.getUSERNUM());
-        Double yearChart =userOnOffRepository.findByYearMonthChart(year, user.getUSERNUM());
+        Double yearChart = userOnOffRepository.findByYearMonthChart(year, user.getUSERNUM());
         double yearMonthChartValue = (yearMonthChart != null) ? yearMonthChart : 0.0;
         double yearChartValue = (yearChart != null) ? yearChart : 0.0;
 
@@ -153,7 +216,7 @@ public class MainApiController {
     }
 
     @GetMapping("/dboardList")
-    public List<Map<String, Object>> dBoardListGet(@RequestParam("dept") String dept){
+    public List<Map<String, Object>> dBoardListGet(@RequestParam("dept") String dept) {
         List<dBoard> dBoardList = dBoardRepository.findBydBoardDept(dept);
         List<Map<String, Object>> dBoardListmap = dBoardList.stream().map(dboard -> {
             Map<String, Object> map = new HashMap<>();
@@ -169,7 +232,7 @@ public class MainApiController {
     }
 
     @GetMapping("/nboardList")
-    public List<Map<String, Object>> nBoardListGet(){
+    public List<Map<String, Object>> nBoardListGet() {
         List<nBoard> nBoardList = nBoardRepository.findBynBoardTop5();
         List<Map<String, Object>> nBoardListmap = nBoardList.stream().map(nboard -> {
             Map<String, Object> map = new HashMap<>();

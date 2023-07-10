@@ -120,10 +120,13 @@
     border: 1px solid darkgray;
     border-bottom-width: 0px;
     padding-left: 30px;
+    padding-left: 30px;
     box-sizing: border-box;
     font-size: 14px;
     color: gray;
     background-color: white;
+}
+#address_id{
 }
 #user_div_text{
     width: 100%;
@@ -204,6 +207,7 @@
     border: 1px solid darkgray;
     border-radius: 5px;
     outline: none;
+    transition: background-color 0.25s ease-in-out;
 }
 .dept_btn:hover{
     background-color: #efefef;
@@ -314,6 +318,7 @@
     height: 38px;
     border: 1px solid darkgray;
     padding-left: 15px;
+    transition: background-color 0.25s ease-in-out;
 }
 .search_input_text:focus{
     outline: none;
@@ -394,6 +399,7 @@
     border: 0px;
     outline: none;
     border-radius: 5px;
+    transition: background-color 0.25s ease-in-out;
 }
 .check-all:hover{
     background-color: rgb(220, 221, 227);
@@ -409,6 +415,7 @@
     border: 0px;
     outline: none;
     border-radius: 5px;
+    transition: background-color 0.25s ease-in-out;
 }
 .uncheck-all:hover{
     background-color: rgb(220, 221, 227);
@@ -431,6 +438,7 @@
     border: 0px;
     outline: none;
     border-radius: 5px;
+    transition: background-color 0.25s ease-in-out;
 }
 .chk_btn_submit:hover{
     background-color: rgb(220, 221, 227);

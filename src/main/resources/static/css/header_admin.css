@@ -140,6 +140,7 @@ body::-webkit-scrollbar-track {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.25s ease-in-out;
 }
 .menu_text_div:hover{
     background-color: rgb(231, 231, 231);

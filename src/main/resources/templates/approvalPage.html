@@ -260,6 +260,15 @@
 </body>
 <th:block layout:fragment="script">
     <!--사용할 자바스크립트는 여기에 첨부 -->
+<!--    <script src="/js/jquery-3.7.0.min.js"></script>-->
+<!--    <script>-->
+<!--        $(function () {-->
+<!--            $(".tap-link").click(function () {-->
+<!--                dept = $(this).data("tab");-->
+<!--                console.log(dept);-->
+<!--            });-->
+<!--        })-->
+<!--    </script>-->
     <script th:inline="javascript">
         $(document).ready(function () {
             $('.tap-link').click(function () {

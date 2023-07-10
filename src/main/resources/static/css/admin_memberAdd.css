@@ -113,6 +113,7 @@ body {
     font-size: 1.2rem;
     outline: none;
     margin-top: 30px;
+    transition: background-color 0.25s ease-in-out;
 }
 
 .form button:hover {
@@ -341,6 +342,7 @@ body {
     font-weight: bold;
     border: 0px solid gray;
     border-right-width: 1px;
+    transition: background-color 0.25s ease-in-out;
 }
 
 .div_form label:hover {
@@ -359,6 +361,7 @@ body {
     border: 0px solid gray;
     border-left-width: 1px;
     outline: none;
+    transition: background-color 0.25s ease-in-out;
 }
 
 #submit_btn:hover {

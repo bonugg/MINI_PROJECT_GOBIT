@@ -94,7 +94,7 @@
             },
             success: function (res) {
                 if (res == '200') {
-                    $('#login_btn').css("backgroundColor", "#181f42").prop("disabled", true);
+                    $('#login_btn').css("backgroundColor", "#181f42").prop("disabled", true).css("transition","background-color 0s ease-in-out");
                     $('#login_text').text("잠시 후 메인페이지로 이동합니다.");
                     location.href = "/";
                 } else {
