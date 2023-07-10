@@ -96,6 +96,9 @@ public class Approval {
     @Column(name = "APP_SIGN", length = 50000)
     private String appSign;
 
+    @Column(name = "APP_CANCLE_REASON", length = 50000)
+    private String appCancleReason;
+
     public ApprovalDTO toDTO(){
         char appSortChr = this.appSort;
         String appSortString = String.valueOf(appSortChr);
