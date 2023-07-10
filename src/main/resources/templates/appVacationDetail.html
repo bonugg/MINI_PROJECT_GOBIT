@@ -32,7 +32,7 @@
                             <input type="hidden" name="appSort" th:value="${approval.appSort}">
                             <input type="hidden" name="appState" value="미승인">
                             <input type="hidden" name="appWriDate" th:value="${approval.appWriDate}">
-                            <input type="hidden" id="appVacReq" name="appVarReq">
+                            <input type="hidden" id="appVacReq" name="appVacReq">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>휴가날짜</div>
@@ -119,16 +119,16 @@
                                         <table>
                                             <tr>
                                                 <td>총 연차</td>
-                                                <td id="appData-totalOff" th:text="${(vacation.vacTotal / (60 * 60 * 24)).toFixed(1)}"></td>
+                                                <td id="appData-totalOff" th:text="${vacation.vacTotalD} + '일'"></td>
                                                 <td>사용 일수</td>
-                                                <td id="appData-vacationUsed" th:text="${(vacation.vacUsed / (60 * 60 * 24)).toFixed(1)}"></td>
+                                                <td id="appData-vacationUsed" th:text="${vacation.vacUsedD} + '일'"></td>
                                                 <td>잔여 연차</td>
-                                                <td id="appData-vacationLeft" th:text="${(vacation.vacLeft / (60 * 60 * 24)).toFixed(1)}"></td>
+                                                <td id="appData-vacationLeft" th:text="${vacation.vacLeftD} + '일'"></td>
                                             </tr>
                                             <tr>
                                                 <td>휴가 날짜</td>
                                                 <td id="appData-date" th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}" colspan="2"></td>
-                                                <td id="appData-vacationDateCnt" th:text="${(approval.appVacReq / (60 * 60 * 24)).toFixed(1)}"></td>
+                                                <td id="appData-vacationDateCnt" th:text="${approval.appVacReqDaysD} + '일'"></td>
                                                 <td>휴가종류</td>
                                                 <td id="appData-vacationType" th:text="${approval.appVacType}"></td>
                                             </tr>

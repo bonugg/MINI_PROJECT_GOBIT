@@ -98,6 +98,11 @@ public class Approval {
     public ApprovalDTO toDTO(){
         char appSortChr = this.appSort;
         String appSortString = String.valueOf(appSortChr);
+
+        // 초단위를 일(day) 단위로 변환
+        long secondsPerDay = 24 * 60 * 60; // 초당 일(day) 수
+        double appVacReqDaysE = (double) this.appVacReq / secondsPerDay;
+
         ApprovalDTO approvalDTO = ApprovalDTO.builder()
                 .appNum(this.appNum)
                 .appSort(appSortString)
@@ -113,7 +118,7 @@ public class Approval {
                 .appLocation(this.appLocation)
                 .appParticipant(this.appParticipant)
                 .appVacType(this.appVacType)
-                .appVacReq(this.appVacReq)
+                .appVacReqDaysD(appVacReqDaysE)
                 .appAlarm(this.appAlarm)
                 .build();
         return approvalDTO;

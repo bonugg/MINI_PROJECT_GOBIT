@@ -40,6 +40,7 @@ public class ApprovalDTO {
     private String appParticipant;      //결재_회의참가자
     private String appVacType;          //결재_휴가종류
     private long appVacReq;             //결재_휴가신청일
+    private double appVacReqDaysD;
     private int appAlarm;               //알림 전송용 코드
 
 

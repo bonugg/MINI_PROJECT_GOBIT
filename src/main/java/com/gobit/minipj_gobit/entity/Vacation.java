@@ -34,16 +34,6 @@ public class Vacation {
     @JoinColumn(name = "USERNUM")
     private User user;
 
-//    @Builder
-//    public Vacation(User user){
-//        this.user = user;
-//        if(user.getUSERPOSITION().equals("팀장")){
-//            this.vacTotal = 25;
-//        }else{
-//            this.vacTotal = 20;
-//        }
-//    }
-
     public void setDefaultVacTotal(){
         if(user.getUSERPOSITION().equals("팀장")){
             this.vacTotal = 2160000;
@@ -60,11 +50,17 @@ public class Vacation {
 
 
     public VacationDTO toDTO(){
+        // 초단위를 일(day) 단위로 변환
+        long secondsPerDay = 24 * 60 * 60; // 초당 일(day) 수
+        double vacTotalE = Math.round(((double) this.vacTotal / secondsPerDay) * 10) / 10.0;
+        double vacUsedE = Math.round(((double) this.vacUsed / secondsPerDay) * 10) / 10.0;
+        double vacLeftE = Math.round(((double) this.vacLeft / secondsPerDay) * 10) / 10.0;
+
         VacationDTO vacationDTO = VacationDTO.builder()
                 .vacNum(this.vacNum)
-                .vacTotal(this.vacTotal)
-                .vacUsed(this.vacUsed)
-                .vacLeft(this.vacLeft)
+                .vacTotalD(vacTotalE)
+                .vacUsedD(vacUsedE)
+                .vacLeftD(vacLeftE)
                 .user(this.user)
                 .build();
         return vacationDTO;

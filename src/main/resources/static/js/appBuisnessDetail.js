@@ -1,16 +1,4 @@
 $(function () {
-//작성자와 로그인 유저가 다르면 수정 삭제 버튼 사라지게 하고 폼 데이터 입력 읽기모드로
-// const loginUser = /*[[${#authentication.getName()}]]*/;
-// const appWriter = /*[[${approval.userNum.USERENO}]]*/;
-
-// if (loginUser != appWriter) {
-//     $("#btnUpdate").hide();
-//     $("#btnDelete").hide();
-//     $("#inputDate-start").attr("readonly", true);
-//     $("#inputDate-end").attr("readonly", true);
-//     $("#input-appLocation").attr("readonly", true);
-//     $("#input-appContent").attr("readonly", true);
-// }
 
     $("#btnUpdate").on("click", () => {
         $.ajax({

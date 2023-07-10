@@ -54,22 +54,18 @@ $(function () {
 
 function printDate() {
     const dateStart = document.getElementById('input-appStart').value;
-    const dateEnd= document.getElementById('input-appEnd').value;
+    const dateEnd = document.getElementById('input-appEnd').value;
     document.getElementById('appData-vacationDate').innerText = `${dateStart} ~ ${dateEnd}`;
 }
-function handleVacType(){
+
+function handleVacType() {
     printType();
     changeDateType();
 }
 
-function handleDate(){
-    handleVacReq();
-    printDate();
-}
-
-function handleVacReq(){
+function handleDate() {
     calculateDateDifference();
-    // printDateDifference();
+    printDate();
 }
 
 function printType() {
@@ -85,8 +81,8 @@ function changeDateType() {
     if (vacType === 'dayOff' || vacType === 'sickDay') {
         appStartInput.setAttribute("type", "date");
         appEndInput.setAttribute("type", "date");
-        appStartInput.name = 'appStart2';
-        appEndInput.name = 'appEnd2';
+        appStartInput.name = "appStart2";
+        appEndInput.name = "appEnd2";
     } else {
         appStartInput.setAttribute("type", "datetime-local");
         appEndInput.setAttribute("type", "datetime-local");
