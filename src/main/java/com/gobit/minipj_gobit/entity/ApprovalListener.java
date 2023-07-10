@@ -12,7 +12,7 @@ public class ApprovalListener {
 
     @PostUpdate
     public void AppUpdate(Approval approval){
-        if(approval.getAppState().equals("승인")){
+        if(approval.getAppState().equals("승인") || approval.getAppState().equals("반려")){
             WSHandler websocketHandler = BeanUtils.getBean(WSHandler.class);
             websocketHandler.handleDatabaseChanges(approval);
         }

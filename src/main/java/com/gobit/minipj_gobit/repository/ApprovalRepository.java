@@ -19,7 +19,7 @@ public interface ApprovalRepository extends JpaRepository<Approval, Long> {
     Page<Approval> findByUser(Pageable pageable, User user);
 
 
-    @Query(value = "select count(a.appAlarm) from Approval a where a.userNum = :user and a.appState = '승인' and  a.appAlarm = 0")
+    @Query(value = "select count(a.appAlarm) from Approval a where a.userNum = :user and (a.appState = '승인' or a.appState = '반려') and  a.appAlarm = 0")
     int findByCntUserApp(User user);
 
     void deleteByAppNum(long appNum);

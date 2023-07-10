@@ -97,8 +97,9 @@
                                         <span th:case="M">회의</span>
                                     </td>
 
-                                    <!-- 문서제목-->
-                                    <td><a href="appDetail/{appNum}" th:text="${approval.appContent}"></a></td>
+                                    <!-- 문서제목.........우선 연결은 좀 나중에 2023.07.03 14:35 -->
+                                    <td><a th:href="@{/approvalList/{appNum} (appNum=${approval.appNum})}" th:text="${approval.appContent}"></a></td>
+
 
                                     <!-- 결재 작성일 -->
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
@@ -261,6 +262,15 @@
 </body>
 <th:block layout:fragment="script">
     <!--사용할 자바스크립트는 여기에 첨부 -->
+<!--    <script src="/js/jquery-3.7.0.min.js"></script>-->
+<!--    <script>-->
+<!--        $(function () {-->
+<!--            $(".tap-link").click(function () {-->
+<!--                dept = $(this).data("tab");-->
+<!--                console.log(dept);-->
+<!--            });-->
+<!--        })-->
+<!--    </script>-->
     <script th:inline="javascript">
         $(document).ready(function () {
             $('.tap-link').click(function () {

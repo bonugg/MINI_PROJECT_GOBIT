@@ -1,5 +1,6 @@
 package com.gobit.minipj_gobit.configuration;
 
+import com.gobit.minipj_gobit.boardUser.ChatSocketHandler;
 import com.gobit.minipj_gobit.handler.WSHandler;
 import com.gobit.minipj_gobit.repository.ApprovalRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,12 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @RequiredArgsConstructor
 public class WebSocketConfig  implements WebSocketConfigurer{
     private final ApprovalRepository approvalRepository;
-
+    private final ChatSocketHandler chatSocketHandler;
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(databaseChangeHandler(), "/database-change")
                 .setAllowedOrigins("*"); // 사용자의 요구 사항에 따라 허용되는 오리진 변경
+        registry.addHandler(chatSocketHandler,  "/chating/{roomNumber}");
     }
     @Bean
     public WebSocketHandler databaseChangeHandler() {
