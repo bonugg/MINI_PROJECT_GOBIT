@@ -1,0 +1,189 @@
+#fullscreen{
+    width: 100vw;
+    height: 100vh;
+}
+#_emt1{
+    width: 100%;
+    height: 70px;
+}
+#_emt2{
+    width: 100%;
+    height: calc(100% - 70px);
+    display: flex;
+}
+#_emt3{
+    width: 100px;
+    height: 100%;
+}
+#_emt4{
+    width: calc(100% - 100px);
+    height: 100%;
+    display: flex;
+}
+#use_screen{
+    width: 100%;
+    height: 100%;
+}
+
+.mypage-title {
+    font-size: 15px;
+    color: #949393;
+    position: absolute;
+    margin-left: 40px;
+    margin-top: 40px;
+}
+
+.profile-card {
+    position: relative;
+    display: table-cell;
+    width: 350px;
+    height: 100vh;
+    left: 10vw;
+    background-color: #fff;
+    box-shadow: 5px 1px 8px 0 rgba(0,0,0,.06);
+    border-left: 1px solid rgba(0,0,0,.08);
+    vertical-align: top;
+    z-index: 1;
+}
+
+.profile-imagespace {
+    padding: 12px 15px 150px;
+    margin-left: 25%;
+    width: 170px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-top: 35%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+#profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+ul {
+    list-style: none;
+}
+
+.changeLink {
+    font-size: 1.3rem;
+    font-weight: lighter;
+    color: black;
+    line-height: 4;
+    padding: 30px;
+}
+
+.footer_line {
+    margin: 20px;
+    color: #4c4c4c;
+    margin-top: 20%;
+}
+
+.left_guide {
+    margin-left: 100px;
+    margin-top: 15%;
+}
+
+.help, .customer_center {
+    float: left;
+    margin-left: 20px;
+    font-size: 0.8rem;
+    color: #4c4c4c;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.profile1 {
+    position: absolute;
+    top: 150px;
+    width: calc(100vw - 900px);
+    left: 40vw;
+    height: 280px;
+    background-color: #ffffff;
+    border: 0.2px solid #949393;
+    border-radius: 3px;
+    padding: 15px 30px;
+}
+
+.profile2 {
+    display: flex;
+    justify-content: flex-start;
+    top: 480px;
+    position: absolute;
+    width: calc(100vw - 900px);
+    height: 420px;
+    background-color: #ffffff;
+    border: 0.2px solid #949393;
+    border-radius: 3px;
+    left: 40vw;
+    padding: 15px 30px;
+}
+
+ul, li {
+    list-style: none;
+}
+
+
+.basic-info {
+    font-size: 14px;
+    color: #949393;
+}
+
+.profile1-table{
+    width: 100%;
+    height: 95%;
+    border: none;
+    border-spacing: 10px;
+    vertical-align: top;
+}
+
+.profile-imageR {
+    width: 45px;
+    height: 45px;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 30px;
+}
+tr > .name {
+    height: 10%;
+}
+
+.mini-email {
+    font-size: 13px;
+    color: #949393;
+    line-height: 13px;
+}
+
+.tel, .address {
+    font-size: 15px;
+    line-height: 20px;
+}
+
+
+.profile2-table{
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: none;
+    font-size: 16px;
+}
+
+.col1, .col2, .tel, .address {
+    border-bottom: 0.2px solid #949393;
+}
+
+.col1{
+    width: 30%;
+    color: #949393;
+}
+

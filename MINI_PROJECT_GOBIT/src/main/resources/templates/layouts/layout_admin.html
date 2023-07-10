@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- head 영역 시작 -->
+<!-- layout으로 잡히는 모든 html의 head영역을 config.html로 대체-->
+<head th:replace="/fragments/config_admin :: config_admin">
+
+</head>
+<header th:replace="/fragments/header_admin :: header_admin"></header>
+<body layout:fragment="content_admin"></body>
+</html>

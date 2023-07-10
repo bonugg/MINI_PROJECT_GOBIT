@@ -1,0 +1,140 @@
+#fullscreen{
+    width: 100vw;
+    height: 100vh;
+}
+#_emt1{
+    width: 100%;
+    height: 70px;
+}
+#_emt2{
+    width: 100%;
+    height: calc(100% - 70px);
+    display: flex;
+}
+#_emt3{
+    width: 100px;
+    height: 100%;
+}
+#_emt4{
+    width: calc(100% - 100px);
+    height: 100%;
+    display: flex;
+}
+#use_screen{
+    width: 100%;
+    height: 100%;
+}
+
+.mypage-title {
+    font-size: 13px;
+    color: #949393;
+    position: absolute;
+    margin-left: 40px;
+    margin-top: 40px;
+}
+
+.profile-card {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin-left: 10vw;
+    top: 150px;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile-imageL {
+    width: 170px;
+    height: 170px;
+
+}
+
+.btnUpdate {
+    position: absolute;
+    left: 10px;
+    top: 200px;
+    width: 150px;
+    height: 50px;
+    background-color: #878BA0;
+    color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+    justify-content: center;
+    border: none;
+}
+
+.btnUpdate:hover {
+    background-color: #6E7182;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.searchA-btn{
+    width: 120px;
+    height: 40px;
+    background-color: #525771;
+    color: #ffffff;
+    font-size: 14px;
+    border: none;
+    position: relative;
+    cursor: pointer;
+}
+
+#postcode, #addressSearch, #detailAddress, #extraAddress {
+    height: 38px;
+    width: 40%;
+    margin-top: 13px;
+}
+
+.profile1 {
+    position: absolute;
+    top: 150px;
+    width: calc(100vw - 800px);
+    left: 35vw;
+    height: 350px;
+    background-color: #ffffff;
+    border: 0.2px solid #949393;
+    border-radius: 3px;
+    padding: 15px 30px;
+}
+
+.profile2 {
+    background: rgb(211, 211, 211);
+    font-size: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 550px;
+    position: absolute;
+    width: calc(100vw - 800px);
+    height: 350px;
+    border: 0.2px solid #949393;
+    border-radius: 3px;
+    left: 35vw;
+    padding: 15px 30px;
+}
+
+.basic-info {
+    font-size: 14px;
+    color: #949393;
+}
+
+.emailUpdate {
+    margin-top: 25px;
+}
+
+.addressUpdate, .phoneUpdate, .emailUpdate {
+    height: 35px;
+    display: flex;
+    padding: 5px;
+    margin-bottom: 15px;
+    width: 98%;
+}
+
+
