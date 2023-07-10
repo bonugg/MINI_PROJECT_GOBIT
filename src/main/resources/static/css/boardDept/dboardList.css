@@ -41,6 +41,7 @@ a {
     margin-left: 42%;
 }
 .sort-btn{
+    border-radius: 3px;
     background-color: transparent;
     cursor: pointer;
     padding: 5px;
