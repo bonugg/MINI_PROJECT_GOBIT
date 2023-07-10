@@ -2,8 +2,16 @@ package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.dto.ApprovalDTO;
 import com.gobit.minipj_gobit.entity.Approval;
+import com.gobit.minipj_gobit.entity.User;
+import com.gobit.minipj_gobit.repository.ApprovalRepository;
 import com.gobit.minipj_gobit.service.ApprovalService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,6 +21,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/appDetail")
 public class AppDetailController {
+
+    @Autowired
+    private HttpSession httpSession;
 
     private ApprovalService approvalService;
 
@@ -63,6 +74,10 @@ public class AppDetailController {
         mv.setViewName("appDetailPage.html");
         return mv;
     }
+
+
+
+
 
     
 }
