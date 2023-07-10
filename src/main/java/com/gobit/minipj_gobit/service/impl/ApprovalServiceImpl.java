@@ -78,11 +78,10 @@ public class ApprovalServiceImpl implements ApprovalService {
         return approvalRepository.cntFinApp();
     }
 
-
-
-
-
-
-
+    @Override
+    public long getAppVacReq(long appNum) {
+        approvalRepository.findAppVacReqByAppNum(appNum);
+        return approvalRepository.findAppVacReqByAppNum(appNum);
+    }
 
 }

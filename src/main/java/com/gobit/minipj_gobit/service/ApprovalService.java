@@ -23,4 +23,5 @@ public interface ApprovalService {
 
     int cntFinApp();
 
+    long getAppVacReq(long appNum);
 }

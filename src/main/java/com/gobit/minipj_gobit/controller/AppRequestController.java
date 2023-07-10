@@ -125,7 +125,6 @@ public class AppRequestController {
         boolean isDateTimeFormat = (appStart != null && appEnd != null);
 
         if (isDateTimeFormat) {
-            System.out.println("신청한 startDate: " + appStart);
             System.out.println("신청한 endDate: " + appEnd);
         } else {
             System.out.println("신청한 startDate: " + appStart2);
@@ -140,7 +139,6 @@ public class AppRequestController {
             vacUsed = vacationService.getVacUsed(approvalDTO.getUserNum().getUSERNUM());
             vacLeft = vacationService.getVacLeft(approvalDTO.getUserNum().getUSERNUM());
             vacTotal = vacationService.getVacTotal(approvalDTO.getUserNum().getUSERNUM());
-
 
             if (isDateTimeFormat && vacLeft > appVacReq || !isDateTimeFormat && vacLeft > appVacReq) {
                 approvalService.saveApproval(approvalDTO.toEntity());

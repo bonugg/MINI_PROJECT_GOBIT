@@ -10,8 +10,8 @@ $(function () {
                 dataType: "json",
                 success: (obj) => {
                     console.log(obj);
-                    alert(obj.item.msg);
                     if (obj.item.result == "success") {
+                        alert(obj.item.msg);
                         window.location.href = obj.item.redirectUrl;
                     }
                 },

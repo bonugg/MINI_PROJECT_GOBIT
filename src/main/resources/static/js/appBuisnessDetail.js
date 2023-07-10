@@ -18,19 +18,14 @@ $(function () {
     });
 
     $('#btnDelete').on("click", () => {
-        // const appNum = parseInt(document.getElementById("appNum").value, 10);  // radix 10으로 지정하여 10진수로 변환
-        // const appNum = document.getElementById("appNum").value;
         const appNum = $("#appNum").val();
         $.ajax({
-            url: "/appDetail/approval/" + appNum,
-            // url: `/appDetail/approval/${appNum}`,
+            url: "/appDetail/buisness/" + appNum,
             type: 'post',
             success: (obj) => {
-                alert("삭제되었습니다.");
+                alert("출장 결재가 삭제되었습니다");
                 console.log(obj);
                 location.href = '/appDetail';
-                // location.href = `/app/meet/{metNum}`;
-                // location.href = '/appDetail';
             },
             error: (error) => {
                 console.log(error);
