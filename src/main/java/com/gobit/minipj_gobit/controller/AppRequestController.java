@@ -42,7 +42,7 @@ public class AppRequestController {
     @PostMapping("/meeting")
     @ResponseBody
     public ResponseEntity<?> saveMeeting(ApprovalDTO approvalDTO) {
-        System.out.println("=======================meeting approval result=======================");
+        System.out.println("=======================meeting approval save result=======================");
         ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<Map<String, String>>();
         Map<String, String> returnMap = new HashMap<String, String>();
 
@@ -77,7 +77,7 @@ public class AppRequestController {
     @PostMapping("/buisness")
     @ResponseBody
     public ResponseEntity<?> saveBuisness(ApprovalDTO approvalDTO) {
-        System.out.println("=======================buisness approval result=======================");
+        System.out.println("=======================buisness approval save result=======================");
         ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<Map<String, String>>();
         Map<String, String> returnMap = new HashMap<String, String>();
 
@@ -112,7 +112,7 @@ public class AppRequestController {
     @PostMapping("/vacation")
     @ResponseBody
     public ResponseEntity<?> saveVacation(ApprovalDTO approvalDTO) {
-        System.out.println("=======================vacation approval result=======================");
+        System.out.println("=======================vacation approval save result=======================");
         ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<Map<String, String>>();
         Map<String, String> returnMap = new HashMap<String, String>();
 
@@ -125,6 +125,7 @@ public class AppRequestController {
         boolean isDateTimeFormat = (appStart != null && appEnd != null);
 
         if (isDateTimeFormat) {
+            System.out.println("신청한 startDate: " + appStart);
             System.out.println("신청한 endDate: " + appEnd);
         } else {
             System.out.println("신청한 startDate: " + appStart2);
@@ -140,25 +141,32 @@ public class AppRequestController {
             vacLeft = vacationService.getVacLeft(approvalDTO.getUserNum().getUSERNUM());
             vacTotal = vacationService.getVacTotal(approvalDTO.getUserNum().getUSERNUM());
 
-            if (isDateTimeFormat && vacLeft > appVacReq || !isDateTimeFormat && vacLeft > appVacReq) {
-                approvalService.saveApproval(approvalDTO.toEntity());
-                long userNum = approvalDTO.getUserNum().getUSERNUM();
-                vacUsed += appVacReq;  //연차 사용일 증가
-                vacLeft = vacTotal - vacUsed; //잔여 연차 차감
-                System.out.println("결재 신청 시 연차 사용일: " + vacUsed);
-                System.out.println("결재 신청 시 잔여 연차일: " + vacLeft);
-                vacationService.saveVacation(vacUsed, vacLeft, userNum);
-                returnMap.put("msg", "휴가 결재가 신청되었습니다.");
-                returnMap.put("result", "success");
-                returnMap.put("redirectUrl", "/appDetail");
-                isVacationApproved = true;
+            if ((appStart != null && appEnd != null && appStart.isBefore(appEnd)) || (appStart2 != null && appEnd2 != null && appStart2.isBefore(appEnd2))){
+                if(isDateTimeFormat && vacLeft > appVacReq || !isDateTimeFormat && vacLeft > appVacReq) {
+                    approvalService.saveApproval(approvalDTO.toEntity());
+                    long userNum = approvalDTO.getUserNum().getUSERNUM();
+                    vacUsed += appVacReq;  //연차 사용일 증가
+                    vacLeft = vacTotal - vacUsed; //잔여 연차 차감
+                    System.out.println("결재 신청 시 연차 사용일: " + vacUsed);
+                    System.out.println("결재 신청 시 잔여 연차일: " + vacLeft);
+                    vacationService.saveVacation(vacUsed, vacLeft, userNum);
+                    returnMap.put("msg", "휴가 결재가 신청되었습니다.");
+                    returnMap.put("result", "success");
+                    returnMap.put("redirectUrl", "/appDetail");
+                    isVacationApproved = true;
+                }
+
+                if (!isVacationApproved) {
+                    returnMap.put("msg", "잔여 연차가 부족합니다.");
+                    returnMap.put("result", "fail");
+                    System.out.println("잔여 연차 부족으로 휴가 결재 신청되지 않음");
+                }
+            } else {
+                returnMap.put("msg", "휴가 시작일과 휴가 종료일을 다시 입력해주세요");
+                returnMap.put("result", "fail");
+                System.out.println("휴가 날짜 입력 오류로 휴가 결재 신청되지 않음");
             }
 
-            if (!isVacationApproved) {
-                returnMap.put("msg", "잔여 연차가 부족합니다.");
-                returnMap.put("result", "fail");
-                System.out.println("잔여 연차 부족으로 휴가 결재 신청되지 않음");
-            }
 
             responseDTO.setItem(returnMap);
             return ResponseEntity.ok().body(responseDTO);

@@ -33,7 +33,9 @@ public class ApprovalDTO {
 //    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime appStart;     //결재_시작일
     private LocalDateTime appEnd;       //결재_종료일
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate appStart2;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate appEnd2;
     private String appContent;          //결재내용
     private String appLocation;         //결재_장소

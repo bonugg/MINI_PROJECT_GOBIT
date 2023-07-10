@@ -2,14 +2,17 @@ $(function () {
 
     $("#btnUpdate").on("click", () => {
         $.ajax({
-            url: "/appDetail/approval",
+            url: "/appDetail/meeting",
             type: "post",
             data: $("#updateForm").serialize(),
+            processData: false,
+            dataType: "json",
             success: (obj) => {
-                alert("수정되었습니다.");
-                // location.href = `/app/meet/{metNum}`;
-                location.href = '/appDetail';
                 console.log(obj);
+                alert(obj.item.msg);
+                if(obj.item.result == "success"){
+                    window.location.href = obj.item.redirectUrl;
+                }
             },
             error: (error) => {
                 console.log(error);

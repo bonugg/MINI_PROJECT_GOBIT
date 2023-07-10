@@ -6,12 +6,11 @@ $(function () {
                 type: "post",
                 data: $("#insertForm").serialize(),
                 processData: false,
-                // contentType: false,
                 dataType: "json",
                 success: (obj) => {
                     console.log(obj);
-                    if (obj.item.result == "success") {
-                        alert(obj.item.msg);
+                    alert(obj.item.msg);
+                    if(obj.item.result == "success"){
                         window.location.href = obj.item.redirectUrl;
                     }
                 },

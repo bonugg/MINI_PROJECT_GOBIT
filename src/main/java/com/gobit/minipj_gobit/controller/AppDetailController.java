@@ -7,22 +7,15 @@ import com.gobit.minipj_gobit.entity.Approval;
 import com.gobit.minipj_gobit.entity.Vacation;
 import com.gobit.minipj_gobit.service.ApprovalService;
 import com.gobit.minipj_gobit.service.VacationService;
-import com.gobit.minipj_gobit.service.impl.VacationServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -62,31 +55,147 @@ public class AppDetailController {
         return mv;
     }
 
-    @PostMapping("/approval")
-    public ModelAndView updateApproval(ApprovalDTO approvalDTO) {
-        System.out.println("=======================update result=======================");
-        System.out.println("approvalDTO 출력 결과:" + approvalDTO);
-        ModelAndView mv = new ModelAndView();
+    @PostMapping("/buisness")
+    @ResponseBody
+    public ResponseEntity<?> updateBuisness(ApprovalDTO approvalDTO) {
+        System.out.println("=======================buisness approval update result=======================");
+        ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<Map<String, String>>();
+        Map<String, String> returnMap = new HashMap<String, String>();
 
-        //repository를 활용해서 Vacation Entity에 접근하여 Vacation Entity의 total을 가져온다.
-        //Vacation의 total이 종료일-시작일 보다 크면 appEnd와 appStart에 넣고
-        // 그리고 Vacation Entity의 vacTotal에서도 차감하고, vacUsed에 추가한다.
-        //만약 Vacation의 total이 종료일-시작일보다 작으면 java에서 html의 alert창 띄우게 하는방법도 찾기
+        LocalDateTime appStart = approvalDTO.getAppStart();
+        LocalDateTime appEnd = approvalDTO.getAppEnd();
+        String appSort = approvalDTO.getAppSort();
+        System.out.println("수정한 startDate: " + appStart);
+        System.out.println("수정한 endDate: " + appEnd);
 
-        //requestDuration: 휴가 신청일 수
-        Duration requestDuration = Duration.between(approvalDTO.getAppEnd(), approvalDTO.getAppStart());
-        long RequestSecond = requestDuration.getSeconds();
-        System.out.println("requestDuration 결과: " + requestDuration);
-        System.out.println("신청 휴가 second: " + requestDuration.getSeconds());
+        try {
+            if (appStart != null && appEnd != null && appStart.isBefore(appEnd)) {
+                approvalService.saveApproval(approvalDTO.toEntity());
+                returnMap.put("msg", "출장 결재가 수정되었습니다");
+                returnMap.put("result", "success");
+                returnMap.put("redirectUrl", "/appDetail");
+                System.out.println("출장 수정됨");
+            } else {
+                returnMap.put("msg", "출장 시작일과 출장 종료일을 다시 입력해주세요");
+                returnMap.put("result", "fail");
+                System.out.println("출장 날짜 입력 오류로 출장 결재 신청되지 않음");
+            }
+            responseDTO.setItem(returnMap);
+            return ResponseEntity.ok().body(responseDTO);
+        } catch (Exception e) {
+            responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
+            responseDTO.setErrorMessage(e.getMessage());
 
-        //다시 수정하기
-        vacationService.updateVacation(RequestSecond);
-//        approvalService.updateApproval(approvalDTO.toEntity());
-//        vacationService.updateVacation(approvalDTO.getAppStart(), approvalDTO.getAppEnd());
-//        mv.addObject(approvalDTO);
-//        mv.setViewName("appDetailPage.html");
-        mv.setViewName("appVacationDetail.html");
-        return mv;
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+    }
+
+    @PostMapping("/meeting")
+    @ResponseBody
+    public ResponseEntity<?> updateMeeting(ApprovalDTO approvalDTO) {
+        System.out.println("=======================meeting approval update result=======================");
+        ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<Map<String, String>>();
+        Map<String, String> returnMap = new HashMap<String, String>();
+
+        LocalDateTime appStart = approvalDTO.getAppStart();
+        LocalDateTime appEnd = approvalDTO.getAppEnd();
+        String appSort = approvalDTO.getAppSort();
+        System.out.println("수정한 startDate: " + appStart);
+        System.out.println("수정한 endDate: " + appEnd);
+
+        try {
+            if (appStart != null && appEnd != null && appStart.isBefore(appEnd)) {
+                approvalService.saveApproval(approvalDTO.toEntity());
+                returnMap.put("msg", "회의 결재가 수정되었습니다");
+                returnMap.put("result", "success");
+                returnMap.put("redirectUrl", "/appDetail");
+                System.out.println("회의 수정됨");
+            } else {
+                returnMap.put("msg", "회의 시작일과 회의 종료일을 다시 입력해주세요");
+                returnMap.put("result", "fail");
+                System.out.println("회의 날짜 입력 오류로 회의 결재 신청되지 않음");
+            }
+            responseDTO.setItem(returnMap);
+            return ResponseEntity.ok().body(responseDTO);
+        } catch (Exception e) {
+            responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
+            responseDTO.setErrorMessage(e.getMessage());
+
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
+    }
+
+    //        vacationService.updateVacation(RequestSecond);
+    @PostMapping("/vacation")
+    @ResponseBody
+    public ResponseEntity<?> updateVacation(ApprovalDTO approvalDTO) {
+        System.out.println("=======================vacation approval update result=======================");
+        ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<Map<String, String>>();
+        Map<String, String> returnMap = new HashMap<String, String>();
+
+        LocalDateTime appStart = approvalDTO.getAppStart();
+        LocalDateTime appEnd = approvalDTO.getAppEnd();
+        LocalDate appStart2 = approvalDTO.getAppStart2();
+        LocalDate appEnd2 = approvalDTO.getAppEnd2();
+        long userNum = approvalDTO.getUserNum().getUSERNUM();
+        long appNum = approvalDTO.getAppNum();
+
+        boolean isDateTimeFormat = (appStart != null && appEnd != null);
+
+        if (isDateTimeFormat) {
+            System.out.println("신청한 startDate: " + appStart);
+            System.out.println("신청한 endDate: " + appEnd);
+        } else {
+            System.out.println("신청한 startDate: " + appStart2);
+            System.out.println("신청한 endDate: " + appEnd2);
+        }
+
+        long newVacReq = approvalDTO.getAppVacReq();
+        long appVacReq = approvalService.getAppVacReq(appNum);
+        long vacUsed = vacationService.getVacUsed(userNum);
+        long vacLeft = vacationService.getVacLeft(userNum);
+        long vacTotal = vacationService.getVacTotal(userNum);
+        System.out.println("수정한 휴가일수: " + newVacReq);
+
+        try {
+            if ((appStart != null && appEnd != null && appStart.isBefore(appEnd)) || (appStart2 != null && appEnd2 != null && appStart2.isBefore(appEnd2))) {
+                System.out.println("통과 테스트1");
+                if(vacLeft + appVacReq > newVacReq){
+                    //복구
+                    approvalService.updateApproval(approvalDTO.toEntity());
+                    vacUsed -= appVacReq;
+                    vacLeft += appVacReq;
+                    //수정 반영
+                    vacUsed += newVacReq;  //연차 사용일 증가
+                    vacLeft = vacTotal - vacUsed; //잔여 연차 차감
+                    System.out.println("결재 수정 시 연차 사용일: " + vacUsed);
+                    System.out.println("결재 수정 시 잔여 연차일: " + vacLeft);
+                    vacationService.saveVacation(vacUsed, vacLeft, userNum);
+                    returnMap.put("msg", "휴가 결재가 수정되었습니다");
+                    returnMap.put("result", "success");
+                    returnMap.put("redirectUrl", "/appDetail");
+                    System.out.println(appNum + "번 휴가 결재가 수정됨");
+                }else{
+                    returnMap.put("msg", "연차 잔여일이 부족합니다.");
+                    returnMap.put("result", "fail");
+                    System.out.println("잔여 연차 부족으로 결재 수정되지 않음");
+                }
+            } else {
+                returnMap.put("msg", "휴가 시작일과 휴가의 종료일을 다시 입력해주세요");
+                returnMap.put("result", "fail");
+                System.out.println("휴가 날짜 입력 오류로 휴가 결재 신청되지 않음");
+            }
+            responseDTO.setItem(returnMap);
+            return ResponseEntity.ok().body(responseDTO);
+        } catch (Exception e) {
+            responseDTO.setStatusCode(HttpStatus.BAD_REQUEST.value());
+            responseDTO.setErrorMessage(e.getMessage());
+
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
+
     }
 
     @PostMapping("/meeting/{appNum}")

@@ -2,14 +2,17 @@ $(function () {
 
     $("#btnUpdate").on("click", () => {
         $.ajax({
-            url: "/appDetail/approval",
+            url: "/appDetail/vacation",
             type: "post",
             data: $("#updateForm").serialize(),
+            processData: false,
+            dataType: "json",
             success: (obj) => {
-                alert("수정되었습니다.");
-                // location.href = `/app/meet/{metNum}`;
-                location.href = '/appDetail';
                 console.log(obj);
+                alert(obj.item.msg);
+                if(obj.item.result == "success"){
+                    window.location.href = obj.item.redirectUrl;
+                }
             },
             error: (error) => {
                 console.log(error);
@@ -25,8 +28,8 @@ $(function () {
             // dataType: "json",
             success: (obj) => {
                 console.log(obj);
-                if (obj.item.result == "success") {
-                    alert(obj.item.msg);
+                alert(obj.item.msg);
+                if(obj.item.result == "success"){
                     window.location.href = obj.item.redirectUrl;
                 }
             },
@@ -39,9 +42,15 @@ $(function () {
 });
 
 function printDate() {
-    const dateStart = document.getElementById('input-appStart').value;
-    const dateEnd = document.getElementById('input-appEnd').value;
-    document.getElementById('appData-vacationDate').innerText = `${dateStart} ~ ${dateEnd}`;
+    const dateStartInput = document.getElementById('input-appStart');
+    const dateEndInput = document.getElementById('input-appEnd');
+    const vacationDateElement = document.getElementById('appData-vacationDate');
+
+    if (dateStartInput !=null && dateEndInput !=null && vacationDateElement) {
+        const dateStart = dateStartInput.value;
+        const dateEnd = dateEndInput.value;
+        vacationDateElement.innerText = `${dateStart} ~ ${dateEnd}`;
+    }
 }
 
 function handleVacType() {
