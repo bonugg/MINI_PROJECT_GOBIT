@@ -10,7 +10,6 @@
         <!--사용할 css는 여기에 첨부. 2번째 링크는 돋보기 버튼용 -->
         <link rel="stylesheet" type="text/css" href="css/empty.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
-        <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" type="text/css" href="css/approvalList.css">
     </th:block>
 </head>
@@ -32,19 +31,19 @@
                 <div id="app_list_card">
                     <div class="card">
                         <p class="card_title">전체 문서</p>
-                        <p class="card_content" th:text="${cntTotalApp + ' 건'}"></p>
+                        <p class="card_content" th:text="${cntLeadTotalApp + ' 건'}"></p>
                     </div>
                     <div class="card">
                         <p class="card_title">승인 대기 문서</p>
-                        <p class="card_content" th:text="${cntWaitApp + ' 건'}"></p>
+                        <p class="card_content" th:text="${cntLeadWaitApp + ' 건'}"></p>
                     </div>
                     <div class="card">
                         <p class="card_title">반려 문서</p>
-                        <p class="card_content" th:text="${cntRejectApp + ' 건'}"></p>
+                        <p class="card_content" th:text="${cntLeadRejectApp + ' 건'}"></p>
                     </div>
                     <div class="card">
                         <p class="card_title">승인 완료 문서</p>
-                        <p class="card_content" th:text="${cntFinApp + ' 건'}"></p>
+                        <p class="card_content" th:text="${cntLeadFinApp + ' 건'}"></p>
                     </div>
 
                 </div>
@@ -59,13 +58,15 @@
                         <li class="tap-link" data-tab="tap_business">출장</li>
                         <li class="tap-link" data-tab="tap_vacation">휴가</li>
 
-                        <li class="search-box">
-                            <input type="text" class="search-txt" name="" placeholder="검색어를 입력하시오">
-                            <a class="search-btn" href="#">
-                                <i class="fas fa-search"></i>
-                            </a>
-                        </li>
                     </ul>
+                    <form th:action="@{/approvalList}" method="get">
+                        <div class="search-box">
+                            <input type="text" class="search-txt" name="sWord" th:value="${sWord}" placeholder="검색어를 입력하시오">
+                            <button type="submit" class="search-btn" >
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
 
                     <div style="clear: both;"></div>
 
@@ -99,6 +100,7 @@
                                     <!-- 문서제목.........우선 연결은 좀 나중에 2023.07.03 14:35 -->
                                     <td><a th:href="@{/approvalList/{appNum} (appNum=${approval.appNum})}" th:text="${approval.appContent}"></a></td>
 
+
                                     <!-- 결재 작성일 -->
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
 
@@ -119,7 +121,7 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th style="width: 10%" th:text="${#tap_all}">번호</th>
+                                    <th style="width: 10%">번호</th>
                                     <th style="width: 10%">구분</th>
                                     <th style="width: 28%">문서제목</th>
                                     <th style="width: 12%">결재 작성일</th>

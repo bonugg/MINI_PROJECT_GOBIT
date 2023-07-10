@@ -40,12 +40,6 @@ public class HomeController {
     }
 
 
-    //(06.20 17:26) 결재 요청 리스트 페이지로 이동
-    @GetMapping("/appDetail")
-    public String approvalDetail() {
-        return "appDetailPage";
-    }
-
     @GetMapping("/login")
     public String loginPage(@RequestParam(value = "error", required = false) String error,
                             @RequestParam(value = "exception", required = false) String exception,

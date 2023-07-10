@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface ApprovalRepository extends JpaRepository<Approval, Long> {
@@ -16,21 +15,39 @@ public interface ApprovalRepository extends JpaRepository<Approval, Long> {
     @Query(value = "select a from Approval a where a.userDept = :dept")
     Page<Approval> findByDept(Pageable pageable, String dept);
 
+    @Query(value = "select a from Approval a where a.userNum = :user")
+    Page<Approval> findByUser(Pageable pageable, User user);
+
 
     @Query(value = "select count(a.appAlarm) from Approval a where a.userNum = :user and (a.appState = '승인' or a.appState = '반려') and  a.appAlarm = 0")
     int findByCntUserApp(User user);
 
     void deleteByAppNum(long appNum);
 
-    @Query(value = "select count(*) from Approval")
-    int cntTotalApp();
+    /*결재권자 표출*/
+    @Query(value = "select count(*) from Approval a where a.userDept = :dept")
+    int cntLeadTotalApp(String dept);
+    @Query(value = "select count(*) from Approval a where a.appState = '미승인' and a.userDept = :dept")
+    int cntLeadWaitApp(String dept);
+    @Query(value = "select count(*) from Approval a where a.appState = '반려' and a.userDept = :dept")
+    int cntLeadRejectApp(String dept);
+    @Query(value = "select count(*) from Approval a where a.appState = '승인' and a.userDept = :dept")
+    int cntLeadFinApp(String dept);
 
-    @Query(value = "select count(*) from Approval where appState = '미승인'")
-    int cntWaitApp();
+    Page<Approval> findByUserDeptAndAppContentContaining(Pageable pageble, String dept, String sWord);
 
-    @Query(value = "select count(*) from Approval where appState = '반려'")
-    int cntRejectApp();
+    /*비결재권자(팀원) 표출*/
+    @Query(value = "select count(*) from Approval a where a.userNum = :user")
+    int cntMemTotalApp(User user);
+    @Query(value = "select count(*) from Approval a where a.appState = '미승인' and a.userNum = :user")
+    int cntMemWaitApp(User user);
+    @Query(value = "select count(*) from Approval a where a.appState = '반려' and a.userNum = :user")
+    int cntMemRejectApp(User user);
+    @Query(value = "select count(*) from Approval a where a.appState = '승인' and a.userNum = :user")
+    int cntMemFinApp(User user);
 
-    @Query(value = "select count(*) from Approval where appState = '승인'")
-    int cntFinApp();
+    Page<Approval> findByUserNumAndAppContentContaining(Pageable pageble, User user, String sWord);
+
+
+
 }
