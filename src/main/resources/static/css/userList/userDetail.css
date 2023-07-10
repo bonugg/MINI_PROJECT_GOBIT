@@ -1,0 +1,16 @@
+.boody > div {
+    display: flex;
+    text-align: center;
+}
+img{
+    width: auto;
+}
+
+.div_key{
+    width: 50%;
+}
+
+.div_val{
+    margin-left: auto;
+    width: 50%;
+}

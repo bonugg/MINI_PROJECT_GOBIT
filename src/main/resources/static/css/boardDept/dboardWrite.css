@@ -1,3 +1,7 @@
+html, body, .note-editable {
+    font-family: 'Noto Sans KR'!important;;
+}
+
 body {
     width: 100vw;
     height: 100vh;
@@ -109,6 +113,7 @@ form {
     width: 50px;
     height: 30px;
     background: transparent;
+    border-radius: 3px;
 }
 
 .fn_add_btn:hover {
@@ -119,7 +124,7 @@ form {
 
 .file_del_btn:hover {
     color: white;
-    background: #fa6362;
+    background: red;
     transition: background-color 0.3s ease;
 }
 
@@ -128,6 +133,7 @@ form {
 }
 #file_input_label_btn {
     border:  1px solid black;
+    border-radius: 3px;
     padding: 3px;
     cursor: pointer;
     background: #181F42;
@@ -163,6 +169,7 @@ form {
     margin: 20px;
     cursor: pointer;
     border: 1px solid black;
+    border-radius: 3px;
     width: 50px;
     height: 30px;
     background: transparent;
@@ -175,7 +182,7 @@ form {
 }
 .cancel:hover {
     color: white;
-    background: #fa6362;
+    background: red;
     transition: background-color 0.3s ease;
 }
 /* 버튼들 */            

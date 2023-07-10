@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>사원 검색</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/empty.css">
+        <link rel="stylesheet" type="text/css" href="/css/userList/userList.css">
+    </th:block>
+</head>
+<body layout:fragment="content">
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <div id="title_menu"></div>
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
+                <div class="title">
+                    <p>사원 검색</p>
+                </div>
+
+                <div class="boody">
+                    <div class="searchDiv">
+                        <div>
+                            <select id="category" onchange="categoryChange(this)">
+                                <option value="all">종류</option>
+                                <option value="dept">부서</option>
+                                <option value="position">직급</option>
+                                <option value="name">이름</option>
+                            </select>
+                            <select id="category_detail">
+                                <option>종류</option>
+                            </select>
+
+                            <input type="text" id="search_keyword" placeholder="이름을 입력하세요.">
+
+                            <button type="button" class="search_bth">
+                                검색
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>부서</th>
+                            <th>직급</th>
+                            <th>휴대전화</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function categoryChange(e) {
+        var deptList = ['IT', '개발', '경영', '디자인', '인사', '마케팅'];
+        var positionList = ['신입', '팀장'];
+        var nameList = ['이름'];
+        var target = document.getElementById('category_detail');
+
+        if (e.value == "dept") {
+            var detail = deptList;
+        } else if (e.value == "position") {
+            var detail = positionList;
+        } else if (e.value == "name") {
+            var detail = nameList;
+        }
+
+        target.options.length = 0;
+
+        for (d in detail) {
+            var opt = document.createElement("option");
+            opt.value = detail[d];
+            opt.innerHTML = detail[d];
+            target.appendChild(opt);
+        }
+    }
+
+    $(document).ready(function () {
+        //검색 ajax
+        const searchBtn = document.getElementsByClassName("search_bth");
+        Array.from(searchBtn).forEach(function(element) {
+            element.addEventListener('click', function (){
+                clickSearchBtn();
+            });
+
+        });
+        function clickSearchBtn() {
+            var category = document.getElementById("category").value;
+            var categoryDetail = document.getElementById("category_detail").value;
+            var kw = document.getElementById("search_keyword").value;
+
+            $.ajax({
+                url: "/user/search",
+                type: "GET",
+                data: {
+                    category: category,
+                    categoryDetail: categoryDetail,
+                    keyword: kw,
+                },
+                success: function (response) {
+                    console.log(response.data);
+                    var tbodyHtml = "";
+                    if (response.data.length == 0) {
+                        tbodyHtml += '<tr><td colspan="4">검색 결과를 찾을 수가 없습니다.</td></tr>';
+                    } else {
+                        response.data.forEach(function (userDTO) {
+                            tbodyHtml += '<tr class="user_detail">';
+                            tbodyHtml += '<td>' + userDTO.name + '</td>';
+                            tbodyHtml += '<td>' + userDTO.position + '</td>';
+                            tbodyHtml += '<td>' + userDTO.dept + '</td>';
+                            tbodyHtml += '<td>' + userDTO.phone + '</td>';
+                            tbodyHtml += '<td style="display: none">' + userDTO.id + '</td>';
+                            tbodyHtml += '</tr>';
+                        });
+                    }
+                    var tbody = document.querySelector("tbody");
+                    tbody.innerHTML = tbodyHtml;
+                    registerEventListeners();
+                },
+                error: function () {
+                    console.log("Error occurred during AJAX request.");
+                },
+            });
+        }
+        //검색 ajax
+
+        //사원 상세 조회
+        function registerEventListeners() {
+            var userDetail = document.getElementsByClassName("user_detail");
+            Array.from(userDetail).forEach(function (ele) {
+                ele.addEventListener('click', function (event){
+                   var userId = this.cells[4].innerText;
+                   console.log(userId);
+                    window.open("/user/detail/" + userId, "_blank", "width=500, height=500");
+                });
+            });
+        }
+        //사원 상세 조회
+
+    });
+
+</script>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</th:block>
+</html>

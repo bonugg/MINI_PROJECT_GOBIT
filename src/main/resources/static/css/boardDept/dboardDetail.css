@@ -108,6 +108,7 @@ a {
     overflow-y: auto;
     background-color: #fff;
     border: 1px solid #ccc;
+    border-radius: 3px;
     padding: 10px;
 }
 
@@ -153,6 +154,7 @@ a {
     margin: 10px;
     cursor: pointer;
     border: 1px solid black;
+    border-radius: 3px;
     width: 50px;
     height: 30px;
     display: flex;
@@ -168,7 +170,7 @@ a {
 
 .delete:hover {
     color: white;
-    background: #fa6362;
+    background: red;
     transition: background-color 0.3s ease;
 }
 /* 버튼들 */
@@ -248,8 +250,9 @@ a {
 }
 
 .reply-input:hover{
-    background: fuchsia;
-    color: black;
+    background: #33ff33;
+    color: fuchsia;
+    font-weight: bolder;
 }
 
 /* 댓글 작성 */
