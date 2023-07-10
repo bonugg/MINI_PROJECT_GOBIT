@@ -22,11 +22,15 @@
         </div>
         <div id="_emt4">
             <div id="use_screen">
+                <div class="myPage">
                 <p class="mypage-title">마이페이지</p>
                 <div class="profile-card">
                     <div class="profile-imagespace">
                     <img id="profile-image" th:src="@{'/upload/' + ${user.USERIMAGE}}" alt="프로필 사진">
                     </div>
+                    <a class="mini_pwChange" href="/pwChange">
+                        비밀번호<br/>변경
+                    </a>
                     <ul class="changeLink">
                         <li class="Update">
                             <a href="/myPageUpdate11">
@@ -51,9 +55,12 @@
                         </ul>
                     </footer>
                 </div>
-                <section class="profile-info">
+                <div class="profile-info">
                     <div class="profile1">
                         <p class="basic-info">기본 정보</p>
+                        <a class="mini_update" href="/myPageUpdate11">
+                            수정
+                        </a>
                         <table class="profile1-table">
                             <tr>
                                 <td class="name" th:text="${user.USERNAME}"></td>
@@ -98,8 +105,8 @@
                             </tr>
                         </table>
                     </div>
-                </section>
-
+                </div>
+                </div>
             </div>
         </div>
     </div>
