@@ -1,0 +1,66 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <meta charset="UTF-8">
+    <title>사원 정보</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/userList/userDetail.css">
+    </th:block>
+</head>
+<body>
+<div class="boody">
+
+    <div><img th:src="${user.imgPath}"></div>
+
+    <div class="div_key">
+        이름
+        <div class="div_val" th:text="${user.name}"></div>
+    </div>
+
+    <div class="div_key">
+        부서
+        <div class="div_val" th:text="${user.dept}"></div>
+    </div>
+
+    <div class="div_key">
+        직급
+        <div class="div_val" th:text="${user.position}"></div>
+    </div>
+
+    <div class="div_key">
+        입사일
+        <div class="div_val" th:text="${user.join}">2023-01-01</div>
+    </div>
+
+    <div class="div_key">
+        이메일
+        <div class="div_val" th:text="${user.email}">minje@gobit.com</div>
+    </div>
+
+    <div class="div_key">
+        휴대전화
+        <div class="div_val" th:text="${user.phone}">010-1234-5678</div>
+    </div>
+
+    <div class="div_key">
+        생일
+        <div class="div_val" th:text="${user.birth}">2023-01-01</div>
+    </div>
+
+    <button type="button" id="chat_btn">1:1 대화</button>
+</div>
+<script>
+    var chatBtn = document.getElementById("chat_btn");
+    chatBtn.addEventListener('click', function () {
+        window.open("/room", "_blank", "width=550, height=700");
+    });
+</script>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+
+</th:block>
+</html>

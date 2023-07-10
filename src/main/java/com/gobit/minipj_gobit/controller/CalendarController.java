@@ -39,6 +39,17 @@ public class CalendarController {
             map.put("start", calendar.getCALSTART());
             map.put("end", calendar.getCALEND());
             map.put("classify", calendar.getCALTYPE());
+            if(calendar.getApproval() != null){
+                map.put("vacationtype", calendar.getApproval().getAppVacType());
+                map.put("applocate", calendar.getApproval().getAppLocation());
+                map.put("meetingPT", calendar.getApproval().getAppParticipant());
+                map.put("approvedName", calendar.getApproval().getAppUserNum().getUSERNAME());
+            }else {
+                map.put("vacationtype", null);
+                map.put("applocate", null);
+                map.put("meetingPT", null);
+                map.put("approvedName", null);
+            }
             return map;
         }).collect(Collectors.toList());
 
@@ -55,6 +66,10 @@ public class CalendarController {
             hash.put("start", list.get(i).get("start")); //시작일자
             hash.put("end", list.get(i).get("end")); //종료일자
             hash.put("classify", list.get(i).get("classify")); //구분
+            hash.put("vacationtype", list.get(i).get("vacationtype")); //구분
+            hash.put("applocate", list.get(i).get("applocate")); //구분
+            hash.put("meetingPT", list.get(i).get("meetingPT")); //구분
+            hash.put("approvedName", list.get(i).get("approvedName")); //구분
 
             jsonObj = new JSONObject(hash);
             jsonArr.add(jsonObj);

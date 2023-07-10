@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Empty</title>
+    <title>전사 게시판</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/empty.css">
@@ -141,7 +141,6 @@ $(document).ready(function () {
                 page: page,
                 category: category,
                 kw: kw,
-                dept: "IT"
             },
             success: function(response) {
                 // Update the table body with the new data

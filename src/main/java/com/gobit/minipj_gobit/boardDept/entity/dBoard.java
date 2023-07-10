@@ -26,7 +26,8 @@ public class dBoard {
     @Column(name = "DOBARD_TITLE")
     private String title;
 
-    @Column(name = "DBOARD_CONTENT", length = 2000)
+    @Lob
+    @Column(name = "DBOARD_CONTENT", columnDefinition="LONGBLOB")
     private String content;
 
     @Column(name = "DBOARD_REGDATE")
