@@ -33,4 +33,5 @@ public interface ApprovalService {
     int cntMemFinApp(User user);
 
 
+    long getAppVacReq(long appNum);
 }

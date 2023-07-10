@@ -1,27 +1,18 @@
 $(function () {
-//작성자와 로그인 유저가 다르면 수정 삭제 버튼 사라지게 하고 폼 데이터 입력 읽기모드로
-// const loginUser = /*[[${#authentication.getName()}]]*/;
-// const appWriter = /*[[${approval.userNum.USERENO}]]*/;
-
-// if (loginUser != appWriter) {
-//     $("#btnUpdate").hide();
-//     $("#btnDelete").hide();
-//     $("#inputDate-start").attr("readonly", true);
-//     $("#inputDate-end").attr("readonly", true);
-//     $("#input-appLocation").attr("readonly", true);
-//     $("#input-appContent").attr("readonly", true);
-// }
 
     $("#btnUpdate").on("click", () => {
         $.ajax({
-            url: "/appDetail/approval",
+            url: "/appDetail/buisness",
             type: "post",
             data: $("#updateForm").serialize(),
+            processData: false,
+            dataType: "json",
             success: (obj) => {
-                alert("수정되었습니다.");
-                // location.href = `/app/meet/{metNum}`;
-                location.href = '/appDetail';
                 console.log(obj);
+                alert(obj.item.msg);
+                if(obj.item.result == "success"){
+                    window.location.href = obj.item.redirectUrl;
+                }
             },
             error: (error) => {
                 console.log(error);
@@ -30,19 +21,14 @@ $(function () {
     });
 
     $('#btnDelete').on("click", () => {
-        // const appNum = parseInt(document.getElementById("appNum").value, 10);  // radix 10으로 지정하여 10진수로 변환
-        // const appNum = document.getElementById("appNum").value;
         const appNum = $("#appNum").val();
         $.ajax({
-            url: "/appDetail/approval/" + appNum,
-            // url: `/appDetail/approval/${appNum}`,
+            url: "/appDetail/buisness/" + appNum,
             type: 'post',
             success: (obj) => {
-                alert("삭제되었습니다.");
+                alert("출장 결재가 삭제되었습니다");
                 console.log(obj);
                 location.href = '/appDetail';
-                // location.href = `/app/meet/{metNum}`;
-                // location.href = '/appDetail';
             },
             error: (error) => {
                 console.log(error);

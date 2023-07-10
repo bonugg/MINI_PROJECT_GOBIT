@@ -1,15 +1,18 @@
 $(function () {
     $('#btnSave').on("click", () => {
         $.ajax({
-            url: "/appRequest/approval",
+            url: "/appRequest/buisness",
             type: "post",
             data: $("#insertForm").serialize(),
+            processData: false,
+            // contentType: false,
+            dataType: "json",
             success: (obj) => {
-                alert("저장되었습니다.");
                 console.log(obj);
-                // window.location.href= '/appDetailPage.html';
-                // location.href = `/app/meet/{metNum}`;
-                location.href = '/appDetail';
+                alert(obj.item.msg);
+                if(obj.item.result == "success"){
+                    window.location.href = obj.item.redirectUrl;
+                }
             },
             error: (error) => {
                 console.log(error);
