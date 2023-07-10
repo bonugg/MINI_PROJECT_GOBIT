@@ -7,6 +7,8 @@ import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
 import com.gobit.minipj_gobit.boardDept.service.BoardService;
+import com.gobit.minipj_gobit.boardUser.UserDTO;
+import com.gobit.minipj_gobit.boardUser.UserService;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -29,6 +31,9 @@ class MinipjGobitApplicationTests {
     dBoardFileRepository fileRepository;
     @Autowired
     BoardService boardService;
+    @Autowired
+    UserService userService;
+
     @Test
     void contextLoads() {
     }
@@ -71,4 +76,13 @@ class MinipjGobitApplicationTests {
             System.out.println(file.getOriginalName());
         }
     }
+
+//    @Test
+//    void 유저리스트() {
+//        List<UserDTO> userDTOList = userService.searchUser("이름", "김");
+//        for (UserDTO userDTO : userDTOList) {
+//            System.out.println(userDTO.getName());
+//            System.out.println(userDTO.getDept());
+//        }
+//    }
 }

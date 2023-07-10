@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @Builder
 @Table(name = "T_APPROVAL")
+@EntityListeners(ApprovalListener.class)
 public class Approval {
 
     //--------결제식별--------
@@ -94,6 +95,9 @@ public class Approval {
     //알림 전송용 코드
     @Column(name = "APP_ALARM")
     private int appAlarm;
+
+    @Column(name = "APP_SIGN", length = 50000)
+    private String appSign;
 
     public ApprovalDTO toDTO(){
         char appSortChr = this.appSort;
