@@ -32,13 +32,14 @@
                             <input type="hidden" name="appSort" th:value="${approval.appSort}">
                             <input type="hidden" name="appState" value="미승인">
                             <input type="hidden" name="appWriDate" th:value="${approval.appWriDate}">
+                            <input type="hidden" id="appVacReq" name="appVarReq">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>휴가날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="input-appStart" name="appStart" th:value="${approval.appStart}" required onchange="printDate()">
+                                        <input type="datetime-local" id="input-appStart" name="appStart" th:value="${approval.appStart}" required onchange="handleDate()">
                                         <p>~</p>
-                                        <input type="datetime-local" id="input-appEnd" name="appEnd" th:value="${approval.appEnd}" required onchange="printDate()">
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" th:value="${approval.appEnd}" required onchange="handleDate()">
                                     </div>
                                 </div>
                                 <div class="input-user">
@@ -51,7 +52,7 @@
                                 <div class="input-type">
                                     <div>휴가 종류</div>
                                     <div class="input-place-form">
-                                        <select id="input-appVacType" name="appVacType" th:value="${approval.appVacType}" required onchange="printType()">
+                                        <select id="input-appVacType" name="appVacType" th:value="${approval.appVacType}" required onchange="handleVacType()">
                                             <option value="morningOff">오전반차</option>
                                             <option value="afternoonOff">오후반차</option>
                                             <option value="dayOff">연차</option>
@@ -118,17 +119,16 @@
                                         <table>
                                             <tr>
                                                 <td>총 연차</td>
-                                                <td id="appData-totalOff">데이터 표출</td>
+                                                <td id="appData-totalOff" th:text="${(vacation.vacTotal / (60 * 60 * 24)).toFixed(1)}"></td>
                                                 <td>사용 일수</td>
-                                                <td id="appData-vacationUsed">데이터 표출</td>
+                                                <td id="appData-vacationUsed" th:text="${(vacation.vacUsed / (60 * 60 * 24)).toFixed(1)}"></td>
                                                 <td>잔여 연차</td>
-                                                <td id="appData-vacationLeft">데이터 표출</td>
+                                                <td id="appData-vacationLeft" th:text="${(vacation.vacLeft / (60 * 60 * 24)).toFixed(1)}"></td>
                                             </tr>
                                             <tr>
                                                 <td>휴가 날짜</td>
                                                 <td id="appData-date" th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}" colspan="2"></td>
-                                                <td>사용 일수</td>
-                                                <td id="appData-vacationDateCnt">데이터 표출</td>
+                                                <td id="appData-vacationDateCnt" th:text="${(approval.appVacReq / (60 * 60 * 24)).toFixed(1)}"></td>
                                                 <td>휴가종류</td>
                                                 <td id="appData-vacationType" th:text="${approval.appVacType}"></td>
                                             </tr>

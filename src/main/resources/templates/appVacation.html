@@ -26,18 +26,19 @@
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="insertForm" action="/appRequest/approval" method="post">
+                        <form id="insertForm" action="/appRequest/vacation" method="post">
                             <input type="hidden" name="appSort" value="V">
                             <input type="hidden" name="appState" value="미승인">
                             <input type="hidden" name="userDept" th:value="${session.user.USERDEPT}">
+                            <input type="hidden" id="appVacReq" name="appVacReq">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>휴가날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="input-appStart" name="appStart" required onchange="printDate()">
+                                        <input type="datetime-local" id="input-appStart" name="appStart" required onchange="handleDate()">
                                         <p>~</p>
                                         <!--inputDate-end"-->
-                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onchange="printDate()">
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onchange="handleDate()">
                                     </div>
                                 </div>
                                 <div class="input-user">
@@ -50,7 +51,7 @@
                                 <div class="input-type">
                                     <div>휴가 종류</div>
                                     <div class="input-place-form">
-                                            <select id="input-appVacType" name="appVacType" required onchange="printType()">
+                                            <select id="input-appVacType" name="appVacType" required onchange="handleVacType()">
                                                 <option value="morningOff">오전반차</option>
                                                 <option value="afternoonOff">오후반차</option>
                                                 <option value="dayOff">연차</option>
@@ -126,8 +127,7 @@
                                             <tr>
                                                 <td>휴가 날짜</td>
                                                 <td id="appData-vacationDate" colspan="2"></td>
-                                                <td>사용 일수</td>
-                                                <td id="appData-vacationDateCnt">휴가날짜수 표출</td>
+                                                <td id="appData-vacationDateCnt"></td>
                                                 <td>휴가종류</td>
                                                 <td id="appData-vacationType"></td>
                                             </tr>

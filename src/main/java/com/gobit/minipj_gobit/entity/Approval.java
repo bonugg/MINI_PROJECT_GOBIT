@@ -88,6 +88,9 @@ public class Approval {
     //휴가종류
     @Column(name="APP_VACTYPE")
     private String appVacType;
+    //휴가 신청일 임시저장
+    @Column(name = "APP_VACREQ")
+    private long appVacReq;
     //알림 전송용 코드
     @Column(name = "APP_ALARM")
     private int appAlarm;
@@ -110,6 +113,7 @@ public class Approval {
                 .appLocation(this.appLocation)
                 .appParticipant(this.appParticipant)
                 .appVacType(this.appVacType)
+                .appVacReq(this.appVacReq)
                 .appAlarm(this.appAlarm)
                 .build();
         return approvalDTO;

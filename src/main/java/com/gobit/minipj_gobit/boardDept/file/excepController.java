@@ -2,7 +2,9 @@ package com.gobit.minipj_gobit.boardDept.file;
 
 
 import com.gobit.minipj_gobit.entity.User;
+import com.gobit.minipj_gobit.entity.Vacation;
 import com.gobit.minipj_gobit.repository.UserRepository;
+import com.gobit.minipj_gobit.repository.VacationRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -33,6 +35,8 @@ public class excepController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    private final VacationRepository vacationRepository;
     @GetMapping("/memberSign")
     public String main() { // 1
         return "/admin/AdminPage";
@@ -86,6 +90,15 @@ public class excepController {
                 data.setUSERIMAGE("user.png");
 
                 userRepository.save(data);
+
+                //회원추가 시 휴가설정
+                Vacation vacation = new Vacation();
+                vacation.setDefaultVacTotal();
+                vacation.setVacUsed(0);
+                vacation.setInitialVacLeft();
+                vacation.setUser(data);
+                vacationRepository.save(vacation);
+
             }
             return ResponseEntity.ok().body("회원가입 완료");
         } catch (DataIntegrityViolationException dve){
