@@ -97,7 +97,7 @@ body {
 }
 
 .input-group input:focus {
-    border: 1px solid #253170
+    border: 0.15rem solid #181F42;
 }
 
 .form button {
@@ -112,6 +112,7 @@ body {
     color: white;
     font-size: 1.2rem;
     outline: none;
+    transition: background-color 0.2s ease-in-out;
 }
 .form button:hover{
     background-color: #253170;

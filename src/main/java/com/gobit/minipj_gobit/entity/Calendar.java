@@ -17,6 +17,12 @@ public class Calendar {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM")
     private User user;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ONOFF")
+    private UserOnOff userOnOff;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_APPROVAL")
+    private Approval approval;
     @NotNull
     @Column(name = "CAL_TITLE")
     private String CALTITLE;
