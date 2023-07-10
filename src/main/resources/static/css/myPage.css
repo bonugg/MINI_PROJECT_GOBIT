@@ -25,7 +25,7 @@
     height: 100%;
 }
 
-@media (min-width: 1525px) {
+@media (min-width: 1542px) {
     .mypage-title {
         font-size: 15px;
         color: #949393;
@@ -43,8 +43,6 @@
         background-color: #fff;
         box-shadow: 5px 1px 8px 0 rgba(0, 0, 0, .06);
         border-left: 1px solid rgba(0, 0, 0, .08);
-        vertical-align: top;
-        z-index: 1;
     }
 
     .profile-imagespace {
@@ -195,13 +193,16 @@
         color: #949393;
     }
 }
-@media screen and (max-width: 1542px) {
+@media screen and (max-width: 1541px) {
     .mypage-title {
         display: none;
     }
 
     ul, li {
         display: none;
+    }
+    .profile-card {
+        z-index: 30;
     }
 
     .myPage {
@@ -214,7 +215,7 @@
         height: 850px;
         background-color: white;
         box-shadow: 5px 1px 8px 0 rgba(0,0,0,.06);
-        position: absolute;
+        position: relative;
         left: 50%;
         transform: translate(-50%);
     }
@@ -227,9 +228,17 @@
         width: 170px;
         border-radius: 50%;
         overflow: hidden;
-        margin-top: -400px;
         box-sizing: border-box;
+        margin-top: -400px;
+        z-index: 1;
     }
+
+    /*.profile-card {*/
+    /*    width: 300px;*/
+    /*    left: 50%;*/
+    /*    transform: translate(-50%);*/
+    /*    margin-top: -800px;*/
+    /*}*/
 
     #profile-image {
         width: 100%;
@@ -249,6 +258,7 @@
         color: white;
         text-align: center;
         margin-top: -260px;
+        z-index: 0;
     }
 
     .profile1 {
