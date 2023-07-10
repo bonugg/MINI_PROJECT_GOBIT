@@ -31,4 +31,13 @@ public class UserController {
         List<UserDTO> userDTOList = userService.searchUser(category, categoryDetail, keyword);
         return new Response("성공", "검색 성공", userDTOList);
     }
+
+    @GetMapping("/detail/{id}")
+    public ModelAndView userDetail(@PathVariable(value = "id") String id) {
+        Long userId = Long.valueOf(id);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/userList/userDetailPage");
+        mv.addObject("user", userService.getUser(userId));
+        return mv;
+    }
 }

@@ -38,6 +38,7 @@ select {
     padding-right: 34px;
     font-size: 16px;
     line-height: 1.5;
+    margin-bottom: 5px;
 }
 
 input {
@@ -88,3 +89,5 @@ td:last-child, th:last-child {
 tbody > tr:hover {
     background-color: rgba(229, 229, 229, 0.72);
 }
+
+.b { display: none; height: 500px; background-color: #bbdefb; }

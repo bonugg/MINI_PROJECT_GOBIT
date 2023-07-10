@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Empty</title>
+    <title>사원 검색</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/empty.css">
@@ -37,10 +37,10 @@
                                 <option value="name">이름</option>
                             </select>
                             <select id="category_detail">
-
+                                <option>종류</option>
                             </select>
 
-                            <input type="text" id="search_keyword">
+                            <input type="text" id="search_keyword" placeholder="이름을 입력하세요.">
 
                             <button type="button" class="search_bth">
                                 검색
@@ -71,30 +71,36 @@
     function categoryChange(e) {
         var deptList = ['IT', '개발', '경영', '디자인', '인사', '마케팅'];
         var positionList = ['신입', '팀장'];
+        var nameList = ['이름'];
         var target = document.getElementById('category_detail');
 
         if (e.value == "dept") {
             var detail = deptList;
         } else if (e.value == "position") {
             var detail = positionList;
+        } else if (e.value == "name") {
+            var detail = nameList;
         }
 
         target.options.length = 0;
 
-        for (x in detail) {
+        for (d in detail) {
             var opt = document.createElement("option");
-            opt.value = detail[x];
-            opt.innerHTML = detail[x];
+            opt.value = detail[d];
+            opt.innerHTML = detail[d];
             target.appendChild(opt);
         }
     }
+
     $(document).ready(function () {
+        //검색 ajax
         const searchBtn = document.getElementsByClassName("search_bth");
-
         Array.from(searchBtn).forEach(function(element) {
-            element.addEventListener('click', clickSearchBtn);
-        });
+            element.addEventListener('click', function (){
+                clickSearchBtn();
+            });
 
+        });
         function clickSearchBtn() {
             var category = document.getElementById("category").value;
             var categoryDetail = document.getElementById("category_detail").value;
@@ -112,25 +118,41 @@
                     console.log(response.data);
                     var tbodyHtml = "";
                     if (response.data.length == 0) {
-                        tbodyHtml += '<tr><td colspan="4" class="no-results">검색 결과를 찾을 수가 없습니다.</td></tr>';
+                        tbodyHtml += '<tr><td colspan="4">검색 결과를 찾을 수가 없습니다.</td></tr>';
                     } else {
                         response.data.forEach(function (userDTO) {
-                            tbodyHtml += '<tr>';
-                            tbodyHtml += '<td class="table-name">' + userDTO.name + '</td>';
-                            tbodyHtml += '<td class="table-cnt">' + userDTO.position + '</td>';
-                            tbodyHtml += '<td class="table-like">' + userDTO.dept + '</td>';
-                            tbodyHtml += '<td class="table-like">' + userDTO.phone + '</td>';
+                            tbodyHtml += '<tr class="user_detail">';
+                            tbodyHtml += '<td>' + userDTO.name + '</td>';
+                            tbodyHtml += '<td>' + userDTO.position + '</td>';
+                            tbodyHtml += '<td>' + userDTO.dept + '</td>';
+                            tbodyHtml += '<td>' + userDTO.phone + '</td>';
+                            tbodyHtml += '<td style="display: none">' + userDTO.id + '</td>';
                             tbodyHtml += '</tr>';
                         });
                     }
                     var tbody = document.querySelector("tbody");
                     tbody.innerHTML = tbodyHtml;
+                    registerEventListeners();
                 },
                 error: function () {
                     console.log("Error occurred during AJAX request.");
                 },
             });
         }
+        //검색 ajax
+
+        //사원 상세 조회
+        function registerEventListeners() {
+            var userDetail = document.getElementsByClassName("user_detail");
+            Array.from(userDetail).forEach(function (ele) {
+                ele.addEventListener('click', function (event){
+                   var userId = this.cells[4].innerText;
+                   console.log(userId);
+                    window.open("/user/detail/" + userId, "_blank", "width=500, height=500");
+                });
+            });
+        }
+        //사원 상세 조회
 
     });
 

@@ -1,0 +1,120 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <meta charset="UTF-8">
+    <title>사원 정보</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/userList/userChat.css">
+    </th:block>
+</head>
+<body>
+<div id="container" class="container">
+    <h1 th:text="${roomName + '의 채팅방'}"></h1>
+    <input type="hidden" id="sessionId" value="">
+    <input type="hidden" id="roomNumber" th:value="${roomNumber}">
+
+    <div id="chat-div" class="chat-div">
+    </div>
+
+    <div id="yourName">
+        <table class="inputTable">
+            <tr>
+                <th>사용자명</th>
+                <th><input type="text" name="userName" id="userName" th:value="${session.user.USERNAME}"></th>
+                <th><button onclick="chatName()" id="startBtn">이름 등록</button></th>
+            </tr>
+        </table>
+    </div>
+    <div id="yourMsg">
+        <table class="inputTable">
+            <tr>
+                <th>메시지</th>
+                <th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
+                <th><button onclick="send()" id="sendBtn">보내기</button></th>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    var ws;
+
+    function wsOpen(){
+        //웹소켓 전송시 현재 방의 번호를 넘겨서 보낸다.
+        ws = new WebSocket("ws://" + location.host + "/chating/"+$("#roomNumber").val());
+        wsEvt();
+    }
+
+    function wsEvt() {
+        ws.onopen = function(data){
+            //소켓이 열리면 동작
+        }
+
+        ws.onmessage = function(data) {
+            //메시지를 받으면 동작
+            var msg = data.data;
+            if(msg != null && msg.trim() != ''){
+                var d = JSON.parse(msg);
+                if(d.type == "getId"){
+                    var si = d.sessionId != null ? d.sessionId : "";
+                    if(si != ''){
+                        $("#sessionId").val(si);
+                    }
+                }else if(d.type == "message"){
+                    if(d.sessionId == $("#sessionId").val()){
+                        $("#chat-div").append("<p class='me'>나 :" + d.msg + "</p>");
+                    }else{
+                        $("#chat-div").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
+                    }
+
+                }else{
+                    console.warn("unknown type!")
+                }
+            }
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        document.addEventListener("keypress", function(e){
+            if(e.keyCode == 13){ //enter press
+                send();
+                chat.scrollTop = chat.scrollHeight;
+            }
+        });
+    }
+
+    function chatName(){
+        var userName = $("#userName").val();
+        if(userName == null || userName.trim() == ""){
+            alert("사용자 이름을 입력해주세요.");
+            $("#userName").focus();
+        }else{
+            wsOpen();
+            $("#yourName").hide();
+            $("#yourMsg").show();
+        }
+    }
+
+    function send() {
+        var option ={
+            type: "message",
+            roomNumber: $("#roomNumber").val(),
+            sessionId : $("#sessionId").val(),
+            userName : $("#userName").val(),
+            msg : $("#chatting").val()
+        }
+        ws.send(JSON.stringify(option));
+        console.log(option);
+        $('#chatting').val("");
+    }
+
+    let chat = document.querySelector('#chat-div');
+    chat.scrollTop = chat.scrollHeight;
+</script>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</th:block>
+</html>

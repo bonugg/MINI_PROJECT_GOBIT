@@ -15,6 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+
+    public UserDTO getUser(Long id) {
+        User user = userRepository.findByUSERNUM(id).get();
+        UserDTO userDTO = UserDTO.userToDTO(user);
+        return userDTO;
+    }
     public List<UserDTO> getList() {
         List<UserDTO> userDTOList = new ArrayList<>();
 
