@@ -82,7 +82,7 @@ public class ApprovalController {
     }
 
 
-
+//
     @GetMapping("/appDetail")
     public String getUserList(Model model, String sWord,
                               @PageableDefault(page = 0, size = 10, sort = "appNum", direction = Sort.Direction.DESC) Pageable pageable) {
