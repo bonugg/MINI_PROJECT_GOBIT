@@ -10,29 +10,16 @@
         <!--사용할 css는 여기에 첨부. 2번째 링크는 돋보기 버튼용 -->
         <link rel="stylesheet" type="text/css" href="css/empty.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
-        <link rel="stylesheet" href="style.css">
         <style>
             /*결재요청리스트 페이지 css*/
 
             /*메인 타이틀*/
             #app_main_title {
-                width: 100%;
-                height: 45px;
-                border-top: 1px solid gray;
-                border-bottom: 1px solid gray;
-                margin-top: 20px;
-                background: white;
-                position: relative;
+                margin: 40px;
+                font-size: 15px;
+                color: grey;
             }
 
-            #app_main_title > p {
-                margin: 0;
-                font-size: 25px;
-                font-weight: bold;
-                padding-left: 10px;
-                position: absolute;
-                top: 10%;
-            }
 
             /*메인 타이틀 종료*/
 
@@ -49,9 +36,9 @@
 
             .card {
                 float: left;
-                width: 300px;
+                width: 250px;
                 height: 100px;
-                margin: 0 80px;
+                margin: 0 50px;
                 border: 1px solid gray;
                 padding-top: 5px;
                 background: white;
@@ -144,7 +131,7 @@
                 background: lightgrey;
                 color: #222;
                 display: inline-block;
-                padding: 15px 60px;
+                padding: 15px 50px;
                 font-size: 15px;
                 cursor: pointer;
             }
@@ -167,23 +154,19 @@
             .now {
                 display: inherit;
             }
-            /*.tab-content{*/
-            /*    display: none;*/
-            /*}*/
-
 
             /*탭 리스트 종료*/
 
             /*결재 목록*/
             table {
                 width: 100%;
+                margin: 0 10px;
                 margin-bottom: 1rem;
                 color: #212529;
-                width: 100%;
-                background-color: white;
+                /*background-color: white;*/
                 border-collapse: separate;
-                border-spacing: 0 10px;  /*셀 사이 간격(행간) 지정*/
-                table-layout: fixed;
+                border-spacing: 0 10px; /*셀 사이 간격(행간) 지정*/
+                table-layout: fixed; /*table width고정. 전체, 휴가, 출장, 회의 탭마다 테이블 width가 달라짐*/
             }
 
 
@@ -237,14 +220,26 @@
                 <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
                 <!-- 1st (06.20 17:00) fragment > header에 링크 추가 완료 -->
                 <div id="app_main_title">
-                    <p>전자결재 상세리스트</p>
+                    <p>전자결재 상세리스트(팀원용)</p>
                 </div>
 
                 <div id="app_list_card">
                     <div class="card">
-                        <p class="card_title">기안 건이라고 제목을 넣어본다</p>
-                       </div>
-
+                        <p class="card_title">전체 문서</p>
+                        <p class="card_content" th:text="${cntMemTotalApp + ' 건'}"></p>
+                    </div>
+                    <div class="card">
+                        <p class="card_title">결재 대기 문서</p>
+                        <p class="card_content" th:text="${cntMemWaitApp + ' 건'}"></p>
+                    </div>
+                    <div class="card">
+                        <p class="card_title">반려된 문서</p>
+                        <p class="card_content" th:text="${cntMemRejectApp + ' 건'}"></p>
+                    </div>
+                    <div class="card">
+                        <p class="card_title">결재 완료 건</p>
+                        <p class="card_content" th:text="${cntMemFinApp + ' 건'}"></p>
+                    </div>
                 </div>
 
                 <div style="clear: both;"></div>
@@ -254,217 +249,144 @@
                     <ul class="taps">
                         <li class="tap-link here" data-tab="tap_all">전체</li>
                         <li class="tap-link" data-tab="tap_meeting">회의</li>
-                        <li class="tap-link" data-tab="tap_trip">출장</li>
+                        <li class="tap-link" data-tab="tap_business">출장</li>
                         <li class="tap-link" data-tab="tap_vacation">휴가</li>
 
-                        <li class="search-box">
-                            <input type="text" class="search-txt" name="" placeholder="검색어를 입력하시오">
-                            <a class="search-btn" href="#">
-                                <i class="fas fa-search"></i>
-                            </a>
-                        </li>
                     </ul>
+                    <form th:action="@{/appDetail}" method="get">
+                        <div class="search-box">
+                            <input type="text" class="search-txt" name="sWord" th:value="${sWord}" placeholder="검색어를 입력하시오">
+                            <button type="submit" class="search-btn" >
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
 
                     <div style="clear: both;"></div>
 
-                    <div id="tap_all" class="tab-content now">
-                        <table class="table">
+                    <div class="content-wrapper">
 
-                            <thead>
-                            <tr>
-                                <th style="width: 10%">번호</th>
-                                <th style="width: 10%">구분</th>
-                                <th style="width: 28%">문서제목</th>
-                                <th style="width: 12%">결재 작성일</th>
-                                <th style="width: 12%">결재(반려)일</th>
-                                <th style="width: 12%">결재상태</th>
-                                <th style="width: 12%">결재 승인자</th>
-                            </tr>
-                            </thead>
+                        <div id="tap_all" class="tab-content now">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th style="width: 10%">번호</th>
+                                    <th style="width: 10%">구분</th>
+                                    <th style="width: 28%">문서제목</th>
+                                    <th style="width: 12%">결재 작성일</th>
+                                    <th style="width: 12%">결재(반려)일</th>
+                                    <th style="width: 12%">결재상태</th>
+                                    <th style="width: 12%">결재 승인자</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr th:each="approval : ${appForUser}">
+                                    <th class="left-line" th:text="${approval.appNum}"></th>
+                                    <!-- 문서번호. 값에 따른 조건문-->
+                                    <td th:switch="${approval.appSort}">
+                                        <span th:case="V">휴가</span>
+                                        <span th:case="B">출장</span>
+                                        <span th:case="M">회의</span>
+                                    </td>
+                                    <td><a th:href="@{/appDetail/{appNum} (appNum=${approval.appNum})}" th:text="${approval.appContent}"></a></td>
+                                    <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${approval.appState}"></td>
+                                    <!-- 결재 승인자  -->
+                                    <td class="right-line" th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                            <tbody>
-                            <tr>
-                                <th class="left-line">001</th>
-                                <td>휴가</td>
-                                <td>구본욱 휴가</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>승인</td>
-                                <td class="right-line">김부장</td>
-                            </tr>
+                        <div id="tap_meeting" class="tab-content">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th style="width: 10%">번호</th>
+                                    <th style="width: 10%">구분</th>
+                                    <th style="width: 28%">문서제목</th>
+                                    <th style="width: 12%">결재 작성일</th>
+                                    <th style="width: 12%">결재(반려)일</th>
+                                    <th style="width: 12%">결재상태</th>
+                                    <th style="width: 12%">결재 승인자</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="approval : ${appForUser}" th:if="${approval.appSort} == 'M'">
+                                    <th class="left-line" th:text="${approval.appNum}"></th>
+                                    <td>회의</td>
+                                    <td><a href="#" th:text="${approval.appContent}"></a></td>
+                                    <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${approval.appState}"></td>
+                                    <!-- 결재 승인자  -->
+                                    <td class="right-line" th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                            <tr>
-                                <th class="left-line">002</th>
-                                <td>출장</td>
-                                <td>부산 출장</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>반려</td>
-                                <td class="right-line"></td>
-                            </tr>
+                        <div id="tap_business" class="tab-content">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th style="width: 10%">번호</th>
+                                    <th style="width: 10%">구분</th>
+                                    <th style="width: 28%">문서제목</th>
+                                    <th style="width: 12%">결재 작성일</th>
+                                    <th style="width: 12%">결재(반려)일</th>
+                                    <th style="width: 12%">결재상태</th>
+                                    <th style="width: 12%">결재 승인자</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="approval : ${appForUser}" th:if="${approval.appSort} == 'B'">
+                                    <th class="left-line" th:text="${approval.appNum}"></th>
+                                    <td>출장</td>
+                                    <td><a href="#" th:text="${approval.appContent}"></a></td>
+                                    <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${approval.appState}"></td>
+                                    <td class="right-line" th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                            <tr>
-                                <th class="left-line">003</th>
-                                <td>회의</td>
-                                <td>네이버클라우스 본사 회의</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>승인</td>
-                                <td class="right-line">김부장</td>
-                            </tr>
+                        <div id="tap_vacation" class="tab-content">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th style="width: 10%">번호</th>
+                                    <th style="width: 10%">구분</th>
+                                    <th style="width: 28%">문서제목</th>
+                                    <th style="width: 12%">결재 작성일</th>
+                                    <th style="width: 12%">결재(반려)일</th>
+                                    <th style="width: 12%">결재상태</th>
+                                    <th style="width: 12%">결재 승인자</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="approval : ${appForUser}" th:if="${approval.appSort} == 'V'">
+                                    <th class="left-line" th:text="${approval.appNum}"></th>
+                                    <td>휴가</td>
+                                    <td><a href="#" th:text="${approval.appContent}"></a></td>
+                                    <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${approval.appState}"></td>
+                                    <!-- 결재 승인자  -->
+                                    <td class="right-line" th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                            </tbody>
-                        </table>
-                    </div>
 
-                    <div id="tap_meeting" class="tab-content">
-                        <table class="table">
 
-                            <thead>
-                            <tr>
-                                <th style="width: 10%">번호</th>
-                                <th style="width: 10%">구분</th>
-                                <th style="width: 28%">문서제목</th>
-                                <th style="width: 12%">결재 작성일</th>
-                                <th style="width: 12%">결재(반려)일</th>
-                                <th style="width: 12%">결재상태</th>
-                                <th style="width: 12%">결재 승인자</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            <tr>
-                                <th class="left-line">001</th>
-                                <td>회의</td>
-                                <td>구본욱 회의</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>승인</td>
-                                <td class="right-line">김부장</td>
-                            </tr>
-
-                            <tr>
-                                <th class="left-line">002</th>
-                                <td>출장</td>
-                                <td>회의다 회의</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>반려</td>
-                                <td class="right-line"></td>
-                            </tr>
-
-                            <tr>
-                                <th class="left-line">003</th>
-                                <td>회의이</td>
-                                <td>네이버클라우스 본사 회의</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>승인</td>
-                                <td class="right-line">김부장</td>
-                            </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="tap_trip" class="tab-content">
-                        <table class="table">
-
-                            <thead>
-                            <tr>
-                                <th style="width: 10%">번호</th>
-                                <th style="width: 10%">구분</th>
-                                <th style="width: 28%">문서제목</th>
-                                <th style="width: 12%">결재 작성일</th>
-                                <th style="width: 12%">결재(반려)일</th>
-                                <th style="width: 12%">결재상태</th>
-                                <th style="width: 12%">결재 승인자</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            <tr>
-                                <th class="left-line">001</th>
-                                <td>출장</td>
-                                <td>출장출장</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>승인</td>
-                                <td class="right-line">김부장</td>
-                            </tr>
-
-                            <tr>
-                                <th class="left-line">002</th>
-                                <td>출장</td>
-                                <td>부산 출장</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>반려</td>
-                                <td class="right-line"></td>
-                            </tr>
-
-                            <tr>
-                                <th class="left-line">003</th>
-                                <td>출장</td>
-                                <td>출자ㅏ앙앙</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>승인</td>
-                                <td class="right-line">김부장</td>
-                            </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="tap_vacation" class="tab-content">
-                        <table class="table">
-
-                            <thead>
-                            <tr>
-                                <th style="width: 10%">번호</th>
-                                <th style="width: 10%">구분</th>
-                                <th style="width: 28%">문서제목</th>
-                                <th style="width: 12%">결재 작성일</th>
-                                <th style="width: 12%">결재(반려)일</th>
-                                <th style="width: 12%">결재상태</th>
-                                <th style="width: 12%">결재 승인자</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            <tr>
-                                <th class="left-line">001</th>
-                                <td>휴가</td>
-                                <td>구본욱 휴가</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>승인</td>
-                                <td class="right-line">김부장</td>
-                            </tr>
-
-                            <tr>
-                                <th class="left-line">002</th>
-                                <td>휴가</td>
-                                <td>휴가휴가휴가아아앙</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>반려</td>
-                                <td class="right-line"></td>
-                            </tr>
-
-                            <tr>
-                                <th class="left-line">003</th>
-                                <td>휴가</td>
-                                <td>휴가휴가휴가휴가</td>
-                                <td>2023-06-10</td>
-                                <td>2023-06-11</td>
-                                <td>승인</td>
-                                <td class="right-line">김부장</td>
-                            </tr>
-
-                            </tbody>
-                        </table>
                     </div>
                 </div>
+
 
             </div>
         </div>
@@ -474,15 +396,15 @@
 <th:block layout:fragment="script">
     <!--사용할 자바스크립트는 여기에 첨부 -->
     <script th:inline="javascript">
-        $(document).ready(function(){
-            $('.tap-link').click(function(){
+        $(document).ready(function () {
+            $('.tap-link').click(function () {
                 let tab_id = $(this).attr('data-tab');
 
                 $('.tap-link').removeClass('here');
                 $('.tab-content').removeClass('now');
 
                 $(this).addClass('here');
-                $("#"+tab_id).addClass('now');
+                $("#" + tab_id).addClass('now');
             });
 
         });

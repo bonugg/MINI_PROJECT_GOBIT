@@ -2,6 +2,7 @@ package com.gobit.minipj_gobit.entity;
 
 import com.gobit.minipj_gobit.dto.ApprovalDTO;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import groovyjarjarantlr4.v4.runtime.misc.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -89,6 +90,10 @@ public class Approval {
     //휴가종류
     @Column(name="APP_VACTYPE")
     private String appVacType;
+    //휴가 신청일 임시저장
+    @Nullable
+    @Column(name = "APP_VACREQ")
+    private long appVacReq;
     //알림 전송용 코드
     @Column(name = "APP_ALARM")
     private int appAlarm;
@@ -99,6 +104,11 @@ public class Approval {
     public ApprovalDTO toDTO(){
         char appSortChr = this.appSort;
         String appSortString = String.valueOf(appSortChr);
+
+        // 초단위를 일(day) 단위로 변환
+        long secondsPerDay = 24 * 60 * 60; // 초당 일(day) 수
+        double appVacReqDaysE = (double) this.appVacReq / secondsPerDay;
+
         ApprovalDTO approvalDTO = ApprovalDTO.builder()
                 .appNum(this.appNum)
                 .appSort(appSortString)
@@ -114,6 +124,7 @@ public class Approval {
                 .appLocation(this.appLocation)
                 .appParticipant(this.appParticipant)
                 .appVacType(this.appVacType)
+                .appVacReqDaysD(appVacReqDaysE)
                 .appAlarm(this.appAlarm)
                 .build();
         return approvalDTO;

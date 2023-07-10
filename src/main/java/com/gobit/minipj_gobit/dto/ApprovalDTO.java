@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
@@ -29,19 +30,27 @@ public class ApprovalDTO {
     private String userDept;            //결재신청자부서
 
     //--------결제상세--------
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime appStart;     //결재_시작일
     private LocalDateTime appEnd;       //결재_종료일
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate appStart2;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate appEnd2;
     private String appContent;          //결재내용
     private String appLocation;         //결재_장소
     private String appParticipant;      //결재_회의참가자
     private String appVacType;          //결재_휴가종류
+    private long appVacReq;             //결재_휴가신청일
+    private double appVacReqDaysD;
     private int appAlarm;               //알림 전송용 코드
 
 
-    public Approval toEntity(){
+    public Approval toEntity() {
         String appSortString = this.appSort;
         char appSortChr = appSortString.charAt(0);
-        Approval approval = Approval.builder()
+
+        Approval.ApprovalBuilder builder = Approval.builder()
                 .appNum(this.appNum)
                 .appSort(appSortChr)
                 .userNum(this.userNum)
@@ -50,14 +59,23 @@ public class ApprovalDTO {
                 .appState(this.appState)
                 .userName(this.userName)
                 .userDept(this.userDept)
-                .appStart(this.appStart)
-                .appEnd(this.appEnd)
                 .appContent(this.appContent)
                 .appLocation(this.appLocation)
                 .appParticipant(this.appParticipant)
                 .appVacType(this.appVacType)
-                .appAlarm(this.appAlarm)
-                .build();
-        return approval;
+                .appVacReq(this.appVacReq)
+                .appAlarm(this.appAlarm);
+
+        if (this.appStart == null || this.appEnd == null) {
+            LocalDateTime appStartDateTime = LocalDateTime.of(appStart2, LocalTime.MIDNIGHT);
+            LocalDateTime appEndDateTime = LocalDateTime.of(appEnd2, LocalTime.MIDNIGHT);
+            builder.appStart(appStartDateTime)
+                    .appEnd(appEndDateTime);
+        } else {
+            builder.appStart(this.appStart)
+                    .appEnd(this.appEnd);
+        }
+
+        return builder.build();
     }
 }

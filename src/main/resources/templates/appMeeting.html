@@ -26,11 +26,12 @@
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="insertForm" action="/appRequest/approval" method="post">
+                        <form id="insertForm" action="/appRequest/meeting" method="post">
                             <input type="hidden" name="appSort" value='M'>
                             <input type="hidden" name="appState" value="미승인">
                             <input type="hidden" name="userNum" th:value="${session.user.USERNUM}">
                             <input type="hidden" name="userDept" th:value="${session.user.USERDEPT}">
+                            <input type="hidden" id="appVacReq" name="appVacReq" value="0">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>회의날짜</div>
