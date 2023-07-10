@@ -288,7 +288,7 @@
                                         <span th:case="B">출장</span>
                                         <span th:case="M">회의</span>
                                     </td>
-                                    <td><a href="appDetail/{appNum}" th:text="${approval.appContent}"></a></td>
+                                    <td><a th:href="@{/appDetail/{appNum} (appNum=${approval.appNum})}" th:text="${approval.appContent}"></a></td>
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${approval.appState}"></td>

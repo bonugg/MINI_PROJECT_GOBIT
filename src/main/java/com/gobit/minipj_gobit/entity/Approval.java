@@ -2,6 +2,7 @@ package com.gobit.minipj_gobit.entity;
 
 import com.gobit.minipj_gobit.dto.ApprovalDTO;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import groovyjarjarantlr4.v4.runtime.misc.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -90,6 +91,7 @@ public class Approval {
     @Column(name="APP_VACTYPE")
     private String appVacType;
     //휴가 신청일 임시저장
+    @Nullable
     @Column(name = "APP_VACREQ")
     private long appVacReq;
     //알림 전송용 코드
