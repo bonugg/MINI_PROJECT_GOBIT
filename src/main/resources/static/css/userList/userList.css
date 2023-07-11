@@ -52,14 +52,43 @@ input {
 }
 
 button {
-    color: white;
     display: inline-block;
     background-color: #181F42;
+    color: white;
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
     width: 80px;
     height: 40px;
-    border-radius: 4px;
     text-align: center;
     font-size: 16px;
+    font-weight: bolder;
+    cursor: pointer;
+    transition:800ms ease all;
+    outline:none;
+}
+
+.search_bth:hover{
+    background:#fff;
+    color:#181F42;
+}
+.search_bth:before,.search_bth:after{
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #181F42;
+    transition:400ms ease all;
+}
+.search_bth:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+.search_bth:hover:before,.search_bth:hover:after{
+    width:100%;
+    transition:800ms ease all;
 }
 
 /* 검색 */
