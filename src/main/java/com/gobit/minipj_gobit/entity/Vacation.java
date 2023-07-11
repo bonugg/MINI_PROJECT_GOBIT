@@ -30,7 +30,7 @@ public class Vacation {
     @Column(name ="VAC_LEFT")
     private long vacLeft;
     //사원
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_NUM")
     private User user;
 
