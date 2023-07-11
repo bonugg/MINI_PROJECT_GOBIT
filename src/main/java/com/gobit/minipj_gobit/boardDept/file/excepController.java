@@ -106,7 +106,8 @@ public class excepController {
         } catch (DataIntegrityViolationException dve){
             return ResponseEntity.badRequest().body("데이터베이스 저장 오류: ");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("회원가입 실패: ");
+            return ResponseEntity.badRequest().body("회원가입 실패: " + e.getMessage());
         }
+
     }
 }
