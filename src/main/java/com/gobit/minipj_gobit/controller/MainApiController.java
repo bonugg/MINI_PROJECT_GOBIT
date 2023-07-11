@@ -220,8 +220,8 @@ public class MainApiController {
     }
 
     @GetMapping("/dboardList")
-    public List<Map<String, Object>> dBoardListGet(@RequestParam("dept") String dept) {
-        List<dBoard> dBoardList = dBoardRepository.findBydBoardDept(dept);
+    public List<Map<String, Object>> dBoardListGet() {
+        List<dBoard> dBoardList = dBoardRepository.findBydBoardDept();
         List<Map<String, Object>> dBoardListmap = dBoardList.stream().map(dboard -> {
             Map<String, Object> map = new HashMap<>();
             map.put("dboardNum", dboard.getId());

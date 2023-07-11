@@ -106,12 +106,12 @@
                                             <div id="td_3_div" th:text="${approval.appContent}"></div>
                                         </td>
                                     </tr>
-<!--                                    <tr id="a" style="display: none">-->
-<!--                                        <th >반려 사유</th>-->
-<!--                                        <td id="td_4" colspan="3">-->
-<!--                                            <div id="td_4_div" th:text="${approval.appCancleReason}"></div>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
+                                    <tr id="a" style="display: none">
+                                        <th >반려 사유</th>
+                                        <td id="td_4" colspan="3">
+                                            <div id="td_4_div" th:text="${approval.appCancleReason}"></div>
+                                        </td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -170,7 +170,6 @@
     <script>
         $(function () {
             let popupLayer = document.getElementById("popup_layer");
-            let stamp = document.querySelector('.stamp');
             if($("#sign_data").val() != ""){
                 $("#img01").attr('src',$("#sign_data").val());
                 $("#img01").show();
@@ -246,7 +245,11 @@
     <script>
         $(function () {
             let popupLayer = document.getElementById("popup_layer2");
+            let popupLayer2 = document.getElementById("a");
             let stamp = document.querySelector('.stamp');
+            if($('#td_4_div').text() != ""){
+                popupLayer2.style.display = "table-row";
+            }
             $(document).on("click", "#submit_btn", function () {
                 if( $("#sign_data").val() == ""){
                     alert("사인을 먼저 해주세요.");
@@ -271,6 +274,8 @@
                             $('#submit_btn').prop("disabled", true);
                             $('#cancle_btn').prop("disabled", false);
                             $('.stamp').show();
+                            $('#td_4_div').text(null);
+                            $('#a').css("display", "none");
                             stamp.style.animation = 'pulse 0.5s forwards';
                             setTimeout(function() {
                                 $('.stamp').css("opacity", 1);
@@ -283,28 +288,36 @@
             $(document).on("click", "#cancle_btn", function () {
                 popupLayer.style.display = "block";
                 document.getElementById('submit_cancle').addEventListener('click', function () {
-                    $.ajax({
-                        type: "post",
-                        url: "/approvalList/cancle",
-                        data: {
-                            id: $('#appNum').text(),
-                            sign: "",
-                            canclereason : $('#cancle_textarea').val()
-                        },
-                        success : function (obj){
-                            if(obj == "성공"){
-                                alert("반려 완료");
-                                $('#submit_btn').prop("disabled", false);
-                                $('#cancle_btn').prop("disabled", true);
-                                $('#cancle_textarea').val("");
-                                $("#sign_data").val("");
-                                $("#img01").hide();
-                                $("#link").show();
-                                $('.stamp').hide();
-                                popupLayer.style.display = "none";
+                    let text = $('#cancle_textarea').val();
+                    if (text = "") {
+                        alert("반려 사유를 작성해주세요.");
+                    } else {
+                        let text2 = $('#cancle_textarea').val();
+                        $.ajax({
+                            type: "post",
+                            url: "/approvalList/cancle",
+                            data: {
+                                id: $('#appNum').text(),
+                                sign: "",
+                                canclereason: text2
+                            },
+                            success: function (obj) {
+                                if (obj == "성공") {
+                                    alert("반려 완료");
+                                    $('#submit_btn').prop("disabled", false);
+                                    $('#cancle_btn').prop("disabled", true);
+                                    $('#cancle_textarea').val("");
+                                    $("#sign_data").val("");
+                                    $("#img01").hide();
+                                    $("#link").show();
+                                    $('.stamp').hide();
+                                    $('#td_4_div').text(text2);
+                                    $('#a').css("display", "table-row");
+                                    popupLayer.style.display = "none";
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 });
                 document.getElementById('cancle_cancle').addEventListener('click', function () {
                     popupLayer.style.display = "none";
