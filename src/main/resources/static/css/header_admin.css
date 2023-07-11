@@ -38,7 +38,7 @@ body::-webkit-scrollbar-track {
     height: 70px;
     position: fixed;
     top: 0;
-    z-index: 100000000;
+    z-index: 1000;
 }
 #nav_cols{
     width: 100%;
