@@ -7,7 +7,9 @@ import com.gobit.minipj_gobit.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService {
@@ -108,6 +110,14 @@ public class ApprovalServiceImpl implements ApprovalService {
     public long getAppVacReq(long appNum) {
         approvalRepository.findAppVacReqByAppNum(appNum);
         return approvalRepository.findAppVacReqByAppNum(appNum);
+    }
+
+    @Modifying
+    @Transactional
+    @Override
+    public void updateAlarm(int i, long appNum) {
+        approvalRepository.updateAlarm(i, appNum);
+        approvalRepository.flush();
     }
 
 }
