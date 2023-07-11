@@ -67,6 +67,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<UserOnOff> userOnOffList = new ArrayList<>();
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private Vacation vacation;
+
 
     public PasswordChangeRequestDTO EntityToDTO() {
         PasswordChangeRequestDTO PCDTO = PasswordChangeRequestDTO.builder()
