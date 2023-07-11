@@ -48,12 +48,11 @@ public class AppRequestController {
 
         LocalDateTime appStart = approvalDTO.getAppStart();
         LocalDateTime appEnd = approvalDTO.getAppEnd();
-        String appSort = approvalDTO.getAppSort();
-        System.out.println("신청한 startDate: " + appStart);
-        System.out.println("신청한 endDate: " + appEnd);
+        System.out.println("신청한 회의 시작날짜: " + appStart);
+        System.out.println("신청한 회의 종료날짜: " + appEnd);
 
         try {
-            if (appStart != null && appEnd != null && appStart.isBefore(appEnd)) {
+            if (appStart.isBefore(appEnd)) {
                 approvalService.saveApproval(approvalDTO.toEntity());
                 returnMap.put("msg", "회의 결재가 신청되었습니다");
                 returnMap.put("result", "success");
@@ -83,12 +82,11 @@ public class AppRequestController {
 
         LocalDateTime appStart = approvalDTO.getAppStart();
         LocalDateTime appEnd = approvalDTO.getAppEnd();
-        String appSort = approvalDTO.getAppSort();
-        System.out.println("신청한 startDate: " + appStart);
-        System.out.println("신청한 endDate: " + appEnd);
+        System.out.println("신청한 출장 시작날짜: " + appStart);
+        System.out.println("신청한 출장 종료날짜: " + appEnd);
 
         try {
-            if (appStart != null && appEnd != null && appStart.isBefore(appEnd)) {
+            if (appStart.isBefore(appEnd)) {
                 approvalService.saveApproval(approvalDTO.toEntity());
                 returnMap.put("msg", "출장 결재가 신청되었습니다");
                 returnMap.put("result", "success");
