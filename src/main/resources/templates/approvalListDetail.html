@@ -106,7 +106,7 @@
                                             <div id="td_3_div" th:text="${approval.appContent}"></div>
                                         </td>
                                     </tr>
-                                    <tr id="a" style="display: none">
+                                    <tr id="a" th:style="${approval.appCancleReason != null} ? 'display: table-row' : 'display: none'">
                                         <th >반려 사유</th>
                                         <td id="td_4" colspan="3">
                                             <div id="td_4_div" th:text="${approval.appCancleReason}"></div>
@@ -163,6 +163,15 @@
         </div>
     </div>
 </div>
+<div class="popup_layer" id="popup_layer3">
+    <div class="popup_box3">
+        <!--팝업 컨텐츠 영역-->
+        <div id="alret0">알 림
+        </div>
+        <div id="alret">
+        </div>
+    </div>
+</div>
 </body>
 <th:block layout:fragment="script">
     <script src="js/jquery-3.7.0.min.js"></script>
@@ -177,11 +186,11 @@
             }
             if($("#appState").val() == "승인") {
                 $('#submit_btn').prop("disabled", true);
-                $('#cancle_btn').prop("disabled", false);
+                $('#cancle_btn').prop("disabled", true);
                 $('.stamp').show();
                 $('.stamp').css("opacity", 1).css("transform", "rotate(0deg) scale(1)");
             }else if($("#appState").val() == "반려"){
-                $('#submit_btn').prop("disabled", false);
+                $('#submit_btn').prop("disabled", true);
                 $('#cancle_btn').prop("disabled", true);
                 $('.stamp').hide();
             }else {
@@ -245,17 +254,31 @@
     <script>
         $(function () {
             let popupLayer = document.getElementById("popup_layer2");
+            let popupLayer3 = document.getElementById("popup_layer3");
             let popupLayer2 = document.getElementById("a");
             let stamp = document.querySelector('.stamp');
-            if($('#td_4_div').text() != ""){
-                popupLayer2.style.display = "table-row";
+
+            function eventPopClose(){
+                if (popupLayer3.style.display === "block") {
+                    document.addEventListener("click", function (event) {
+                        if (event.target.id == "popup_layer3"
+                            && popupLayer3.contains(event.target)) {
+                            popupLayer3.style.display = "none";
+                        }
+                    });
+                }
             }
+
             $(document).on("click", "#submit_btn", function () {
                 if( $("#sign_data").val() == ""){
-                    alert("사인을 먼저 해주세요.");
+                    popupLayer3.style.display = "block";
+                    $('#alret').text("사인을 먼저 해주세요.");
+                    eventPopClose();
                     return null;
                 }else if($("#sign_data").val().length >= 50000){
-                    alert("사인을 간단하게 입력해주세요.");
+                    popupLayer3.style.display = "block";
+                    $('#alret').text("사인을 간단하게 입력해주세요.");
+                    eventPopClose();
                     $("#img01").attr('src',"");
                     $("#img01").hide();
                     $("#link").show();
@@ -270,16 +293,25 @@
                     },
                     success : function (obj){
                         if(obj == "성공"){
-                            alert("승인 완료");
-                            $('#submit_btn').prop("disabled", true);
-                            $('#cancle_btn').prop("disabled", false);
-                            $('.stamp').show();
-                            $('#td_4_div').text(null);
-                            $('#a').css("display", "none");
-                            stamp.style.animation = 'pulse 0.5s forwards';
-                            setTimeout(function() {
-                                $('.stamp').css("opacity", 1);
-                            }, 500);
+                            popupLayer3.style.display = "block";
+                            $('#alret').text("승인 완료");
+                            if (popupLayer3.style.display === "block") {
+                                document.addEventListener("click", function (event) {
+                                    if (event.target.id == "popup_layer3"
+                                        && popupLayer3.contains(event.target)) {
+                                        popupLayer3.style.display = "none";
+                                        $('#submit_btn').prop("disabled", true);
+                                        $('#cancle_btn').prop("disabled", true);
+                                        $('.stamp').show();
+                                        $('#td_4_div').text(null);
+                                        $('#a').css("display", "none");
+                                        stamp.style.animation = 'pulse 0.5s forwards';
+                                        setTimeout(function() {
+                                            $('.stamp').css("opacity", 1);
+                                        }, 500);
+                                    }
+                                });
+                            }
                         }
                     }
                 });
@@ -289,8 +321,17 @@
                 popupLayer.style.display = "block";
                 document.getElementById('submit_cancle').addEventListener('click', function () {
                     let text = $('#cancle_textarea').val();
-                    if (text = "") {
-                        alert("반려 사유를 작성해주세요.");
+                    if (text == "") {
+                        popupLayer.style.display = "none";
+                        popupLayer3.style.display = "block";
+                        $('#alret').text("반려 사유를 작성해주세요.");
+                        document.addEventListener("click", function (event) {
+                            if (event.target.id == "popup_layer3"
+                                && popupLayer3.contains(event.target)) {
+                                popupLayer.style.display = "block";
+                                popupLayer3.style.display = "none";
+                            }
+                        });
                     } else {
                         let text2 = $('#cancle_textarea').val();
                         $.ajax({
@@ -303,17 +344,24 @@
                             },
                             success: function (obj) {
                                 if (obj == "성공") {
-                                    alert("반려 완료");
-                                    $('#submit_btn').prop("disabled", false);
-                                    $('#cancle_btn').prop("disabled", true);
-                                    $('#cancle_textarea').val("");
-                                    $("#sign_data").val("");
-                                    $("#img01").hide();
-                                    $("#link").show();
-                                    $('.stamp').hide();
-                                    $('#td_4_div').text(text2);
-                                    $('#a').css("display", "table-row");
                                     popupLayer.style.display = "none";
+                                    popupLayer3.style.display = "block";
+                                    $('#alret').text("반려 완료.");
+                                    document.addEventListener("click", function (event) {
+                                        if (event.target.id == "popup_layer3"
+                                            && popupLayer3.contains(event.target)) {
+                                            $('#submit_btn').prop("disabled", true);
+                                            $('#cancle_btn').prop("disabled", true);
+                                            $('#cancle_textarea').val("");
+                                            $("#sign_data").val("");
+                                            $("#img01").hide();
+                                            $("#link").show();
+                                            $('.stamp').hide();
+                                            $('#td_4_div').text(text2);
+                                            $('#a').css("display", "table-row");
+                                            popupLayer3.style.display = "none";
+                                        }
+                                    });
                                 }
                             }
                         });

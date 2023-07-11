@@ -218,6 +218,8 @@ $(function () {
                 let userListHTML = '';
                 for (let i = 0; i < obj.length; i++) {
                     let item = obj[i];
+                    const regex = /(<([^>]+)>)/ig;
+                    item.dboardContent = item.dboardContent.replace(regex, "");
                     console.log(item.dboardContent);
                     userListHTML += `
                                          <table class="notice_table" onclick="location.href='/boardDept/updateCnt/${item.dboardNum}'">
@@ -235,10 +237,11 @@ $(function () {
                                                     </tr>
                                                     <tr class="tr1410">
                                                         <td rowspan="2" class="board_img_td">
-                                                            <div class="notice_img_div">
+                                                   
                                                                 <div class="notice_img_div2">
-                                                                    <img class="img"
-                                                                       src="https://i.ibb.co/60TZMPY/noimage.png">                                                                </div>
+                                                                    <div class="img">
+                                                                        전사 게시판
+                                                                    </div>
                                                             </div>
                                                         </td>
                                                         <td colspan="4" rowspan="2" class="notice_content_td">
@@ -289,12 +292,12 @@ $(function () {
                                                         <td class="notice_writer_cnt_td2" id="bcnt">${item.nboardCnt}</td>
                                                     </tr>
                                                     <tr class="tr1410">
-                                                        <td rowspan="2" class="board_img_td">
-                                                            <div class="notice_img_div">
+                                                             <td rowspan="2" class="board_img_td">
+                                                   
                                                                 <div class="notice_img_div2">
-                                                                    <img class="img"
-                                                                         src="https://i.ibb.co/60TZMPY/noimage.png">
-                                                                </div>
+                                                                    <div class="img">
+                                                                        공지 사항
+                                                                    </div>
                                                             </div>
                                                         </td>
                                                         <td colspan="4" rowspan="2" class="notice_content_td">
@@ -567,9 +570,10 @@ $(function () {
                         popupLayer.style.display = "block";
                         $('.popup_box').css("height", "");
                         if (info.event.extendedProps.classify == '출퇴근') {
-                            $('.popup_box').css("height", "200px");
-                            $('.popup_cont_1').css("height", "50%");
-                            $('.popup_cont_2').css("height", "50%");
+                            $('.popup_cont_0').css("margin-bottom", "10px");
+                            $('#title').text("출퇴근 캘린더 상세보기");
+                            $('.popup_cont_1').css("height", "60px");
+                            $('.popup_cont_2').css("height", "60px");
                             $('#popup_date').css("font-size", "15px");
                             $('.popup_cont_3').css("display", "none");
                             $('.popup_cont_4').css("display", "none");
@@ -577,6 +581,8 @@ $(function () {
                             $('#vacation_type').css("display", "none");
                             $('#approve_name').css("display", "none");
                         } else if (info.event.extendedProps.classify == 'V') {
+                            $('.popup_cont_0').css("margin-bottom", "20px");
+                            $('#title').text("휴가 캘린더 상세보기");
                             $('.popup_cont_1').css("height", "60px");
                             $('.popup_cont_2').css("height", "60px");
                             $('.popup_cont_3').css("height", "60px");
@@ -586,6 +592,8 @@ $(function () {
                             $('.popup_cont_4').css("display", "none");
                             $('.popup_cont_5').css("display", "none");
                         } else if (info.event.extendedProps.classify == 'B') {
+                            $('#title').text("출장 캘린더 상세보기");
+                            $('.popup_cont_0').css("margin-bottom", "20px");
                             $('.popup_cont_1').css("height", "60px");
                             $('.popup_cont_2').css("height", "60px");
                             $('.popup_cont_4').css("height", "60px");
@@ -596,6 +604,8 @@ $(function () {
                             $('#approve_name').css("display", "");
                             $('.popup_cont_5').css("display", "none");
                         } else if (info.event.extendedProps.classify == 'M') {
+                            $('.popup_cont_0').css("margin-bottom", "20px");
+                            $('#title').text("회의 캘린더 상세보기");
                             $('.popup_cont_1').css("height", "60px");
                             $('.popup_cont_2').css("height", "60px");
                             $('.popup_cont_4').css("height", "60px");
