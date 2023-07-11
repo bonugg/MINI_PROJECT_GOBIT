@@ -24,4 +24,7 @@ public interface VacationRepository extends JpaRepository<Vacation, Long> {
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE t_vacation t SET t.vac_used = :vacUsed, t.vac_left = :vacLeft WHERE t.usernum = :userNum", nativeQuery = true)
     void request(@Param("vacUsed") long vacUsed, @Param("vacLeft") long vacLeft, @Param("userNum") long userNum);
+
+//    @Query(value = "INSERT INTO t_vacation(vac_total, vac_sued, usernum, vac_left, vac_reqtmp) VALUES()")
+//    void save(@Param())
 }

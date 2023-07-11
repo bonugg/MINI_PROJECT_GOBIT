@@ -30,24 +30,9 @@ public class Vacation {
     @Column(name ="VAC_LEFT")
     private long vacLeft;
     //사원
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "USERNUM")
+    @OneToOne
+    @JoinColumn(name = "USER_NUM")
     private User user;
-
-    public void setDefaultVacTotal(){
-        if(user.getUSERPOSITION().equals("팀장")){
-            this.vacTotal = 2160000;
-            //25일
-        }else{
-            this.vacTotal = 1728000;
-            //20일
-        }
-    }
-
-    public void setInitialVacLeft(){
-        this.vacLeft = this.vacTotal;
-    }
-
 
     public VacationDTO toDTO(){
         // 초단위를 일(day) 단위로 변환
@@ -64,6 +49,20 @@ public class Vacation {
                 .user(this.user)
                 .build();
         return vacationDTO;
+    }
+
+    public void setDefault(User user){
+        System.out.println("추가할 회원의 직급: " + user.getUSERPOSITION());
+        if(user.getUSERPOSITION().equals("팀장")){
+            this.vacTotal = 2160000;
+            //25일
+        }else{
+            this.vacTotal = 1728000;
+            //20일
+        }
+        this.vacLeft = this.vacTotal;
+        this.vacUsed = 0;
+        this.user = user;
     }
 
 }
