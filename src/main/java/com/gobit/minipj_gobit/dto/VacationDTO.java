@@ -33,4 +33,19 @@ public class VacationDTO {
                 .build();
         return  vacation;
     }
+
+    public void setDefault(User user){
+        System.out.println("추가할 회원의 직급: " + user.getUSERPOSITION());
+        if(user.getUSERPOSITION().equals("팀장")){
+            this.vacTotal = 2160000;
+            //25일
+        }else{
+            this.vacTotal = 1728000;
+            //20일
+        }
+        this.vacLeft = this.vacTotal;
+        this.vacUsed = 0;
+        this.user = user;
+    }
+
 }

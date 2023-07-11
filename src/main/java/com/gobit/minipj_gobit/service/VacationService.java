@@ -15,6 +15,5 @@ public interface VacationService {
 
     void saveVacation(long vacUsed, long vacLeft, long userNum);
 
-    void updateVacation(long requestSecond);
-
+    void initialize(Vacation vacation);
 }

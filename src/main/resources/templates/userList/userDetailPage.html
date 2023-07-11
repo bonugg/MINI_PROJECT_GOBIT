@@ -49,15 +49,8 @@
                 <td style="border-bottom-right-radius: 5px; border-bottom-width: 1px" id="joindate" th:text="${user.join}">사원 입사일</td>
             </tr>
         </table>
-        <button type="button" id="chat_btn">대화방</button>
     </div>
 </div>
-<script>
-    var chatBtn = document.getElementById("chat_btn");
-    chatBtn.addEventListener('click', function () {
-        window.open("/room", "_blank", "width=550, height=700");
-    });
-</script>
 </body>
 <th:block layout:fragment="script">
     <!--사용할 자바스크립트는 여기에 첨부 -->

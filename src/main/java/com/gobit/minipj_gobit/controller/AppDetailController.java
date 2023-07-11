@@ -41,6 +41,9 @@ public class AppDetailController {
     public ModelAndView getApproval(@PathVariable long appNum) {
         ModelAndView mv = new ModelAndView();
         Approval approval = approvalService.getApproval(appNum);
+//        Vacation vacation = vacationService.getVacation(approval.getUserNum().getUSERNUM());
+        System.out.println("회원번호: " + approval.getUserNum().getUSERNUM());
+        System.out.println("vacation 결과: " + vacationService.getVacation(approval.getUserNum().getUSERNUM()));
         Vacation vacation = vacationService.getVacation(approval.getUserNum().getUSERNUM());
         if(approval.getAppSort() == 'M'){
             mv.setViewName("appMeetingDetail.html");
@@ -51,6 +54,13 @@ public class AppDetailController {
             mv.setViewName("appBuisnessDetail.html");
         }else{
             System.out.println("다음 종류를 찾지 못했습니다.");
+        }
+        //알람값 설정
+        if(approval.getAppState() != "미승인"){
+            approvalService.updateAlarm(1, appNum);
+            Approval newApproval = approvalService.getApproval(appNum);
+            ApprovalDTO approvalDTO = newApproval.toDTO();
+            mv.addObject("approval", approvalDTO);
         }
         ApprovalDTO approvalDTO = approval.toDTO();
         VacationDTO vacationDTO = vacation.toDTO();
