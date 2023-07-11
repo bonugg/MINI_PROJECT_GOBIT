@@ -1,23 +1,21 @@
 $(function () {
     $('#btnSave').on("click", () => {
-        $('#btnSave').on("click", () => {
-            $.ajax({
-                url: "/appRequest/vacation",
-                type: "post",
-                data: $("#insertForm").serialize(),
-                processData: false,
-                dataType: "json",
-                success: (obj) => {
-                    console.log(obj);
-                    alert(obj.item.msg);
-                    if(obj.item.result == "success"){
-                        window.location.href = obj.item.redirectUrl;
-                    }
-                },
-                error: (error) => {
-                    console.log(error);
+        $.ajax({
+            url: "/appRequest/vacation",
+            type: "post",
+            data: $("#insertForm").serialize(),
+            processData: false,
+            dataType: "json",
+            success: (obj) => {
+                console.log(obj);
+                alert(obj.item.msg);
+                if (obj.item.result == "success") {
+                    window.location.href = obj.item.redirectUrl;
                 }
-            });
+            },
+            error: (error) => {
+                console.log(error);
+            }
         });
     });
 });
@@ -51,8 +49,8 @@ function changeDateType() {
     if (vacType === 'dayOff' || vacType === 'sickDay') {
         appStartInput.setAttribute("type", "date");
         appEndInput.setAttribute("type", "date");
-        appStartInput.name = "appStart2";
-        appEndInput.name = "appEnd2";
+        appStartInput.name = "appStartDay";
+        appEndInput.name = "appEndDay";
     } else {
         appStartInput.setAttribute("type", "datetime-local");
         appEndInput.setAttribute("type", "datetime-local");

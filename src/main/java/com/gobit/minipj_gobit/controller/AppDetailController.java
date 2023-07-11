@@ -68,12 +68,11 @@ public class AppDetailController {
 
         LocalDateTime appStart = approvalDTO.getAppStart();
         LocalDateTime appEnd = approvalDTO.getAppEnd();
-        String appSort = approvalDTO.getAppSort();
-        System.out.println("수정한 startDate: " + appStart);
-        System.out.println("수정한 endDate: " + appEnd);
+        System.out.println("수정한 출장 시작일: " + appStart);
+        System.out.println("수정한 출장 종료일: " + appEnd);
 
         try {
-            if (appStart != null && appEnd != null && appStart.isBefore(appEnd)) {
+            if (appStart.isBefore(appEnd)) {
                 approvalService.saveApproval(approvalDTO.toEntity());
                 returnMap.put("msg", "출장 결재가 수정되었습니다");
                 returnMap.put("result", "success");
@@ -104,9 +103,8 @@ public class AppDetailController {
 
         LocalDateTime appStart = approvalDTO.getAppStart();
         LocalDateTime appEnd = approvalDTO.getAppEnd();
-        String appSort = approvalDTO.getAppSort();
-        System.out.println("수정한 startDate: " + appStart);
-        System.out.println("수정한 endDate: " + appEnd);
+        System.out.println("수정한 회의 시작일: " + appStart);
+        System.out.println("수정한 회의 종료일: " + appEnd);
 
         try {
             if (appStart != null && appEnd != null && appStart.isBefore(appEnd)) {
@@ -141,19 +139,24 @@ public class AppDetailController {
 
         LocalDateTime appStart = approvalDTO.getAppStart();
         LocalDateTime appEnd = approvalDTO.getAppEnd();
-        LocalDate appStart2 = approvalDTO.getAppStart2();
-        LocalDate appEnd2 = approvalDTO.getAppEnd2();
+        LocalDate appStartDay = approvalDTO.getAppStartDay();
+        LocalDate appEndDay = approvalDTO.getAppEndDay();
+        boolean isDateFormatOk = false;
         long userNum = approvalDTO.getUserNum().getUSERNUM();
         long appNum = approvalDTO.getAppNum();
 
-        boolean isDateTimeFormat = (appStart != null && appEnd != null);
-
-        if (isDateTimeFormat) {
-            System.out.println("신청한 startDate: " + appStart);
-            System.out.println("신청한 endDate: " + appEnd);
-        } else {
-            System.out.println("신청한 startDate: " + appStart2);
-            System.out.println("신청한 endDate: " + appEnd2);
+        if(appStart != null && appEnd != null){
+            System.out.println("수정한 휴가 시작일(시간단위): " + appStart);
+            System.out.println("수정한 휴가 종료일(시간단위): " + appStart);
+            if(appStart.isBefore(appEnd)){
+                isDateFormatOk = true;
+            }
+        }else{
+            System.out.println("수정한 휴가 시작일(하루단위): " + appStartDay);
+            System.out.println("수정한 휴가 종료일(하루단위): " + appEndDay);
+            if(appStartDay.isBefore(appEndDay)){
+                isDateFormatOk = true;
+            }
         }
 
         long newVacReq = approvalDTO.getAppVacReq();
@@ -164,8 +167,11 @@ public class AppDetailController {
         System.out.println("수정한 휴가일수: " + newVacReq);
 
         try {
-            if ((appStart != null && appEnd != null && appStart.isBefore(appEnd)) || (appStart2 != null && appEnd2 != null && appStart2.isBefore(appEnd2))) {
-                System.out.println("통과 테스트1");
+            if (isDateFormatOk != true) {
+                returnMap.put("msg", "휴가 시작일과 휴가의 종료일을 다시 입력해주세요");
+                returnMap.put("result", "fail");
+                System.out.println("휴가 날짜 입력 오류로 휴가 결재 신청되지 않음");
+            } else {
                 if(vacLeft + appVacReq > newVacReq){
                     //복구
                     approvalService.updateApproval(approvalDTO.toEntity());
@@ -186,10 +192,6 @@ public class AppDetailController {
                     returnMap.put("result", "fail");
                     System.out.println("잔여 연차 부족으로 결재 수정되지 않음");
                 }
-            } else {
-                returnMap.put("msg", "휴가 시작일과 휴가의 종료일을 다시 입력해주세요");
-                returnMap.put("result", "fail");
-                System.out.println("휴가 날짜 입력 오류로 휴가 결재 신청되지 않음");
             }
             responseDTO.setItem(returnMap);
             return ResponseEntity.ok().body(responseDTO);
@@ -205,8 +207,7 @@ public class AppDetailController {
     @PostMapping("/meeting/{appNum}")
     public ModelAndView deleteMeeting(@PathVariable long appNum){
         System.out.println("=======================meeting approval delete result=======================");
-        System.out.println("approvalDTO 출력 결과:" + appNum);
-//        System.out.println("approvalDTO.getAppNum() 결과: " + approvalDTO.getAppNum());
+        System.out.println("삭제한 회의결재 번호:" + appNum);
         ModelAndView mv = new ModelAndView();
         approvalService.deleteApproval(appNum);
         mv.setViewName("appDetailPage.html");
@@ -216,8 +217,7 @@ public class AppDetailController {
     @PostMapping("/buisness/{appNum}")
     public ModelAndView deleteBuisness(@PathVariable long appNum){
         System.out.println("=======================buisness approval delete result=======================");
-        System.out.println("approvalDTO 출력 결과:" + appNum);
-//        System.out.println("approvalDTO.getAppNum() 결과: " + approvalDTO.getAppNum());
+        System.out.println("삭제한 출장결재 번호:" + appNum);
         ModelAndView mv = new ModelAndView();
         approvalService.deleteApproval(appNum);
         mv.setViewName("appDetailPage.html");
@@ -236,7 +236,7 @@ public class AppDetailController {
         long vacUsed = vacationService.getVacUsed(userNum);
         long vacTotal = vacationService.getVacTotal(userNum);
         long vacLeft = vacationService.getVacLeft(userNum);
-        System.out.println("신청한 휴가일수: " + appVacReq);
+        System.out.println("기존 신청한 휴가일수: " + appVacReq);
         System.out.println("기존 연차 사용일수: " + vacUsed);
         System.out.println("기존 연차 잔여일수: " + vacLeft);
 
@@ -250,7 +250,7 @@ public class AppDetailController {
             returnMap.put("msg", "휴가 결재가 삭제되었습니다.");
             returnMap.put("result", "success");
             returnMap.put("redirectUrl", "/appDetail");
-            System.out.println(appNum + "번 휴가 결재가 삭제됨");
+            System.out.println("삭제한 휴가결재 번호: "+ appNum);
 
             responseDTO.setItem(returnMap);
             return ResponseEntity.ok().body(responseDTO);

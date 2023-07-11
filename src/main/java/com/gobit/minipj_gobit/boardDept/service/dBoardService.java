@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class dBoardService {
     private final dBoardRepository dBoardRepository;
     private final LikeRepository likeRepository;
     private final dBoardFileRepository boardFileRepository;
+    private final FileService fileService;
 
     public Page<dBoard> getList(int page, String kw) {
         List<Sort.Order> sorts = new ArrayList<>();
@@ -83,11 +85,7 @@ public class dBoardService {
         List<dBoardFile> fileList = boardFileRepository.findAllByBoard(board);
 
         for (dBoardFile file : fileList) {
-            String saveName = file.getSaveName();
-            File deleteFile = new File(saveName);
-            if (deleteFile.exists()) {
-                deleteFile.delete();
-            }
+            fileService.deleteFile(file);
         }
         boardFileRepository.deleteAll(fileList);
         this.dBoardRepository.delete(board);

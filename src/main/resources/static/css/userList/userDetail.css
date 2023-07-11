@@ -1,16 +1,19 @@
-.boody > div {
-    display: flex;
+#user_div_content2 {
     text-align: center;
 }
-img{
-    width: auto;
+
+#chat_btn {
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 60px;
+    height: 30px;
+    background: transparent;
+    margin-top: 20px;
 }
 
-.div_key{
-    width: 50%;
-}
-
-.div_val{
-    margin-left: auto;
-    width: 50%;
+#chat_btn:hover {
+    background: #181F42;
+    color: whitesmoke;
+    transition: background-color 0.3s ease;
 }
