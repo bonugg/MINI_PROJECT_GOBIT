@@ -87,7 +87,6 @@ td:last-child, th:last-child {
 }
 
 tbody > tr:hover {
+    cursor: pointer;
     background-color: rgba(229, 229, 229, 0.72);
 }
-
-.b { display: none; height: 500px; background-color: #bbdefb; }

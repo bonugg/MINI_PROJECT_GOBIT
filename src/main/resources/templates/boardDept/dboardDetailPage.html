@@ -58,8 +58,16 @@
                                 작성자
                             </div>
                             <div class="date" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></div>
-                            <div class="cnt" th:text="${board.cnt}"></div>
-                            <div class="like-cnt" th:text="${board.like}"></div>
+
+                            <div class="div-cnt">
+                                <img src="/img/boardDept/free-icon-eyes-7835667.png" id="cntIcon">
+                                <div class="cnt" th:text="${board.cnt}"></div>
+                            </div>
+
+                            <div class="div-like">
+                                <img src="/img/boardDept/free-icon-like-5372262.png" id="likeIcon">
+                                <div class="like-cnt" th:text="${board.like}"></div>
+                            </div>
 
                             <div class="div-files" th:if="${!board.files.isEmpty()}">
                                 <label class="label-hover">첨부파일</label>
