@@ -116,36 +116,41 @@ public class AppRequestController {
         ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<Map<String, String>>();
         Map<String, String> returnMap = new HashMap<String, String>();
 
+        long userNum = approvalDTO.getUserNum().getUSERNUM();
         LocalDateTime appStart = approvalDTO.getAppStart();
         LocalDateTime appEnd = approvalDTO.getAppEnd();
-        LocalDate appStart2 = approvalDTO.getAppStart2();
-        LocalDate appEnd2 = approvalDTO.getAppEnd2();
-        long appVacReq = approvalDTO.getAppVacReq();
-        System.out.println(appVacReq);
-        boolean isDateTimeFormat = (appStart != null && appEnd != null);
-
-        if (isDateTimeFormat) {
-            System.out.println("신청한 startDate: " + appStart);
-            System.out.println("신청한 endDate: " + appEnd);
-        } else {
-            System.out.println("신청한 startDate: " + appStart2);
-            System.out.println("신청한 endDate: " + appEnd2);
+        LocalDate appStartDay = approvalDTO.getAppStartDay();
+        LocalDate appEndDay = approvalDTO.getAppEndDay();
+        long vacReq = approvalDTO.getAppVacReq();
+        boolean isDateFormatOk = false;
+        System.out.println("신청 시간(초): " + vacReq);
+        if(appStart != null && appEnd != null){
+            System.out.println("신청한 휴가 시작일(시간단위): " + appStart);
+            System.out.println("신청한 휴가 종료일(시간단위): " + appStart);
+            if(appStart.isBefore(appEnd)){
+                isDateFormatOk = true;
+            }
+        }else{
+            System.out.println("신청한 휴가 시작일(하루단위): " + appStartDay);
+            System.out.println("신청한 휴가 종료일(하루단위): " + appEndDay);
+            if(appStartDay.isBefore(appEndDay)){
+                isDateFormatOk = true;
+            }
         }
 
         try {
-            long vacUsed;
-            long vacLeft;
-            long vacTotal;
-            boolean isVacationApproved = false;
-            vacUsed = vacationService.getVacUsed(approvalDTO.getUserNum().getUSERNUM());
-            vacLeft = vacationService.getVacLeft(approvalDTO.getUserNum().getUSERNUM());
-            vacTotal = vacationService.getVacTotal(approvalDTO.getUserNum().getUSERNUM());
+            long vacUsed = vacationService.getVacUsed(userNum);
+            long vacLeft = vacationService.getVacLeft(userNum);
+            long vacTotal = vacationService.getVacTotal(userNum);
 
-            if ((appStart != null && appEnd != null && appStart.isBefore(appEnd)) || (appStart2 != null && appEnd2 != null && appStart2.isBefore(appEnd2))){
-                if(isDateTimeFormat && vacLeft > appVacReq || !isDateTimeFormat && vacLeft > appVacReq) {
+            if(isDateFormatOk != true){
+                returnMap.put("msg", "휴가 시작일과 휴가 종료일을 다시 입력해주세요");
+                returnMap.put("result", "fail");
+                System.out.println("휴가 날짜 입력 오류로 휴가 결재 신청되지 않음");
+            }else{
+                if(vacLeft > vacReq){
                     approvalService.saveApproval(approvalDTO.toEntity());
-                    long userNum = approvalDTO.getUserNum().getUSERNUM();
-                    vacUsed += appVacReq;  //연차 사용일 증가
+                    vacUsed += vacReq;  //연차 사용일 증가
                     vacLeft = vacTotal - vacUsed; //잔여 연차 차감
                     System.out.println("결재 신청 시 연차 사용일: " + vacUsed);
                     System.out.println("결재 신청 시 잔여 연차일: " + vacLeft);
@@ -153,21 +158,13 @@ public class AppRequestController {
                     returnMap.put("msg", "휴가 결재가 신청되었습니다.");
                     returnMap.put("result", "success");
                     returnMap.put("redirectUrl", "/appDetail");
-                    isVacationApproved = true;
-                }
-
-                if (!isVacationApproved) {
+                    System.out.println("휴가 결재가 신청됨");
+                }else{
                     returnMap.put("msg", "잔여 연차가 부족합니다.");
                     returnMap.put("result", "fail");
                     System.out.println("잔여 연차 부족으로 휴가 결재 신청되지 않음");
                 }
-            } else {
-                returnMap.put("msg", "휴가 시작일과 휴가 종료일을 다시 입력해주세요");
-                returnMap.put("result", "fail");
-                System.out.println("휴가 날짜 입력 오류로 휴가 결재 신청되지 않음");
             }
-
-
             responseDTO.setItem(returnMap);
             return ResponseEntity.ok().body(responseDTO);
         } catch (Exception e) {

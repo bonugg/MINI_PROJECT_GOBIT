@@ -141,8 +141,8 @@ public class AppDetailController {
 
         LocalDateTime appStart = approvalDTO.getAppStart();
         LocalDateTime appEnd = approvalDTO.getAppEnd();
-        LocalDate appStart2 = approvalDTO.getAppStart2();
-        LocalDate appEnd2 = approvalDTO.getAppEnd2();
+        LocalDate appStart2 = approvalDTO.getAppStartDay();
+        LocalDate appEnd2 = approvalDTO.getAppEndDay();
         long userNum = approvalDTO.getUserNum().getUSERNUM();
         long appNum = approvalDTO.getAppNum();
 
