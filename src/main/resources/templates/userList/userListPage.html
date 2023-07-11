@@ -124,13 +124,15 @@
                         tbodyHtml += '<tr><td colspan="4">검색 결과를 찾을 수가 없습니다.</td></tr>';
                     } else {
                         response.data.forEach(function (userDTO) {
-                            tbodyHtml += '<tr class="user_detail">';
-                            tbodyHtml += '<td>' + userDTO.name + '</td>';
-                            tbodyHtml += '<td>' + userDTO.dept + '</td>';
-                            tbodyHtml += '<td>' + userDTO.position + '</td>';
-                            tbodyHtml += '<td>' + userDTO.phone + '</td>';
-                            tbodyHtml += '<td style="display: none">' + userDTO.id + '</td>';
-                            tbodyHtml += '</tr>';
+                            if (userDTO.position !== '관리자'){
+                                tbodyHtml += '<tr class="user_detail">';
+                                tbodyHtml += '<td>' + userDTO.name + '</td>';
+                                tbodyHtml += '<td>' + userDTO.dept + '</td>';
+                                tbodyHtml += '<td>' + userDTO.position + '</td>';
+                                tbodyHtml += '<td>' + userDTO.phone + '</td>';
+                                tbodyHtml += '<td style="display: none">' + userDTO.id + '</td>';
+                                tbodyHtml += '</tr>';
+                            }
                         });
                     }
                     var tbody = document.querySelector("tbody");
