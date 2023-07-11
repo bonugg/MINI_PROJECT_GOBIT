@@ -103,6 +103,7 @@ public class ApprovalServiceImpl implements ApprovalService {
     public int cntMemFinApp(User user) {
         return approvalRepository.cntMemFinApp(user);
     }
+
     @Override
     public long getAppVacReq(long appNum) {
         approvalRepository.findAppVacReqByAppNum(appNum);

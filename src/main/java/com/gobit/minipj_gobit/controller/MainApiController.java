@@ -54,6 +54,7 @@ public class MainApiController {
         approval.setAppUserNum(user);
         approval.setAppState("승인");
         approval.setAppSign(sign);
+        approval.setAppCancleReason(null);
         approval.setAppStateDate(LocalDateTime.now());
         approvalRepository.save(approval);
         approvalRepository.flush();
@@ -79,10 +80,13 @@ public class MainApiController {
 
     @PostMapping("/approvalList/cancle")
     public String approvalListDetailCancle(@RequestParam("id") long id,
-                                           @RequestParam("sign") String sign) {
+                                           @RequestParam("sign") String sign,
+                                           @RequestParam("canclereason") String canclereason ) {
+        System.out.println(canclereason);
         User user = (User) httpSession.getAttribute("user");
         Approval approval = approvalRepository.findById(id).orElse(null);
         approval.setAppUserNum(user);
+        approval.setAppCancleReason(canclereason);
         approval.setAppState("반려");
         approval.setAppSign(sign);
         approval.setAppStateDate(LocalDateTime.now());

@@ -106,6 +106,12 @@
                                             <div id="td_3_div" th:text="${approval.appContent}"></div>
                                         </td>
                                     </tr>
+<!--                                    <tr id="a" style="display: none">-->
+<!--                                        <th >반려 사유</th>-->
+<!--                                        <td id="td_4" colspan="3">-->
+<!--                                            <div id="td_4_div" th:text="${approval.appCancleReason}"></div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
                                 </table>
                             </div>
                         </div>
@@ -136,6 +142,23 @@
             <div id="popup_3">
                 <button id="save-png" class="sign_btn">저장</button>
                 <button id="clear" class="sign_btn">지우기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup_layer" id="popup_layer2">
+    <div class="popup_box2">
+        <!--팝업 컨텐츠 영역-->
+        <div id="cancle_pop">
+            <div id="cancle_pop_title">
+                반려 이유를 작성해주세요.
+            </div>
+            <div id="cancle_pop_content">
+                <textarea id="cancle_textarea"></textarea>
+            </div>
+            <div id="cancle_pop_btn_div">
+                <button id="submit_cancle" class="sign_btn">제출</button>
+                <button id="cancle_cancle" class="sign_btn">취소</button>
             </div>
         </div>
     </div>
@@ -222,6 +245,7 @@
     </script>
     <script>
         $(function () {
+            let popupLayer = document.getElementById("popup_layer2");
             let stamp = document.querySelector('.stamp');
             $(document).on("click", "#submit_btn", function () {
                 if( $("#sign_data").val() == ""){
@@ -257,25 +281,44 @@
             });
 
             $(document).on("click", "#cancle_btn", function () {
-                $.ajax({
-                    type: "post",
-                    url: "/approvalList/cancle",
-                    data: {
-                        id: $('#appNum').text(),
-                        sign: ""
-                    },
-                    success : function (obj){
-                        if(obj == "성공"){
-                            alert("반려 완료");
-                            $('#submit_btn').prop("disabled", false);
-                            $('#cancle_btn').prop("disabled", true);
-                            $("#sign_data").val("");
-                            $("#img01").hide();
-                            $("#link").show();
-                            $('.stamp').hide();
+                popupLayer.style.display = "block";
+                document.getElementById('submit_cancle').addEventListener('click', function () {
+                    $.ajax({
+                        type: "post",
+                        url: "/approvalList/cancle",
+                        data: {
+                            id: $('#appNum').text(),
+                            sign: "",
+                            canclereason : $('#cancle_textarea').val()
+                        },
+                        success : function (obj){
+                            if(obj == "성공"){
+                                alert("반려 완료");
+                                $('#submit_btn').prop("disabled", false);
+                                $('#cancle_btn').prop("disabled", true);
+                                $('#cancle_textarea').val("");
+                                $("#sign_data").val("");
+                                $("#img01").hide();
+                                $("#link").show();
+                                $('.stamp').hide();
+                                popupLayer.style.display = "none";
+                            }
                         }
-                    }
+                    });
                 });
+                document.getElementById('cancle_cancle').addEventListener('click', function () {
+                    popupLayer.style.display = "none";
+                });
+
+                if (popupLayer.style.display === "block") {
+                    document.addEventListener("click", function (event) {
+                        if (event.target.id == "popup_layer2"
+                            && popupLayer.contains(event.target)) {
+                            popupLayer.style.display = "none";
+                        }
+                    });
+                }
+
             });
         });
     </script>
