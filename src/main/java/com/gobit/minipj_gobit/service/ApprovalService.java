@@ -34,4 +34,6 @@ public interface ApprovalService {
 
 
     long getAppVacReq(long appNum);
+
+    void updateAlarm(int i, long appNum);
 }

@@ -1,10 +1,12 @@
 package com.gobit.minipj_gobit.boardDept.file;
 
 
+import com.gobit.minipj_gobit.dto.VacationDTO;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.entity.Vacation;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import com.gobit.minipj_gobit.repository.VacationRepository;
+import com.gobit.minipj_gobit.service.VacationService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -35,6 +37,8 @@ public class excepController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    private VacationService vacationService;
 
     private final VacationRepository vacationRepository;
     @GetMapping("/memberSign")
@@ -92,19 +96,18 @@ public class excepController {
                 userRepository.save(data);
 
                 //회원추가 시 휴가설정
+                System.out.println("======================" + data.getUSERNAME() + "님 연차 설정======================");
                 Vacation vacation = new Vacation();
-                vacation.setDefaultVacTotal();
-                vacation.setVacUsed(0);
-                vacation.setInitialVacLeft();
-                vacation.setUser(data);
+                vacation.setDefault(data);
                 vacationRepository.save(vacation);
 
             }
             return ResponseEntity.ok().body("회원가입 완료");
         } catch (DataIntegrityViolationException dve){
-            return ResponseEntity.badRequest().body("데이터베이스 저장 오류");
-        }catch (Exception e) {
-            return ResponseEntity.badRequest().body("회원가입 실패");
+            return ResponseEntity.badRequest().body("데이터베이스 저장 오류: ");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("회원가입 실패: " + e.getMessage());
         }
+
     }
 }

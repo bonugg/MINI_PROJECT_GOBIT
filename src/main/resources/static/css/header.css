@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Noto Sans KR', sans-serif;
+    text-decoration: none!important;
 }
 ul li{
     list-style-type: none;
@@ -90,10 +91,14 @@ body::-webkit-scrollbar-track {
     align-items: center;
 }
 #my_div_2{
-    width: 150px;
+    width: 120px;
     display: flex;
     justify-content: left;
     align-items: center;
+    cursor: pointer;
+}
+#my_div_3{
+    width: 50px;
 }
 .nav_div{
     width: 18px;
@@ -106,7 +111,6 @@ body::-webkit-scrollbar-track {
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
 }
 #nav_img{
     width: 100%;
@@ -142,6 +146,7 @@ body::-webkit-scrollbar-track {
     width: 100%;
     height: 100%;
     display: flex;
+    text-align: center;
     align-items: center;
     justify-content: center;
     transition: background-color 0.25s ease-in-out;
@@ -149,10 +154,10 @@ body::-webkit-scrollbar-track {
 .menu_text_div:hover{
     background-color: rgb(231, 231, 231);
 }
-.nav_div:hover .submenu {
+#my_div_2:hover .submenu {
     display: block;
     transform: scaleY(1);
-    transition: transform 0.3s ease-out;
+    transition: transform 0.4s ease-out;
 }
 
 
@@ -160,8 +165,9 @@ body::-webkit-scrollbar-track {
 
 h6{
     width: 80px;
-    font-size: 16px;
+    font-size: 16px !important;
     text-align: center;
+    font-weight: bold !important;
 }
 a {
     color: inherit;   	    /* 부모 엘리먼트의 값을 물려받는다 */

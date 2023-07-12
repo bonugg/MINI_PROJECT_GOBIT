@@ -1,17 +1,23 @@
 *{
     margin:0;
     padding:0;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+body{
 }
 .container{
     width: 500px;
     margin: 0 auto;
-    padding: 25px
+    padding: 25px;
+}
+#chat_title{
+
 }
 .container h1{
     text-align: left;
     padding: 5px 5px 5px 15px;
-    color: #FFBB00;
-    border-left: 3px solid #FFBB00;
+    color: #181F42;
+    border-left: 3px solid #181F42;
     margin-bottom: 20px;
 }
 .roomContainer{
@@ -24,15 +30,15 @@
     border: none;
 }
 .roomList th{
-    border: 1px solid #FFBB00;
-    background-color: #fff;
-    color: #FFBB00;
+    border: 1px solid #181F42;
+    color: #181F42;
+    background-color: white;
 }
 .roomList td{
-    border: 1px solid #FFBB00;
-    background-color: #fff;
+    border: 1px solid #181F42;
+    background-color: #181F42;
     text-align: left;
-    color: #FFBB00;
+    color: white;
 }
 .roomList .num{
     width: 75px;
@@ -46,18 +52,55 @@
     text-align: center;
 }
 button{
-    background-color: #FFBB00;
+    background-color: #181F42;
     font-size: 14px;
-    color: #000;
-    border: 1px solid #000;
-    border-radius: 5px;
+    color: white;
+    border: 0px;
     padding: 3px;
-    margin: 3px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: #253170;
+    cursor: pointer;
+}
+.inputTable{
+    width: 100%;
+    margin-top: 10px;
 }
 .inputTable th{
     padding: 5px;
+    border: 0px;
 }
 .inputTable input{
     width: 330px;
     height: 25px;
+}
+#th_room{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+#roomName{
+    width: 80%;
+    height: 30px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid gray;
+    border-right-width: 0px;
+    outline: none;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+#createRoom{
+    background-color: #181F42;
+    font-size: 14px;
+    color: white;
+    border: 0px;
+    padding: 3px;
+    cursor: pointer;
+    width: 20%;
+    height: 30px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition: background-color 0.25s ease-in-out;
 }

@@ -9,7 +9,7 @@
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/appMeeting.css">
-
+        <link rel="stylesheet" type="text/css" href="/css/approvalRequestPage.css">
     </th:block>
 </head>
 <body layout:fragment="content">
@@ -72,20 +72,20 @@
                                     <div class="appInfo">
                                         <table>
                                             <tr>
-                                                <td>문서번호</td>
-                                                <td>123456</td>
+                                                <td class="column_appInfoTitle">문서번호</td>
+                                                <td class="column_appInfoContent"></td>
                                             </tr>
                                             <tr>
-                                                <td>부서</td>
-                                                <td th:text="${session.user.USERDEPT}"></td>
+                                                <td class="column_appInfoTitle">부서</td>
+                                                <td class="column_appInfoContent" th:text="${session.user.USERDEPT}"></td>
                                             </tr>
                                             <tr>
-                                                <td>기안일</td>
-                                                <td>20230202</td>
+                                                <td class="column_appInfoTitle">기안일</td>
+                                                <td class="column_appInfoContent"></td>
                                             </tr>
                                             <tr>
-                                                <td>기안자</td>
-                                                <td th:text="${session.user.USERNAME}"></td>
+                                                <td class="column_appInfoTitle">기안자</td>
+                                                <td class="column_appInfoContent" th:text="${session.user.USERNAME}"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -95,19 +95,14 @@
                                     <div class="appConfirm">
                                         <table>
                                             <tr>
-                                                <td rowspan="4"> 결재</td>
-                                                <td>담당</td>
-                                                <td>팀장</td>
+                                                <td rowspan="3" style="width: 25px;"> 결재</td>
+                                                <td style="width: 100px;">담당</td>
                                             </tr>
                                             <tr>
-                                                <td rowspan="2">담당자 싸인</td>
-                                                <td rowspan="2">팀장 싸인</td>
-                                            </tr>
-                                            <tr>
+                                                <td style="height: 100px;">담당자 싸인</td>
                                             </tr>
                                             <tr>
                                                 <td>담당자 id</td>
-                                                <td>팀장 id</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -116,17 +111,17 @@
                                     <div class="appData">
                                         <table>
                                             <tr>
-                                                <td>회의 날짜</td>
+                                                <td class="column_narrow">회의 날짜</td>
                                                 <td id="appData-date"></td>
-                                                <td>출장 장소</td>
+                                                <td class="column_narrow">출장 장소</td>
                                                 <td id="appData-place"></td>
                                             </tr>
                                             <tr>
-                                                <td>회의 참석자</td>
+                                                <td class="column_narrow">회의 참석자</td>
                                                 <td id="appData-people" colspan="3"></td>
                                             </tr>
                                             <tr class="appData-colspan">
-                                                <td>회의 목적</td>
+                                                <td class="column_narrow">회의 목적</td>
                                                 <td colspan="3" id="appData-content"></td>
                                             </tr>
                                         </table>

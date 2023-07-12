@@ -2,15 +2,14 @@ package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
-import com.gobit.minipj_gobit.entity.Approval;
+import com.gobit.minipj_gobit.entity.*;
+import com.gobit.minipj_gobit.entity.Calendar;
 import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
 import com.gobit.minipj_gobit.noticeDept.repository.nBoardRepository;
-import com.gobit.minipj_gobit.entity.Calendar;
-import com.gobit.minipj_gobit.entity.User;
-import com.gobit.minipj_gobit.entity.UserOnOff;
 import com.gobit.minipj_gobit.repository.ApprovalRepository;
 import com.gobit.minipj_gobit.repository.CalendarRepository;
 import com.gobit.minipj_gobit.repository.UserOnOffRepository;
+import com.gobit.minipj_gobit.repository.VacationRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +33,7 @@ public class MainApiController {
     private final dBoardRepository dBoardRepository;
     private final nBoardRepository nBoardRepository;
     private final ApprovalRepository approvalRepository;
+    private final VacationRepository vacationRepository;
 
     @GetMapping("/approvalList/{appNum}")
     public ModelAndView approvalListDetail(@PathVariable long appNum) {
@@ -54,12 +54,14 @@ public class MainApiController {
         approval.setAppUserNum(user);
         approval.setAppState("승인");
         approval.setAppSign(sign);
+        approval.setAppCancleReason(null);
         approval.setAppStateDate(LocalDateTime.now());
         approvalRepository.save(approval);
         approvalRepository.flush();
         Calendar calendar = new Calendar();
         calendar.setUser(approval.getUserNum());
         calendar.setApproval(approval);
+
         if (approval.getAppSort().equals("V")) {
             caltype = "휴가";
         } else if (approval.getAppSort().equals("B")) {
@@ -79,24 +81,27 @@ public class MainApiController {
 
     @PostMapping("/approvalList/cancle")
     public String approvalListDetailCancle(@RequestParam("id") long id,
-                                           @RequestParam("sign") String sign) {
+                                           @RequestParam("sign") String sign,
+                                           @RequestParam("canclereason") String canclereason ) {
+        System.out.println(canclereason);
         User user = (User) httpSession.getAttribute("user");
         Approval approval = approvalRepository.findById(id).orElse(null);
+        Vacation vacation = vacationRepository.findByUserNum(approval.getUserNum().getUSERNUM());
+        vacation.setVacUsed(vacation.getVacUsed() - approval.getAppVacReq());
+        vacation.setVacLeft(vacation.getVacLeft() + approval.getAppVacReq());
+        vacationRepository.save(vacation);
+        vacationRepository.flush();
         approval.setAppUserNum(user);
+        approval.setAppCancleReason(canclereason);
         approval.setAppState("반려");
         approval.setAppSign(sign);
         approval.setAppStateDate(LocalDateTime.now());
         approvalRepository.save(approval);
         approvalRepository.flush();
         Optional<Calendar> calendar = Optional.ofNullable(calendarRepository.findByApproval(approval).orElse(null));
-        System.out.println("==================");
-        System.out.println(calendar);
-        System.out.println("==================");
         if (calendar.isEmpty()) {
-            System.out.println("데이터 없음");
             return "성공";
         } else {
-            System.out.println("데이터 있음");
             calendarRepository.delete(calendar.get());
             calendarRepository.flush();
             return "성공";
@@ -216,8 +221,8 @@ public class MainApiController {
     }
 
     @GetMapping("/dboardList")
-    public List<Map<String, Object>> dBoardListGet(@RequestParam("dept") String dept) {
-        List<dBoard> dBoardList = dBoardRepository.findBydBoardDept(dept);
+    public List<Map<String, Object>> dBoardListGet() {
+        List<dBoard> dBoardList = dBoardRepository.findBydBoardDept();
         List<Map<String, Object>> dBoardListmap = dBoardList.stream().map(dboard -> {
             Map<String, Object> map = new HashMap<>();
             map.put("dboardNum", dboard.getId());

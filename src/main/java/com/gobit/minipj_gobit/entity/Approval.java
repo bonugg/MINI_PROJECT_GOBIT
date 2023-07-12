@@ -101,17 +101,17 @@ public class Approval {
     @Column(name = "APP_SIGN", length = 50000)
     private String appSign;
 
-    public ApprovalDTO toDTO(){
-        String appSortChr = this.appSort;
-        String appSortString = String.valueOf(appSortChr);
+    @Column(name = "APP_CANCLE_REASON", length = 50000)
+    private String appCancleReason;
 
+    public ApprovalDTO toDTO(){
         // 초단위를 일(day) 단위로 변환
         long secondsPerDay = 24 * 60 * 60; // 초당 일(day) 수
         double appVacReqDaysE = (double) this.appVacReq / secondsPerDay;
 
         ApprovalDTO approvalDTO = ApprovalDTO.builder()
                 .appNum(this.appNum)
-                .appSort(appSortString)
+                .appSort(this.appSort)
                 .userNum(this.userNum)
                 .appUserNum(this.appUserNum)
                 .appWriDate(this.appWriDate)
@@ -126,6 +126,7 @@ public class Approval {
                 .appVacType(this.appVacType)
                 .appVacReqDaysD(appVacReqDaysE)
                 .appAlarm(this.appAlarm)
+                .appSign(this.appSign)
                 .build();
         return approvalDTO;
     }

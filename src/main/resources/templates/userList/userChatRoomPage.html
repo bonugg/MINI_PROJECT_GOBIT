@@ -8,20 +8,23 @@
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/userList/userChatRoom.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&family=Orbit&family=Russo+One&display=swap" rel="stylesheet">
     </th:block>
 </head>
 <body>
 <div class="container">
-    <h1>채팅방</h1>
+    <h1>대화방</h1>
     <div id="roomContainer" class="roomContainer">
         <table id="roomList" class="roomList"></table>
     </div>
     <div>
         <table class="inputTable">
             <tr>
-                <th>방 제목</th>
-                <th><input type="text" name="roomName" id="roomName"></th>
-                <th><button id="createRoom">방 만들기</button></th>
+                <th id="th_room"><input type="text" name="roomName" id="roomName" placeholder="방 제목">
+                    <button id="createRoom">방 만들기</button>
+                </th>
             </tr>
         </table>
     </div>

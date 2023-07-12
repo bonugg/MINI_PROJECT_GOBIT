@@ -34,9 +34,9 @@ public class ApprovalDTO {
     private LocalDateTime appStart;     //결재_시작일
     private LocalDateTime appEnd;       //결재_종료일
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate appStart2;
+    private LocalDate appStartDay;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate appEnd2;
+    private LocalDate appEndDay;
     private String appContent;          //결재내용
     private String appLocation;         //결재_장소
     private String appParticipant;      //결재_회의참가자
@@ -44,15 +44,13 @@ public class ApprovalDTO {
     private long appVacReq;             //결재_휴가신청일
     private double appVacReqDaysD;
     private int appAlarm;               //알림 전송용 코드
+    private String appSign;
 
 
     public Approval toEntity() {
-        String appSortString = this.appSort;
-        String appSortChr = appSortString;
-
         Approval.ApprovalBuilder builder = Approval.builder()
                 .appNum(this.appNum)
-                .appSort(appSortChr)
+                .appSort(this.appSort)
                 .userNum(this.userNum)
                 .appUserNum(this.appUserNum)
                 .appWriDate(LocalDateTime.now())
@@ -64,13 +62,14 @@ public class ApprovalDTO {
                 .appParticipant(this.appParticipant)
                 .appVacType(this.appVacType)
                 .appVacReq(this.appVacReq)
-                .appAlarm(this.appAlarm);
+                .appAlarm(this.appAlarm)
+                .appSign(this.appSign);
 
         if (this.appStart == null || this.appEnd == null) {
-            LocalDateTime appStartDateTime = LocalDateTime.of(appStart2, LocalTime.MIDNIGHT);
-            LocalDateTime appEndDateTime = LocalDateTime.of(appEnd2, LocalTime.MIDNIGHT);
-            builder.appStart(appStartDateTime)
-                    .appEnd(appEndDateTime);
+            LocalDateTime appStartTime = LocalDateTime.of(this.appStartDay, LocalTime.MIDNIGHT);
+            LocalDateTime appEndTime = LocalDateTime.of(this.appEndDay, LocalTime.MIDNIGHT);
+            builder.appStart(appStartTime)
+                    .appEnd(appEndTime);
         } else {
             builder.appStart(this.appStart)
                     .appEnd(this.appEnd);

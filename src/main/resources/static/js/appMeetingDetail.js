@@ -1,4 +1,19 @@
 $(function () {
+    console.log($("#sign_data").val());
+    if($("#sign_data").val() != null){
+        $("#sign_img").attr('src',$("#sign_data").val());
+        $("#sign_img").show();
+    }
+
+    if($("#appState").val() != "미승인"){
+        $('#btnUpdate').prop("disabled", true);
+        $('#btnDelete').prop("disabled", true);
+        $('#input-appStart').attr("readonly", true);
+        $('#input-appEnd').attr("readonly", true);
+        $('#input-Participant').attr("readonly", true);
+        $('#input-appLocation').attr("readonly", true);
+        $('#input-appContent').attr("readonly", true);
+    }
 
     $("#btnUpdate").on("click", () => {
         $.ajax({

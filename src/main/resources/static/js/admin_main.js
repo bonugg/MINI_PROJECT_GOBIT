@@ -1,10 +1,12 @@
 $(function () {
     let dept;
+    let popupLayer3 = document.getElementById("popup_layer3");
+    let popupLayer4 = document.getElementById("popup_layer4");
 
     // 'dept_btn버튼 클릭 시 dept에 부서 정보 담음
     $(".dept_btn").click(function () {
         dept = $(this).data("userdept");
-        $('#btn_text').text("변경").css("color","#4c4c4c").css("backgroundColor", "rgb(192, 193, 201)").on({
+        $('#btn_text').text("변경").css("color", "#4c4c4c").css("backgroundColor", "rgb(192, 193, 201)").on({
             'mouseenter': function () {
                 $(this).css('background-color', "rgb(220, 221, 227)");
             },
@@ -12,20 +14,20 @@ $(function () {
                 $(this).css('background-color', "rgb(192, 193, 201)");
             }
         });
-        $('.dept_btn').css("backgroundColor", "").css("color","").css("font-weight","").on({
+        $('.dept_btn').css("backgroundColor", "").css("color", "").css("font-weight", "").on({
             'mouseenter': function () {
-                $(this).css('backgroundColor', "").css("color","").css("font-weight","");
+                $(this).css('backgroundColor', "").css("color", "").css("font-weight", "");
             },
             'mouseleave': function () {
-                $(this).css('backgroundColor', "").css("color","").css("font-weight","");
+                $(this).css('backgroundColor', "").css("color", "").css("font-weight", "");
             }
         });
-        $(this).css("backgroundColor", "#181F42").css("color","white").css("font-weight","bold").on({
+        $(this).css("backgroundColor", "#181F42").css("color", "white").css("font-weight", "bold").on({
             'mouseenter': function () {
-                $(this).css('backgroundColor', "#253170").css("color","white").css("font-weight","bold");
+                $(this).css('backgroundColor', "#253170").css("color", "white").css("font-weight", "bold");
             },
             'mouseleave': function () {
-                $(this).css('backgroundColor', "#181F42").css("color","white").css("font-weight","bold");
+                $(this).css('backgroundColor', "#181F42").css("color", "white").css("font-weight", "bold");
             }
         });
         listGetIt(dept);
@@ -64,11 +66,11 @@ $(function () {
                 if (response == "성공") {
                     for (let i = 0; i < usernums.length; i++) {
                         $('#uname' + usernums[i]).text(userposition);
-                        if(usernums[i] == $('#all2').val()){
+                        if (usernums[i] == $('#all2').val()) {
                             $('#position').text(userposition).css("color", "#4c4c4c");
                         }
                     }
-                    $('#btn_text').text("변경").css("color","#4c4c4c").css("backgroundColor", "rgb(192, 193, 201)").on({
+                    $('#btn_text').text("변경").css("color", "#4c4c4c").css("backgroundColor", "rgb(192, 193, 201)").on({
                         'mouseenter': function () {
                             $(this).css('background-color', "rgb(220, 221, 227)");
                         },
@@ -98,34 +100,67 @@ $(function () {
                 }
             },
             error: function (xhr, status, error) {
-                alert("전송 중 오류가 발생했습니다.");
             }
         });
     });
 
     //엔터 입력 시 동작
-    $("#search").keyup(function(event) {
+    $("#search").keyup(function (event) {
         if (event.which === 13) {
             $("#submit_search").click();
         }
     });
 
-    $("#pwd_clean").click(function () {
-        if (confirm($('#name').text()+"님의 패스워드를 초기화 하시겠습니까?")) {
-            $.ajax({
-                type: "GET",
-                url: "/admin/changePwd",
-                data: {
-                    id: $('#all2').val()
-                },
-                success: function (obj) {
-                    if (obj == "성공") {
-                        alert("패스워드 초기화 완료");
-                    }
+    function eventPopClose() {
+        if (popupLayer3.style.display === "block") {
+            document.addEventListener("click", function (event) {
+                if (event.target.id == "popup_layer3"
+                    && popupLayer3.contains(event.target)) {
+                    popupLayer3.style.display = "none";
                 }
             });
         }
+    }
+
+    function eventPopClose2() {
+        if (popupLayer4.style.display === "block") {
+            document.addEventListener("click", function (event) {
+                if (event.target.id == "popup_layer4"
+                    && popupLayer4.contains(event.target)) {
+                    popupLayer4.style.display = "none";
+                }
+            });
+        }
+    }
+
+    $("#pwd_clean").click(function () {
+        popupLayer3.style.display = "block";
+        $('#b1').show();
+        $('#b2').hide();
+        $('#alret').text($('#name').text() + "님의 패스워드를 초기화 하시겠습니까?");
+        eventPopClose();
     });
+
+    window.sub = function sub() {
+        $.ajax({
+            type: "GET",
+            url: "/admin/changePwd",
+            data: {
+                id: $('#all2').val()
+            },
+            success: function (obj) {
+                if (obj == "성공") {
+                    popupLayer3.style.display = "none";
+                    popupLayer4.style.display = "block";
+                    $('#alret_1').text("패스워드 초기화 완료");
+                    eventPopClose2();
+                }
+            }
+        });
+    };
+    window.can = function can() {
+        popupLayer3.style.display = "none";
+    };
 
     $(".search_input_btn").click(function () {
         let searchText = $('#search').val();
@@ -220,7 +255,7 @@ $(function () {
                 $('#user_div_btn').show();
                 $('.user_po').val("");
                 const userImage = document.getElementById('user_img');
-                userImage.src = "/upload/"+response.userImage;
+                userImage.src = "/upload/" + response.userImage;
                 $('#name').text(response.userName).css("color", "#4c4c4c");
                 $('#eno').text(response.userEno).css("color", "#4c4c4c");
                 $('#dept').text(response.userDept).css("color", "#4c4c4c");
@@ -229,7 +264,7 @@ $(function () {
                 $('#address_id').text(response.userAddress).css("color", "#4c4c4c");
                 $('#phone').text(response.userPhone).css("color", "#4c4c4c");
                 $('#joindate').text(response.userJoinDate).css("color", "#4c4c4c");
-                $('.user_po').attr('id', "ups"+response.userNum);
+                $('.user_po').attr('id', "ups" + response.userNum);
                 $('#all2').val(response.userNum);
                 $('#delete_user').val(response.userNum);
             }
@@ -315,40 +350,58 @@ $(function () {
 
     $(document).on("click", "#delete_user", function () {
         let usernum = $('#delete_user').val();
-        if (confirm($('#una' + usernum).text() + "님을 정말 삭제하시겠습니까?")) {
-            $.ajax({
-                type: "DELETE",
-                url: "/admin/deleteUser",
-                data: {
-                    usernum: usernum
-                },
-                success: function (response) {
-                    // Ajax 요청이 성공하면 호출되는 함수
-                    if (response.item.msg == "정상적으로 삭제되었습니다.") {
-                        alert($('#una' + usernum).text() + "님을 삭제했습니다.");
-                        $('#user_div_btn').hide();
-                        $('#user_div_text').show();
-                        const userImage = document.getElementById('user_img');
-                        userImage.src = "/img/user.png";
-                        $('#name').text("사원 이름").css("color", "");
-                        $('#eno').text("사원 사번").css("color", "");
-                        $('#dept').text("사원 부서").css("color", "");
-                        $('#position').text("사원 직급").css("color", "");
-                        $('#email').text("사원 이메일").css("color", "");
-                        $('#address_id').text("사원 주소").css("color", "");
-                        $('#phone').text("사원 번호").css("color", "");
-                        $('#joindate').text("사원 입사일").css("color", "");
-                        $('.user_po').attr('id', "no_val");
-                        $('#all2').val("no_val");
-                        $('#delete_user').val("no_val");
-                        listGetIt(response.item.dept);
-                    } else {
-                        alert("삭제 실패");
-                    }
-                }
-            });
-        }
+        popupLayer3.style.display = "block";
+        $('#b2').show();
+        $('#b1').hide();
+        $('#alret').text($('#una' + usernum).text() + "님을 정말 삭제하시겠습니까?");
+        eventPopClose();
     });
+
+    window.del = function del() {
+        let usernum = $('#delete_user').val();
+        $.ajax({
+            type: "DELETE",
+            url: "/admin/deleteUser",
+            data: {
+                usernum: usernum
+            },
+            success: function (response) {
+                // Ajax 요청이 성공하면 호출되는 함수
+                if (response.item.msg == "정상적으로 삭제되었습니다.") {
+                    popupLayer3.style.display = "none";
+                    popupLayer4.style.display = "block";
+                    $('#alret_1').text($('#una' + usernum).text() + "님을 삭제했습니다.");
+                    if (popupLayer4.style.display === "block") {
+                        document.addEventListener("click", function (event) {
+                            if (event.target.id == "popup_layer4"
+                                && popupLayer4.contains(event.target)) {
+                                $('#user_div_btn').hide();
+                                $('#user_div_text').show();
+                                const userImage = document.getElementById('user_img');
+                                userImage.src = "/img/user.png";
+                                $('#name').text("사원 이름").css("color", "");
+                                $('#eno').text("사원 사번").css("color", "");
+                                $('#dept').text("사원 부서").css("color", "");
+                                $('#position').text("사원 직급").css("color", "");
+                                $('#email').text("사원 이메일").css("color", "");
+                                $('#address_id').text("사원 주소").css("color", "");
+                                $('#phone').text("사원 번호").css("color", "");
+                                $('#joindate').text("사원 입사일").css("color", "");
+                                $('.user_po').attr('id', "no_val");
+                                $('#all2').val("no_val");
+                                $('#delete_user').val("no_val");
+                                listGetIt(response.item.dept);
+                                popupLayer4.style.display = "none";
+                            }
+                        });
+                    }
+                } else {
+                    alert("삭제 실패");
+                }
+            }
+        });
+    };
+
     $(document).on("click", "#all2", function () {
         let usernum = $('#all2').val();
         let position = $("#ups" + usernum).val();

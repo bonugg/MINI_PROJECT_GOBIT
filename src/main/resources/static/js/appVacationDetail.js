@@ -1,4 +1,18 @@
 $(function () {
+    console.log($("#sign_data").val());
+    if($("#sign_data").val() != null){
+        $("#sign_img").attr('src',$("#sign_data").val());
+        $("#sign_img").show();
+    }
+
+    if($("#appState").val() != "미승인"){
+        $('#btnUpdate').prop("disabled", true);
+        $('#btnDelete').prop("disabled", true);
+        $('#input-appStart').attr("readonly", true);
+        $('#input-appEnd').attr("readonly", true);
+        $('#input-appVacType').attr("disabled", true);
+        $('#input-appContent').attr("readonly", true);
+    }
 
     $("#btnUpdate").on("click", () => {
         $.ajax({
@@ -44,9 +58,9 @@ $(function () {
 function printDate() {
     const dateStartInput = document.getElementById('input-appStart');
     const dateEndInput = document.getElementById('input-appEnd');
-    const vacationDateElement = document.getElementById('appData-vacationDate');
+    const vacationDateElement = document.getElementById('appData-date');
 
-    if (dateStartInput !=null && dateEndInput !=null && vacationDateElement) {
+    if (dateStartInput !=null && dateEndInput !=null) {
         const dateStart = dateStartInput.value;
         const dateEnd = dateEndInput.value;
         vacationDateElement.innerText = `${dateStart} ~ ${dateEnd}`;
@@ -76,8 +90,8 @@ function changeDateType() {
     if (vacType === 'dayOff' || vacType === 'sickDay') {
         appStartInput.setAttribute("type", "date");
         appEndInput.setAttribute("type", "date");
-        appStartInput.name = "appStart2";
-        appEndInput.name = "appEnd2";
+        appStartInput.name = "appStartDay";
+        appEndInput.name = "appEndDay";
     } else {
         appStartInput.setAttribute("type", "datetime-local");
         appEndInput.setAttribute("type", "datetime-local");
@@ -88,11 +102,14 @@ function calculateDateDifference() {
     const appStartInput = document.getElementById("input-appStart");
     const appEndInput = document.getElementById("input-appEnd");
 
-    const appStartValue = new Date(appStartInput.value);
-    const appEndValue = new Date(appEndInput.value);
+    // const appStartValue = new Date(appStartInput.value);
+    // const appEndValue = new Date(appEndInput.value);
+    //
+    // const differenceInMilliseconds = appEndValue.getTime() - appStartValue.getTime();
+    const appStartValue = $("#input-appStart").val();
+    const appEndValue = $("#input-appEnd").val();
 
-    const differenceInMilliseconds = appEndValue.getTime() - appStartValue.getTime();
-
+    const differenceInMilliseconds = new Date(appEndValue) - new Date(appStartValue);
     const differenceInSeconds = differenceInMilliseconds / 1000;
     console.log("차이(초):", differenceInSeconds);
     const appVacReq = document.getElementById('appVacReq')

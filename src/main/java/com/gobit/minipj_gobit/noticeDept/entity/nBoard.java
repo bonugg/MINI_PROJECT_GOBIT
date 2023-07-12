@@ -40,7 +40,7 @@ public class nBoard {
     private User user;
 
     @OneToMany(mappedBy = "board" , cascade = CascadeType.REMOVE)
-    private List<nBoardNoticeFile> files;
+    private List<nBoardFile> files;
 
     @Builder
     public nBoard(Long id, String title, String content, LocalDateTime regDate, LocalDateTime updateDate, int cnt) {

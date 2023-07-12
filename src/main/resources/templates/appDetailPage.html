@@ -25,10 +25,10 @@
                 <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
                 <!-- 1st (06.20 17:00) fragment > header에 링크 추가 완료 -->
                 <div id="app_main_title">
-                    <p>결재 요청</p> <!-- 이름수정 20230712
-                    rff1451  -->
+                    <p>결재 요청 목록</p>
+                </div>
 
-                <div id="app_list_card">
+                    <div id="app_list_card">
                     <div class="card">
                         <p class="card_title">전체 문서</p>
                         <p class="card_content" th:text="${cntMemTotalApp + ' 건'}"></p>
@@ -97,7 +97,6 @@
                         </li>
                     </ul>
 
-
                     <div style="clear: both;"></div>
 
                     <div class="content-wrapper">
@@ -115,9 +114,14 @@
                                     <th style="width: 12%">결재 승인자</th>
                                 </tr>
                                 </thead>
-                                <tbody >
-                                <tr th:each="approval : ${appForUser}">
-                                    <th class="left-line" th:text="${approval.appNum}"></th>
+                                <tbody id="tbody_all">
+                                <tr th:each="approval : ${appForUser}" class="tr_cls">
+                                    <th class="left-line">
+                                        <p th:text="${approval.appNum}"></p>
+                                        <div th:if="${approval.appAlarm == 0 && approval.appState !='미승인'}"
+                                             class="alram_th">!
+                                        </div>
+                                    </th>
                                     <!-- 문서번호. 값에 따른 조건문-->
                                     <td th:switch="${approval.appSort}">
                                         <span th:case="V">휴가</span>
@@ -130,11 +134,13 @@
                                     <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${approval.appState}"></td>
                                     <!-- 결재 승인자  -->
-                                    <td class="right-line" th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
+                                    <td class="right-line"
+                                        th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
 
