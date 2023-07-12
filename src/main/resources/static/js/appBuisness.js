@@ -1,5 +1,7 @@
 $(function () {
     $('#btnSave').on("click", () => {
+        // 버튼 비활성화
+        $("#btnUpdate").prop("disabled", true);
         $.ajax({
             url: "/appRequest/buisness",
             type: "post",
