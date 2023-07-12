@@ -14,7 +14,7 @@
 <body>
 <div id="user_div_img">
     <div id="user_div_img2">
-        <img src="/img/user.png" id="user_img">
+        <img src="/img/user.png" id="user_img" th:src="@{'/upload/' + ${user.img}}">
     </div>
 </div>
 <div id="user_div_content">
