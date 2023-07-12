@@ -21,13 +21,13 @@ $(function () {
 });
 
 function printDate() {
-    const dateStartInput = document.getElementById('input-appStart');
-    const dateEndInput = document.getElementById('input-appEnd');
-    const vacationDateElement = document.getElementById('appData-date');
-
-    if (dateStartInput != null && dateEndInput != null) {
-        const dateStart = dateStartInput.value;
-        const dateEnd = dateEndInput.value;
+    const appStartInput = document.getElementById("input-appStart");
+    const appEndInput = document.getElementById("input-appEnd");
+    const vacationDateElement = document.getElementById('appData-vacationDate');
+    if ($('#input-appStart').val() != null && $('#input-appEnd').val() != null) {
+        console.log("테스트테스트테스트: " + $('#input-appStart').val());
+        const dateStart = appStartInput.value;
+        const dateEnd = appEndInput.value;
         vacationDateElement.innerText = `${dateStart} ~ ${dateEnd}`;
     }
 }
