@@ -3,6 +3,12 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <header th:fragment="header">
+    <script>
+        function openRoomWindow(event){
+            event.preventDefault();
+            window.open('/room', '_blank', 'width=550,height=700');
+        }
+    </script>
     <aside class="side-bar">
         <section class="side-bar__icon-box">
             <section class="side-bar__icon-1">
@@ -28,17 +34,35 @@
                     <li class="menu_li_li"><a href="/appBuisness" class="menu_text">출장 전자결재 신청</a></li>
                     <li class="menu_li_li"><a href="/appVacation" class="menu_text">휴가 전자결재 신청</a></li>
                     <li class="menu_li_li"><a href="/appMeeting" class="menu_text">회의 전자결재 신청</a></li>
-                    <li class="menu_li_li"><a href="/approvalList" class="menu_text" id="menu_text3">전자결재 요청 목록
+                    <li class="menu_li_li">
+                        <a href="/appDetail" class="menu_text" id="menu_text3">전자결재 상세 목록
                         <div id="hid" th:text="${hidtext}">0</div>
                     </a></li>
-                    <li class="menu_li_li"><a href="/appDetail" class="menu_text">전자결재 상세 목록</a></li>
+                    <!--hjd 2023.07.06 상세목록과 요청목록 순서 변경 -->
+                    <!--hjd 2023.07.06 신입이 아닐 경우에 게시판 숨김. permit에도 role_user는 이 링크로 접속 불가하도록 수정함 -->
+                    <li class="menu_li_li" th:style="${session.user.USERPOSITION != '팀장' && session.user.USERPOSITION != '관리자'? 'display:none' : 'display:block'}">
+                        <a href="/approvalList" class="menu_text forLeader">전자결재 요청 목록
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="menu_li">
                 <a class="menu_a">게시판</a>
                 <ul>
                     <li class="menu_li_li"><a href="/noticeDept/list" class="menu_text">공지 게시판</a></li>
-                    <li class="menu_li_li"><a href="/boardDept/list" class="menu_text">부서 게시판</a></li>
+                    <li class="menu_li_li"><a href="/boardDept/list" class="menu_text">전사 게시판</a></li>
+                </ul>
+            </li>
+            <li class="menu_li">
+                <a class="menu_a">사원조회</a>
+                <ul>
+                    <li class="menu_li_li"><a href="/user/list" class="menu_text">사원조회</a></li>
+                </ul>
+            </li>
+            <li class="menu_li">
+                <a class="menu_a">메신저</a>
+                <ul>
+                    <li class="menu_li_li"><a style="cursor: pointer" onclick="openRoomWindow(event)" class="menu_text">대화방</a></li>
                 </ul>
             </li>
         </ul>

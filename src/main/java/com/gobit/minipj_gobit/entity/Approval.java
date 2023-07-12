@@ -2,6 +2,7 @@ package com.gobit.minipj_gobit.entity;
 
 import com.gobit.minipj_gobit.dto.ApprovalDTO;
 import groovyjarjarantlr4.v4.runtime.misc.NotNull;
+import groovyjarjarantlr4.v4.runtime.misc.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 @AllArgsConstructor
 @Builder
 @Table(name = "T_APPROVAL")
+@EntityListeners(ApprovalListener.class)
 public class Approval {
 
     //--------결제식별--------
@@ -30,7 +32,7 @@ public class Approval {
     //결재종류: V 휴가, B 출장, M 회의. char(1)
     @NotNull
     @Column(name = "APP_SORT")
-    private char appSort;
+    private String appSort;
 
     //결재신청자
 //    @ManyToOne(fetch = FetchType.LAZY)
@@ -88,16 +90,28 @@ public class Approval {
     //휴가종류
     @Column(name="APP_VACTYPE")
     private String appVacType;
+    //휴가 신청일 임시저장
+    @Nullable
+    @Column(name = "APP_VACREQ")
+    private long appVacReq;
     //알림 전송용 코드
     @Column(name = "APP_ALARM")
     private int appAlarm;
 
+    @Column(name = "APP_SIGN", length = 50000)
+    private String appSign;
+
+    @Column(name = "APP_CANCLE_REASON", length = 50000)
+    private String appCancleReason;
+
     public ApprovalDTO toDTO(){
-        char appSortChr = this.appSort;
-        String appSortString = String.valueOf(appSortChr);
+        // 초단위를 일(day) 단위로 변환
+        long secondsPerDay = 24 * 60 * 60; // 초당 일(day) 수
+        double appVacReqDaysE = (double) this.appVacReq / secondsPerDay;
+
         ApprovalDTO approvalDTO = ApprovalDTO.builder()
                 .appNum(this.appNum)
-                .appSort(appSortString)
+                .appSort(this.appSort)
                 .userNum(this.userNum)
                 .appUserNum(this.appUserNum)
                 .appWriDate(this.appWriDate)
@@ -110,7 +124,9 @@ public class Approval {
                 .appLocation(this.appLocation)
                 .appParticipant(this.appParticipant)
                 .appVacType(this.appVacType)
+                .appVacReqDaysD(appVacReqDaysE)
                 .appAlarm(this.appAlarm)
+                .appSign(this.appSign)
                 .build();
         return approvalDTO;
     }

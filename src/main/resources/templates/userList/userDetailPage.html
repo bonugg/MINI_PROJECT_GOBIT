@@ -1,0 +1,59 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <meta charset="UTF-8">
+    <title>사원 정보</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/userList/userDetail.css">
+        <link rel="stylesheet" type="text/css" href="/css/admin_main.css">
+    </th:block>
+</head>
+<body>
+<div id="user_div_img">
+    <div id="user_div_img2">
+        <img src="/img/user.png" id="user_img">
+    </div>
+</div>
+<div id="user_div_content">
+    <div id="user_div_content2">
+        <table id="user_div_content_table">
+            <tr>
+                <th style="border-top-left-radius: 5px" th:text="${user.name}">이름</th>
+                <td style="border-top-right-radius: 5px" id="name" th:text="${user.name}">사원 이름</td>
+            </tr>
+            <tr>
+                <th>사번</th>
+                <td id="eno" th:text="${user.eno}">사원 사번</td>
+            </tr>
+            <tr>
+                <th>부서</th>
+                <td id="dept" th:text="${user.dept}">사원 부서</td>
+            </tr>
+            <tr>
+                <th>직급</th>
+                <td id="position" th:text="${user.position}">사원 직급</td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td id="email"th:text="${user.email}">사원 이메일</td>
+            </tr>
+            <tr>
+                <th>번호</th>
+                <td id="phone" th:text="${user.phone}">사원 번호</td>
+            </tr>
+            <tr>
+                <th style="border-bottom-left-radius: 5px; border-bottom-width: 1px">입사일</th>
+                <td style="border-bottom-right-radius: 5px; border-bottom-width: 1px" id="joindate" th:text="${user.join}">사원 입사일</td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+
+</th:block>
+</html>

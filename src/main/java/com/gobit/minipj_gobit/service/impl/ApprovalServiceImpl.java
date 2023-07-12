@@ -1,20 +1,22 @@
 package com.gobit.minipj_gobit.service.impl;
 
 import com.gobit.minipj_gobit.entity.Approval;
+import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.ApprovalRepository;
 import com.gobit.minipj_gobit.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService {
-    ApprovalRepository approvalRepository;
+    private ApprovalRepository approvalRepository;
 
     @Autowired
-    public ApprovalServiceImpl(ApprovalRepository approvalRepository){
+    public ApprovalServiceImpl(ApprovalRepository approvalRepository) {
         this.approvalRepository = approvalRepository;
     }
 
@@ -27,15 +29,33 @@ public class ApprovalServiceImpl implements ApprovalService {
     //특정 결재 불러오기
     @Override
     public Approval getApproval(long appNum) {
-        if(approvalRepository.findByAppNum(appNum).isEmpty()){
+        if (approvalRepository.findByAppNum(appNum).isEmpty()) {
             return null;
         }
         return approvalRepository.findByAppNum(appNum).get();
     }
 
+
+    //검색기능 구현
+    @Override
+    public Page<Approval> searchAppLeaderDept(Pageable pageable, String dept, String sWord) {
+        return approvalRepository.findByUserDeptAndAppContentContaining(pageable, dept, sWord);
+    }
+
+    @Override
+    public Page<Approval> searchAppUser(Pageable pageble, User user, String sWord) {
+        return approvalRepository.findByUserNumAndAppContentContaining(pageble, user, sWord);
+    }
+
     //결재리스트 불러오기
-    public Page<Approval> getApprovalList(Pageable pageable) {
-        return approvalRepository.findAll(pageable);
+    @Override
+    public Page<Approval> findByDept(Pageable pageable, String dept, String cls) {
+        return approvalRepository.findByDept(pageable, dept, cls);
+    }
+
+    @Override
+    public Page<Approval> findByUser(Pageable pageable, User user, String cls) {
+        return approvalRepository.findByUser(pageable, user, cls);
     }
 
     @Override
@@ -51,4 +71,60 @@ public class ApprovalServiceImpl implements ApprovalService {
         approvalRepository.deleteByAppNum(appNum);
         approvalRepository.flush();
     }
+
+    // // 2023.07.05 전체 결재문서, 승인 대기 문서, 반려 문서, 승인 완료문서
+    @Override
+    public int cntLeadTotalApp(String dept) {
+        return approvalRepository.cntLeadTotalApp(dept);
+    }
+
+    @Override
+    public int cntLeadWaitApp(String dept) {
+        return approvalRepository.cntLeadWaitApp(dept);
+    }
+
+    @Override
+    public int cntLeadRejectApp(String dept) {
+        return approvalRepository.cntLeadRejectApp(dept);
+    }
+
+    @Override
+    public int cntLeadFinApp(String dept) {
+        return approvalRepository.cntLeadFinApp(dept);
+    }
+
+    @Override
+    public int cntMemTotalApp(User user) {
+        return approvalRepository.cntMemTotalApp(user);
+    }
+
+    @Override
+    public int cntMemWaitApp(User user) {
+        return approvalRepository.cntMemWaitApp(user);
+    }
+
+    @Override
+    public int cntMemRejectApp(User user) {
+        return approvalRepository.cntMemRejectApp(user);
+    }
+
+    @Override
+    public int cntMemFinApp(User user) {
+        return approvalRepository.cntMemFinApp(user);
+    }
+
+    @Override
+    public long getAppVacReq(long appNum) {
+        approvalRepository.findAppVacReqByAppNum(appNum);
+        return approvalRepository.findAppVacReqByAppNum(appNum);
+    }
+
+    @Modifying
+    @Transactional
+    @Override
+    public void updateAlarm(int i, long appNum) {
+        approvalRepository.updateAlarm(i, appNum);
+        approvalRepository.flush();
+    }
+
 }

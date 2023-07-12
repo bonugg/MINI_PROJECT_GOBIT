@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Empty</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/approvalListDetail.css">
+
+    </th:block>
+</head>
+<body layout:fragment="content">
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <input type="hidden" th:value="${approval.appState}" id="appState">
+                <div class="page-name">요청리스트 상세보기</div>
+                <div id="div_1">
+                    <div id="div_2">
+                        <div id="div_3">
+                            <div class="div_4">
+                                <table class="table_1">
+                                    <tr>
+                                        <th>문서 번호</th>
+                                        <td id="appNum" th:text="${approval.appNum}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>부서</th>
+                                        <td th:text="${approval.userNum.USERDEPT}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>기안일</th>
+                                        <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>기안자</th>
+                                        <td th:text="${approval.userNum.USERNAME}"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div id="div_5">
+                                <p th:if="${approval.appSort.toString() =='V'}"><b>휴가 신청서</b></p>
+                                <p th:if="${approval.appSort.toString() == 'B'}"><b>출장 신청서</b></p>
+                                <p th:if="${approval.appSort.toString() == 'M'}"><b>회의 신청서</b></p>
+                            </div>
+                            <div class="div_4_1">
+                                <table class="table_1" style="height: 80%">
+                                    <tr>
+                                        <th rowspan="2" class="th_1">담당</th>
+                                        <td rowspan="2" class="th_2"  style="padding: 0;">
+                                            <div id="sign_div">
+                                                <p style="margin-left: 10px;">팀장</p>
+                                                <img class="stamp" src="/img/approve.png">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr></tr>
+                                    <tr>
+                                        <th rowspan="2" class="th_1">담당자 싸인</th>
+                                        <td rowspan="2" class="th_2" style="padding: 0;">
+                                            <div id="sign_div2">
+                                                <img src="" id="img01">
+                                                <p><a id="link">(여기를 클릭해 주세요)</a></p>
+                                                <input type="hidden" id="sign_data" th:value="${approval.appSign}">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr></tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="div_6">
+                            <div id="div_8">
+                                <table id="table_2">
+                                    <tr>
+                                        <th th:if="${approval.appSort.toString() =='V'}" class="th_3">휴가 날짜</th>
+                                        <th th:if="${approval.appSort.toString() =='B'}" class="th_3">출장 날짜</th>
+                                        <th th:if="${approval.appSort.toString() =='M'}" class="th_3">회의 날짜</th>
+                                        <td th:if="${approval.appSort.toString() =='V'}" id="td_1_1"
+                                            th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}">
+                                        </td>
+                                        <td th:if="${approval.appSort.toString() =='B' or approval.appSort.toString() =='M'}" id="td_1"
+                                            th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}">
+                                        </td>
+                                        <th th:if="${approval.appSort.toString() =='B'}" class="th_3">출장 장소</th>
+                                        <th th:if="${approval.appSort.toString() =='M'}" class="th_3">회의 장소</th>
+                                        <td th:if="${approval.appSort.toString() =='B' or approval.appSort.toString() =='M'}" class="td_2" th:text="${approval.appLocation}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th th:if="${approval.appSort.toString() =='M'}" class="th_3">회의 참석자</th>
+                                        <td th:if="${approval.appSort.toString() =='M'}" class="td_2" colspan="3" th:text="${approval.appParticipant}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th th:if="${approval.appSort.toString() =='V'}">휴가 목적</th>
+                                        <th th:if="${approval.appSort.toString() =='B'}">출장 목적</th>
+                                        <th th:if="${approval.appSort.toString() =='M'}">회의 목적</th>
+                                        <td id="td_3" colspan="3">
+                                            <div id="td_3_div" th:text="${approval.appContent}"></div>
+                                        </td>
+                                    </tr>
+<!--                                    <tr id="a" style="display: none">-->
+<!--                                        <th >반려 사유</th>-->
+<!--                                        <td id="td_4" colspan="3">-->
+<!--                                            <div id="td_4_div" th:text="${approval.appCancleReason}"></div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+                                </table>
+                            </div>
+                        </div>
+                        <div id="div_7">
+                            <button class="div_7_btn" id="submit_btn">승인</button>
+                            <button class="div_7_btn" id="cancle_btn">반려</button>
+                            <button class="div_7_btn" style="margin-right: 0px" onclick="location.href='/approvalList'">
+                                목록보기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-name"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup_layer" id="popup_layer">
+    <div class="popup_box">
+        <!--팝업 컨텐츠 영역-->
+        <div id="popup_1">
+            <div id="popup_2">
+                결재 승인 시 빈 칸에 서명해 주세요
+            </div>
+            <div class="wrapper">
+                <canvas id="signature-pad" class="signature-pad"></canvas>
+            </div>
+            <div id="popup_3">
+                <button id="save-png" class="sign_btn">저장</button>
+                <button id="clear" class="sign_btn">지우기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup_layer" id="popup_layer2">
+    <div class="popup_box2">
+        <!--팝업 컨텐츠 영역-->
+        <div id="cancle_pop">
+            <div id="cancle_pop_title">
+                반려 이유를 작성해주세요.
+            </div>
+            <div id="cancle_pop_content">
+                <textarea id="cancle_textarea"></textarea>
+            </div>
+            <div id="cancle_pop_btn_div">
+                <button id="submit_cancle" class="sign_btn">제출</button>
+                <button id="cancle_cancle" class="sign_btn">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script>
+        $(function () {
+            let popupLayer = document.getElementById("popup_layer");
+            let stamp = document.querySelector('.stamp');
+            if($("#sign_data").val() != ""){
+                $("#img01").attr('src',$("#sign_data").val());
+                $("#img01").show();
+                $("#link").hide();
+            }
+            if($("#appState").val() == "승인") {
+                $('#submit_btn').prop("disabled", true);
+                $('#cancle_btn').prop("disabled", false);
+                $('.stamp').show();
+                $('.stamp').css("opacity", 1).css("transform", "rotate(0deg) scale(1)");
+            }else if($("#appState").val() == "반려"){
+                $('#submit_btn').prop("disabled", false);
+                $('#cancle_btn').prop("disabled", true);
+                $('.stamp').hide();
+            }else {
+                $('#submit_btn').prop("disabled", false);
+                $('#cancle_btn').prop("disabled", false);
+                $('.stamp').hide();
+            }
+
+            function openPopup() {
+                popupLayer.style.display = "block";
+
+                var canvas = document.getElementById('signature-pad');
+
+                function resizeCanvas() {
+                    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+                    canvas.width = canvas.offsetWidth * ratio;
+                    canvas.height = canvas.offsetHeight * ratio;
+                    canvas.getContext("2d").scale(ratio, ratio);
+                }
+
+                window.onresize = resizeCanvas;
+                resizeCanvas();
+
+                var signaturePad = new SignaturePad(canvas, {
+                    backgroundColor: 'rgb(255, 255, 255, 0)',
+                    penColor: "rgb(1, 2, 3)"
+                });
+
+                document.getElementById('save-png').addEventListener('click', function () {
+                    if (signaturePad.isEmpty()) {
+                        return alert("Please provide a signature first.");
+                    }
+
+                    let data = signaturePad.toDataURL('image/png');
+                    console.log(data);
+                    $("#img01").attr('src',data);
+                    $("#img01").show();
+                    $("#link").hide();
+                    $("#sign_data").val(data);
+                    popupLayer.style.display = "none";
+                });
+
+                document.getElementById('clear').addEventListener('click', function () {
+                    signaturePad.clear();
+                });
+
+
+                if (popupLayer.style.display === "block") {
+                    document.addEventListener("click", function (event) {
+                        if (event.target.id == "popup_layer"
+                            && popupLayer.contains(event.target)) {
+                            popupLayer.style.display = "none";
+                        }
+                    });
+                }
+            }
+
+            $(document).on("click", "#link, #img01", openPopup);
+        });
+    </script>
+    <script>
+        $(function () {
+            let popupLayer = document.getElementById("popup_layer2");
+            let stamp = document.querySelector('.stamp');
+            $(document).on("click", "#submit_btn", function () {
+                if( $("#sign_data").val() == ""){
+                    alert("사인을 먼저 해주세요.");
+                    return null;
+                }else if($("#sign_data").val().length >= 50000){
+                    alert("사인을 간단하게 입력해주세요.");
+                    $("#img01").attr('src',"");
+                    $("#img01").hide();
+                    $("#link").show();
+                    return null;
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/approvalList/submit",
+                    data: {
+                        id: $('#appNum').text(),
+                        sign: $("#sign_data").val()
+                    },
+                    success : function (obj){
+                        if(obj == "성공"){
+                            alert("승인 완료");
+                            $('#submit_btn').prop("disabled", true);
+                            $('#cancle_btn').prop("disabled", false);
+                            $('.stamp').show();
+                            stamp.style.animation = 'pulse 0.5s forwards';
+                            setTimeout(function() {
+                                $('.stamp').css("opacity", 1);
+                            }, 500);
+                        }
+                    }
+                });
+            });
+
+            $(document).on("click", "#cancle_btn", function () {
+                popupLayer.style.display = "block";
+                document.getElementById('submit_cancle').addEventListener('click', function () {
+                    $.ajax({
+                        type: "post",
+                        url: "/approvalList/cancle",
+                        data: {
+                            id: $('#appNum').text(),
+                            sign: "",
+                            canclereason : $('#cancle_textarea').val()
+                        },
+                        success : function (obj){
+                            if(obj == "성공"){
+                                alert("반려 완료");
+                                $('#submit_btn').prop("disabled", false);
+                                $('#cancle_btn').prop("disabled", true);
+                                $('#cancle_textarea').val("");
+                                $("#sign_data").val("");
+                                $("#img01").hide();
+                                $("#link").show();
+                                $('.stamp').hide();
+                                popupLayer.style.display = "none";
+                            }
+                        }
+                    });
+                });
+                document.getElementById('cancle_cancle').addEventListener('click', function () {
+                    popupLayer.style.display = "none";
+                });
+
+                if (popupLayer.style.display === "block") {
+                    document.addEventListener("click", function (event) {
+                        if (event.target.id == "popup_layer2"
+                            && popupLayer.contains(event.target)) {
+                            popupLayer.style.display = "none";
+                        }
+                    });
+                }
+
+            });
+        });
+    </script>
+</th:block>
+</html>

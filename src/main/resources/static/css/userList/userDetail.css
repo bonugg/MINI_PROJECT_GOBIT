@@ -1,0 +1,19 @@
+#user_div_content2 {
+    text-align: center;
+}
+
+#chat_btn {
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 60px;
+    height: 30px;
+    background: transparent;
+    margin-top: 20px;
+}
+
+#chat_btn:hover {
+    background: #181F42;
+    color: whitesmoke;
+    transition: background-color 0.3s ease;
+}

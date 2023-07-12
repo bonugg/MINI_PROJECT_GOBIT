@@ -9,7 +9,7 @@
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/appVacation.css">
-
+        <link rel="stylesheet" type="text/css" href="/css/approvalRequestPage.css">
     </th:block>
 </head>
 <body layout:fragment="content">
@@ -26,18 +26,19 @@
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
                         <!--데이터 입력부-->
-                        <form id="insertForm" action="/appRequest/approval" method="post">
+                        <form id="insertForm" action="/appRequest/vacation" method="post">
                             <input type="hidden" name="appSort" value="V">
                             <input type="hidden" name="appState" value="미승인">
                             <input type="hidden" name="userDept" th:value="${session.user.USERDEPT}">
+                            <input type="hidden" id="appVacReq" name="appVacReq">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>휴가날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="input-appStart" name="appStart" required onchange="printDate()">
+                                        <input type="datetime-local" id="input-appStart" name="appStart" required onchange="handleDate()">
                                         <p>~</p>
                                         <!--inputDate-end"-->
-                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onchange="printDate()">
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onchange="handleDate()">
                                     </div>
                                 </div>
                                 <div class="input-user">
@@ -50,7 +51,7 @@
                                 <div class="input-type">
                                     <div>휴가 종류</div>
                                     <div class="input-place-form">
-                                            <select id="input-appVacType" name="appVacType" required onchange="printType()">
+                                            <select id="input-appVacType" name="appVacType" required onchange="handleVacType()">
                                                 <option value="morningOff">오전반차</option>
                                                 <option value="afternoonOff">오후반차</option>
                                                 <option value="dayOff">연차</option>
@@ -72,20 +73,20 @@
                                     <div class="appInfo">
                                         <table>
                                             <tr>
-                                                <td>문서번호</td>
-                                                <td></td>
+                                                <td class="column_appInfoTitle">문서번호</td>
+                                                <td class="column_appInfoContent"></td>
                                             </tr>
                                             <tr>
-                                                <td>부서</td>
-                                                <td th:text="${session.user.USERDEPT}"></td>
+                                                <td class="column_appInfoTitle">부서</td>
+                                                <td class="column_appInfoContent" th:text="${session.user.USERDEPT}"></td>
                                             </tr>
                                             <tr>
-                                                <td>기안일</td>
-                                                <td></td>
+                                                <td class="column_appInfoTitle">기안일</td>
+                                                <td class="column_appInfoContent"></td>
                                             </tr>
                                             <tr>
-                                                <td>기안자</td>
-                                                <td th:text="${session.user.USERNAME}"></td>
+                                                <td class="column_appInfoTitle">기안자</td>
+                                                <td class="column_appInfoContent" th:text="${session.user.USERNAME}"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -95,19 +96,14 @@
                                     <div class="appConfirm">
                                         <table>
                                             <tr>
-                                                <td rowspan="4"> 결재</td>
-                                                <td>담당</td>
-                                                <td>팀장</td>
+                                                <td rowspan="3" style="width: 25px;"> 결재</td>
+                                                <td style="width: 100px;">담당</td>
                                             </tr>
                                             <tr>
-                                                <td rowspan="2">담당자 싸인</td>
-                                                <td rowspan="2">팀장 싸인</td>
-                                            </tr>
-                                            <tr>
+                                                <td style="height: 100px;">담당자 싸인</td>
                                             </tr>
                                             <tr>
                                                 <td>담당자 id</td>
-                                                <td>팀장 id</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -116,23 +112,22 @@
                                     <div class="appData">
                                         <table>
                                             <tr>
-                                                <td>총 연차</td>
-                                                <td id="appData-totalOff">총연차 데이터 표출</td>
-                                                <td>사용 일수</td>
-                                                <td id="appData-vacationUsed">사용일수 표출</td>
-                                                <td>잔여 연차</td>
-                                                <td id="appData-vacationLeft">잔여연차 표출</td>
+                                                <td class="column_narrow">총 연차</td>
+                                                <td id="appData-totalOff"></td>
+                                                <td class="column_narrow">사용 일수</td>
+                                                <td id="appData-vacationUsed"></td>
+                                                <td class="column_narrow">잔여 연차</td>
+                                                <td id="appData-vacationLeft"></td>
                                             </tr>
                                             <tr>
-                                                <td>휴가 날짜</td>
+                                                <td class="column_narrow">휴가 날짜</td>
                                                 <td id="appData-vacationDate" colspan="2"></td>
-                                                <td>사용 일수</td>
-                                                <td id="appData-vacationDateCnt">휴가날짜수 표출</td>
-                                                <td>휴가종류</td>
+                                                <td id="appData-vacationDateCnt"></td>
+                                                <td class="column_narrow">휴가종류</td>
                                                 <td id="appData-vacationType"></td>
                                             </tr>
                                             <tr class="appData-colspan">
-                                                <td>출장 목적</td>
+                                                <td class="column_narrow">출장 목적</td>
                                                 <td colspan="6" id="appData-content"></td>
                                             </tr>
                                         </table>

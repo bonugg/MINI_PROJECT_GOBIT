@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/layout}" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Empty</title>
+    <title>게시글</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/empty.css">
@@ -58,8 +58,16 @@
                                 작성자
                             </div>
                             <div class="date" th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm')}"></div>
-                            <div class="cnt" th:text="${board.cnt}"></div>
-                            <div class="like-cnt" th:text="${board.like}"></div>
+
+                            <div class="div-cnt">
+                                <img src="/img/boardDept/free-icon-eyes-7835667.png" id="cntIcon">
+                                <div class="cnt" th:text="${board.cnt}"></div>
+                            </div>
+
+                            <div class="div-like">
+                                <img src="/img/boardDept/free-icon-like-5372262.png" id="likeIcon">
+                                <div class="like-cnt" th:text="${board.like}"></div>
+                            </div>
 
                             <div class="div-files" th:if="${!board.files.isEmpty()}">
                                 <label class="label-hover">첨부파일</label>

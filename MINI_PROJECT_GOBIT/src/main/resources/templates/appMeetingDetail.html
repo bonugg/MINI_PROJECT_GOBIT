@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>회의 결재신청</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/appMeetingDetail.css">
+
+    </th:block>
+</head>
+<body layout:fragment="content">
+<div id="fullscreen">
+    <div id="_emt1"></div>
+    <div id="_emt2">
+        <div id="_emt3">
+        </div>
+        <div id="_emt4">
+            <div id="use_screen">
+                <!--헤더와 메뉴바를 제외한 영역 -->
+                <p class="page-name">회의 결제신청 페이지</p>
+                <div class="use_screen_form">
+                    <div class="leftSpace"></div>
+                    <div class="centerSpace">
+                        <!--데이터 입력부-->
+                        <form id="updateForm" name="approval" action="/appDetail/approval" method="post">
+                            <input type="hidden" id="appNum" name="appNum" th:value="${approval.appNum}">
+                            <input type="hidden" name="appAlarm" th:value="${approval.appAlarm}">
+                            <input type="hidden" name="appSort" th:value="${approval.appSort}">
+                            <input type="hidden" name="appState" value="미승인">
+                            <input type="hidden" name="appWriDate" th:value="${approval.appWriDate}">
+                            <input type="hidden" name="userNum" th:value="${approval.userNum.USERNUM}">
+                            <section id="inputData-section">
+                                <div class="input-date">
+                                    <div>회의날짜</div>
+                                    <div class="input-date-form">
+                                        <input type="datetime-local" id="inputDate-start" name="appStart" th:value="${approval.appStart}" required
+                                               onchange="printDate()">
+                                        <p>~</p>
+                                        <input type="datetime-local" id="inputDate-end" name="appEnd" th:value="${approval.appEnd}" required
+                                               onchange="printDate()">
+                                    </div>
+                                </div>
+                                <div class="input-user">
+                                    <div>회의 참석자</div>
+                                    <div class="input-user-form">
+                                     <textarea id="input-Participant" name="appParticipant" th:text="${approval.appParticipant}"
+                                               style="resize:vertical" cols="50" rows="1"
+                                               required onkeyup="printPeople()"></textarea>
+                                    </div>
+                                </div>
+                                <div class="input-place">
+                                    <div>회의 장소</div>
+                                    <div class="input-place-form">
+                                        <input type="text" id="input-appLocation" name="appLocation" th:value="${approval.appLocation}"
+                                               required onkeyup="printPlace()">
+                                    </div>
+                                </div>
+                                <div class="input-text">
+                                    <div>회의 목적</div>
+                                    <div class="input-text-form">
+                            <textarea id="input-appContent" name="appContent" th:text="${approval.appContent}"
+                                      style="resize:vertical" cols="50" rows="1" required onkeyup="printContent()"></textarea>
+                                    </div>
+                                </div>
+                            </section>
+                            <!--데이터 표출부-->
+                            <section id="viewData-section">
+                                <div class="appForm1">
+                                    <div class="appInfo">
+                                        <table>
+                                            <tr>
+                                                <td>문서번호</td>
+                                                <td th:text="${approval.appNum}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>부서</td>
+                                                <td th:text="${approval.userNum.USERDEPT}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>기안일</td>
+                                                <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>기안자</td>
+                                                <td th:text="${approval.userNum.USERNAME}"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="appTitle">
+                                        <h3>회의 신청서</h3>
+                                    </div>
+                                    <div class="appConfirm">
+                                        <table>
+                                            <tr>
+                                                <td rowspan="4"> 결재</td>
+                                                <td>담당</td>
+                                                <td>팀장</td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="2">담당자 싸인</td>
+                                                <td rowspan="2">팀장 싸인</td>
+                                            </tr>
+                                            <tr>
+                                            </tr>
+                                            <tr>
+                                                <td>담당자 id</td>
+                                                <td>팀장 id</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="appForm2">
+                                    <div class="appData">
+                                        <table>
+                                            <tr>
+                                                <td>회의 날짜</td>
+                                                <!--<td id="appData-date" th:value="${approval.appStart}"></td>-->
+                                                <td id="appData-date" th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}"></td>
+                                                <td>출장 장소</td>
+                                                <td id="appData-place" th:text="${approval.appLocation}"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>회의 참석자</td>
+                                                <td id="appData-people" colspan="3" th:text="${approval.appParticipant}"></td>
+                                            </tr>
+                                            <tr class="appData-colspan">
+                                                <td>회의 목적</td>
+                                                <td colspan="3" id="appData-content" th:value="${approval.appContent}"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+                            <div id="dataSubmit-section">
+                                <button type="button" th:if="${#authentication.getName() == #strings.toString(approval.userNum.USERENO)}" id="btnUpdate">수정</button>
+                                <button type="button" id="btnDelete">삭제</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="rightSpace"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <script src="/js/jquery-3.7.0.min.js"></script>
+    <script src="/js/appMeetingDetail.js"></script>
+</th:block>
+</html>

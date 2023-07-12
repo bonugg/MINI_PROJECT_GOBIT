@@ -37,6 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/signup", "/signup").permitAll()
                         .requestMatchers("/polling", "/onadd", "/offadd", "/main/calendar").permitAll()
                         .requestMatchers("/memberSign", "/memberSigns","/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/approvalList", "/approvalList/**").hasAnyRole("MANAGER")
                         .anyRequest().hasAnyRole("USER", "MANAGER")
                 )
                 .formLogin(formLogin -> formLogin

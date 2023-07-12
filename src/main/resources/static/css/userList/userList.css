@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.title > p {
+    margin-top: 40px;
+    margin-left: 40px;
+    font-size: 15px;
+    color: grey;
+}
+
+.boody {
+    min-width: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* 검색 */
+
+.searchDiv {
+    width: 800px;
+    padding: 30px;
+    border: 1px solid #C8D1DB;
+    border-radius: 10px;
+    background-color: #F9F9F9;
+    text-align: center;
+}
+
+select {
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    height: 40px;
+    padding: 0 11px;
+    padding-right: 34px;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 5px;
+}
+
+input {
+    display: inline-block;
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    height: 39px;
+    padding: 0 11px;
+    padding-right: 34px;
+    font-size: 16px;
+}
+
+button {
+    display: inline-block;
+    background-color: #181F42;
+    color: white;
+    border: 1px solid #BDBDBD;
+    border-radius: 4px;
+    width: 80px;
+    height: 40px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bolder;
+    cursor: pointer;
+    transition:800ms ease all;
+    outline:none;
+}
+
+.search_bth:hover{
+    background:#fff;
+    color:#181F42;
+}
+.search_bth:before,.search_bth:after{
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #181F42;
+    transition:400ms ease all;
+}
+.search_bth:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+.search_bth:hover:before,.search_bth:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+
+/* 검색 */
+
+table {
+    width: 850px;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-size: 16px;
+}
+
+th {
+    background-color: #eaeaea;
+    border-top: 2px solid black;
+}
+
+td:last-child, th:last-child {
+    border-right: none; /* 마지막 열의 세로 구분선 제거 */
+}
+
+tbody > tr:hover {
+    cursor: pointer;
+    background-color: rgba(229, 229, 229, 0.72);
+}
