@@ -2,20 +2,29 @@ package com.gobit.minipj_gobit.noticeDept.service;
 
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
+import com.gobit.minipj_gobit.noticeDept.entity.nBoardFile;
+import com.gobit.minipj_gobit.noticeDept.repository.NfileRepository;
 import com.gobit.minipj_gobit.noticeDept.repository.nBoardRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-@Service
-public class nBoardService {
-    private nBoardRepository boardRepository;
+import java.time.LocalDateTime;
+import java.util.List;
 
-    @Autowired
-    public nBoardService(nBoardRepository boardRepository) {
-        this.boardRepository = boardRepository;
-    }
+@Service
+@RequiredArgsConstructor
+public class nBoardService {
+    private final nBoardRepository boardRepository;
+    private final NfileService nfileService;
+    private final NfileRepository nfileRepository;
+
+//    @Autowired
+//    public nBoardService(nBoardRepository boardRepository) {
+//        this.boardRepository = boardRepository;
+//    }
 
     public nBoard getBoard(Long id) {
         return boardRepository.findById(id).get();
@@ -29,8 +38,13 @@ public class nBoardService {
         boardRepository.save(board);
     }
 
-    public void delete(nBoard nBoard) {
-        boardRepository.delete(nBoard);
+    public void delete(nBoard board) {
+        List<nBoardFile> files = board.getFiles();
+        boardRepository.delete(board);
+        for (nBoardFile file : files) {
+            nfileService.deleteFile(file);
+        }
+        nfileRepository.deleteAll(files);
     }
 
 //    public List<nBoardDto> getNoticeList() {
@@ -59,19 +73,23 @@ public class nBoardService {
     }
 
 
-    public nBoard write(nBoard board,User user) {
-
+    public Long write(String title, String content, User user) {
+        nBoard board = new nBoard();
+        board.setTitle(title);
+        board.setContent(content);
         board.setUser(user);
 
-        return boardRepository.save(board);
+        boardRepository.save(board);
+
+        return board.getId();
     }
 
-    public nBoard modify(nBoard board, Long id) {
+    public void modify(Long id, String title, String content) {
         nBoard existingBoard = boardRepository.findById(id).get();
-        existingBoard.setTitle(board.getTitle());
-        existingBoard.setContent(board.getContent());
-
-        return boardRepository.save(existingBoard);
+        existingBoard.setTitle(title);
+        existingBoard.setContent(content);
+        existingBoard.setUpdateDate(LocalDateTime.now());
+        boardRepository.save(existingBoard);
     }
 
     public Page<nBoard> searchBoard(String searchKeyword, String keyword, Pageable pageable) {
