@@ -1,11 +1,12 @@
 $(function () {
     console.log($("#sign_data").val());
-    if($("#sign_data").val() != null){
-        $("#sign_img").attr('src',$("#sign_data").val());
+    if ($("#sign_data").val() != null) {
+        $("#sign_img").attr('src', $("#sign_data").val());
         $("#sign_img").show();
     }
 
-    if($("#appState").val() != "미승인"){
+    console.log("테스트1 " + $("#appStat").val());
+    if ($("#appState").val() != "미승인") {
         $('#btnUpdate').prop("disabled", true);
         $('#btnDelete').prop("disabled", true);
         $('#input-appStart').attr("readonly", true);
@@ -15,6 +16,7 @@ $(function () {
     }
 
     $("#btnUpdate").on("click", () => {
+        console.log($("#updateForm").serialize());
         $.ajax({
             url: "/appDetail/vacation",
             type: "post",
@@ -24,7 +26,7 @@ $(function () {
             success: (obj) => {
                 console.log(obj);
                 alert(obj.item.msg);
-                if(obj.item.result == "success"){
+                if (obj.item.result == "success") {
                     window.location.href = obj.item.redirectUrl;
                 }
             },
@@ -43,7 +45,7 @@ $(function () {
             success: (obj) => {
                 console.log(obj);
                 alert(obj.item.msg);
-                if(obj.item.result == "success"){
+                if (obj.item.result == "success") {
                     window.location.href = obj.item.redirectUrl;
                 }
             },
@@ -60,7 +62,7 @@ function printDate() {
     const dateEndInput = document.getElementById('input-appEnd');
     const vacationDateElement = document.getElementById('appData-date');
 
-    if (dateStartInput !=null && dateEndInput !=null) {
+    if (dateStartInput != null && dateEndInput != null) {
         const dateStart = dateStartInput.value;
         const dateEnd = dateEndInput.value;
         vacationDateElement.innerText = `${dateStart} ~ ${dateEnd}`;
@@ -102,14 +104,11 @@ function calculateDateDifference() {
     const appStartInput = document.getElementById("input-appStart");
     const appEndInput = document.getElementById("input-appEnd");
 
-    // const appStartValue = new Date(appStartInput.value);
-    // const appEndValue = new Date(appEndInput.value);
-    //
-    // const differenceInMilliseconds = appEndValue.getTime() - appStartValue.getTime();
-    const appStartValue = $("#input-appStart").val();
-    const appEndValue = $("#input-appEnd").val();
+    const appStartValue = new Date(appStartInput.value);
+    const appEndValue = new Date(appEndInput.value);
 
-    const differenceInMilliseconds = new Date(appEndValue) - new Date(appStartValue);
+    const differenceInMilliseconds = appEndValue.getTime() - appStartValue.getTime();
+
     const differenceInSeconds = differenceInMilliseconds / 1000;
     console.log("차이(초):", differenceInSeconds);
     const appVacReq = document.getElementById('appVacReq')
