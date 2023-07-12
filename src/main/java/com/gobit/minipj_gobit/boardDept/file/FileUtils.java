@@ -22,7 +22,7 @@ import java.util.UUID;
 public class FileUtils {
 
 
-    public static final  String UPLOAD_PATH = "C:/tmp/upload";
+    public static final  String UPLOAD_PATH = "/Users/minje/Desktop/upload";
 
 
     /**

@@ -4,7 +4,6 @@ html {
 
 body {
     width: 100vw;
-    min-width: 1200px;
     background: whitesmoke;
 }
 
@@ -14,21 +13,30 @@ a {
 }
 
 /* 머리부분 시작 */
-.heead {
-    display: flex;
-    height: 78px;
-    /* border-top: 0.5px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2); */
-}
-/* 머리부분 끝 */
-
-.title > p {
-    margin-top: 40px;
-    margin-left: 40px;
+#boardDept{
+    position: absolute;
+    top: 40px;
+    left: 40px;
     font-size: 15px;
     color: grey;
 }
 
+@media (max-width: 1000px) {
+    #_emt2{
+        width: 1000px;
+    }
+}
+/* 머리부분 끝 */
+
+
+/* 몸통 부분 */
+#use_screen2{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /* 몸통 부분 */
 .boody {
@@ -37,15 +45,20 @@ a {
     align-items: center;
     flex-direction: column;
     width: 70%;
+    min-height: 92.5vh;
     margin: 0 auto;
+    border-left: 1px solid darkgray;
+    border-right: 1px solid darkgray;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
 }
-/* 몸통 부분 */
 
 /* 제목 부분 */
 .div-botitle {
-    margin-top: 30px;
     width: 90%;
     height: 80px;
+    padding: 5px;
     background-color: rgba(217, 217, 217, 0.3);
     border-top: 1.5px solid rgba(0, 0, 0, 1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -55,20 +68,23 @@ a {
 
 .board-title {
     margin-left: 30px;
-    font-size: 24px; 
+    font-size: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 /* 제목 부분 */
 
 /* 내용 부분 */
 .div-content {
     width: 90%;
-    height: 100%;
+    min-height: 300px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .board-content {
     margin: 30px 30px 30px 30px;
     word-break: break-all;
-
 }
 /* 내용 부분 */
 
@@ -76,7 +92,9 @@ a {
 .div-values {
     display: flex;
     width: 90%;
-    height: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     justify-content: space-around;
     align-items: center;
@@ -162,7 +180,6 @@ a {
 .div-board-btns {
     display: flex;
     width: 90%;
-    height: 70px;
     align-items: center;
     justify-content: center;
 }
@@ -197,8 +214,13 @@ a {
 
 
 /* 댓글 구역 */
+.reply_title_dform {
+    width: 80%;
+}
+
 .div-reply {
-    width: 90%;
+    width: 80%;
+    scroll-behavior: smooth;
 }
 /* 댓글 구역 */
 
@@ -277,7 +299,7 @@ a {
 
 /* 댓글 반복 */
 #reply_user_img {
-    width: 100px;
+    width: 30px;
     border-radius: 50%;
 }
 .div-reply-for {
@@ -285,22 +307,38 @@ a {
     margin-bottom: 5px;
 }
 
+
 .reply-wri-btn {
     display: flex;
     justify-content: space-between;
 }
 
 .reply-writer {
+    display: flex;
+    align-items: center;
     margin-right: auto;
+}
+.reply-writer > span {
+    margin-left: 5px;
+    font-size: small;
 }
 
 .reply-content {
-    margin-top: 5px;
+    margin-top: 15px;
     margin-bottom: 5px;
     overflow-y: auto;
 }
 
 .reply-content-hr {
     margin-bottom: 20px;
+}
+
+.reply-fbtn {
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 31px;
+    height: 22px;
 }
 /* 댓글 반복 */
