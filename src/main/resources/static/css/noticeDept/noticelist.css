@@ -5,11 +5,12 @@ table {
 section.notice {
     padding: 100px 0;
     padding-bottom: 15px;
-    padding-top: 40px;
+    padding-top: 0px;
 }
 
 .page-title {
-    margin-bottom: 60px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     margin-right: 450px;
     color: gray;
     font-size: 15px;
@@ -76,6 +77,18 @@ section.notice {
     width: 100px;
     text-align: center;
 }
+.board-table .th-title {
+    width: calc(100% - 450px);
+    text-align: center;
+}
+.board-table .th-name {
+    width: 100px;
+    text-align: center;
+}
+.board-table .th-cnt{
+    width: 50px;
+    text-align: center;
+}
 
 .board-table .th-date {
     width: 200px;
@@ -88,8 +101,8 @@ section.notice {
 .board-table tbody td {
     border-top: 1px solid #e7e7e7;
     text-align: center;
-}
 
+}
 .board-table tbody th {
     padding-left: 28px;
     padding-right: 14px;
@@ -99,6 +112,19 @@ section.notice {
 
 .board-table tbody th p{
     display: none;
+}
+
+#notice_title{
+   margin: 0;
+   box-sizing: border-box;
+}
+.shorttitle {
+    width: 80%;
+    text-overflow: ellipsis;     /* 생략 처리 ( ... )*/
+    white-space: nowrap;         /* 줄바꿈 하지 않고 잘림*/
+    overflow: hidden;            /* 스크롤 처리 하지 않음*/
+    word-break: break-all;
+    text-align: left;
 }
 
 .btn {
@@ -230,22 +256,7 @@ section.notice {
 .page_nation .arrow {
     border:1px solid #ccc;
 }
-.page_nation .pprev {
-    background:#f8f8f8 url('/img/page_pprev.png') no-repeat center center;
-    margin-left:0;
-}
-.page_nation .prev {
-    background:#f8f8f8 url('/img/page_prev.png') no-repeat center center;
-    margin-right:7px;
-}
-.page_nation .next {
-    background:#f8f8f8 url("/img/page_next.png") no-repeat center center;
-    margin-left:7px;
-}
-.page_nation .nnext {
-    background:#f8f8f8 url('/img/page_nnext.png') no-repeat center center;
-    margin-right:0;
-}
+
 .page_nation a.active {
     background-color:#42454c;
     color:#fff;
@@ -277,4 +288,5 @@ section.notice {
     width: 80px;
     margin-right: 10px;
 }
+
 
