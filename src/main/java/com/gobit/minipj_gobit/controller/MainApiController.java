@@ -61,11 +61,11 @@ public class MainApiController {
         Calendar calendar = new Calendar();
         calendar.setUser(approval.getUserNum());
         calendar.setApproval(approval);
-        if (approval.getAppSort() == 'V') {
+        if (approval.getAppSort() == "V") {
             caltype = "휴가";
-        } else if (approval.getAppSort() == 'B') {
+        } else if (approval.getAppSort() == "B") {
             caltype = "출장";
-        } else if (approval.getAppSort() == 'M') {
+        } else if (approval.getAppSort() == "M") {
             caltype = "회의";
         }
         calendar.setCALTITLE(approval.getUserNum().getUSERNAME() + " " + caltype);

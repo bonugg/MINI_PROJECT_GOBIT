@@ -1,4 +1,9 @@
 $(function () {
+    console.log($("#sign_data").val());
+    if($("#sign_data").val() != null){
+        $("#sign_img").attr('src',$("#sign_data").val());
+        $("#sign_img").show();
+    }
 
     $("#btnUpdate").on("click", () => {
         $.ajax({
