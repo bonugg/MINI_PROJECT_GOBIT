@@ -38,12 +38,15 @@ a {
     align-items: center;
 }
 
+/* 몸통 부분 */
 .boody {
     display: flex;
     background-color: white;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     width: 70%;
+    min-height: 92.5vh;
     margin: 0 auto;
     border-left: 1px solid darkgray;
     border-right: 1px solid darkgray;
@@ -51,7 +54,6 @@ a {
     padding-bottom: 40px;
     box-sizing: border-box;
 }
-/* 몸통 부분 */
 
 /* 제목 부분 */
 .div-botitle {

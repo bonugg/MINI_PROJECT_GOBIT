@@ -1,10 +1,13 @@
 html, body, .note-editable {
     font-family: 'Noto Sans KR'!important;;
 }
-
+@media (max-width: 1000px) {
+    #_emt2{
+        width: 1000px;
+    }
+}
 body {
     width: 100vw;
-    height: 100vh;
     min-width: 1200px;
     background-color: #F6F8FF;
 }
@@ -37,8 +40,10 @@ input, textarea:focus {
     display: flex;
     background-color: white;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     width: 70%;
+    min-height: 92.5vh;
     margin: 0 auto;
     border-left: 1px solid darkgray;
     border-right: 1px solid darkgray;
