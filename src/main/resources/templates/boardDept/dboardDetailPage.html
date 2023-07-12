@@ -24,7 +24,7 @@
                 <!--헤더와 메뉴바를 제외한 영역 -->
                 <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
                 <div id="use_screen2">
-                    <p id="boardDept">전사게시판</p>
+                    <p id="boardDept"><a href="/boardDept/list" style="color: grey">전사게시판</a></p>
 
                     <!-- 몸통 부분 -->
                     <div class="boody">
@@ -73,10 +73,6 @@
                         </div>
                         <!-- 작성 관련 내용 -->
 
-                        <!-- 첨부 파일들 -->
-
-                        <!-- 첨부 파일들 -->
-
 
                         <!-- 버튼들 -->
                         <div class="div-board-btns">
@@ -96,12 +92,7 @@
                         </div>
                         <!-- 버튼들 -->
 
-
-
-                        <!-- 댓글 시작-->
-                        <div class="div-reply">
-
-
+                        <div class="reply_title_dform">
                             <!-- 댓글 수 표시 -->
                             <div class="reply-title">
                                 <h4 th:text="'댓글 수 : ' + ${#lists.size(board.replyList)} + '개'"></h4>
@@ -112,8 +103,8 @@
                             <!-- 댓글 작성 -->
                             <div class="reply-dform">
                                 <form class="reply-form" th:action="@{|/reply/create/${board.id}|}" method="post">
-                                    <textarea class="reply-area" name="content" id="" cols="90" rows="4"
-                                              placeholder="댓글을 입력해 주세요." onkeyup="countingLength(this)"></textarea>
+                                        <textarea class="reply-area" name="content" id="" cols="90" rows="4"
+                                                  placeholder="댓글을 입력해 주세요." onkeyup="countingLength(this)"></textarea>
                                     <div class="reply-btn">
                                         <span id="reply-length">0/300자</span>
                                         <input class="reply-input" type="submit" value="등록">
@@ -121,9 +112,10 @@
                                 </form>
                             </div>
                             <!-- 댓글 작성 -->
+                        </div>
 
-
-
+                        <!-- 댓글 시작-->
+                        <div class="div-reply">
                             <!-- 댓글 반복 -->
                             <div class="reply-for">
 

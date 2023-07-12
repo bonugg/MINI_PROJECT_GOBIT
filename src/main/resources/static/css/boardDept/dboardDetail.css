@@ -4,7 +4,6 @@ html {
 
 body {
     width: 100vw;
-    min-width: 1200px;
     background: whitesmoke;
 }
 
@@ -21,6 +20,12 @@ a {
     font-size: 15px;
     color: grey;
 }
+
+@media (max-width: 1000px) {
+    #_emt2{
+        width: 1000px;
+    }
+}
 /* 머리부분 끝 */
 
 
@@ -28,7 +33,6 @@ a {
 #use_screen2{
     position: relative;
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,14 +47,17 @@ a {
     margin: 0 auto;
     border-left: 1px solid darkgray;
     border-right: 1px solid darkgray;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
 }
 /* 몸통 부분 */
 
 /* 제목 부분 */
 .div-botitle {
-    margin-top: 30px;
     width: 90%;
     height: 80px;
+    padding: 5px;
     background-color: rgba(217, 217, 217, 0.3);
     border-top: 1.5px solid rgba(0, 0, 0, 1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -60,20 +67,22 @@ a {
 
 .board-title {
     margin-left: 30px;
-    font-size: 24px; 
+    font-size: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 /* 제목 부분 */
 
 /* 내용 부분 */
 .div-content {
     width: 90%;
-    height: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 .board-content {
     margin: 30px 30px 30px 30px;
     word-break: break-all;
-
 }
 /* 내용 부분 */
 
@@ -81,7 +90,8 @@ a {
 .div-values {
     display: flex;
     width: 90%;
-    height: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     margin-bottom: 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     justify-content: space-around;
@@ -168,7 +178,6 @@ a {
 .div-board-btns {
     display: flex;
     width: 90%;
-    height: 70px;
     align-items: center;
     justify-content: center;
 }
@@ -203,8 +212,13 @@ a {
 
 
 /* 댓글 구역 */
+.reply_title_dform {
+    width: 80%;
+}
+
 .div-reply {
-    width: 90%;
+    width: 80%;
+    scroll-behavior: smooth;
 }
 /* 댓글 구역 */
 
@@ -289,9 +303,6 @@ a {
 .div-reply-for {
     margin-top: 5px;
     margin-bottom: 5px;
-}
-.div-reply-for:last-child {
-    margin-bottom: 80px;
 }
 
 
