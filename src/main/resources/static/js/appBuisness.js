@@ -20,6 +20,8 @@ $(function () {
                 console.log(error);
             }
         });
+        // 이벤트 리스너 제거
+        $("#btnUpdate").off("click");
     });
 });
 
