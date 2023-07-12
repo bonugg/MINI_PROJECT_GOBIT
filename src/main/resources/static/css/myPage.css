@@ -235,7 +235,6 @@
         left: 50%;
         transform: translate(-50%);
         width: 170px;
-        border-radius: 50%;
         overflow: hidden;
         box-sizing: border-box;
         margin-top: -400px;

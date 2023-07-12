@@ -93,31 +93,14 @@
 
 .profile1 {
     position: absolute;
-    top: 150px;
+    top: 200px;
     width: calc(100vw - 900px);
     left: 35vw;
-    height: 350px;
+    height: 400px;
     background-color: #ffffff;
     border: 0.2px solid #949393;
     border-radius: 3px;
-    padding: 15px 30px;
-}
-
-.profile2 {
-    background: rgb(211, 211, 211);
-    font-size: 20px;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 550px;
-    position: absolute;
-    width: calc(100vw - 900px);
-    height: 350px;
-    border: 0.2px solid #949393;
-    border-radius: 3px;
-    left: 35vw;
-    padding: 15px 30px;
+    padding: 30px 30px;
 }
 
 .basic-info {
@@ -126,14 +109,14 @@
 }
 
 .emailUpdate {
-    margin-top: 25px;
+    margin-top: 30px;
 }
 
 .addressUpdate, .phoneUpdate, .emailUpdate {
     height: 35px;
     display: flex;
     padding: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
     width: 98%;
 }
 
@@ -151,31 +134,14 @@
 
     .profile1 {
         position: absolute;
-        top: 150px;
+        top: 200px;
         width: 450px;
         left: 420px;
-        height: 350px;
+        height: 400px;
         background-color: #ffffff;
         border: 0.2px solid #949393;
         border-radius: 3px;
-        padding: 15px 30px;
-    }
-
-    .profile2 {
-        background: rgb(211, 211, 211);
-        font-size: 20px;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        top: 550px;
-        position: absolute;
-        width: 450px;
-        height: 350px;
-        border: 0.2px solid #949393;
-        border-radius: 3px;
-        left: 420px;
-        padding: 15px 30px;
+        padding: 30px 30px;
     }
 }
 

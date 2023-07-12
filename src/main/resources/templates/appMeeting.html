@@ -36,11 +36,9 @@
                                 <div class="input-date">
                                     <div>회의날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="inputDate-start" name="appStart" required
-                                               onchange="printDate()">
+                                        <input type="datetime-local" id="input-appStart" name="appStart" th:value="${approval.appStart}" required onchange="handleStartDate()"/>
                                         <p>~</p>
-                                        <input type="datetime-local" id="inputDate-end" name="appEnd" required
-                                               onchange="printDate()">
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" th:value="${approval.appEnd}" required onchange="handleEndDate()"/>
                                     </div>
                                 </div>
                                 <div class="input-user">
