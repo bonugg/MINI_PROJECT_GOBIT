@@ -22,7 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/appDetail")
 public class AppDetailController {
-
+//////////
     @Autowired
     private HttpSession httpSession;
 
