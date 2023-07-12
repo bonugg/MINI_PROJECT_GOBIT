@@ -10,9 +10,9 @@ public interface ApprovalService {
 
     Approval getApproval(long appNum);
 
-    Page<Approval> findByDept(Pageable pageable, String dept);
+    Page<Approval> findByDept(Pageable pageable, String dept, String cls);
 
-    Page<Approval> findByUser(Pageable pageable, User user);
+    Page<Approval> findByUser(Pageable pageable, User user, String cls);
 
     Page<Approval> searchAppLeaderDept(Pageable pageable,String sWord, String dept);
 

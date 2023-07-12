@@ -38,20 +38,23 @@ public class ApprovalController {
 
 
     @GetMapping("/approvalList")
-    public String getLeaderList(Model model, String sWord,
+    public String getLeaderList(Model model, String cls, String sWord,
                                 @PageableDefault(page = 0, size = 10, sort = "appNum", direction = Sort.Direction.DESC) Pageable pageable) {
 //                                                   page 인덱스 0부터 10개씩, appNum기준으로 역순 제공
-        System.out.println("당신이 이상한거 바꿔논거 아님요? 그럼 왜 안댐");
+
         User user = (User) httpSession.getAttribute("user");
         Page<Approval> appForLeader = null;
-        if(sWord == null) {
-            appForLeader = approvalService.findByDept(pageable,user.getUSERDEPT());
-            System.out.println("아왜");
+        if (sWord == null) {
+            if(cls == null) cls = "";
+            appForLeader = approvalService.findByDept(pageable, user.getUSERDEPT(), cls);
 //            System.out.println(appForLeader);
+            // 긍게 이게 돼야함 ↓
+            // 그니까 효준님이 원하는대로 할려면 저 탭을 누를때마다 이 메소드를 실행시켜서 그 sort뭐시기로 검색을 해야함
+            // 근데 거기서 페이지를 가져오면 될거같긴한데요?
+
 
         } else {
             appForLeader = approvalService.searchAppLeaderDept(pageable, user.getUSERDEPT(), sWord);
-            System.out.println("ㅠㅠㅠㅠ");
         }
 
         int nowPage = appForLeader.getNumber() + 1;
@@ -59,7 +62,7 @@ public class ApprovalController {
 
         int startPage = Math.max(1, nowPage - 5);
         int endPage = Math.min(nowPage + 5, appForLeader.getTotalPages());
-
+        model.addAttribute("cls", cls);
         model.addAttribute("appForLeader", appForLeader);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
@@ -87,9 +90,9 @@ public class ApprovalController {
     }
 
 
-//
+    //
     @GetMapping("/appDetail")
-    public String getUserList(Model model, String sWord,
+    public String getUserList(Model model, String cls, String sWord,
                               @PageableDefault(page = 0, size = 10, sort = "appNum", direction = Sort.Direction.DESC) Pageable pageable) {
 //                                                   page 인덱스 0부터 10개씩, appNum기준으로 역순 제공
         User user = (User) httpSession.getAttribute("user");
@@ -97,8 +100,8 @@ public class ApprovalController {
         Page<Approval> appForUser = null;
 
         if (sWord == null) {
-            appForUser = approvalService.findByUser(pageable, user);
-//        Page<Approval> appForLeader = approvalRepository.findAll(pageable);
+            if(cls == null) cls = "";
+            appForUser = approvalService.findByUser(pageable, user, cls);
         } else {
             appForUser = approvalService.searchAppUser(pageable, user, sWord);
         }
