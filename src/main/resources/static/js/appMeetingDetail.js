@@ -16,6 +16,7 @@ $(function () {
     }
 
     $("#btnUpdate").on("click", () => {
+        $("#btnUpdate").prop("disabled", true);
         $.ajax({
             url: "/appDetail/meeting",
             type: "post",
@@ -33,6 +34,8 @@ $(function () {
                 console.log(error);
             }
         });
+
+        $("#btnUpdate").off("click");
     });
 
     $('#btnDelete').on("click", () => {
