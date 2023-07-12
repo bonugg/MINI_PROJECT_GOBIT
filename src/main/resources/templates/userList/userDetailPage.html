@@ -8,56 +8,49 @@
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/userList/userDetail.css">
+        <link rel="stylesheet" type="text/css" href="/css/admin_main.css">
     </th:block>
 </head>
 <body>
-<div class="boody">
-
-    <div><img th:src="${user.imgPath}"></div>
-
-    <div class="div_key">
-        이름
-        <div class="div_val" th:text="${user.name}"></div>
+<div id="user_div_img">
+    <div id="user_div_img2">
+        <img src="/img/user.png" id="user_img">
     </div>
-
-    <div class="div_key">
-        부서
-        <div class="div_val" th:text="${user.dept}"></div>
-    </div>
-
-    <div class="div_key">
-        직급
-        <div class="div_val" th:text="${user.position}"></div>
-    </div>
-
-    <div class="div_key">
-        입사일
-        <div class="div_val" th:text="${user.join}">2023-01-01</div>
-    </div>
-
-    <div class="div_key">
-        이메일
-        <div class="div_val" th:text="${user.email}">minje@gobit.com</div>
-    </div>
-
-    <div class="div_key">
-        휴대전화
-        <div class="div_val" th:text="${user.phone}">010-1234-5678</div>
-    </div>
-
-    <div class="div_key">
-        생일
-        <div class="div_val" th:text="${user.birth}">2023-01-01</div>
-    </div>
-
-    <button type="button" id="chat_btn">1:1 대화</button>
 </div>
-<script>
-    var chatBtn = document.getElementById("chat_btn");
-    chatBtn.addEventListener('click', function () {
-        window.open("/room", "_blank", "width=550, height=700");
-    });
-</script>
+<div id="user_div_content">
+    <div id="user_div_content2">
+        <table id="user_div_content_table">
+            <tr>
+                <th style="border-top-left-radius: 5px" th:text="${user.name}">이름</th>
+                <td style="border-top-right-radius: 5px" id="name" th:text="${user.name}">사원 이름</td>
+            </tr>
+            <tr>
+                <th>사번</th>
+                <td id="eno" th:text="${user.eno}">사원 사번</td>
+            </tr>
+            <tr>
+                <th>부서</th>
+                <td id="dept" th:text="${user.dept}">사원 부서</td>
+            </tr>
+            <tr>
+                <th>직급</th>
+                <td id="position" th:text="${user.position}">사원 직급</td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td id="email"th:text="${user.email}">사원 이메일</td>
+            </tr>
+            <tr>
+                <th>번호</th>
+                <td id="phone" th:text="${user.phone}">사원 번호</td>
+            </tr>
+            <tr>
+                <th style="border-bottom-left-radius: 5px; border-bottom-width: 1px">입사일</th>
+                <td style="border-bottom-right-radius: 5px; border-bottom-width: 1px" id="joindate" th:text="${user.join}">사원 입사일</td>
+            </tr>
+        </table>
+    </div>
+</div>
 </body>
 <th:block layout:fragment="script">
     <!--사용할 자바스크립트는 여기에 첨부 -->

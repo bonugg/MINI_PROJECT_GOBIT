@@ -5,7 +5,9 @@ import com.gobit.minipj_gobit.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -51,6 +53,7 @@ public interface ApprovalRepository extends JpaRepository<Approval, Long> {
 
     Page<Approval> findByUserNumAndAppContentContaining(Pageable pageble, User user, String sWord);
 
-
-
+    @Modifying(clearAutomatically = true)
+    @Query(value="UPDATE t_approval t SET t.app_alarm =:i WHERE t.app_num =:appNum", nativeQuery = true)
+    void updateAlarm(@Param("i") int i, @Param("appNum") long appNum);
 }

@@ -81,6 +81,23 @@ a {
     justify-content: space-around;
     align-items: center;
 }
+.div-cnt{
+    display: flex;
+}
+
+#cntIcon {
+    width: 25px;
+    margin-right: 10px;
+}
+
+.div-like{
+    display: flex;
+}
+
+#likeIcon {
+    width: 22px;
+    margin-right: 8px;
+}
 /* 작성 관련 내용 부분 */
 
 /*첨부파일 내용 부분*/

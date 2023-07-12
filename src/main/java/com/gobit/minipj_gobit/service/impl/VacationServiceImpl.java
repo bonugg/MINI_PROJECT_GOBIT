@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 @Service
 public class VacationServiceImpl implements VacationService {
     VacationRepository vacationRepository;
@@ -48,9 +46,11 @@ public class VacationServiceImpl implements VacationService {
         vacationRepository.request(vacUsed, vacLeft, userNum);
     }
 
-
     @Override
-    public void updateVacation(long requestSecond) {
-
+    public void initialize(Vacation vacation) {
+        vacationRepository.save(vacation);
+        vacationRepository.flush();
     }
+
+
 }
