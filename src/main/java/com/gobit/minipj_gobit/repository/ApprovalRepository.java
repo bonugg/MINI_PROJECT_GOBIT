@@ -17,7 +17,7 @@ public interface ApprovalRepository extends JpaRepository<Approval, Long> {
     @Query(value ="SELECT app_vacreq FROM t_approval t WHERE t.app_num =:appNum", nativeQuery = true)
     long findAppVacReqByAppNum(long appNum);
 
-    @Query(value = "select a from Approval a where a.userNum.U = :dept and a.appSort LIKE CONCAT('%', :cls, '%')")
+    @Query(value = "select a from Approval a where a.userNum.USERDEPT = :dept and a.appSort LIKE CONCAT('%', :cls, '%')")
     Page<Approval> findByDept(Pageable pageable, String dept, String cls);
 
     @Query(value = "select a from Approval a where a.userNum = :user and a.appSort LIKE CONCAT('%', :cls, '%')")
