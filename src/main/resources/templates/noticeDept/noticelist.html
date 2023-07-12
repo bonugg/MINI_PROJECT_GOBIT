@@ -58,9 +58,9 @@
                                 <tbody>
                                     <tr th:each="nboard, loop: ${postList}">
                                     <td th:text="${nboard.id}"></td>
-                                    <td>
+                                    <td id="notice_title">
                                     <a th:href="@{|/noticeDept/updateCnt/${nboard.id}|}"
-                                       th:text="${nboard.title}"></a>
+                                       th:text="${nboard.title}" class="shorttitle"></a>
                                     </td>
                                     <td th:if="${nboard.user != null}" th:text="${nboard.user.USERNAME}"></td>
                                     <td th:text="${#temporals.format(nboard.regDate, 'yyyy-MM-dd HH:mm')}"></td>
@@ -101,8 +101,10 @@
     </div>
 </div>
 </body>
+<script>
+
+</script>
 <th:block layout:fragment="script">
     <!--사용할 자바스크립트는 여기에 첨부 -->
-
 </th:block>
 </html>

@@ -51,6 +51,15 @@ a {
     color: #fff;
 }
 
+.bt_wrap button.on:hover {
+    background-color: #373737;
+}
+
+.bt_wrap button:hover {
+    background-color: #dcdcdc;
+
+}
+
 
 .board_view {
     width: 100%;
@@ -228,7 +237,7 @@ a {
 
 .noticeTitle {
     margin-top: 40px;
-    margin-left: 40px;
+    margin-left: 39px;
     font-size: 15px;
     color: grey;
 }
