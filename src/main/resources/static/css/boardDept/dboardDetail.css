@@ -14,23 +14,26 @@ a {
 }
 
 /* 머리부분 시작 */
-.heead {
-    display: flex;
-    height: 78px;
-    /* border-top: 0.5px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2); */
-}
-/* 머리부분 끝 */
-
-.title > p {
-    margin-top: 40px;
-    margin-left: 40px;
+#boardDept{
+    position: absolute;
+    top: 40px;
+    left: 40px;
     font-size: 15px;
     color: grey;
 }
+/* 머리부분 끝 */
 
 
 /* 몸통 부분 */
+#use_screen2{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .boody {
     display: flex;
     background-color: white;
@@ -38,6 +41,8 @@ a {
     flex-direction: column;
     width: 70%;
     margin: 0 auto;
+    border-left: 1px solid darkgray;
+    border-right: 1px solid darkgray;
 }
 /* 몸통 부분 */
 
@@ -77,6 +82,7 @@ a {
     display: flex;
     width: 90%;
     height: 50px;
+    margin-bottom: 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     justify-content: space-around;
     align-items: center;
@@ -277,13 +283,17 @@ a {
 
 /* 댓글 반복 */
 #reply_user_img {
-    width: 100px;
+    width: 30px;
     border-radius: 50%;
 }
 .div-reply-for {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+.div-reply-for:last-child {
+    margin-bottom: 80px;
+}
+
 
 .reply-wri-btn {
     display: flex;
@@ -291,16 +301,31 @@ a {
 }
 
 .reply-writer {
+    display: flex;
+    align-items: center;
     margin-right: auto;
+}
+.reply-writer > span {
+    margin-left: 5px;
+    font-size: small;
 }
 
 .reply-content {
-    margin-top: 5px;
+    margin-top: 15px;
     margin-bottom: 5px;
     overflow-y: auto;
 }
 
 .reply-content-hr {
     margin-bottom: 20px;
+}
+
+.reply-fbtn {
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 31px;
+    height: 22px;
 }
 /* 댓글 반복 */
