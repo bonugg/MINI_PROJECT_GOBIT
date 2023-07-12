@@ -43,7 +43,6 @@ a {
     display: flex;
     background-color: white;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     width: 70%;
     min-height: 92.5vh;
@@ -78,6 +77,7 @@ a {
 /* 내용 부분 */
 .div-content {
     width: 90%;
+    min-height: 300px;
     padding-top: 5px;
     padding-bottom: 5px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
