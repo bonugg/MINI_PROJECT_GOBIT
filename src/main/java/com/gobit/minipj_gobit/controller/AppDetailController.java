@@ -83,7 +83,6 @@ public class AppDetailController {
             if (appStart.isBefore(appEnd)) {
                 long appNum = approvalDTO.getAppNum();
                 approvalService.saveApproval(approvalDTO.toEntity());
-                approvalService.updateAlarm(0, appNum);
                 returnMap.put("msg", "출장 결재가 수정되었습니다");
                 returnMap.put("result", "success");
                 returnMap.put("redirectUrl", "/appDetail");
@@ -120,7 +119,6 @@ public class AppDetailController {
             if (appStart.isBefore(appEnd)) {
                 long appNum = approvalDTO.getAppNum();
                 approvalService.saveApproval(approvalDTO.toEntity());
-                approvalService.updateAlarm(0, appNum);
                 returnMap.put("msg", "회의 결재가 수정되었습니다");
                 returnMap.put("result", "success");
                 returnMap.put("redirectUrl", "/appDetail");
@@ -195,7 +193,6 @@ public class AppDetailController {
                     System.out.println("결재 수정 시 연차 사용일: " + vacUsed);
                     System.out.println("결재 수정 시 잔여 연차일: " + vacLeft);
                     vacationService.saveVacation(vacUsed, vacLeft, userNum);
-                    approvalService.updateAlarm(0, appNum);
                     returnMap.put("msg", "휴가 결재가 수정되었습니다");
                     returnMap.put("result", "success");
                     returnMap.put("redirectUrl", "/appDetail");
