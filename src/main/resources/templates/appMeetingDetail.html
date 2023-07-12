@@ -9,6 +9,7 @@
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/appMeetingDetail.css">
+        <link rel="stylesheet" type="text/css" href="/css/approvalDetailPage.css">
 
     </th:block>
 </head>
@@ -30,17 +31,17 @@
                             <input type="hidden" id="appNum" name="appNum" th:value="${approval.appNum}">
                             <input type="hidden" name="appAlarm" th:value="${approval.appAlarm}">
                             <input type="hidden" name="appSort" th:value="${approval.appSort}">
-                            <input type="hidden" name="appState" value="미승인">
+                            <input type="hidden" id="appState" name="appState" th:value="${approval.appState}">
                             <input type="hidden" name="appWriDate" th:value="${approval.appWriDate}">
                             <input type="hidden" name="userNum" th:value="${approval.userNum.USERNUM}">
                             <section id="inputData-section">
                                 <div class="input-date">
                                     <div>회의날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="inputDate-start" name="appStart" th:value="${approval.appStart}" required
+                                        <input type="datetime-local" id="input-appStart" name="appStart" th:value="${approval.appStart}" required
                                                onchange="printDate()">
                                         <p>~</p>
-                                        <input type="datetime-local" id="inputDate-end" name="appEnd" th:value="${approval.appEnd}" required
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" th:value="${approval.appEnd}" required
                                                onchange="printDate()">
                                     </div>
                                 </div>
