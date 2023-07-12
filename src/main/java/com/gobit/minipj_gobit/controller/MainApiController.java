@@ -61,6 +61,7 @@ public class MainApiController {
         Calendar calendar = new Calendar();
         calendar.setUser(approval.getUserNum());
         calendar.setApproval(approval);
+
         if (approval.getAppSort().equals("V")) {
             caltype = "휴가";
         } else if (approval.getAppSort().equals("B")) {

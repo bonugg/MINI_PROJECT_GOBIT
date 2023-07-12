@@ -44,15 +44,13 @@ public class ApprovalDTO {
     private long appVacReq;             //결재_휴가신청일
     private double appVacReqDaysD;
     private int appAlarm;               //알림 전송용 코드
+    private String appSign;
 
 
     public Approval toEntity() {
-        String appSortString = this.appSort;
-        String appSortChr = appSortString;
-
         Approval.ApprovalBuilder builder = Approval.builder()
                 .appNum(this.appNum)
-                .appSort(appSortChr)
+                .appSort(this.appSort)
                 .userNum(this.userNum)
                 .appUserNum(this.appUserNum)
                 .appWriDate(LocalDateTime.now())
@@ -64,7 +62,8 @@ public class ApprovalDTO {
                 .appParticipant(this.appParticipant)
                 .appVacType(this.appVacType)
                 .appVacReq(this.appVacReq)
-                .appAlarm(this.appAlarm);
+                .appAlarm(this.appAlarm)
+                .appSign(this.appSign);
 
         if (this.appStart == null || this.appEnd == null) {
             LocalDateTime appStartTime = LocalDateTime.of(this.appStartDay, LocalTime.MIDNIGHT);

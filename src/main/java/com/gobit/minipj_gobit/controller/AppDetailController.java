@@ -41,15 +41,15 @@ public class AppDetailController {
     public ModelAndView getApproval(@PathVariable long appNum) {
         ModelAndView mv = new ModelAndView();
         Approval approval = approvalService.getApproval(appNum);
-//        Vacation vacation = vacationService.getVacation(approval.getUserNum().getUSERNUM());
         System.out.println("회원번호: " + approval.getUserNum().getUSERNUM());
         System.out.println("vacation 결과: " + vacationService.getVacation(approval.getUserNum().getUSERNUM()));
         Vacation vacation = vacationService.getVacation(approval.getUserNum().getUSERNUM());
-        if (approval.getAppSort().equals("M")) {
+        if(approval.getAppSort().equals("M")){
             mv.setViewName("appMeetingDetail.html");
-        } else if (approval.getAppSort().equals("V")) {
+        }
+        else if(approval.getAppSort().equals("V")){
             mv.setViewName("appVacationDetail.html");
-        } else if (approval.getAppSort().equals("B")) {
+        }else if(approval.getAppSort().equals("B")){
             mv.setViewName("appBuisnessDetail.html");
         } else {
             System.out.println("다음 종류를 찾지 못했습니다.");
@@ -176,18 +176,12 @@ public class AppDetailController {
         System.out.println("수정한 휴가일수: " + newVacReq);
 
         try {
-<<<<<<< HEAD
-            if ((appStart != null && appEnd != null && appStart.isBefore(appEnd)) || (appStart2 != null && appEnd2 != null && appStart2.isBefore(appEnd2))) {
-                System.out.println("통과 테스트1");
-                if (vacLeft + appVacReq > newVacReq) {
-=======
             if (isDateFormatOk != true) {
                 returnMap.put("msg", "휴가 시작일과 휴가의 종료일을 다시 입력해주세요");
                 returnMap.put("result", "fail");
                 System.out.println("휴가 날짜 입력 오류로 휴가 결재 신청되지 않음");
             } else {
                 if(vacLeft + appVacReq > newVacReq){
->>>>>>> c379d043a9fbb753ca574f771cd18906604c46b0
                     //복구
                     approvalService.updateApproval(approvalDTO.toEntity());
                     vacUsed -= appVacReq;
