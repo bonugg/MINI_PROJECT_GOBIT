@@ -55,7 +55,7 @@ public class AppDetailController {
             System.out.println("다음 종류를 찾지 못했습니다.");
         }
         //알람값 설정
-        if(approval.getAppState() != "미승인"){
+        if(!(approval.getAppState().equals("미승인"))){
             approvalService.updateAlarm(1, appNum);
             Approval newApproval = approvalService.getApproval(appNum);
             ApprovalDTO approvalDTO = newApproval.toDTO();
