@@ -140,6 +140,7 @@
                                     <a th:id="|reply_${reply.id}|"></a>
                                     <div class="reply-wri-btn">
                                         <p class="reply-writer">
+                                            <img id="reply_user_img" th:src="@{'/upload/' + ${reply.user.USERIMAGE}}">
                                             <span th:text="${reply.user.USERNAME}"></span>
                                             <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></span>
                                         </p>
