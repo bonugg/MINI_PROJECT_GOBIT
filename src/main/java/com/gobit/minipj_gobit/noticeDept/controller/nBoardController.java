@@ -1,38 +1,33 @@
 package com.gobit.minipj_gobit.noticeDept.controller;
 
 import com.gobit.minipj_gobit.entity.User;
-import com.gobit.minipj_gobit.boardDept.entity.BoardForm;
-import com.gobit.minipj_gobit.boardDept.entity.dBoard;
-import com.gobit.minipj_gobit.noticeDept.dto.nBoardDto;
 import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
-import com.gobit.minipj_gobit.noticeDept.entity.nBoardNoticeFile;
-import com.gobit.minipj_gobit.noticeDept.repository.nBoardRepository;
+import com.gobit.minipj_gobit.noticeDept.entity.nBoardFile;
+import com.gobit.minipj_gobit.noticeDept.file.FileUtil;
+import com.gobit.minipj_gobit.noticeDept.repository.NfileRepository;
 import com.gobit.minipj_gobit.noticeDept.service.NfileService;
-import com.gobit.minipj_gobit.noticeDept.service.nBoardImgService;
 import com.gobit.minipj_gobit.noticeDept.service.nBoardService;
 import com.gobit.minipj_gobit.repository.UserRepository;
-import jakarta.transaction.Transactional;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.monitor.FileEntry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.print.PageFormat;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/noticeDept")
@@ -41,7 +36,8 @@ public class nBoardController {
 
     @Autowired
     private nBoardService boardService;
-
+    @Autowired
+    private NfileRepository nfileRepository;
     @Autowired
     private UserRepository userRepository;
 
@@ -49,7 +45,7 @@ public class nBoardController {
     private NfileService nfileService;
 
     @Autowired
-    private nBoardImgService boardImgService;
+    private FileUtil fileUtil;
 
 
     @GetMapping("/list")
@@ -86,40 +82,66 @@ public class nBoardController {
 
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
+        System.out.println("============");
+        System.out.println(id);
+        System.out.println("============");
         nBoard board = this.boardService.getBoard(id);
-        List<nBoardNoticeFile> boardFileList = boardImgService.getBoardFiles(board);
-
+        System.out.println("============");
         model.addAttribute("nBoard", board);
-        model.addAttribute("boardFiles", boardFileList);
         return "noticeDept/noticeDetail";
     }
 
     @PostMapping("/noticeWrite")
-    @Transactional
-    public String write(nBoard board, Principal principal, MultipartFile[] files) {
+    public String write(@RequestParam("title") String title,
+                        @RequestParam("content") String content,
+                        @RequestParam("files") List<MultipartFile> multipartFiles,
+                        Principal principal) {
         User user = this.userRepository.findByUSERENO(Integer.parseInt(principal.getName())).get();
+        Long id = boardService.write(title, content, user);
+        List<nBoardFile> files = fileUtil.uploadFiles(multipartFiles);
 
-        boardService.write(board, user);
-
-        List<nBoardNoticeFile> boardNoticeFiles = nfileService.saveFiles(board, files);
-
-       for(nBoardNoticeFile boardNoticeFile : boardNoticeFiles) {
-           boardImgService.saveBoardFiles(boardNoticeFile);
-       }
-
+        nfileService.saveFiles(id, files);
         return "redirect:/noticeDept/list";
     }
 
     @GetMapping("/modify/{id}")
-    public String modify(Model model, @PathVariable("id") Long id) {
+    public String modify(Model model,
+                         @PathVariable("id") Long id) {
         nBoard board = boardService.getBoard(id);
         model.addAttribute("nBoard", board);
         return "noticeDept/noticeEdit";
     }
 
-    @PostMapping("/modify/{id}")
-    public String modifyCreate( @PathVariable("id") Long id,nBoard board) {
-        boardService.modify(board, id);
+    @PostMapping("/modify")
+    public String modifyPost(@RequestParam("id") Long id,
+                             @RequestParam("title") String title,
+                             @RequestParam("content") String content,
+                             @RequestParam(value = "items", required = false, defaultValue = "null") List<String> exFilesStr,
+                             @RequestParam(value = "files") List<MultipartFile> multipartFiles) {
+        System.out.println("-----------시작---------------");
+        if(multipartFiles != null){
+            System.out.println(multipartFiles.get(0));
+        }else {
+            System.out.println(multipartFiles);
+        }
+
+        boardService.modify(id, title, content);
+
+        if (exFilesStr != null) {
+            System.out.println(exFilesStr);
+            System.out.println("--기존 파일 리스트---");
+            //기존 파일리스트 조회
+            List<nBoardFile> exFiles = nfileService.findByFiles(id);
+            System.out.println(exFiles);
+            System.out.println("--기존 파일 리스트---");
+            //수정된 파일 삭제
+            nfileService.modifyFiles(exFilesStr, exFiles);
+        }
+
+        //새로운 파일 저장
+        List<nBoardFile> files = fileUtil.uploadFiles(multipartFiles);
+        nfileService.saveFiles(id, files);
+
         return "redirect:/noticeDept/detail/" + id;
     }
 
@@ -127,11 +149,31 @@ public class nBoardController {
     public String delete(@PathVariable("id") Long id) {
         nBoard nBoard = this.boardService.getBoard(id);
         this.boardService.delete(nBoard);
-        return "redirect:/noticeDept/list";
+        return  "redirect:/noticeDept/list";
     }
 
     @GetMapping("/noticeWrite")
     public String noticeWrite() {
         return "/noticeDept/noticeWrite";
+    }
+
+    @GetMapping("/down/{fileId}")
+    public void fileDown(@PathVariable("fileId") Long fileId, HttpServletResponse response) throws IOException {
+        nBoardFile file = nfileService.findById(fileId);
+        Resource resource = fileUtil.readFileAsResource(file);
+
+//        String originalFilename = file.getOriginalName();
+//        String encodedFilename = URLEncoder.encode(originalFilename, StandardCharsets.UTF_8.toString());
+
+        try {
+            String filename = URLEncoder.encode(file.getOriginalName(), "UTF-8");
+            response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; fileName=\"" + filename + "\";");
+            response.setHeader(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.getSize()));
+            FileCopyUtils.copy(resource.getInputStream(), response.getOutputStream());
+        } catch (IOException e) {
+            throw new RuntimeException("파일 다운로드 중에 오류가 발생했습니다: " + e.getMessage());
+        }
+
     }
 }

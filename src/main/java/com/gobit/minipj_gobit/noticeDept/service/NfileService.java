@@ -1,118 +1,110 @@
 package com.gobit.minipj_gobit.noticeDept.service;
 
-import com.gobit.minipj_gobit.noticeDept.dto.nFileDto;
+import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
 import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
-import com.gobit.minipj_gobit.noticeDept.entity.nBoardNoticeFile;
+import com.gobit.minipj_gobit.noticeDept.entity.nBoardFile;
 import com.gobit.minipj_gobit.noticeDept.repository.NfileRepository;
-import jakarta.transaction.Transactional;
+import com.gobit.minipj_gobit.noticeDept.repository.nBoardRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.gobit.minipj_gobit.boardDept.file.FileUtils.UPLOAD_PATH;
 
 @Service
+@RequiredArgsConstructor
 public class NfileService {
+    private final NfileRepository fileRepository;
+    private final nBoardRepository boardRepository;
 
-    @Autowired
-    private NfileRepository nfileRepository;
-
-    public NfileService(NfileRepository nfileRepository) {
-        this.nfileRepository = nfileRepository;
+    @Transactional
+    public void saveFiles(final Long boardId, final List<nBoardFile> files) {
+        nBoard board = boardRepository.findById(boardId).get();
+        for (nBoardFile file : files) {
+            file.setBoard(board);
+        }
+        fileRepository.saveAll(files);
     }
 
-//    @Transactional
-//    public Long saveFile(nFileDto fileDto) {
-//        return nfileRepository.save(fileDto.toEntity()).getNfileNo();
-//    }
-//
-//    @Transactional
-//    public nFileDto getFile(Long nfileNo) {
-//        nBoardNoticeFile file = nfileRepository.findById(id).get();
-//
-//        nFileDto fileDto = nFileDto.builder()
-//                .nfileNo(nfileNo)
-//                .nfileOrigin(file.getNfileOrigin())
-//                .nfileName(file.getNfileName())
-//                .nfilePath(file.getNfilePath())
-//                .build();
-//        return  fileDto;
-//
-//    }
+    public List<Map<String, Object>> findAllFileByBoardId(Long boardId) {
+        nBoard board = boardRepository.findById(boardId).get();
+        List<nBoardFile> fileList = fileRepository.findAllByBoard(board);
+        return changeListMap(fileList);
+    }
 
+    public nBoardFile findById(Long id) {
+        return fileRepository.findById(id).get();
+    }
 
-//    @Value("${file.dir}")
-//    private String fileDir;
-//
-//    public Long saveFile(MultipartFile files) throws IOException {
-//        if (files.isEmpty()) {
-//            throw new IllegalArgumentException("업로드된 파일이 없습니다.");
-//        }
-//
-//        String origName = files.getOriginalFilename();
-//        String uuid = UUID.randomUUID().toString();
-//        String extension = origName.substring(origName.lastIndexOf("."));
-//        String savedName = uuid + extension;
-//        String savedPath = fileDir + File.separator + savedName;
-//
-//        nBoardNoticeFile fileInfo = nBoardNoticeFile.builder()
-//                .nfileOrigin(origName)
-//                .nfileName(savedName)
-//                .nfilePath(savedPath)
-//                .build();
-//
-//        try {
-//            Files.copy(files.getInputStream(), Paths.get(savedPath), StandardCopyOption.REPLACE_EXISTING);
-//        } catch (IOException e) {
-//            // 파일 저장 실패 처리
-//            throw new IOException("파일을 저장하는 동안 오류가 발생했습니다.", e);
-//        }
-//
-//        nBoardNoticeFile savedFile = nfileRepository.save(fileInfo);
-//
-//        return savedFile.getNfileNo();
-//    }
+    List<Map<String, Object>> changeListMap(List<nBoardFile> fileList) {
+        List<Map<String, Object>> returnListMap = fileList.stream().map(file -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", file.getId());
+            map.put("originalName", file.getOriginalName());
+            map.put("saveName", file.getSaveName());
+            map.put("size", file.getSize());
+            map.put("createDate", file.getCreateDate());
+            return map;
+        }).collect(Collectors.toList());
 
-    public List<nBoardNoticeFile> saveFiles(nBoard board, MultipartFile[] files) {
+        return returnListMap;
+    }
 
-        List<nBoardNoticeFile> boardFiles = new ArrayList<>();
+    public List<nBoardFile> findByFiles(Long boardId) {
+        nBoard board = boardRepository.findById(boardId).get();
+        List<nBoardFile> fileList = fileRepository.findAllByBoard(board);
+        return fileList;
+    }
 
-        for(MultipartFile file : files) {
-            if(!file.isEmpty()) {
-                String fileOrigin = file.getOriginalFilename();
-                String fileExt = fileOrigin.substring(fileOrigin.lastIndexOf("."));
-                String fileName = UUID.randomUUID().toString() + fileExt;
-                String filePath = "C:/tmp/uploads/" + fileName;
+    public void modifyFiles(List<String> existingFiles, List<nBoardFile> modifiedFiles) {
+        List<nBoardFile> newFiles = new ArrayList<>();
 
-                try {
+        for (nBoardFile file : modifiedFiles) {
+            boolean isExisting = false;
 
-                    file.transferTo(new File(filePath));
-
-                } catch (IOException ie) {
-                    ie.getStackTrace();
+            for (String str : existingFiles) {
+                if (str.equals(file.getOriginalName())) {
+                    isExisting = true;
+                    break;
                 }
+            }
 
-                nBoardNoticeFile boardfile = nBoardNoticeFile.builder()
-                        .board(board)
-                        .nfileName(fileName)
-                        .nfileOrigin(fileOrigin)
-                        .nfilePath(filePath)
-                                .build();
-
-                boardFiles.add(boardfile);
+            if (!isExisting) {
+                newFiles.add(file);
             }
         }
 
-        return boardFiles;
+        for (nBoardFile file : newFiles) {
+            deleteFile(file);
+            fileRepository.delete(file);
+        }
+    }
+
+    public void deleteFile(nBoardFile file) {
+        String uploadedDate = file.getCreateDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyMMdd"));
+        String filename = file.getSaveName();
+        Path filePath = Paths.get(UPLOAD_PATH, uploadedDate, filename);
+
+        try {
+            // 파일 삭제
+            Files.deleteIfExists(filePath);
+
+            // 파일이 삭제되었는지 확인
+            if (Files.exists(filePath)) {
+                System.out.println("파일 삭제에 실패하였습니다.");
+            } else {
+                System.out.println("파일이 성공적으로 삭제되었습니다.");
+            }
+        } catch (Exception e) {
+            System.out.println("파일 삭제 중 오류가 발생하였습니다: " + e.getMessage());
+        }
     }
 
 }
