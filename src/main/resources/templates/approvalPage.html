@@ -25,7 +25,7 @@
                 <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
                 <!-- 1st (06.20 17:00) fragment > header에 링크 추가 완료 -->
                 <div id="app_main_title">
-                    <p>전자결재 요청(팀장용)</p>
+                    <p>결재 승인</p>
                 </div>
 
                 <div id="app_list_card">
@@ -45,28 +45,57 @@
                         <p class="card_title">승인 완료 문서</p>
                         <p class="card_content" th:text="${cntLeadFinApp + ' 건'}"></p>
                     </div>
-
                 </div>
 
                 <div style="clear: both;"></div>
 
                 <div class="app-list-tab">
 
-                    <ul class="taps">
-                        <li class="tap-link here" data-tab="tap_all">전체</li>
-                        <li class="tap-link" data-tab="tap_meeting">회의</li>
-                        <li class="tap-link" data-tab="tap_business">출장</li>
-                        <li class="tap-link" data-tab="tap_vacation">휴가</li>
-
-                    </ul>
                     <form th:action="@{/approvalList}" method="get">
+                        <input type="hidden" name="cls" th:value="${cls}">
                         <div class="search-box">
-                            <input type="text" class="search-txt" name="sWord" th:value="${sWord}" placeholder="검색어를 입력하시오">
-                            <button type="submit" class="search-btn" >
+                            <input type="text" class="search-txt" name="sWord" th:value="${sWord}"
+                                   placeholder="검색어를 입력하시오">
+                            <button type="submit" class="search-btn">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
                     </form>
+
+                    <ul class="taps">
+                        <li class="tap-link here" data-tab="tap_all"
+                            th:if="${cls == ''}"
+                            th:onClick="|window.location.href='/approvalList?cls='|">전체
+                        </li>
+                        <li class="tap-link" data-tab="tap_all"
+                            th:unless="${cls == ''}"
+                            th:onClick="|window.location.href='/approvalList?cls='|">전체
+                        </li>
+                        <li class="tap-link here" data-tab="tap_meeting"
+                            th:if="${cls == 'M'}"
+                            th:onClick="|window.location.href='/approvalList?cls=M'|">회의
+                        </li>
+                        <li class="tap-link" data-tab="tap_meeting"
+                            th:unless="${cls=='M'}"
+                            th:onClick="|window.location.href='/approvalList?cls=M'|">회의
+                        </li>
+                        <li class="tap-link here" data-tab="tap_business"
+                            th:if="${cls=='B'}"
+                            th:onClick="|window.location.href='/approvalList?cls=B'|">출장
+                        </li>
+                        <li class="tap-link" data-tab="tap_business"
+                            th:unless="${cls=='B'}"
+                            th:onClick="|window.location.href='/approvalList?cls=B'|">출장
+                        </li>
+                        <li class="tap-link here" data-tab="tap_vacation"
+                            th:if="${cls=='V'}"
+                            th:onClick="|window.location.href='/approvalList?cls=V'|">휴가
+                        </li>
+                        <li class="tap-link" data-tab="tap_vacation"
+                            th:unless="${cls=='V'}"
+                            th:onClick="|window.location.href='/approvalList?cls=V'|">휴가
+                        </li>
+                    </ul>
 
                     <div style="clear: both;"></div>
 
@@ -85,7 +114,7 @@
                                     <th style="width: 12%">승인 요청자</th>
                                 </tr>
                                 </thead>
-                                <tbody >
+                                <tbody>
                                 <tr th:each="approval : ${appForLeader}">
                                     <!-- 문서번호 -->
                                     <th class="left-line" th:text="${approval.appNum}"></th>
@@ -97,17 +126,13 @@
                                         <span th:case="M">회의</span>
                                     </td>
 
-                                    <!-- 문서제목.........우선 연결은 좀 나중에 2023.07.03 14:35 -->
-                                    <td><a th:href="@{/approvalList/{appNum} (appNum=${approval.appNum})}" th:text="${approval.appContent}"></a></td>
+                                    <td><a th:href="@{/approvalList/{appNum} (appNum=${approval.appNum})}"
+                                           th:text="${approval.appContent}"></a></td>
 
-
-                                    <!-- 결재 작성일 -->
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
 
-                                    <!-- 결재(반려)일 -->
                                     <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
 
-                                    <!-- 결재 상태 -->
                                     <td th:text="${approval.appState}"></td>
 
                                     <!-- 결재 요청자  -->
@@ -116,129 +141,6 @@
                                 </tbody>
                             </table>
                         </div>
-
-                        <div id="tap_meeting" class="tab-content">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th style="width: 10%">번호</th>
-                                    <th style="width: 10%">구분</th>
-                                    <th style="width: 28%">문서제목</th>
-                                    <th style="width: 12%">결재 작성일</th>
-                                    <th style="width: 12%">결재(반려)일</th>
-                                    <th style="width: 12%">결재상태</th>
-                                    <th style="width: 12%">승인 요청자</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="approval : ${appForLeader}" th:if="${approval.appSort} == 'M'">
-                                    <!-- 문서번호 -->
-                                    <th class="left-line" th:text="${approval.appNum}"></th>
-
-                                    <!-- 구분-->
-                                    <td>회의</td>
-
-                                    <!-- 문서제목.........우선 연결은 좀 나중에 2023.07.03 14:35 -->
-                                    <td><a href="#" th:text="${approval.appContent}"></a></td>
-
-                                    <!-- 결재 작성일 -->
-                                    <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
-
-                                    <!-- 결재(반려)일 -->
-                                    <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
-
-                                    <!-- 결재 상태 -->
-                                    <td th:text="${approval.appState}"></td>
-
-                                    <!-- 결재 요청자  -->
-                                    <td class="right-line" th:text="${approval.userNum.getUSERNAME()}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div id="tap_business" class="tab-content">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th style="width: 10%">번호</th>
-                                    <th style="width: 10%">구분</th>
-                                    <th style="width: 28%">문서제목</th>
-                                    <th style="width: 12%">결재 작성일</th>
-                                    <th style="width: 12%">결재(반려)일</th>
-                                    <th style="width: 12%">결재상태</th>
-                                    <th style="width: 12%">승인 요청자</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="approval : ${appForLeader}" th:if="${approval.appSort} == 'B'">
-                                    <!-- 문서번호 -->
-                                    <th class="left-line" th:text="${approval.appNum}"></th>
-
-                                    <!-- 구분-->
-                                    <td>출장</td>
-
-                                    <!-- 문서제목.........우선 연결은 좀 나중에 2023.07.03 14:35 -->
-                                    <td><a href="#" th:text="${approval.appContent}"></a></td>
-
-                                    <!-- 결재 작성일 -->
-                                    <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
-
-                                    <!-- 결재(반려)일 -->
-                                    <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
-
-                                    <!-- 결재 상태 -->
-                                    <td th:text="${approval.appState}"></td>
-
-                                    <!-- 결재 요청자  -->
-                                    <td class="right-line" th:text="${approval.userNum.getUSERNAME()}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div id="tap_vacation" class="tab-content">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th style="width: 10%">번호</th>
-                                    <th style="width: 10%">구분</th>
-                                    <th style="width: 28%">문서제목</th>
-                                    <th style="width: 12%">결재 작성일</th>
-                                    <th style="width: 12%">결재(반려)일</th>
-                                    <th style="width: 12%">결재상태</th>
-                                    <th style="width: 12%">승인 요청자</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="approval : ${appForLeader}" th:if="${approval.appSort} == 'V'">
-                                    <!-- 문서번호 -->
-                                    <th class="left-line" th:text="${approval.appNum}"></th>
-
-                                    <!-- 구분-->
-                                    <td>휴가</td>
-
-                                    <!-- 문서제목.........우선 연결은 좀 나중에 2023.07.03 14:35 -->
-                                    <td><a href="#" th:text="${approval.appContent}"></a></td>
-
-                                    <!-- 결재 작성일 -->
-                                    <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
-
-                                    <!-- 결재(반려)일 -->
-                                    <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
-
-                                    <!-- 결재 상태 -->
-                                    <td th:text="${approval.appState}"></td>
-
-                                    <!-- 결재 요청자  -->
-                                    <td class="right-line" th:text="${approval.userNum.getUSERNAME()}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-
-
                     </div>
                 </div>
 
@@ -248,7 +150,7 @@
                         <th:block th:if="${page > 0}"> <!-- 페이지가 하나 뿐일 때 0과 1이 나타나기때문에 0은 필터해주기 위한 작업 -->
                             <!-- 현재 페이지 표출은 인덱스+1인 상태라, nowpage가 아닐 경우, -1을 해서 해당 페이지 링크로 갈 수 있도록 인덱스로 맞춰줌 -->
                             <a th:if="${page != nowPage}"
-                               th:href="@{/approvalList(page = ${page - 1}, keyword = ${param.keyword})}"
+                               th:href="@{/approvalList(page = ${page - 1}, cls = ${cls}, sWord = ${param.sWord})}"
                                th:text="${page}" class="pageNum"></a>
                             <strong th:if="${page == nowPage}" th:text="${page}" id="nowPage"></strong>
                         </th:block>
@@ -261,29 +163,8 @@
 </div>
 </body>
 <th:block layout:fragment="script">
-    <!--사용할 자바스크립트는 여기에 첨부 -->
-<!--    <script src="/js/jquery-3.7.0.min.js"></script>-->
-<!--    <script>-->
-<!--        $(function () {-->
-<!--            $(".tap-link").click(function () {-->
-<!--                dept = $(this).data("tab");-->
-<!--                console.log(dept);-->
-<!--            });-->
-<!--        })-->
-<!--    </script>-->
     <script th:inline="javascript">
-        $(document).ready(function () {
-            $('.tap-link').click(function () {
-                let tab_id = $(this).attr('data-tab');
 
-                $('.tap-link').removeClass('here');
-                $('.tab-content').removeClass('now');
-
-                $(this).addClass('here');
-                $("#" + tab_id).addClass('now');
-            });
-
-        });
     </script>
 </th:block>
 </html>

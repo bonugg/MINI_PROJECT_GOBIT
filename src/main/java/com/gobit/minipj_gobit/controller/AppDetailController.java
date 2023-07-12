@@ -31,25 +31,24 @@ public class AppDetailController {
     private VacationService vacationService;
 
     @Autowired
-    public AppDetailController(ApprovalService approvalService, VacationService vacationService){
+    public AppDetailController(ApprovalService approvalService, VacationService vacationService) {
         this.approvalService = approvalService;
         this.vacationService = vacationService;
     }
-    
+
     //결재 상세페이지로 이동
     @GetMapping("/{appNum}")
     public ModelAndView getApproval(@PathVariable long appNum) {
         ModelAndView mv = new ModelAndView();
         Approval approval = approvalService.getApproval(appNum);
         Vacation vacation = vacationService.getVacation(approval.getUserNum().getUSERNUM());
-        if(approval.getAppSort() == 'M'){
+        if (approval.getAppSort().equals("M")) {
             mv.setViewName("appMeetingDetail.html");
-        }
-        else if(approval.getAppSort() == 'V'){
+        } else if (approval.getAppSort().equals("V")) {
             mv.setViewName("appVacationDetail.html");
-        }else if(approval.getAppSort() == 'B'){
+        } else if (approval.getAppSort().equals("B")) {
             mv.setViewName("appBuisnessDetail.html");
-        }else{
+        } else {
             System.out.println("다음 종류를 찾지 못했습니다.");
         }
         ApprovalDTO approvalDTO = approval.toDTO();
@@ -166,7 +165,7 @@ public class AppDetailController {
         try {
             if ((appStart != null && appEnd != null && appStart.isBefore(appEnd)) || (appStart2 != null && appEnd2 != null && appStart2.isBefore(appEnd2))) {
                 System.out.println("통과 테스트1");
-                if(vacLeft + appVacReq > newVacReq){
+                if (vacLeft + appVacReq > newVacReq) {
                     //복구
                     approvalService.updateApproval(approvalDTO.toEntity());
                     vacUsed -= appVacReq;
@@ -181,7 +180,7 @@ public class AppDetailController {
                     returnMap.put("result", "success");
                     returnMap.put("redirectUrl", "/appDetail");
                     System.out.println(appNum + "번 휴가 결재가 수정됨");
-                }else{
+                } else {
                     returnMap.put("msg", "연차 잔여일이 부족합니다.");
                     returnMap.put("result", "fail");
                     System.out.println("잔여 연차 부족으로 결재 수정되지 않음");
@@ -203,7 +202,7 @@ public class AppDetailController {
     }
 
     @PostMapping("/meeting/{appNum}")
-    public ModelAndView deleteMeeting(@PathVariable long appNum){
+    public ModelAndView deleteMeeting(@PathVariable long appNum) {
         System.out.println("=======================meeting approval delete result=======================");
         System.out.println("approvalDTO 출력 결과:" + appNum);
 //        System.out.println("approvalDTO.getAppNum() 결과: " + approvalDTO.getAppNum());
@@ -214,7 +213,7 @@ public class AppDetailController {
     }
 
     @PostMapping("/buisness/{appNum}")
-    public ModelAndView deleteBuisness(@PathVariable long appNum){
+    public ModelAndView deleteBuisness(@PathVariable long appNum) {
         System.out.println("=======================buisness approval delete result=======================");
         System.out.println("approvalDTO 출력 결과:" + appNum);
 //        System.out.println("approvalDTO.getAppNum() 결과: " + approvalDTO.getAppNum());
@@ -226,7 +225,7 @@ public class AppDetailController {
 
     @PostMapping("/vacation/{appNum}")
     @ResponseBody
-    public ResponseEntity<?> deleteVacation(@PathVariable long appNum){
+    public ResponseEntity<?> deleteVacation(@PathVariable long appNum) {
         System.out.println("=======================vacation approval delete result=======================");
         ResponseDTO<Map<String, String>> responseDTO = new ResponseDTO<Map<String, String>>();
         Map<String, String> returnMap = new HashMap<String, String>();
@@ -240,7 +239,7 @@ public class AppDetailController {
         System.out.println("기존 연차 사용일수: " + vacUsed);
         System.out.println("기존 연차 잔여일수: " + vacLeft);
 
-        try{
+        try {
             vacUsed -= appVacReq;
             vacLeft += appVacReq;
             System.out.println("결재 삭제 시 연차 사용일: " + vacUsed);
@@ -265,5 +264,5 @@ public class AppDetailController {
 
     }
 
-    
+
 }
