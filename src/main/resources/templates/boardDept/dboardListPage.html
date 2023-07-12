@@ -127,11 +127,22 @@
 </div>
 <script>
 $(document).ready(function () {
+    function handleSearchKeyPress(event) {
+        // Enter 키의 keyCode 값은 13
+        if (event.keyCode === 13) {
+            event.preventDefault(); // 기본 동작 방지
+            document.getElementById("btn_search").click(); // 검색 버튼 클릭
+        }
+    }
+
+    document.getElementById("search_kw").addEventListener("keyup", handleSearchKeyPress);
+
     const page_elements = document.getElementsByClassName("page_link");
 
     function clickPageBtn() {
         // 현재 페이지의 URL
         var url = new URL(window.location.href);
+        var currentPath = window.location.pathname;
 
         // URLSearchParams 객체 생성
         var params = new URLSearchParams(url.search);
@@ -144,54 +155,62 @@ $(document).ready(function () {
         console.log(kw); // 출력: k
 
         var page = this.dataset.page;
+        if (currentPath.endsWith('/sorted-by-cnt') || currentPath.endsWith('/sorted-by-like')) {
+            var searchParams = new URLSearchParams(window.location.search);
+            searchParams.set('page', page);
+            var newURL = window.location.origin + currentPath + '?' + searchParams.toString();
+            window.location.href = newURL;
+        } else {
+            $.ajax({
+                url: "/api/list",
+                type: "GET",
+                data: {
+                    page: page,
+                    category: category,
+                    kw: kw,
+                },
+                success: function(response) {
+                    // Update the table body with the new data
+                    var tbodyHtml = "";
+                    response.content.forEach(function(boardDTO) {
+                        tbodyHtml += '<tr>';
+                        tbodyHtml += '<td>' + boardDTO.id + '</td>';
+                        tbodyHtml += '<td class="table-title">';
+                        tbodyHtml += '<a href="/boardDept/updateCnt/' + boardDTO.id + '">' + boardDTO.title + '</a>';
+                        tbodyHtml += '</td>';
+                        tbodyHtml += '<td class="table-name">' + boardDTO.username + '</td>';
+                        tbodyHtml += '<td class="table-date">' + formatDate(boardDTO.createDate) + '</td>';
+                        tbodyHtml += '<td class="table-cnt">' + boardDTO.cnt + '</td>';
+                        tbodyHtml += '<td class="table-like">' + boardDTO.like + '</td>';
+                        tbodyHtml += '</tr>';
+                    });
 
-        $.ajax({
-            url: "/api/list",
-            type: "GET",
-            data: {
-                page: page,
-                category: category,
-                kw: kw,
-            },
-            success: function(response) {
-                // Update the table body with the new data
-                var tbodyHtml = "";
-                response.content.forEach(function(boardDTO) {
-                    tbodyHtml += '<tr>';
-                    tbodyHtml += '<td>' + boardDTO.id + '</td>';
-                    tbodyHtml += '<td class="table-title">';
-                    tbodyHtml += '<a href="/boardDept/updateCnt/' + boardDTO.id + '">' + boardDTO.title + '</a>';
-                    tbodyHtml += '</td>';
-                    tbodyHtml += '<td class="table-name">' + boardDTO.username + '</td>';
-                    tbodyHtml += '<td class="table-date">' + formatDate(boardDTO.createDate) + '</td>';
-                    tbodyHtml += '<td class="table-cnt">' + boardDTO.cnt + '</td>';
-                    tbodyHtml += '<td class="table-like">' + boardDTO.like + '</td>';
-                    tbodyHtml += '</tr>';
-                });
+                    var tbody = document.querySelector("tbody");
+                    tbody.innerHTML = tbodyHtml;
 
-                var tbody = document.querySelector("tbody");
-                tbody.innerHTML = tbodyHtml;
+                    console.log(response);
 
-                console.log(response);
+                    var currentPage = response.number;
+                    var totalPages = response.totalPages;
 
-                var currentPage = response.number;
-                var totalPages = response.totalPages;
+                    var pagingButtons = generatePagingButtons(currentPage, totalPages);
 
-                var pagingButtons = generatePagingButtons(currentPage, totalPages);
+                    // 페이징 버튼 업데이트
+                    $(".paging").html(pagingButtons);
 
-                // 페이징 버튼 업데이트
-                $(".paging").html(pagingButtons);
+                    // 기존 페이지 버튼에 이벤트 리스너 제거
+                    $(".page_link").off("click");
 
-                // 기존 페이지 버튼에 이벤트 리스너 제거
-                $(".page_link").off("click");
+                    // 새로 생성된 페이지 버튼에 클릭 이벤트 리스너 추가
+                    $(".page_link").click(clickPageBtn);
+                },
+                error: function() {
+                    console.log("Error occurred during AJAX request.");
+                }
+            });
+        }
 
-                // 새로 생성된 페이지 버튼에 클릭 이벤트 리스너 추가
-                $(".page_link").click(clickPageBtn);
-            },
-            error: function() {
-                console.log("Error occurred during AJAX request.");
-            }
-        });
+
     }
 
     Array.from(page_elements).forEach(function(element) {
