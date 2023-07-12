@@ -19,7 +19,9 @@ $(function () {
         };
 
         socket.onmessage = (event) => {
+            console.log("---------------");
             console.log(event);
+            console.log("---------------");
             let jsonObj = JSON.parse(event.data);
             $('#hid').text(jsonObj.testcnt);
             if (userDept == jsonObj.userdept) {
