@@ -16,6 +16,7 @@ $(function () {
     }
 
     $("#btnUpdate").on("click", () => {
+        $("#btnUpdate").prop("disabled", true);
         $.ajax({
             url: "/appDetail/meeting",
             type: "post",
@@ -33,6 +34,8 @@ $(function () {
                 console.log(error);
             }
         });
+
+        $("#btnUpdate").off("click");
     });
 
     $('#btnDelete').on("click", () => {
@@ -53,6 +56,48 @@ $(function () {
 
 });
 
+function printDate() {
+    const dateStartInput = document.getElementById('input-appStart');
+    const dateEndInput = document.getElementById('input-appEnd');
+    const vacationDateElement = document.getElementById('appData-date');
+
+    if (dateStartInput != null && dateEndInput != null) {
+        const dateStart = dateStartInput.value;
+        const dateEnd = dateEndInput.value;
+        vacationDateElement.innerText = `${dateStart} ~ ${dateEnd}`;
+    }
+}
+
+function handleStartDate() {
+    const appStartInput = document.getElementById("input-appStart");
+    const appEndInput = document.getElementById("input-appEnd");
+    const appStartValue = new Date(appStartInput.value);
+    const appEndValue = new Date(appEndInput.value);
+    // 날짜 유효성 검사
+    if (appEndValue <= appStartValue) {
+        alert("회의 시작일은 회의 종료일보다 이전이어야 합니다");
+        // appEndInput.value = "";
+        return;
+    }
+    printDate();
+}
+
+function handleEndDate() {
+    const appStartInput = document.getElementById("input-appStart");
+    const appEndInput = document.getElementById("input-appEnd");
+
+    const appStartValue = new Date(appStartInput.value);
+    const appEndValue = new Date(appEndInput.value);
+
+    // 날짜 유효성 검사
+    if (appEndValue <= appStartValue) {
+        alert("회의 종료일은 회의 시작일보다 이후여야 합니다");
+        // appEndInput.value = "";
+        return;
+    }
+
+    printDate();
+}
 
 function printPlace() {
     const place = document.getElementById('input-appLocation').value;
