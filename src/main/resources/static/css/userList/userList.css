@@ -68,8 +68,8 @@ button {
 }
 
 .search_bth:hover{
-    background:#fff;
-    color:#181F42;
+    background:#253170;
+    color:white;
 }
 .search_bth:before,.search_bth:after{
     position:absolute;

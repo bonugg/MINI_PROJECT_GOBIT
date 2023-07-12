@@ -42,7 +42,7 @@
                     <div class="boody">
 
 
-                        <form action="/boardDept/modify" method="post" name="board" enctype="multipart/form-data">
+                        <form action="/boardDept/modify" method="post" name="board" enctype="multipart/form-data" id="final_form">
                             <input type="hidden" th:value="${board.id}" th:name="id" id="boardId">
                             <!-- 제목 -->
                             <div class="div-botitle">
@@ -191,6 +191,19 @@
                         alert('1000자 이하로 입력해 주세요.');
                     }
                 }
+            }
+        });
+
+        //빈 제목일 경우
+        var form = document.getElementById('final_form');
+
+        form.addEventListener('submit', function(event) {
+            var titleField = document.querySelector('input[name="title"]');
+            var titleValue = titleField.value.trim();
+
+            if (titleValue === '') {
+                event.preventDefault(); // 폼 제출을 막음
+                alert('제목을 입력해주세요.');
             }
         });
     });

@@ -276,6 +276,10 @@ a {
 
 
 /* 댓글 반복 */
+#reply_user_img {
+    width: 100px;
+    border-radius: 50%;
+}
 .div-reply-for {
     margin-top: 5px;
     margin-bottom: 5px;

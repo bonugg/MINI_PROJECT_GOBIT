@@ -69,7 +69,7 @@
 </div>
 <script>
     function categoryChange(e) {
-        var deptList = ['IT', '개발', '경영', '디자인', '인사', '마케팅'];
+        var deptList = ['IT', '개발', '경영', '디자인', '인사'];
         var positionList = ['신입', '팀장'];
         var nameList = ['이름'];
         var otherList = ['종류'];
@@ -160,6 +160,18 @@
         //사원 상세 조회
 
     });
+
+    function handleSearchKeyPress(event) {
+        // Enter 키의 keyCode 값은 13
+        if (event.keyCode === 13) {
+            event.preventDefault(); // 기본 동작 방지
+            document.querySelector(".search_bth").click(); // 검색 버튼 클릭
+        }
+    }
+
+    document.getElementById("search_keyword").addEventListener("keyup", handleSearchKeyPress);
+
+
 
 </script>
 </body>

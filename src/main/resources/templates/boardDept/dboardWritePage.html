@@ -42,11 +42,11 @@
                     <div class="boody">
 
 
-                        <form method="post" enctype="multipart/form-data">
+                        <form method="post" enctype="multipart/form-data" id="final_form">
                             <!-- 제목 -->
                             <div class="div-botitle">
                                 <div class="board-title">
-                                    <input type="text" name="title" placeholder="여기에 제목을 입력하세요.">
+                                    <input id="title_input" type="text" name="title" placeholder="여기에 제목을 입력하세요.">
                                 </div>
                             </div>
                             <!-- 제목 -->
@@ -133,6 +133,20 @@
                 }
             }
         });
+
+        //빈 제목일 경우
+        var form = document.getElementById('final_form');
+
+        form.addEventListener('submit', function(event) {
+            var titleField = document.querySelector('input[name="title"]');
+            var titleValue = titleField.value.trim();
+
+            if (titleValue === '') {
+                event.preventDefault(); // 폼 제출을 막음
+                alert('제목을 입력해주세요.');
+            }
+        });
+
     });
 
     // 파일 선택

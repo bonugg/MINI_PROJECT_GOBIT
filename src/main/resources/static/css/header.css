@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Noto Sans KR', sans-serif;
+    text-decoration: none!important;
 }
 ul li{
     list-style-type: none;
@@ -145,6 +146,7 @@ body::-webkit-scrollbar-track {
     width: 100%;
     height: 100%;
     display: flex;
+    text-align: center;
     align-items: center;
     justify-content: center;
     transition: background-color 0.25s ease-in-out;
@@ -163,8 +165,9 @@ body::-webkit-scrollbar-track {
 
 h6{
     width: 80px;
-    font-size: 16px;
+    font-size: 16px !important;
     text-align: center;
+    font-weight: bold !important;
 }
 a {
     color: inherit;   	    /* 부모 엘리먼트의 값을 물려받는다 */
