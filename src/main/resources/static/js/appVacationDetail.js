@@ -74,7 +74,33 @@ function handleVacType() {
     changeDateType();
 }
 
-function handleDate() {
+function handleStartDate() {
+    const appStartInput = document.getElementById("input-appStart");
+    const appEndInput = document.getElementById("input-appEnd");
+    const appStartValue = new Date(appStartInput.value);
+    const appEndValue = new Date(appEndInput.value);
+    // 날짜 유효성 검사
+    if (appEndValue <= appStartValue) {
+        alert("휴가 시작일은 휴가 종료일보다 이전이어야 합니다");
+        return;
+    }
+    calculateDateDifference();
+    printDate();
+}
+
+function handleEndDate() {
+    const appStartInput = document.getElementById("input-appStart");
+    const appEndInput = document.getElementById("input-appEnd");
+
+    const appStartValue = new Date(appStartInput.value);
+    const appEndValue = new Date(appEndInput.value);
+
+    // 날짜 유효성 검사
+    if (appEndValue <= appStartValue) {
+        alert("휴가 종료일은 휴가 시작일보다 이후여야 합니다");
+        return;
+    }
+
     calculateDateDifference();
     printDate();
 }
