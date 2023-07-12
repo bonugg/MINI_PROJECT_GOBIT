@@ -1,19 +1,18 @@
-package com.gobit.minipj_gobit.boardDept.entity;
+package com.gobit.minipj_gobit.noticeDept.entity;
 
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @Data
 @Entity
-@Table(name = "T_BOARD_DEPT_FILE")
+@Table(name = "T_BOARD_NOTICE_FILE")
 @NoArgsConstructor
-public class dBoardFile {
+public class nBoardFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,9 +21,10 @@ public class dBoardFile {
     private Long size;
     private LocalDateTime createDate;
     @ManyToOne
-    private dBoard board;
+    @JoinColumn(name = "NBOARD_NUM")
+    private nBoard board;
     @Builder
-    public dBoardFile(String originalName, String saveName, long size) {
+    public nBoardFile(String originalName, String saveName, long size) {
         this.originalName = originalName;
         this.saveName = saveName;
         this.size = size;
@@ -33,7 +33,7 @@ public class dBoardFile {
 
     @Override
     public String toString() {
-        return "dBoardFile{" +
+        return "nBoardFile{" +
                 "id=" + id +
                 ", originalName='" + originalName + '\'' +
                 ", saveName='" + saveName + '\'' +

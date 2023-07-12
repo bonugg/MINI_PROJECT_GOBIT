@@ -91,10 +91,14 @@ body::-webkit-scrollbar-track {
     align-items: center;
 }
 #my_div_2{
-    width: 150px;
+    width: 120px;
     display: flex;
     justify-content: left;
     align-items: center;
+    cursor: pointer;
+}
+#my_div_3{
+    width: 50px;
 }
 .nav_div{
     width: 18px;
@@ -107,7 +111,6 @@ body::-webkit-scrollbar-track {
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
 }
 #nav_img{
     width: 100%;
@@ -151,10 +154,10 @@ body::-webkit-scrollbar-track {
 .menu_text_div:hover{
     background-color: rgb(231, 231, 231);
 }
-.nav_div:hover .submenu {
+#my_div_2:hover .submenu {
     display: block;
     transform: scaleY(1);
-    transition: transform 0.3s ease-out;
+    transition: transform 0.4s ease-out;
 }
 
 

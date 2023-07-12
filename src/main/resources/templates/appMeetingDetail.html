@@ -96,19 +96,21 @@
                                     <div class="appConfirm">
                                         <table>
                                             <tr>
-                                                <td rowspan="4"> 결재</td>
+                                                <td rowspan="4" style="width: 40px;"> 결재</td>
                                                 <td>담당</td>
-                                                <td>팀장</td>
                                             </tr>
                                             <tr>
-                                                <td rowspan="2">담당자 싸인</td>
-                                                <td rowspan="2">팀장 싸인</td>
+                                                <td th:if="${approval.appState == '미승인'}">미결재 상태</td>
+                                                <td th:if="${approval.appState != '미승인'}">
+                                                    <img src="" id="sign_img">
+                                                    <input type="hidden" id="sign_data" th:value="${approval.appSign}">
+                                                </td>
                                             </tr>
                                             <tr>
                                             </tr>
                                             <tr>
-                                                <td>담당자 id</td>
-                                                <td>팀장 id</td>
+                                                <td th:if="${approval.appState =='미승인'}">담당자 id</td>
+                                                <td th:if="${approval.appState !='미승인'}" th:text="${approval.appUserNum.USERNUM}"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -150,6 +152,7 @@
 </body>
 <th:block layout:fragment="script">
     <script src="/js/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script src="/js/appMeetingDetail.js"></script>
 </th:block>
 </html>

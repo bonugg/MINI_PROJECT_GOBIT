@@ -63,20 +63,22 @@
 
 
             /*검색*/
-            .search-box{
+            .search-box {
                 padding: 10px;
                 float: right;
                 background-color: #fff;
                 border: 1px solid gray;
                 border-radius: 30px;
                 transition: 0.4s;
-                width:30px;
+                width: 30px;
             }
-            .search-box:hover{ /*활성화 시 테두리 살짝 진해지도록*/
+
+            .search-box:hover { /*활성화 시 테두리 살짝 진해지도록*/
                 box-shadow: 0px 0px .5px 1px gray;
                 width: 290px; /*280 이하로 내려가면 마우스 아이콘 위치 깨짐*/
             }
-            .search-btn{
+
+            .search-btn {
                 text-decoration: none;
                 float: right;
                 width: 30px;
@@ -84,18 +86,20 @@
                 background-color: #fff;
                 border-radius: 50%;
                 display: flex;
-                justify-content: center;  /*justify-content, align-items는 display: flex일 때만 쓸 수 있고, 원 가운데 돋보기 위치시키기 위한 지정값*/
+                justify-content: center; /*justify-content, align-items는 display: flex일 때만 쓸 수 있고, 원 가운데 돋보기 위치시키기 위한 지정값*/
                 align-items: center;
                 color: gray;
             }
-            .search-box:hover > .search-btn{
+
+            .search-box:hover > .search-btn {
                 background-color: #fff;
             }
-            .search-txt{
+
+            .search-txt {
                 display: flex;
                 padding: 0;
                 width: 0px;
-                border:none;
+                border: none;
                 background: none;
                 outline: none;
                 float: left;
@@ -103,7 +107,8 @@
                 line-height: 30px;
                 transition: .4s;
             }
-            .search-box:hover > .search-txt{
+
+            .search-box:hover > .search-txt {
                 width: 240px;
                 padding: 0 6px;
             }
@@ -121,13 +126,13 @@
                 /*border: 2px solid gray;*/
             }
 
-            .taps{
+            .taps {
                 margin: 0px;
                 padding: 0px;
                 list-style: none;
             }
 
-            .tap-link{
+            .tap-link {
                 background: lightgrey;
                 color: #222;
                 display: inline-block;
@@ -137,12 +142,12 @@
             }
 
 
-            .tap-link:hover{
+            .tap-link:hover {
                 background: #181F42;
                 color: white;
             }
 
-            .here{
+            .here {
                 background: white;
                 color: #222;
             }
@@ -171,9 +176,9 @@
 
 
             thead {
-                color: #fff;                   /*테이블 구분 글씨색*/
-                background-color: #454d55;    /*테이블 구분 배경*/
-                border-color: #454d55;      /*테두리 색 지정*/
+                color: #fff; /*테이블 구분 글씨색*/
+                background-color: #454d55; /*테이블 구분 배경*/
+                border-color: #454d55; /*테두리 색 지정*/
             }
 
             thead th {
@@ -182,7 +187,6 @@
                 font-size: 15px;
                 color: #fff;
             }
-
 
 
             tbody th, tbody td {
@@ -196,6 +200,32 @@
 
             .left-line {
                 border-left: 1px solid gray;
+
+            }
+
+            .left-line2 {
+                border-left: 1px solid gray;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+            }
+
+            .alram_th {
+                position: absolute;
+                top: 50;
+                left: 10px;
+                width: 20px;
+                height: 20px;
+                background-color: red;
+                color: white;
+                font-size: 10px;
+                line-height: 10px;
+                zoom: 0.9;
+                border-radius: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
             .right-line {
@@ -255,8 +285,9 @@
                     </ul>
                     <form th:action="@{/appDetail}" method="get">
                         <div class="search-box">
-                            <input type="text" class="search-txt" name="sWord" th:value="${sWord}" placeholder="검색어를 입력하시오">
-                            <button type="submit" class="search-btn" >
+                            <input type="text" class="search-txt" name="sWord" th:value="${sWord}"
+                                   placeholder="검색어를 입력하시오">
+                            <button type="submit" class="search-btn">
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
@@ -279,21 +310,28 @@
                                     <th style="width: 12%">결재 승인자</th>
                                 </tr>
                                 </thead>
-                                <tbody >
-                                <tr th:each="approval : ${appForUser}">
-                                    <th class="left-line" th:text="${approval.appNum}"></th>
+                                <tbody id="tbody_all">
+                                <tr th:each="approval : ${appForUser}" class="tr_cls">
+                                    <th class="left-line2">
+                                        <p th:text="${approval.appNum}"></p>
+                                        <div th:if="${approval.appAlarm == 0 && approval.appState !='미승인'}"
+                                             class="alram_th">!
+                                        </div>
+                                    </th>
                                     <!-- 문서번호. 값에 따른 조건문-->
                                     <td th:switch="${approval.appSort}">
                                         <span th:case="V">휴가</span>
                                         <span th:case="B">출장</span>
                                         <span th:case="M">회의</span>
                                     </td>
-                                    <td><a th:href="@{/appDetail/{appNum} (appNum=${approval.appNum})}" th:text="${approval.appContent}"></a></td>
+                                    <td><a th:href="@{/appDetail/{appNum} (appNum=${approval.appNum})}"
+                                           th:text="${approval.appContent}"></a></td>
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${approval.appState}"></td>
                                     <!-- 결재 승인자  -->
-                                    <td class="right-line" th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
+                                    <td class="right-line"
+                                        th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -314,14 +352,21 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="approval : ${appForUser}" th:if="${approval.appSort} == 'M'">
-                                    <th class="left-line" th:text="${approval.appNum}"></th>
+                                    <th class="left-line2">
+                                        <p th:text="${approval.appNum}"></p>
+                                        <div th:if="${approval.appAlarm == 0 && approval.appState !='미승인'}"
+                                             class="alram_th">!
+                                        </div>
+                                    </th>
                                     <td>회의</td>
-                                    <td><a href="#" th:text="${approval.appContent}"></a></td>
+                                    <td><a th:href="@{/appDetail/{appNum} (appNum=${approval.appNum})}"
+                                           th:text="${approval.appContent}"></a></td>
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${approval.appState}"></td>
                                     <!-- 결재 승인자  -->
-                                    <td class="right-line" th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
+                                    <td class="right-line"
+                                        th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -342,13 +387,20 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="approval : ${appForUser}" th:if="${approval.appSort} == 'B'">
-                                    <th class="left-line" th:text="${approval.appNum}"></th>
+                                    <th class="left-line2">
+                                        <p th:text="${approval.appNum}"></p>
+                                        <div th:if="${approval.appAlarm == 0 && approval.appState !='미승인'}"
+                                             class="alram_th">!
+                                        </div>
+                                    </th>
                                     <td>출장</td>
-                                    <td><a href="#" th:text="${approval.appContent}"></a></td>
+                                    <td><a th:href="@{/appDetail/{appNum} (appNum=${approval.appNum})}"
+                                           th:text="${approval.appContent}"></a></td>
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${approval.appState}"></td>
-                                    <td class="right-line" th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
+                                    <td class="right-line"
+                                        th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -369,19 +421,25 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="approval : ${appForUser}" th:if="${approval.appSort} == 'V'">
-                                    <th class="left-line" th:text="${approval.appNum}"></th>
+                                    <th class="left-line2">
+                                        <p th:text="${approval.appNum}"></p>
+                                        <div th:if="${approval.appAlarm == 0 && approval.appState !='미승인'}"
+                                             class="alram_th">!
+                                        </div>
+                                    </th>
                                     <td>휴가</td>
-                                    <td><a href="#" th:text="${approval.appContent}"></a></td>
+                                    <td><a th:href="@{/appDetail/{appNum} (appNum=${approval.appNum})}"
+                                           th:text="${approval.appContent}"></a></td>
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${approval.appState}"></td>
                                     <!-- 결재 승인자  -->
-                                    <td class="right-line" th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
+                                    <td class="right-line"
+                                        th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-
 
 
                     </div>
@@ -406,7 +464,6 @@
                 $(this).addClass('here');
                 $("#" + tab_id).addClass('now');
             });
-
         });
     </script>
 </th:block>

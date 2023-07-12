@@ -32,7 +32,7 @@ public class Approval {
     //결재종류: V 휴가, B 출장, M 회의. char(1)
     @NotNull
     @Column(name = "APP_SORT")
-    private char appSort;
+    private String appSort;
 
     //결재신청자
 //    @ManyToOne(fetch = FetchType.LAZY)
@@ -105,16 +105,13 @@ public class Approval {
     private String appCancleReason;
 
     public ApprovalDTO toDTO(){
-        char appSortChr = this.appSort;
-        String appSortString = String.valueOf(appSortChr);
-
         // 초단위를 일(day) 단위로 변환
         long secondsPerDay = 24 * 60 * 60; // 초당 일(day) 수
         double appVacReqDaysE = (double) this.appVacReq / secondsPerDay;
 
         ApprovalDTO approvalDTO = ApprovalDTO.builder()
                 .appNum(this.appNum)
-                .appSort(appSortString)
+                .appSort(this.appSort)
                 .userNum(this.userNum)
                 .appUserNum(this.appUserNum)
                 .appWriDate(this.appWriDate)
@@ -129,6 +126,7 @@ public class Approval {
                 .appVacType(this.appVacType)
                 .appVacReqDaysD(appVacReqDaysE)
                 .appAlarm(this.appAlarm)
+                .appSign(this.appSign)
                 .build();
         return approvalDTO;
     }

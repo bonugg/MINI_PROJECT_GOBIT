@@ -12,12 +12,20 @@ $(function () {
     let changeChartHandlerAdded = true; //이벤트 리스너가 한번만 등록되도록 함
 
     //----------차트------------------
-    charton();
-    function charton(){
+    $(document).ready(function () {
+        charton();
+    });
+    function charton() {
         $.ajax({
             type: 'POST',
             url: '/chart',
             success: function (result) {
+                myChart.resize();
+                let chartSize = myChart.getWidth();
+                if(chartSize <= 100){
+                    charton();
+                    return;
+                }
                 // Initialize the echarts instance based on the prepared dom
 
                 // Specify the configuration items and data for the chart
@@ -119,11 +127,12 @@ $(function () {
                     });
                     changeChartHandlerAdded = false;
                 }
+
                 window.addEventListener('resize', function () {
                     myChart.resize();
                 });
             },
-            error: function(error) {
+            error: function (error) {
                 let myChart = echarts.init(document.getElementById('main'));
 
                 // Specify the configuration items and data for the chart
@@ -190,24 +199,28 @@ $(function () {
 
                     }
                 });
+                window.addEventListener('resize', function () {
+                    myChart.resize();
+                });
             }
         });
     }
+
     //-------------------------------
 
     $.ajax({
         type: 'get',
-        url : '/dboardList',
-        data: {
-            dept : userDept
-        },
-        success: function (obj){
+        url: '/dboardList',
+        success: function (obj) {
             if (obj.length == 0) {
-                $('#dboardList').html('부서게시판 글이 없습니다.');
+                $('#dboardList').html('전사게시판 글이 없습니다.');
             } else {
                 let userListHTML = '';
                 for (let i = 0; i < obj.length; i++) {
                     let item = obj[i];
+                    const regex = /(<([^>]+)>)/ig;
+                    item.dboardContent = item.dboardContent.replace(regex, "");
+                    console.log(item.dboardContent);
                     userListHTML += `
                                          <table class="notice_table" onclick="location.href='/boardDept/updateCnt/${item.dboardNum}'">
                                                     <tr>
@@ -224,10 +237,11 @@ $(function () {
                                                     </tr>
                                                     <tr class="tr1410">
                                                         <td rowspan="2" class="board_img_td">
-                                                            <div class="notice_img_div">
+                                                   
                                                                 <div class="notice_img_div2">
-                                                                    <img class="img"
-                                                                       src="https://i.ibb.co/60TZMPY/noimage.png">                                                                </div>
+                                                                    <div class="img">
+                                                                        전사 게시판
+                                                                    </div>
                                                             </div>
                                                         </td>
                                                         <td colspan="4" rowspan="2" class="notice_content_td">
@@ -249,14 +263,14 @@ $(function () {
                 $('#dboardList').html(userListHTML);
             }
         },
-        error: function (err){
+        error: function (err) {
             console.log(err);
         }
     });
     $.ajax({
         type: 'get',
-        url : '/nboardList',
-        success: function (obj){
+        url: '/nboardList',
+        success: function (obj) {
             if (obj.length == 0) {
                 $('#nboardList').html('공지게시판 글이 없습니다.');
             } else {
@@ -278,12 +292,12 @@ $(function () {
                                                         <td class="notice_writer_cnt_td2" id="bcnt">${item.nboardCnt}</td>
                                                     </tr>
                                                     <tr class="tr1410">
-                                                        <td rowspan="2" class="board_img_td">
-                                                            <div class="notice_img_div">
+                                                             <td rowspan="2" class="board_img_td">
+                                                   
                                                                 <div class="notice_img_div2">
-                                                                    <img class="img"
-                                                                         src="https://i.ibb.co/60TZMPY/noimage.png">
-                                                                </div>
+                                                                    <div class="img">
+                                                                        공지 사항
+                                                                    </div>
                                                             </div>
                                                         </td>
                                                         <td colspan="4" rowspan="2" class="notice_content_td">
@@ -305,53 +319,53 @@ $(function () {
                 $('#nboardList').html(userListHTML);
             }
         },
-        error: function (err){
+        error: function (err) {
             console.log(err);
         }
     });
 
-    document.querySelectorAll('.off_img').forEach(function(div) {
-        div.addEventListener('mouseover', function(event) {
+    document.querySelectorAll('.off_img').forEach(function (div) {
+        div.addEventListener('mouseover', function (event) {
             let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
             let offTimeValue = event.target.closest('.off_img').querySelector('input[type="hidden"]').value;
             let offtime = formatDatesec(offTimeValue);
-            if(offtime == "NaN시 aN분 aN초"){
+            if (offtime == "NaN시 aN분 aN초") {
                 offtime = "퇴근 정보 없음";
             }
             tooltip.innerHTML = offtime;
             tooltip.style.display = 'block';
         });
-        div.addEventListener('mousemove', function(event) {
+        div.addEventListener('mousemove', function (event) {
             let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
             tooltip.style.left = (event.pageX + 10) + 'px';
             tooltip.style.top = (event.pageY + 10) + 'px';
         });
 
 
-        div.addEventListener('mouseout', function(event) {
+        div.addEventListener('mouseout', function (event) {
             let tooltip = event.currentTarget.querySelector('.tooltip');
             tooltip.style.display = 'none';
         });
     });
 
-    document.querySelectorAll('.on_img').forEach(function(div) {
-        div.addEventListener('mouseover', function(event) {
+    document.querySelectorAll('.on_img').forEach(function (div) {
+        div.addEventListener('mouseover', function (event) {
             let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
             let onTimeValue = event.target.closest('.on_img').querySelector('input[type="hidden"]').value;
             let ontime = formatDatesec(onTimeValue);
-            if(ontime == "NaN시 aN분 aN초"){
+            if (ontime == "NaN시 aN분 aN초") {
                 ontime = "출근 정보 없음";
             }
             tooltip.innerHTML = ontime;
             tooltip.style.display = 'block';
         });
-        div.addEventListener('mousemove', function(event) {
+        div.addEventListener('mousemove', function (event) {
             let tooltip = event.target.closest('.cno_list').querySelector('.tooltip');
             tooltip.style.left = (event.pageX + 10) + 'px';
             tooltip.style.top = (event.pageY + 10) + 'px';
         });
 
-        div.addEventListener('mouseout', function(event) {
+        div.addEventListener('mouseout', function (event) {
             let tooltip = event.currentTarget.querySelector('.tooltip');
             tooltip.style.display = 'none';
         });
@@ -555,17 +569,20 @@ $(function () {
                     eventClick: function (info) {
                         popupLayer.style.display = "block";
                         $('.popup_box').css("height", "");
-                        if(info.event.extendedProps.classify == '출퇴근'){
-                            $('.popup_box').css("height", "200px");
-                            $('.popup_cont_1').css("height", "50%");
-                            $('.popup_cont_2').css("height", "50%");
+                        if (info.event.extendedProps.classify == '출퇴근') {
+                            $('.popup_cont_0').css("margin-bottom", "10px");
+                            $('#title').text("출퇴근 캘린더 상세보기");
+                            $('.popup_cont_1').css("height", "60px");
+                            $('.popup_cont_2').css("height", "60px");
                             $('#popup_date').css("font-size", "15px");
                             $('.popup_cont_3').css("display", "none");
                             $('.popup_cont_4').css("display", "none");
                             $('.popup_cont_5').css("display", "none");
                             $('#vacation_type').css("display", "none");
                             $('#approve_name').css("display", "none");
-                        }else if(info.event.extendedProps.classify == 'V'){
+                        } else if (info.event.extendedProps.classify == 'V') {
+                            $('.popup_cont_0').css("margin-bottom", "20px");
+                            $('#title').text("휴가 캘린더 상세보기");
                             $('.popup_cont_1').css("height", "60px");
                             $('.popup_cont_2').css("height", "60px");
                             $('.popup_cont_3').css("height", "60px");
@@ -574,7 +591,9 @@ $(function () {
                             $('#approve_name').css("display", "");
                             $('.popup_cont_4').css("display", "none");
                             $('.popup_cont_5').css("display", "none");
-                        }else if(info.event.extendedProps.classify == 'B'){
+                        } else if (info.event.extendedProps.classify == 'B') {
+                            $('#title').text("출장 캘린더 상세보기");
+                            $('.popup_cont_0').css("margin-bottom", "20px");
                             $('.popup_cont_1').css("height", "60px");
                             $('.popup_cont_2').css("height", "60px");
                             $('.popup_cont_4').css("height", "60px");
@@ -584,7 +603,9 @@ $(function () {
                             $('#vacation_type').css("display", "");
                             $('#approve_name').css("display", "");
                             $('.popup_cont_5').css("display", "none");
-                        }else if(info.event.extendedProps.classify == 'M'){
+                        } else if (info.event.extendedProps.classify == 'M') {
+                            $('.popup_cont_0').css("margin-bottom", "20px");
+                            $('#title').text("회의 캘린더 상세보기");
                             $('.popup_cont_1').css("height", "60px");
                             $('.popup_cont_2').css("height", "60px");
                             $('.popup_cont_4').css("height", "60px");

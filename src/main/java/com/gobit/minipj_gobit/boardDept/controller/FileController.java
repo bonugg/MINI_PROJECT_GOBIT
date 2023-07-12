@@ -13,6 +13,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 public class FileController {
+
     private final FileService fileService;
     @GetMapping("/file/files/{boardId}")
     public List<Map<String, Object>> findAllFileByBoardId(@PathVariable("boardId") Long boardId) {

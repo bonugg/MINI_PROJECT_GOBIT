@@ -2,7 +2,8 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{layouts/layout}"
+      >
 <head>
     <meta charset="UTF-8">
     <title>Empty</title>
@@ -47,18 +48,25 @@
                                     <dt>조회</dt>
                                     <dd th:text="${nBoard.cnt}"></dd>
                                 </dl>
-                                <dl>
-                                    <dt>첨부파일</dt>
-                                    <dd></dd>
-                                </dl>
+                                <div style="margin-top: 10px">
+                                    <dl>
+                                        <dt class="label-hover" th:if="${nBoard.files}">첨부파일</dt>
+                                        <dd th:each="a : ${nBoard.files}">
+                                                <a style="text-decoration: underline" th:id="${a.id}" th:href="@{/noticeDept/down/{fileId}(fileId=${a.id})}"
+                                                   th:text="${a.originalName}"></a>
+                                        </dd>
+                                    </dl>
+                                </div>
                             </div>
-                            <div class="cont" th:text="${nBoard.content}">
+                            <div class="cont" th:utext="${nBoard.content}">
                             </div>
                         </div>
                         <div class="bt_wrap">
                             <a href="/noticeDept/list"><button class="on" type="button">목록</button></a>
-                            <a th:href="@{/noticeDept/modify/{id}(id=${id})}"><button type="button">수정</button></a>
-                            <a th:href="@{/noticeDept/delete/{id}(id=${nBoard.id})}"><button type="button">삭제</button></a>
+                            <a th:if="${#authentication.getName() == #strings.toString(nBoard.user.USERENO)}"
+                               th:href="@{/noticeDept/modify/{id}(id=${id})}"><button type="button">수정</button></a>
+                            <a th:if="${#authentication.getName() == #strings.toString(nBoard.user.USERENO)}"
+                               th:href="@{/noticeDept/delete/{id}(id=${nBoard.id})}" class="delete"><button type="button">삭제</button></a>
                         </div>
                     </div>
                 </div>
@@ -66,9 +74,30 @@
         </div>
     </div>
 </div>
+<script>
+
+    const down_elements = document.getElementsByClassName("downlink");
+    Array.from(down_elements).forEach(function (ele){
+        ele.addEventListener('click', function (){
+            ele.preventDefault();
+            var fileName = $(this).attr("href");
+            location.href = "fileDown.do?fileName=" + fileName;
+        });
+    });
+
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function(ele) {
+        ele.addEventListener('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+
+</script>
 </body>
 <th:block layout:fragment="script">
     <!--사용할 자바스크립트는 여기에 첨부 -->
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </th:block>
 </html>

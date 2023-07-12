@@ -115,9 +115,12 @@ public class dBoardController {
         this.dBoardService.modify(id, title, content);
 
         if (exFilesStr != null) {
+            System.out.println(exFilesStr);
+            System.out.println("--파일 리스트1---");
             //기존 파일리스트 조회
             List<dBoardFile> exFiles = fileService.findByFiles(id);
-
+            System.out.println(exFiles);
+            System.out.println("--파일 리스트2---");
             //수정된 파일 삭제
             fileService.modifyFiles(exFilesStr, exFiles);
         }

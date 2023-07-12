@@ -7,14 +7,16 @@ import com.gobit.minipj_gobit.service.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService {
     private ApprovalRepository approvalRepository;
 
     @Autowired
-    public ApprovalServiceImpl(ApprovalRepository approvalRepository){
+    public ApprovalServiceImpl(ApprovalRepository approvalRepository) {
         this.approvalRepository = approvalRepository;
     }
 
@@ -27,7 +29,7 @@ public class ApprovalServiceImpl implements ApprovalService {
     //특정 결재 불러오기
     @Override
     public Approval getApproval(long appNum) {
-        if(approvalRepository.findByAppNum(appNum).isEmpty()){
+        if (approvalRepository.findByAppNum(appNum).isEmpty()) {
             return null;
         }
         return approvalRepository.findByAppNum(appNum).get();
@@ -47,13 +49,13 @@ public class ApprovalServiceImpl implements ApprovalService {
 
     //결재리스트 불러오기
     @Override
-    public Page<Approval> findByDept(Pageable pageable, String dept) {
-        return approvalRepository.findByDept(pageable, dept);
+    public Page<Approval> findByDept(Pageable pageable, String dept, String cls) {
+        return approvalRepository.findByDept(pageable, dept, cls);
     }
 
     @Override
-    public Page<Approval> findByUser(Pageable pageable, User user) {
-        return approvalRepository.findByUser(pageable, user);
+    public Page<Approval> findByUser(Pageable pageable, User user, String cls) {
+        return approvalRepository.findByUser(pageable, user, cls);
     }
 
     @Override
@@ -75,30 +77,37 @@ public class ApprovalServiceImpl implements ApprovalService {
     public int cntLeadTotalApp(String dept) {
         return approvalRepository.cntLeadTotalApp(dept);
     }
+
     @Override
     public int cntLeadWaitApp(String dept) {
         return approvalRepository.cntLeadWaitApp(dept);
     }
+
     @Override
     public int cntLeadRejectApp(String dept) {
         return approvalRepository.cntLeadRejectApp(dept);
     }
+
     @Override
     public int cntLeadFinApp(String dept) {
         return approvalRepository.cntLeadFinApp(dept);
     }
+
     @Override
     public int cntMemTotalApp(User user) {
         return approvalRepository.cntMemTotalApp(user);
     }
+
     @Override
     public int cntMemWaitApp(User user) {
         return approvalRepository.cntMemWaitApp(user);
     }
+
     @Override
     public int cntMemRejectApp(User user) {
         return approvalRepository.cntMemRejectApp(user);
     }
+
     @Override
     public int cntMemFinApp(User user) {
         return approvalRepository.cntMemFinApp(user);
@@ -108,6 +117,14 @@ public class ApprovalServiceImpl implements ApprovalService {
     public long getAppVacReq(long appNum) {
         approvalRepository.findAppVacReqByAppNum(appNum);
         return approvalRepository.findAppVacReqByAppNum(appNum);
+    }
+
+    @Modifying
+    @Transactional
+    @Override
+    public void updateAlarm(int i, long appNum) {
+        approvalRepository.updateAlarm(i, appNum);
+        approvalRepository.flush();
     }
 
 }
