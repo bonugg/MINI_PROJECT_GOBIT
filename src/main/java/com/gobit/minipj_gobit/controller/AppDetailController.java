@@ -45,12 +45,12 @@ public class AppDetailController {
         System.out.println("회원번호: " + approval.getUserNum().getUSERNUM());
         System.out.println("vacation 결과: " + vacationService.getVacation(approval.getUserNum().getUSERNUM()));
         Vacation vacation = vacationService.getVacation(approval.getUserNum().getUSERNUM());
-        if(approval.getAppSort() == 'M'){
+        if(approval.getAppSort().equals("M")){
             mv.setViewName("appMeetingDetail.html");
         }
-        else if(approval.getAppSort() == 'V'){
+        else if(approval.getAppSort().equals("V")){
             mv.setViewName("appVacationDetail.html");
-        }else if(approval.getAppSort() == 'B'){
+        }else if(approval.getAppSort().equals("B")){
             mv.setViewName("appBuisnessDetail.html");
         }else{
             System.out.println("다음 종류를 찾지 못했습니다.");

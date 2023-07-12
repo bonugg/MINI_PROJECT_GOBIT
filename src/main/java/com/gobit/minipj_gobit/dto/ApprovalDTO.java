@@ -48,11 +48,10 @@ public class ApprovalDTO {
 
     public Approval toEntity() {
         String appSortString = this.appSort;
-        char appSortChr = appSortString.charAt(0);
 
         Approval.ApprovalBuilder builder = Approval.builder()
                 .appNum(this.appNum)
-                .appSort(appSortChr)
+                .appSort(appSortString)
                 .userNum(this.userNum)
                 .appUserNum(this.appUserNum)
                 .appWriDate(LocalDateTime.now())
