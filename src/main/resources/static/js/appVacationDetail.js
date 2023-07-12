@@ -5,6 +5,15 @@ $(function () {
         $("#sign_img").show();
     }
 
+    if($("#appState").val() != "미승인"){
+        $('#btnUpdate').prop("disabled", true);
+        $('#btnDelete').prop("disabled", true);
+        $('#input-appStart').attr("readonly", true);
+        $('#input-appEnd').attr("readonly", true);
+        $('#input-appVacType').attr("disabled", true);
+        $('#input-appContent').attr("readonly", true);
+    }
+
     $("#btnUpdate").on("click", () => {
         $.ajax({
             url: "/appDetail/vacation",

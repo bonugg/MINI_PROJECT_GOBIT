@@ -9,7 +9,7 @@
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/appVacationDetail.css">
-
+        <link rel="stylesheet" type="text/css" href="/css/approvalDetailPage.css">
     </th:block>
 </head>
 <body layout:fragment="content">
@@ -30,7 +30,7 @@
                             <input type="hidden" id="appNum" name="appNum" th:value="${approval.appNum}">
                             <input type="hidden" name="appAlarm" th:value="${approval.appAlarm}">
                             <input type="hidden" name="appSort" th:value="${approval.appSort}">
-                            <input type="hidden" name="appState" value="미승인">
+                            <input type="hidden" id="appState" name="appState" th:value="${approval.appState}">
                             <input type="hidden" name="appWriDate" th:value="${approval.appWriDate}">
                             <input type="hidden" id="appVacReq" name="appVacReq">
                             <section id="inputData-section">
@@ -143,7 +143,7 @@
                                 </div>
                             </section>
                             <div id="dataSubmit-section">
-                                <button type="button" th:if="${#authentication.getName() == #strings.toString(approval.userNum.USERENO)}" id="btnUpdate">수정</button>
+                                <button type="button" id="btnUpdate">수정</button>
                                 <button type="button" id="btnDelete">삭제</button>
                             </div>
                         </form>
