@@ -50,6 +50,9 @@ public class ApprovalServiceImpl implements ApprovalService {
     //결재리스트 불러오기
     @Override
     public Page<Approval> findByDept(Pageable pageable, String dept, String cls) {
+        System.out.println("======================");
+        System.out.println(approvalRepository.findByDept(pageable, dept, cls));
+        System.out.println("======================");
         return approvalRepository.findByDept(pageable, dept, cls);
     }
 
