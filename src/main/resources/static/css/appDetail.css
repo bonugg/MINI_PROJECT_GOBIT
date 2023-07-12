@@ -34,8 +34,7 @@
 
 
 
-
-/*결재요청리스트 페이지(팀원용) css*/
+/*결재요청(팀원용) css*/
 
 /*메인 타이틀*/
 #app_main_title {
@@ -217,6 +216,9 @@ thead th {
     padding: 10px;
     font-size: 15px;
     color: #fff;
+    white-space: nowrap; /* 셀의 내용이 한 줄로 표시되도록 설정 */
+    overflow: hidden; /* 셀 내용이 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 말줄임표(...)로 표시 */
 }
 
 
@@ -227,6 +229,9 @@ tbody th, tbody td {
     font-size: 14px;
     background: #fff;
     text-align: center;
+    white-space: nowrap; /* 셀의 내용이 한 줄로 표시되도록 설정 */
+    overflow: hidden; /* 셀 내용이 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis; /* 말줄임표(...)로 표시 */
 }
 
 .left-line {
