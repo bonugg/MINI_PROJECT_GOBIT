@@ -47,26 +47,6 @@ public class nBoardService {
         nfileRepository.deleteAll(files);
     }
 
-//    public List<nBoardDto> getNoticeList() {
-//        List<nBoard> boardlist = nBoardRepository.findAll();
-//        List<nBoardDto> nBoardDtoList = new ArrayList<>();
-//
-//        for (nBoard board : boardlist) {
-//            nBoardDto boardDto = nBoardDto.builder()
-//                    .id(board.getId())
-//                    .title(board.getTitle())
-//                    .content(board.getContent())
-//                    .regDate(board.getRegDate())
-//                    .updateDate(board.getUpdateDate())
-//                    .cnt(board.getCnt())
-//                    .build();
-//            nBoardDtoList.add(boardDto);
-//
-//        }
-//        return nBoardDtoList;
-//
-//    }
-
     public Page<nBoard> getNoticeList(Pageable pageable) {
 
             return boardRepository.findAll(pageable);
