@@ -32,7 +32,7 @@ public class Approval {
     //결재종류: V 휴가, B 출장, M 회의. char(1)
     @NotNull
     @Column(name = "APP_SORT")
-    private char appSort;
+    private String appSort;
 
     //결재신청자
 //    @ManyToOne(fetch = FetchType.LAZY)
@@ -105,7 +105,7 @@ public class Approval {
     private String appCancleReason;
 
     public ApprovalDTO toDTO(){
-        char appSortChr = this.appSort;
+        String appSortChr = this.appSort;
         String appSortString = String.valueOf(appSortChr);
 
         // 초단위를 일(day) 단위로 변환
