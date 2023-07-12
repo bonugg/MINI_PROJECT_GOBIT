@@ -49,13 +49,7 @@ public class AppDetailController {
         }
         else if(approval.getAppSort().equals("V")){
             mv.setViewName("appVacationDetail.html");
-<<<<<<< HEAD
-        }else if (approval.getAppSort().equals("M")) {
-            mv.setViewName("appMeetingDetail.html");
-        }else if (approval.getAppSort().equals("B")) {
-=======
         }else if(approval.getAppSort().equals("B")){
->>>>>>> 743d762ac6132a782824d09f23a79ea00d44992e
             mv.setViewName("appBuisnessDetail.html");
         } else {
             System.out.println("다음 종류를 찾지 못했습니다.");
@@ -182,10 +176,6 @@ public class AppDetailController {
         System.out.println("수정한 휴가일수: " + newVacReq);
 
         try {
-            if ((appStart != null && appEnd != null && appStart.isBefore(appEnd)) || (appStart2 != null && appEnd2 != null && appStart2.isBefore(appEnd2))) {
-                System.out.println("통과 테스트1");
-                if (vacLeft + appVacReq > newVacReq) {
-
             if (isDateFormatOk != true) {
                 returnMap.put("msg", "휴가 시작일과 휴가의 종료일을 다시 입력해주세요");
                 returnMap.put("result", "fail");

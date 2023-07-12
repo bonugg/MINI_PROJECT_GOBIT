@@ -48,19 +48,9 @@ public class ApprovalDTO {
 
 
     public Approval toEntity() {
-<<<<<<< HEAD
-        String appSortString = this.appSort;
-
-        String appSortChr = appSortString;
-
-        Approval.ApprovalBuilder builder = Approval.builder()
-                .appNum(this.appNum)
-                .appSort(appSortString)
-=======
         Approval.ApprovalBuilder builder = Approval.builder()
                 .appNum(this.appNum)
                 .appSort(this.appSort)
->>>>>>> 743d762ac6132a782824d09f23a79ea00d44992e
                 .userNum(this.userNum)
                 .appUserNum(this.appUserNum)
                 .appWriDate(LocalDateTime.now())
