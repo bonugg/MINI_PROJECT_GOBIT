@@ -26,21 +26,11 @@
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
                 <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
-                <div>
-                    <!-- 머리부분 -->
-                    <div class="heead">
-                        <div class="div-title">
-                            <div class="title">
-                                <p>전사게시판</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 머리부분 -->
-
+                <div id="use_screen2">
+                    <p id="boardDept"><a href="/boardDept/list" style="color: grey">전사게시판</a></p>
 
                     <!-- 몸통 부분 -->
                     <div class="boody">
-
 
                         <form action="/boardDept/modify" method="post" name="board" enctype="multipart/form-data" id="final_form">
                             <input type="hidden" th:value="${board.id}" th:name="id" id="boardId">
@@ -164,7 +154,8 @@
         var MAX_LENGTH = 1000;
         var fontList = ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'];
         $('#summernote').summernote({
-            height: 300,
+            disableResizeEditor: true,
+            height: 370,
             focus: true,
             lang: "ko-KR",
             fontNames: fontList,
