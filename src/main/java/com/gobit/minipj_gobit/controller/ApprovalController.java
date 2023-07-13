@@ -48,9 +48,6 @@ public class ApprovalController {
             if(cls == null) cls = "";
             appForLeader = approvalService.findByDept(pageable, user.getUSERDEPT(), cls);
 //            System.out.println(appForLeader);
-            // 긍게 이게 돼야함 ↓
-            // 그니까 효준님이 원하는대로 할려면 저 탭을 누를때마다 이 메소드를 실행시켜서 그 sort뭐시기로 검색을 해야함
-            // 근데 거기서 페이지를 가져오면 될거같긴한데요?
 
 
         } else {
@@ -60,13 +57,16 @@ public class ApprovalController {
         int nowPage = appForLeader.getNumber() + 1;
         //Page<Approval>에서 getNumber를 하여 인덱스 숫자 반환. 인덱스는 -0부터 시작하니까 + 1
 
-        int startPage = Math.max(1, nowPage - 5);
-        int endPage = Math.min(nowPage + 5, appForLeader.getTotalPages());
+        int startPage = ((nowPage - 1) / 5) * 5 + 1;
+        int endPage = Math.min(startPage + 4, appForLeader.getTotalPages());
+        int lastPage = appForLeader.getTotalPages();
         model.addAttribute("cls", cls);
         model.addAttribute("appForLeader", appForLeader);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("pageSize", 5);
 
 
         // // 2023.07.05 추가
@@ -109,14 +109,18 @@ public class ApprovalController {
         int nowPage = appForUser.getNumber() + 1;
         //Page<Approval>에서 getNumber를 하여 인덱스 숫자 반환. 인덱스는 -0부터 시작하니까 + 1
 
-        int startPage = Math.max(1, nowPage - 5);
-        int endPage = Math.min(nowPage + 5, appForUser.getTotalPages());
-
+        int startPage = ((nowPage - 1) / 5) * 5 + 1;
+        int endPage = Math.min(startPage + 4, appForUser.getTotalPages());
+        int lastPage = appForUser.getTotalPages();
+        model.addAttribute("cls", cls);
         model.addAttribute("appForUser", appForUser);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("pageSize", 5);
 
+//        System.out.println("end= " + endPage + "last =" + lastPage);
 
         // // 2023.07.05 추가
         // 전체 결재문서, 승인 대기, 반려, 승인 완료
