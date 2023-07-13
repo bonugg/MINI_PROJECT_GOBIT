@@ -165,9 +165,6 @@ public class dBoardController {
         dBoardFile file = fileService.findById(fileId);
         Resource resource = fileUtils.readFileAsResource(file);
 
-//        String originalFilename = file.getOriginalName();
-//        String encodedFilename = URLEncoder.encode(originalFilename, StandardCharsets.UTF_8.toString());
-
         try {
             String filename = URLEncoder.encode(file.getOriginalName(), "UTF-8");
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);

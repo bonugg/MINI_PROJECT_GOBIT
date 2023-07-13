@@ -15,7 +15,8 @@
 </head>
 <body>
 <div class="container">
-    <h1>대화방</h1>
+    <h1>자유 대화방</h1>
+    <input type="hidden" id="user_Id" th:value="${session.user.USERNUM}">
     <div id="roomContainer" class="roomContainer">
         <table id="roomList" class="roomList"></table>
     </div>
@@ -43,8 +44,12 @@
     }
 
     function createRoom(){
+        var userID = document.getElementById("user_Id").value;
         $("#createRoom").click(function(){
-            var msg = {	roomName : $('#roomName').val()	};
+            var msg = {
+                roomName : $('#roomName').val(),
+                userNum : userID.toString()
+            };
 
             commonAjax('/createRoom', msg, 'post', function(result){
                 createChatingRoom(result);
@@ -54,20 +59,36 @@
         });
     }
 
+    function deleteRoom(roomNumber) {
+        console.log(roomNumber);
+        var url = '/deleteRoom'; // 삭제할 방의 경로
+        var msg = { roomNum: roomNumber }; // 삭제할 방의 번호를 파라미터로 전달
+        var type = 'POST'; // HTTP 요청 방식 (POST)
+
+        // commonAjax 함수 호출하여 서버로 방 삭제 요청 전송
+        commonAjax(url, msg, type, function(result) {
+            createChatingRoom(result);
+        });
+    }
+
+
     function goRoom(number, name){
-        location.href="/moveChating?roomName="+name+"&"+"roomNumber="+number;
+        event.preventDefault();
+        let uurl ="/moveChating?roomName="+name+"&"+"roomNumber="+number;
+        window.open(uurl, '_blank', 'width=550,height=700');
     }
 
     function createChatingRoom(res){
         if(res != null){
-            var tag = "<tr><th class='num'>순서</th><th class='room'>방 이름</th><th class='go'></th></tr>";
+            var tag = "<tr><th class='num'>순서</th><th class='room'>방 이름</th><th class='go'></th><th class='del'></th></tr>";
             res.forEach(function(d, idx){
                 var rn = d.roomName.trim();
-                var roomNumber = d.roomNumber;
+                var roomNum = d.roomNumber;
                 tag += "<tr>"+
                     "<td class='num'>"+(idx+1)+"</td>"+
                     "<td class='room'>"+ rn +"</td>"+
-                    "<td class='go'><button type='button' onclick='goRoom(\""+roomNumber+"\", \""+rn+"\")'>참여</button></td>" +
+                    "<td class='go'><button type='button' onclick='goRoom(\""+roomNum+"\", \""+rn+"\")'>참여</button></td>" +
+                    "<td class='del'><button type='button' onclick='deleteRoom(" + roomNum + ")'>삭제</button> </td>" +
                     "</tr>";
             });
             $("#roomList").empty().append(tag);

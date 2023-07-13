@@ -145,18 +145,27 @@
                 </div>
 
                 <div class="pagination">
-                    <!-- 스타트 페이지부터 엔트페이지까지 순서대로 담(sequence)겠다 -->
+                     <span th:style="${startPage == 1 ? 'display:none' : 'display:inline;'}">
+                         <th:block th:with="startPage=${((nowPage - 4)/5) * 5}">
+                             <a th:href="@{/approvalList(page = ${startPage}, cls = ${cls}, sWord = ${param.sWord})}" class="pageNum">&laquo;</a>
+                         </th:block>
+                     </span>
+
                     <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-                        <th:block th:if="${page > 0}"> <!-- 페이지가 하나 뿐일 때 0과 1이 나타나기때문에 0은 필터해주기 위한 작업 -->
-                            <!-- 현재 페이지 표출은 인덱스+1인 상태라, nowpage가 아닐 경우, -1을 해서 해당 페이지 링크로 갈 수 있도록 인덱스로 맞춰줌 -->
+                        <th:block th:if="${page > 0}">
                             <a th:if="${page != nowPage}"
                                th:href="@{/approvalList(page = ${page - 1}, cls = ${cls}, sWord = ${param.sWord})}"
                                th:text="${page}" class="pageNum"></a>
                             <strong th:if="${page == nowPage}" th:text="${page}" id="nowPage"></strong>
                         </th:block>
                     </th:block>
-                </div>
 
+                    <span th:style="${lastPage == endPage ? 'display:none' : 'display:inline'}">
+                         <th:block th:with="startPage=${((nowPage +4)/5) * 5}">
+                             <a th:href="@{/approvalList(page = ${startPage}, cls = ${cls}, sWord = ${param.sWord})}" class="pageNum">&raquo;</a>
+                         </th:block>
+                     </span>
+                </div>
             </div>
         </div>
     </div>
