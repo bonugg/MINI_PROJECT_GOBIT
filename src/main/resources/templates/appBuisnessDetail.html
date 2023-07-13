@@ -21,7 +21,7 @@
         <div id="_emt4">
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
-                <p class="page-name">출장 결제신청 페이지</p>
+                <p class="page-name">출장 결제상세</p>
                 <div class="use_screen_form">
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
@@ -70,20 +70,20 @@
                                     <div class="appInfo">
                                         <table>
                                             <tr>
-                                                <td>문서번호</td>
-                                                <td th:text="${approval.appNum}"></td>
+                                                <td class="column_appInfoTitle">문서번호</td>
+                                                <td class="column_appInfoContent" th:text="${approval.appNum}"></td>
                                             </tr>
                                             <tr>
-                                                <td>부서</td>
-                                                <td th:text="${approval.userNum.USERDEPT}"></td>
+                                                <td class="column_appInfoTitle">부서</td>
+                                                <td class="column_appInfoContent" th:text="${approval.userNum.USERDEPT}"></td>
                                             </tr>
                                             <tr>
-                                                <td>기안일</td>
-                                                <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
+                                                <td class="column_appInfoTitle">기안일</td>
+                                                <td class="column_appInfoContent" th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
                                             </tr>
                                             <tr>
-                                                <td>기안자</td>
-                                                <td th:text="${approval.userNum.USERNAME}"></td>
+                                                <td class="column_appInfoTitle">기안자</td>
+                                                <td class="column_appInfoContent" th:text="${approval.userNum.USERNAME}"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -93,21 +93,19 @@
                                     <div class="appConfirm">
                                         <table>
                                             <tr>
-                                                <td rowspan="4" style="width: 40px;"> 결재</td>
-                                                <td>담당</td>
+                                                <td class="column_confirmTitle" rowspan="3"> 결재</td>
+                                                <td class="column_manager">담당</td>
                                             </tr>
                                             <tr>
-                                                <td th:if="${approval.appState == '미승인'}">미결재 상태</td>
-                                                <td th:if="${approval.appState != '미승인'}">
+                                                <td class="column_sign" th:if="${approval.appState == '미승인'}">미결재 상태</td>
+                                                <td class="column_sign" th:if="${approval.appState != '미승인'}">
                                                     <img src="" id="sign_img">
                                                     <input type="hidden" id="sign_data" th:value="${approval.appSign}">
                                                 </td>
                                             </tr>
                                             <tr>
-                                            </tr>
-                                            <tr>
-                                                <td th:if="${approval.appState =='미승인'}">담당자 id</td>
-                                                <td th:if="${approval.appState !='미승인'}" th:text="${approval.appUserNum.USERNUM}"></td>
+                                                <td class="column_confirmId" th:if="${approval.appState =='미승인'}">담당자 id</td>
+                                                <td class="column_confirmId" th:if="${approval.appState !='미승인'}" th:text="${approval.appUserNum.USERNUM}"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -116,13 +114,13 @@
                                     <div class="appData">
                                         <table>
                                             <tr>
-                                                <td>출장 날짜</td>
+                                                <td class="column_narrow">출장 날짜</td>
                                                 <td id="appData-date" th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}"></td>
-                                                <td>출장 장소</td>
+                                                <td class="column_narrow">출장 장소</td>
                                                 <td id="appData-place" th:text="${approval.appLocation}"></td>
                                             </tr>
                                             <tr class="appData-colspan">
-                                                <td>출장 목적</td>
+                                                <td class="column_narrow">출장 목적</td>
                                                 <td colspan="3" id="appData-content" th:text="${approval.appContent}"></td>
                                             </tr>
                                         </table>
