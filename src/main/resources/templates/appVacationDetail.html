@@ -21,7 +21,7 @@
         <div id="_emt4">
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
-                <p class="page-name">휴가 결제신청 페이지</p>
+                <p class="page-name">휴가 결제상세</p>
                 <div class="use_screen_form">
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
@@ -35,24 +35,28 @@
                             <input type="hidden" id="appVacReq" name="appVacReq" th:value="${approval.appVacReq}">
                             <section id="inputData-section">
                                 <div class="input-date">
-                                    <div>휴가날짜</div>
+                                    <div class="column">휴가날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="input-appStart" name="appStart" th:value="${approval.appStart}" required onchange="handleStartDate()"/>
+                                        <input type="datetime-local" id="input-appStart" name="appStart"
+                                               th:value="${approval.appStart}" required onchange="handleStartDate()"/>
                                         <p>~</p>
-                                        <input type="datetime-local" id="input-appEnd" name="appEnd" th:value="${approval.appEnd}" required onchange="handleEndDate()"/>
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd"
+                                               th:value="${approval.appEnd}" required onchange="handleEndDate()"/>
                                     </div>
                                 </div>
                                 <div class="input-user">
-                                    <div>신청자</div>
+                                    <div class="column">신청자</div>
                                     <div class="input-user-form">
                                         <input type="hidden" name="userNum" th:value="${approval.userNum.USERNUM}">
                                         <p th:text="${approval.userNum.USERNAME}"></p>
                                     </div>
                                 </div>
                                 <div class="input-type">
-                                    <div>휴가 종류</div>
+                                    <div class="column">휴가 종류</div>
                                     <div class="input-place-form">
-                                        <select id="input-appVacType" name="appVacType" th:selected="${approval.appVacType}" required onchange="handleVacType()">
+                                        <select id="input-appVacType" name="appVacType"
+                                                th:selected="${approval.appVacType}" required
+                                                onchange="handleVacType()">
                                             <option value="morningOff">오전반차</option>
                                             <option value="afternoonOff">오후반차</option>
                                             <option value="dayOff">연차</option>
@@ -61,10 +65,11 @@
                                     </div>
                                 </div>
                                 <div class="input-text">
-                                    <div>휴가 사유</div>
+                                    <div class="column">휴가 사유</div>
                                     <div class="input-text-form">
                             <textarea id="input-appContent" name="appContent" th:text="${approval.appContent}"
-                                      style="resize:vertical" cols="50" rows="1" required onkeyup="printContent()"></textarea>
+                                      style="resize:vertical" cols="50" rows="1" required placeholder="내용을 입력해주세요"
+                                      onkeyup="printContent()"></textarea>
                                     </div>
                                 </div>
                             </section>
@@ -74,20 +79,23 @@
                                     <div class="appInfo">
                                         <table>
                                             <tr>
-                                                <td class="column">문서번호</td>
-                                                <td th:text="${approval.appNum}"></td>
+                                                <td class="column_appInfoTitle">문서번호</td>
+                                                <td class="column_appInfoContent" th:text="${approval.appNum}"></td>
                                             </tr>
                                             <tr>
-                                                <td class="column">부서</td>
-                                                <td th:text="${approval.userNum.USERDEPT}"></td>
+                                                <td class="column_appInfoTitle">부서</td>
+                                                <td class="column_appInfoContent"
+                                                    th:text="${approval.userNum.USERDEPT}"></td>
                                             </tr>
                                             <tr>
-                                                <td class="column">기안일</td>
-                                                <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
+                                                <td class="column_appInfoTitle">기안일</td>
+                                                <td class="column_appInfoContent"
+                                                    th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
                                             </tr>
                                             <tr>
-                                                <td class="column">기안자</td>
-                                                <td th:text="${approval.userNum.USERNAME}"></td>
+                                                <td class="column_appInfoTitle">기안자</td>
+                                                <td class="column_appInfoContent"
+                                                    th:text="${approval.userNum.USERNAME}"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -97,21 +105,23 @@
                                     <div class="appConfirm">
                                         <table>
                                             <tr>
-                                                <td rowspan="4" style="width: 40px;"> 결재</td>
-                                                <td>담당</td>
+                                                <td class="column_confirmTitle" rowspan="3"> 결재</td>
+                                                <td class="column_manager">담당</td>
                                             </tr>
                                             <tr>
-                                                <td th:if="${approval.appState == '미승인'}">미결재 상태</td>
-                                                <td th:if="${approval.appState != '미승인'}">
+                                                <td class="column_sign" th:if="${approval.appState == '미승인'}">미결재 상태
+                                                </td>
+                                                <td class="column_sign" th:if="${approval.appState != '미승인'}">
                                                     <img src="" id="sign_img">
                                                     <input type="hidden" id="sign_data" th:value="${approval.appSign}">
                                                 </td>
                                             </tr>
                                             <tr>
-                                            </tr>
-                                            <tr>
-                                                <td th:if="${approval.appState =='미승인'}">담당자 id</td>
-                                                <td th:if="${approval.appState !='미승인'}" th:text="${approval.appUserNum.USERNUM}"></td>
+                                                <td class="column_confirmId" th:if="${approval.appState =='미승인'}">담당자
+                                                    id
+                                                </td>
+                                                <td class="column_confirmId" th:if="${approval.appState !='미승인'}"
+                                                    th:text="${approval.appUserNum.USERNUM}"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -120,23 +130,27 @@
                                     <div class="appData">
                                         <table>
                                             <tr>
-                                                <td style="width: 80px;">총 연차</td>
+                                                <td class="column_narrow">총 연차</td>
                                                 <td id="appData-totalOff" th:text="${vacation.vacTotalD} + '일'"></td>
-                                                <td>사용 일수</td>
+                                                <td class="column_narrow">사용 일수</td>
                                                 <td id="appData-vacationUsed" th:text="${vacation.vacUsedD} + '일'"></td>
-                                                <td>잔여 연차</td>
+                                                <td class="column_narrow">잔여 연차</td>
                                                 <td id="appData-vacationLeft" th:text="${vacation.vacLeftD} + '일'"></td>
                                             </tr>
                                             <tr>
-                                                <td>휴가 날짜</td>
-                                                <td id="appData-date" th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}" colspan="2"></td>
-                                                <td id="appData-vacationDateCnt" th:text="${approval.appVacReqDaysD} + '일'"></td>
-                                                <td>휴가종류</td>
+                                                <td class="column_narrow">휴가 날짜</td>
+                                                <td id="appData-date"
+                                                    th:text="${#temporals.format(approval.appStart, 'yyyy-MM-dd HH:mm')} + ' ~ ' + ${#temporals.format(approval.appEnd, 'yyyy-MM-dd HH:mm')}"
+                                                    colspan="2"></td>
+                                                <td id="appData-vacationDateCnt"
+                                                    th:text="${approval.appVacReqDaysD} + '일'"></td>
+                                                <td class="column_narrow">휴가 종류</td>
                                                 <td id="appData-vacationType" th:text="${approval.appVacType}"></td>
                                             </tr>
                                             <tr class="appData-colspan">
-                                                <td>출장 목적</td>
-                                                <td colspan="6" id="appData-content" th:text="${approval.appContent}"></td>
+                                                <td class="column_narrow">휴가 목적</td>
+                                                <td colspan="6" id="appData-content"
+                                                    th:text="${approval.appContent}"></td>
                                             </tr>
                                         </table>
                                     </div>

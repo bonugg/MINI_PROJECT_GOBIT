@@ -21,7 +21,7 @@
         <div id="_emt4">
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
-                <p class="page-name">회의 결제신청 페이지</p>
+                <p class="page-name">회의 결제신청</p>
                 <div class="use_screen_form">
                     <div class="leftSpace"></div>
                     <div class="centerSpace">
@@ -34,33 +34,36 @@
                             <input type="hidden" id="appVacReq" name="appVacReq" value="0">
                             <section id="inputData-section">
                                 <div class="input-date">
-                                    <div>회의날짜</div>
+                                    <div class="column">회의날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="input-appStart" name="appStart" required onchange="handleStartDate()"/>
+                                        <input type="datetime-local" id="input-appStart" name="appStart" required
+                                               onchange="handleStartDate()"/>
                                         <p>~</p>
-                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onchange="handleEndDate()"/>
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required
+                                               onchange="handleEndDate()"/>
                                     </div>
                                 </div>
                                 <div class="input-user">
-                                    <div>회의 참석자</div>
+                                    <div class="column">회의 참석자</div>
                                     <div class="input-user-form">
-                                     <textarea id="input-Participant" name="appParticipant" style="resize:vertical"
+                                        <textarea id="input-Participant" name="appParticipant" style="resize:vertical"
                                                cols="50"
                                                rows="1" required onkeyup="printPeople()"></textarea>
                                     </div>
                                 </div>
                                 <div class="input-place">
-                                    <div>회의 장소</div>
+                                    <div class="column">회의 장소</div>
                                     <div class="input-place-form">
                                         <input type="text" id="input-appLocation" name="appLocation" required
                                                onkeyup="printPlace()">
                                     </div>
                                 </div>
                                 <div class="input-text">
-                                    <div>회의 목적</div>
+                                    <div class="column">회의 목적</div>
                                     <div class="input-text-form">
-                            <textarea id="input-appContent" name="appContent" style="resize:vertical" cols="50"
-                                      rows="1" required onkeyup="printContent()"></textarea>
+                                        <textarea id="input-appContent" name="appContent" cols="50"
+                                                  rows="1" required placeholder="내용을 입력해주세요"
+                                                  onkeyup="printContent()"></textarea>
                                     </div>
                                 </div>
                             </section>
@@ -75,7 +78,8 @@
                                             </tr>
                                             <tr>
                                                 <td class="column_appInfoTitle">부서</td>
-                                                <td class="column_appInfoContent" th:text="${session.user.USERDEPT}"></td>
+                                                <td class="column_appInfoContent"
+                                                    th:text="${session.user.USERDEPT}"></td>
                                             </tr>
                                             <tr>
                                                 <td class="column_appInfoTitle">기안일</td>
@@ -83,7 +87,8 @@
                                             </tr>
                                             <tr>
                                                 <td class="column_appInfoTitle">기안자</td>
-                                                <td class="column_appInfoContent" th:text="${session.user.USERNAME}"></td>
+                                                <td class="column_appInfoContent"
+                                                    th:text="${session.user.USERNAME}"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -93,14 +98,14 @@
                                     <div class="appConfirm">
                                         <table>
                                             <tr>
-                                                <td rowspan="3" style="width: 25px;"> 결재</td>
-                                                <td style="width: 100px;">담당</td>
+                                                <td class="column_confirmTitle" rowspan="3"> 결재</td>
+                                                <td class="column_manager">담당</td>
                                             </tr>
                                             <tr>
-                                                <td style="height: 100px;">담당자 싸인</td>
+                                                <td class="column_sign">담당자 싸인</td>
                                             </tr>
                                             <tr>
-                                                <td>담당자 id</td>
+                                                <td class="column_confirmId">담당자 id</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -111,7 +116,7 @@
                                             <tr>
                                                 <td class="column_narrow">회의 날짜</td>
                                                 <td id="appData-date"></td>
-                                                <td class="column_narrow">출장 장소</td>
+                                                <td class="column_narrow">회의 장소</td>
                                                 <td id="appData-place"></td>
                                             </tr>
                                             <tr>
