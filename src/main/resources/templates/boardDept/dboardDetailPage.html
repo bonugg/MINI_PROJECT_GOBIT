@@ -102,8 +102,8 @@
 
                             <!-- 댓글 작성 -->
                             <div class="reply-dform">
-                                <form class="reply-form" th:action="@{|/reply/create/${board.id}|}" method="post">
-                                        <textarea class="reply-area" name="content" id="" cols="90" rows="4"
+                                <form class="reply-form" id="reply_form_area" th:action="@{|/reply/create/${board.id}|}" method="post">
+                                        <textarea class="reply-area" name="content" id="reply_area_id" cols="90" rows="4"
                                                   placeholder="댓글을 입력해 주세요." onkeyup="countingLength(this)"></textarea>
                                     <div class="reply-btn">
                                         <span id="reply-length">0/300자</span>
@@ -193,6 +193,29 @@
         }
         document.getElementById('reply-length').innerText = content.value.length + '/300자';
     }
+
+    //빈 제목일 경우 & 중복 작성 방지
+    var form = document.getElementById('reply_form_area');
+
+    form.addEventListener('submit', function(event) {
+        var replyField = document.getElementById('reply_area_id');
+        var replyValue = replyField.value.trim();
+
+        if (replyValue === '') {
+            event.preventDefault(); // 폼 제출을 막음
+            alert('내용을 입력해주세요.');
+        } else {
+            // 알림창 표시
+            var confirmResult = confirm("댓글을 등록하시겠습니까?");
+
+            if (confirmResult) {
+                // 확인 버튼을 눌렀을 때 submit 이벤트 발생
+                $("#reply_form_area").submit();
+            } else {
+                event.preventDefault();
+            }
+        }
+    });
 
 </script>
 </body>
