@@ -196,9 +196,10 @@ a {
     padding: 7px;
     cursor: pointer;
 }
-.active-page > * {
+.active-page > a {
     background: #181F42;
     color: whitesmoke;
+    pointer-events: none;
 }
 
 .page_link:hover{

@@ -42,14 +42,37 @@ public class ChatController {
     @RequestMapping("/createRoom")
     public @ResponseBody List<Room> createRoom(@RequestParam HashMap<Object, Object> params){
         String roomName = (String) params.get("roomName");
+//        String userNumber = (String) params.get("userNum");
         if(roomName != null && !roomName.trim().equals("")) {
             Room room = new Room();
             room.setRoomNumber(++roomNumber);
             room.setRoomName(roomName);
+//            room.setUserNum(userNumber);
             roomList.add(room);
         }
         return roomList;
     }
+
+    /**
+     * 방 삭제하기
+     * @param params
+     * @return
+     */
+    /**
+     * 방 삭제하기
+     * @param params
+     * @return
+     */
+    @RequestMapping("/deleteRoom")
+    public @ResponseBody List<Room> deleteRoom(@RequestParam HashMap<Object, Object> params) {
+        int roomNumber = Integer.parseInt((String) params.get("roomNum"));
+
+        // roomNumber에 해당하는 방을 찾아서 제거
+        roomList.removeIf(room -> room.getRoomNumber() == roomNumber);
+
+        return roomList;
+    }
+
 
     /**
      * 방 정보가져오기

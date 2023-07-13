@@ -2,6 +2,21 @@
     margin:0;
     padding:0;
 }
+input {
+    border: 1px solid black;
+}
+button {
+    width: 75px;
+    height: 25px;
+    background-color: transparent;
+    border: 1px solid black;
+    cursor: pointer;
+}
+button:hover{
+    background: #181F42;
+    color: whitesmoke;
+    transition: background-color 0.3s ease;
+}
 .container{
     width: 500px;
     margin: 0 auto;
@@ -34,4 +49,14 @@ input{
 }
 #yourMsg{
     display: none;
+}
+.msgImg{
+    width: 200px;
+    height: 125px;
+}
+.clearBoth{
+    clear: both;
+}
+.img{
+    float: right;
 }
