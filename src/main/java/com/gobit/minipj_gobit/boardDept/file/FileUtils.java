@@ -22,7 +22,7 @@ import java.util.UUID;
 public class FileUtils {
 
 
-    public static final  String UPLOAD_PATH = "C:/tmp/upload";
+    public static final  String UPLOAD_PATH = "/Users/minje/Desktop/upload";
 
 
     /**
@@ -80,13 +80,6 @@ public class FileUtils {
         return uuid + "." + extension;
     }
 
-    /**
-     * 업로드 경로 반환
-     * @return 업로드 경로
-     */
-    private String getUploadPath() {
-        return makeDirectories(UPLOAD_PATH);
-    }
 
     /**
      * 업로드 경로 반환

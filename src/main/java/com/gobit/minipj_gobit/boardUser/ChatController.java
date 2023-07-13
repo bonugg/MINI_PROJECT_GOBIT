@@ -52,6 +52,27 @@ public class ChatController {
     }
 
     /**
+     * 방 삭제하기
+     * @param params
+     * @return
+     */
+    /**
+     * 방 삭제하기
+     * @param params
+     * @return
+     */
+    @RequestMapping("/deleteRoom")
+    public @ResponseBody List<Room> deleteRoom(@RequestParam HashMap<Object, Object> params) {
+        int roomNumber = Integer.parseInt((String) params.get("roomNum"));
+
+        // roomNumber에 해당하는 방을 찾아서 제거
+        roomList.removeIf(room -> room.getRoomNumber() == roomNumber);
+
+        return roomList;
+    }
+
+
+    /**
      * 방 정보가져오기
      * @param params
      * @return

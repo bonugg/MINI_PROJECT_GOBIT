@@ -1,27 +1,45 @@
 $(function () {
+    const saveDataDebounced = debounce(saveData, 1000); // debounce 함수를 호출하여 반환된 함수를 저장
+
     $('#btnSave').on("click", () => {
-        // 버튼 비활성화
-        $("#btnUpdate").prop("disabled", true);
-        $.ajax({
-            url: "/appRequest/buisness",
-            type: "post",
-            data: $("#insertForm").serialize(),
-            processData: false,
-            // contentType: false,
-            dataType: "json",
-            success: (obj) => {
-                console.log(obj);
-                alert(obj.item.msg);
-                if(obj.item.result == "success"){
-                    window.location.href = obj.item.redirectUrl;
-                }
-            },
-            error: (error) => {
-                console.log(error);
-            }
-        });
+        saveDataDebounced(); // 반환된 함수를 호출하여 saveData 함수 실행
     });
 });
+
+function debounce(func, delay = 0) {
+    let timer = null;
+
+    return function () {
+        const context = this;
+        const args = arguments;
+
+        if (timer) {
+            clearTimeout(timer);
+        }
+
+        timer = setTimeout(() => func.apply(context, args), delay);
+    };
+}
+
+function saveData() {
+    $.ajax({
+        url: "/appRequest/buisness",
+        type: "post",
+        data: $("#insertForm").serialize(),
+        processData: false,
+        dataType: "json",
+        success: (obj) => {
+            console.log(obj);
+            alert(obj.item.msg);
+            if (obj.item.result == "success") {
+                window.location.href = obj.item.redirectUrl;
+            }
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+}
 
 
 function printDate() {

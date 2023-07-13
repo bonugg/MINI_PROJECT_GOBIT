@@ -45,7 +45,8 @@ public class ApprovalController {
         User user = (User) httpSession.getAttribute("user");
         Page<Approval> appForLeader = null;
         if (sWord == null) {
-            if(cls == null) cls = "";
+            if(cls == null)
+                cls = "";
             appForLeader = approvalService.findByDept(pageable, user.getUSERDEPT(), cls);
 //            System.out.println(appForLeader);
 
@@ -53,6 +54,7 @@ public class ApprovalController {
         } else {
             appForLeader = approvalService.searchAppLeaderDept(pageable, user.getUSERDEPT(), sWord);
         }
+
 
         int nowPage = appForLeader.getNumber() + 1;
         //Page<Approval>에서 getNumber를 하여 인덱스 숫자 반환. 인덱스는 -0부터 시작하니까 + 1

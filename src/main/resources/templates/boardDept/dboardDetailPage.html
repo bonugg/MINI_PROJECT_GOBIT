@@ -23,17 +23,8 @@
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
                 <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
-                <div>
-                    <!-- 머리부분 -->
-                    <div class="heead">
-                        <div class="div-title">
-                            <div class="title">
-                                <p>전사게시판</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 머리부분 -->
-
+                <div id="use_screen2">
+                    <p id="boardDept"><a href="/boardDept/list" style="color: grey">전사게시판</a></p>
 
                     <!-- 몸통 부분 -->
                     <div class="boody">
@@ -82,10 +73,6 @@
                         </div>
                         <!-- 작성 관련 내용 -->
 
-                        <!-- 첨부 파일들 -->
-
-                        <!-- 첨부 파일들 -->
-
 
                         <!-- 버튼들 -->
                         <div class="div-board-btns">
@@ -105,12 +92,7 @@
                         </div>
                         <!-- 버튼들 -->
 
-
-
-                        <!-- 댓글 시작-->
-                        <div class="div-reply">
-
-
+                        <div class="reply_title_dform">
                             <!-- 댓글 수 표시 -->
                             <div class="reply-title">
                                 <h4 th:text="'댓글 수 : ' + ${#lists.size(board.replyList)} + '개'"></h4>
@@ -120,9 +102,9 @@
 
                             <!-- 댓글 작성 -->
                             <div class="reply-dform">
-                                <form class="reply-form" th:action="@{|/reply/create/${board.id}|}" method="post">
-                                    <textarea class="reply-area" name="content" id="" cols="90" rows="4"
-                                              placeholder="댓글을 입력해 주세요." onkeyup="countingLength(this)"></textarea>
+                                <form class="reply-form" id="reply_form_area" th:action="@{|/reply/create/${board.id}|}" method="post">
+                                        <textarea class="reply-area" name="content" id="reply_area_id" cols="90" rows="4"
+                                                  placeholder="댓글을 입력해 주세요." onkeyup="countingLength(this)"></textarea>
                                     <div class="reply-btn">
                                         <span id="reply-length">0/300자</span>
                                         <input class="reply-input" type="submit" value="등록">
@@ -130,9 +112,10 @@
                                 </form>
                             </div>
                             <!-- 댓글 작성 -->
+                        </div>
 
-
-
+                        <!-- 댓글 시작-->
+                        <div class="div-reply">
                             <!-- 댓글 반복 -->
                             <div class="reply-for">
 
@@ -140,7 +123,7 @@
                                     <a th:id="|reply_${reply.id}|"></a>
                                     <div class="reply-wri-btn">
                                         <p class="reply-writer">
-                                            <img id="reply_user_img" th:src="@{'/upload/' + ${reply.user.USERIMAGE}}">
+                                            <img id="reply_user_img" src="/img/user.png" th:src="@{'/upload/' + ${reply.user.USERIMAGE}}">
                                             <span th:text="${reply.user.USERNAME}"></span>
                                             <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></span>
                                         </p>
@@ -155,9 +138,6 @@
 
                                     <hr class="reply-content-hr">
                                 </div>
-
-
-
                             </div>
 
                             <!-- 댓글 반복 -->
@@ -213,6 +193,29 @@
         }
         document.getElementById('reply-length').innerText = content.value.length + '/300자';
     }
+
+    //빈 제목일 경우 & 중복 작성 방지
+    var form = document.getElementById('reply_form_area');
+
+    form.addEventListener('submit', function(event) {
+        var replyField = document.getElementById('reply_area_id');
+        var replyValue = replyField.value.trim();
+
+        if (replyValue === '') {
+            event.preventDefault(); // 폼 제출을 막음
+            alert('내용을 입력해주세요.');
+        } else {
+            // 알림창 표시
+            var confirmResult = confirm("댓글을 등록하시겠습니까?");
+
+            if (confirmResult) {
+                // 확인 버튼을 눌렀을 때 submit 이벤트 발생
+                $("#reply_form_area").submit();
+            } else {
+                event.preventDefault();
+            }
+        }
+    });
 
 </script>
 </body>

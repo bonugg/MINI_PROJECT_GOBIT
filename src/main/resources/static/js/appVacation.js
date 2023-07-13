@@ -1,33 +1,54 @@
 $(function () {
+    const saveDataDebounced = debounce(saveData, 1000); // debounce 함수를 호출하여 반환된 함수를 저장
+
     $('#btnSave').on("click", () => {
-        $.ajax({
-            url: "/appRequest/vacation",
-            type: "post",
-            data: $("#insertForm").serialize(),
-            processData: false,
-            dataType: "json",
-            success: (obj) => {
-                console.log(obj);
-                alert(obj.item.msg);
-                if (obj.item.result == "success") {
-                    window.location.href = obj.item.redirectUrl;
-                }
-            },
-            error: (error) => {
-                console.log(error);
-            }
-        });
+        saveDataDebounced(); // 반환된 함수를 호출하여 saveData 함수 실행
     });
 });
 
-function printDate() {
-    const dateStartInput = document.getElementById('input-appStart');
-    const dateEndInput = document.getElementById('input-appEnd');
-    const vacationDateElement = document.getElementById('appData-date');
+function debounce(func, delay = 0) {
+    let timer = null;
 
-    if (dateStartInput != null && dateEndInput != null) {
-        const dateStart = dateStartInput.value;
-        const dateEnd = dateEndInput.value;
+    return function () {
+        const context = this;
+        const args = arguments;
+
+        if (timer) {
+            clearTimeout(timer);
+        }
+
+        timer = setTimeout(() => func.apply(context, args), delay);
+    };
+}
+
+function saveData() {
+    $.ajax({
+        url: "/appRequest/vacation",
+        type: "post",
+        data: $("#insertForm").serialize(),
+        processData: false,
+        dataType: "json",
+        success: (obj) => {
+            console.log(obj);
+            alert(obj.item.msg);
+            if (obj.item.result == "success") {
+                window.location.href = obj.item.redirectUrl;
+            }
+        },
+        error: (error) => {
+            console.log(error);
+        }
+    });
+}
+
+function printDate() {
+    const appStartInput = document.getElementById("input-appStart");
+    const appEndInput = document.getElementById("input-appEnd");
+    const vacationDateElement = document.getElementById('appData-vacationDate');
+    if ($('#input-appStart').val() != null && $('#input-appEnd').val() != null) {
+        console.log("테스트테스트테스트: " + $('#input-appStart').val());
+        const dateStart = appStartInput.value;
+        const dateEnd = appEndInput.value;
         vacationDateElement.innerText = `${dateStart} ~ ${dateEnd}`;
     }
 }
