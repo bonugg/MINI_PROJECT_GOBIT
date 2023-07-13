@@ -6,7 +6,8 @@ $(function () {
     let year = today.getFullYear();
     let month = (today.getMonth() + 1).toString().padStart(2, '0'); // 월은 1월이 0으로 시작하므로 1을 더합니다.
     let day = today.getDate().toString().padStart(2, '0'); // 일자가 두 자리가 되도록 왼쪽에 0을 추가합니다.
-    const pattern = "218.153.162.95";
+    const pattern = "58.29.191.61";
+    // const pattern = "218.153.162.95";
     let myChart = echarts.init(document.getElementById('main'));
     let formattedDate = `${year}-${month}-${day}`; // yyyy-MM-dd 형식으로 날짜를 표현합니다.
     let changeChartHandlerAdded = true; //이벤트 리스너가 한번만 등록되도록 함

@@ -4,7 +4,7 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>사원 정보</title>
+    <title>1:1 채팅창</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부 -->
         <link rel="stylesheet" type="text/css" href="/css/chat/userchar.css">
@@ -23,27 +23,30 @@
         <div id="message_div">
             <div id="onoff-grid-container">
                 <div class="item" th:each="item : ${sendList}">
-                    <div class="user_prof">
-                        <img th:src="@{'/upload/' + ${item.user.USERIMAGE}}"
-                             alt="유저 프로필 이미지"
-                             class="img_list"
-                             style="font-size: 0px"
-                        />
-                        <p  class="username_p" th:text="${item.user.USERNAME + '님'}"></p>
+                    <div class="te">
+                        <div class="user_prof" th:style="${item.user.USERNUM} == ${session.user.USERNUM} ? 'position: absolute; right: 0; top: 0;' : ''">
+                            <img th:src="@{'/upload/' + ${item.user.USERIMAGE}}"
+                                 alt="유저 프로필 이미지"
+                                 class="img_list"
+                                 style="font-size: 0px"
+                            />
+                            <p class="username_p" th:text="${item.user.USERNAME + '님'}"></p>
+                        </div>
+                        <table class="onoff_table" th:style="${item.user.USERNUM} == ${session.user.USERNUM} ? 'position: absolute; right: 0; top: 33px;' : ''">
+                            <tr>
+                                <td class="message_list" th:text="${item.chatSend}">
+                                </td>
+                            </tr>
+                        </table>
+                        <p class="date" th:text="${#temporals.format(item.chatSendDate, 'MM-dd HH:mm')}" th:style="${item.user.USERNUM} == ${session.user.USERNUM} ? 'position: absolute; right: 0; top: 70px;' : ''"></p>
                     </div>
-                    <table class="onoff_table">
-                        <tr>
-                            <td class="message_list"  th:text="${item.chatSend}">
-                            </td>
-                        </tr>
-                    </table>
-
                 </div>
             </div>
         </div>
         <div id="send_div">
-            <input type="text" id="send_text" placeholder="보낼 메시지를 입력해주세요.">
+            <input type="text" id="send_text" placeholder="연결 비활성화" disabled>
             <input type="hidden" id="receive_user" th:value="${receiveId.id}">
+            <input type="hidden" id="user_check" value="0">
             <button type="button" id="send_btn">보내기</button>
         </div>
     </div>
@@ -78,21 +81,23 @@
             $(document).on("click", "#send_btn", function () {
                 let send_text = $('#send_text').val();
                 let receive_user = $('#receive_user').val();
+                let user_check = $('#user_check').val();
 
                 $.ajax({
                     type: "POST",
                     url: "/sendMessage",
                     data: {
                         receiveuser: receive_user,
-                        sendText: send_text
+                        sendText: send_text,
+                        usercheck: user_check,
                     },
                     success: function (response) {
                         // Ajax 요청이 성공하면 호출되는 함수
                         $('#send_text').val("");
 
                     },
-                    error: function (){
-                        $('#send_text').attr("placeholder","메세지 전송 실패");
+                    error: function () {
+                        $('#send_text').attr("placeholder", "메세지 전송 실패");
                     }
                 });
             });

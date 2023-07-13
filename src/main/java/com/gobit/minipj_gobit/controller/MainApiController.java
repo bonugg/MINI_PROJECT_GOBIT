@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -97,11 +98,18 @@ public class MainApiController {
 
     @PostMapping("/sendMessage")
     public String sendMessage(@RequestParam("receiveuser") long receiveuser,
-                              @RequestParam("sendText") String sendText){
+                              @RequestParam("sendText") String sendText,
+                              @RequestParam("usercheck") String usercheck){
+        System.out.println("유저 체크 : " + usercheck);
         User user = (User) httpSession.getAttribute("user");
         Message message = new Message();
         message.setChatSend(sendText);
         message.setUser(user);
+        if(usercheck.equals("1")){
+            message.setChatCheck(1);
+        }else if (usercheck.equals("0")){
+            message.setChatCheck(0);
+        }
         message.setReceiveUser(userRepository.findById(receiveuser).get());
         messageRepository.save(message);
         messageRepository.flush();

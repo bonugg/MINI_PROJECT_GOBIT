@@ -31,7 +31,8 @@
     <script>
         $(function () {
             window.messagePage = function messagePage() {
-                window.open("/messagePage", "_blank", "width=550, height=700");
+                let chatWindowName = "charList" + userNum;
+                let chatWindow = window.open("/messagePage", chatWindowName, "width=550, height=700");
             };
         });
     </script>

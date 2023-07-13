@@ -17,6 +17,14 @@ public class MessageListener extends TextWebSocketHandler {
     @Autowired
     private HttpSession httpSession;
     @PostPersist
+    public void onMessageSend(Message message) {
+        User user = (User) httpSession.getAttribute("user");
+        if(message.getUser().getUSERNUM() == user.getUSERNUM() || message.getReceiveUser().getUSERNUM() == user.getUSERNUM()){
+            WSHandler websocketHandler = BeanUtils.getBean(WSHandler.class);
+            websocketHandler.handleDatabaseChanges(message);
+        }
+    }
+
     @PostUpdate
     public void onMessageUpdate(Message message) {
         User user = (User) httpSession.getAttribute("user");
