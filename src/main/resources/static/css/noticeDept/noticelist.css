@@ -119,7 +119,7 @@ section.notice {
     display: none;
 }
 
-tr:hover{
+.tbody tr:hover{
     background-color: #E8EAF6;
 }
 
