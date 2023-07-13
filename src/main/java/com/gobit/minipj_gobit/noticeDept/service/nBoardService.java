@@ -21,11 +21,6 @@ public class nBoardService {
     private final NfileService nfileService;
     private final NfileRepository nfileRepository;
 
-//    @Autowired
-//    public nBoardService(nBoardRepository boardRepository) {
-//        this.boardRepository = boardRepository;
-//    }
-
     public nBoard getBoard(Long id) {
         return boardRepository.findById(id).get();
     }

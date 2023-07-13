@@ -68,7 +68,9 @@ section.notice {
 }
 .board-table a:hover {
     text-decoration: underline;
+    font-weight: bold;
 }
+
 .board-table th {
     text-align: center;
 }
@@ -76,6 +78,7 @@ section.notice {
 .board-table .th-num {
     width: 100px;
     text-align: center;
+
 }
 .board-table .th-title {
     width: calc(100% - 450px);
@@ -84,14 +87,16 @@ section.notice {
 .board-table .th-name {
     width: 100px;
     text-align: center;
+
 }
 .board-table .th-cnt{
-    width: 50px;
+    width: 60px;
     text-align: center;
 }
 
 .board-table .th-date {
-    width: 200px;
+    width: 150px;
+
 }
 
 .board-table th, .board-table td {
@@ -114,16 +119,19 @@ section.notice {
     display: none;
 }
 
+tr:hover{
+    background-color: #E8EAF6;
+}
+
 #notice_title{
    margin: 0;
    box-sizing: border-box;
 }
 .shorttitle {
-    width: 80%;
+    width: 85%;
     text-overflow: ellipsis;     /* 생략 처리 ( ... )*/
     white-space: nowrap;         /* 줄바꿈 하지 않고 잘림*/
     overflow: hidden;            /* 스크롤 처리 하지 않음*/
-    word-break: break-all;
     text-align: left;
 }
 
@@ -278,7 +286,7 @@ section.notice {
 #board-search .search-window .search-wrap input[type="search"] {
     display: inline-block;
     vertical-align: middle;
-    width: 410px;
+    width: 475px;
     margin-right: 10px;
 }
 

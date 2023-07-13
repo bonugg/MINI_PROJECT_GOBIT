@@ -151,6 +151,9 @@
     setTimeout(function() {
       button.disabled = false;  // 버튼 다시 활성화
       button.closest('form').submit();  // 폼 제출
+
+      // 등록 완료 알림 표시
+      alert('등록되었습니다.');
     }, 1000);  // 적절한 지연 시간을 설정합니다. 이 예제에서는 1초(1000ms)입니다.
   });
 </script>
