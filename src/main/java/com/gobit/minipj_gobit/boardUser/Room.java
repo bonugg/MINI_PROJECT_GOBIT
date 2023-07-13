@@ -6,5 +6,4 @@ import lombok.Data;
 public class Room {
     int roomNumber;
     String roomName;
-    String userNum;
 }

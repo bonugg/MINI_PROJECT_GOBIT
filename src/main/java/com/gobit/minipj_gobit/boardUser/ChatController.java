@@ -42,12 +42,10 @@ public class ChatController {
     @RequestMapping("/createRoom")
     public @ResponseBody List<Room> createRoom(@RequestParam HashMap<Object, Object> params){
         String roomName = (String) params.get("roomName");
-//        String userNumber = (String) params.get("userNum");
         if(roomName != null && !roomName.trim().equals("")) {
             Room room = new Room();
             room.setRoomNumber(++roomNumber);
             room.setRoomName(roomName);
-//            room.setUserNum(userNumber);
             roomList.add(room);
         }
         return roomList;
