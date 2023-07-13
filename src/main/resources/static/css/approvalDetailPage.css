@@ -212,3 +212,7 @@ th, td, tr{
     background-color: #e3e3e3;
     cursor: auto;
 }
+
+input[type='date']::-webkit-calendar-picker-indicator, input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
