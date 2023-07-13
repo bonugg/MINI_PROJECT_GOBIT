@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>대화방</h1>
+    <h1>자유 대화방</h1>
     <input type="hidden" id="user_Id" th:value="${session.user.USERNUM}">
     <div id="roomContainer" class="roomContainer">
         <table id="roomList" class="roomList"></table>
@@ -73,7 +73,9 @@
 
 
     function goRoom(number, name){
-        location.href="/moveChating?roomName="+name+"&"+"roomNumber="+number;
+        event.preventDefault();
+        let uurl ="/moveChating?roomName="+name+"&"+"roomNumber="+number;
+        window.open(uurl, '_blank', 'width=550,height=700');
     }
 
     function createChatingRoom(res){
