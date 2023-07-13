@@ -10,6 +10,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean;
 
 
 @Configuration
@@ -27,5 +28,13 @@ public class WebSocketConfig  implements WebSocketConfigurer{
     @Bean
     public WebSocketHandler databaseChangeHandler() {
         return new WSHandler(approvalRepository);
+    }
+
+    @Bean
+    public ServletServerContainerFactoryBean createWebSocketContainer() {
+        ServletServerContainerFactoryBean container = new ServletServerContainerFactoryBean();
+        container.setMaxTextMessageBufferSize(500000);
+        container.setMaxBinaryMessageBufferSize(500000);
+        return container;
     }
 }
