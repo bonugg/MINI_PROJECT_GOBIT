@@ -58,8 +58,7 @@
                                     </dl>
                                 </div>
                             </div>
-                            <div class="cont" style="white-space: pre-line;" th:text="${nBoard.content}">
-                            </div>
+                            <div class="cont" style="white-space: pre-line;" th:utext="${@commonUtil.markdown(nBoard.content)}"></div>
                         </div>
                         <div class="bt_wrap">
                             <a href="/noticeDept/list"><button class="on" type="button">목록</button></a>
