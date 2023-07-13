@@ -83,7 +83,7 @@
                         <!-- 페이지 숫자 표시 -->
                         <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
                                 <a th:if="${page != nowPage}" th:href="@{/noticeDept/list(page=${page - 1}, searchKeyword=${param.searchKeyword})}" th:text="${page}"></a>
-                                <strong th:if="${page == nowPage}" th:text="${page}" style="color: darkblue"></strong>
+                                <strong th:if="${page == nowPage}" th:text="${page}" style="color: #181F42"></strong>
                         </th:block>
 
                         <!-- 다음 버튼 -->
