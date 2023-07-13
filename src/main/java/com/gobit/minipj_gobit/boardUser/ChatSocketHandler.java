@@ -57,6 +57,7 @@ public class ChatSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         //소켓 연결
+        System.out.println("session" + session);
         super.afterConnectionEstablished(session);
         boolean flag = false;
         String url = session.getUri().toString();
