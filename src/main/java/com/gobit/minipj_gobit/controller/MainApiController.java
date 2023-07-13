@@ -75,16 +75,18 @@ public class MainApiController {
         sendList.addAll(sendList2);
         sendList.sort(Comparator.comparing(Message::getChatSendDate));
 
+        List<Message> addSetCheck = new ArrayList<>();
         for(Message ms : sendList){
-            if(ms.getReceiveUser().getUSERNUM() == user.getUSERNUM()){
+            if(ms.getReceiveUser().getUSERNUM() == user.getUSERNUM() && ms.getChatCheck() != 1){
                 ms.setChatCheck(1);
+                addSetCheck.add(ms);
             }
         }
 
-        messageRepository.saveAll(sendList);
+        messageRepository.saveAll(addSetCheck);
         messageRepository.flush();
         // 발행 후 이벤트 수정
-        messageListener.afterSaveAll(sendList);
+        messageListener.afterSaveAll(addSetCheck);
 
         mv.addObject("sendId", userDTO);
         mv.addObject("receiveId", receiveUserDTO);

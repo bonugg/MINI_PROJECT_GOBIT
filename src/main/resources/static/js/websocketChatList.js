@@ -24,8 +24,12 @@ $(function () {
             let jsonObj = JSON.parse(event.data);
             console.log(jsonObj);
             console.log("---------------");
-            $('#num'+jsonObj.sendid).text(jsonObj.sendUserCnt);
-
+            if(jsonObj.receiveUser == userNum){
+                $('#num'+jsonObj.sendid).css("display", "").text(jsonObj.sendUserCnt);
+            }
+            if($('#num'+jsonObj.sendid).text() == 0){
+                $('#num'+jsonObj.sendid).css("display", "none");
+            }
         };
 
         socket.onclose = () => {

@@ -116,6 +116,29 @@ body::-webkit-scrollbar-track {
     box-sizing: border-box;
     width: 100%;
 }
+.name_list3 {
+    font-size: 12px;
+    text-align: left;
+    padding-left: 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+.name_list2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color:red;
+    color: white;
+    font-size: 10px;
+    text-align: left;
+    zoom: 0.9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .btn_list{
     font-size: 11px;
     text-align: left;

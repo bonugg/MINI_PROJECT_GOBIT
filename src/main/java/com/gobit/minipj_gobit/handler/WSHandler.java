@@ -33,16 +33,6 @@ public class WSHandler extends TextWebSocketHandler {
         for (WebSocketSession currentSession : sessions) {
             if (currentSession.isOpen()) {
                 System.out.println(currentSession+"===");
-                String sessionUri = currentSession.getUri().toString();
-                if (o instanceof Message && sessionUri.contains("charRoom=")) {
-                    int charRoom = Integer.parseInt(sessionUri.substring(sessionUri.indexOf("charRoom=") + 9));
-                    System.out.println(charRoom);
-                    Message message = (Message) o;
-                    long a = message.getUser().getUSERNUM() + message.getReceiveUser().getUSERNUM();
-                    if(a == charRoom){
-
-                    }
-                }
                 CompletableFuture.runAsync(() -> {
                             try {
                                 sendUserOnOffMessage(currentSession, o);
@@ -79,6 +69,7 @@ public class WSHandler extends TextWebSocketHandler {
             result.put("sendid", message.getUser().getUSERNUM());
             result.put("sendMsg", message.getChatSend());
             result.put("sendUser", message.getUser().getUSERNAME());
+            result.put("receiveUser", message.getReceiveUser().getUSERNUM());
             result.put("sendUserImg", message.getUser().getUSERIMAGE());
             result.put("sendUserCnt", messageRepository.findBycnt(message.getUser(), message.getReceiveUser()));
         }

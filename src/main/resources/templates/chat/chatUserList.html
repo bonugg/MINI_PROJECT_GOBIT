@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <div id="div_title">
-        유저 목록
+        사원 목록
     </div>
     <div id="div_content">
         <div id="onoff-grid-container" th:each="item : ${userDTOList}">
@@ -36,8 +36,9 @@
                         <td class="name_list"
                             th:text="${item.name + '님'}">
                         </td>
-                        <td class="name_list" th:id="${'num'+item.id}"
-                            th:text="${item.count}">
+                        <td class="name_list3">
+                            <div th:id="${'num'+item.id}" class="name_list2" th:text="${item.count}" th:style="${item.count} == 0 ? 'display:none' : ''">
+                            </div>
                         </td>
                         <td class="btn_list">
                             <button type="button" class="btn_chat" th:onclick="messageSendPage([[${item.id}]])">대화하기</button>
