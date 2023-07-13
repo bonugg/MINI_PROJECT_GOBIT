@@ -1,0 +1,102 @@
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>사원 정보</title>
+    <th:block layout:fragment="css">
+        <!--사용할 css는 여기에 첨부 -->
+        <link rel="stylesheet" type="text/css" href="/css/chat/userchar.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&family=Orbit&family=Russo+One&display=swap"
+              rel="stylesheet">
+    </th:block>
+</head>
+<body>
+<div class="container">
+    <div id="div_title" th:text="${receiveId.name + '님'}">
+
+    </div>
+    <div id="div_content">
+        <div id="message_div">
+            <div id="onoff-grid-container">
+                <div class="item" th:each="item : ${sendList}">
+                    <div class="user_prof">
+                        <img th:src="@{'/upload/' + ${item.user.USERIMAGE}}"
+                             alt="유저 프로필 이미지"
+                             class="img_list"
+                             style="font-size: 0px"
+                        />
+                        <p  class="username_p" th:text="${item.user.USERNAME + '님'}"></p>
+                    </div>
+                    <table class="onoff_table">
+                        <tr>
+                            <td class="message_list"  th:text="${item.chatSend}">
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div id="send_div">
+            <input type="text" id="send_text" placeholder="보낼 메시지를 입력해주세요.">
+            <input type="hidden" id="receive_user" th:value="${receiveId.id}">
+            <button type="button" id="send_btn">보내기</button>
+        </div>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <!--사용할 자바스크립트는 여기에 첨부 -->
+    <script src="/js/jquery-3.7.0.min.js"></script>
+    <script th:inline="javascript">
+        const userDept = [[${session.user.USERDEPT}]];
+        const userNum = [[${session.user.USERNUM}]];
+        const receiveUserNum = [[${receiveId.id}]];
+    </script>
+    <script th:src="@{/js/websocketChat.js}"></script>
+    <script>
+        $(function () {
+            function scrollToBottom() {
+                let messageDiv = document.getElementById("message_div");
+                messageDiv.scrollTop = messageDiv.scrollHeight;
+            }
+
+            window.addEventListener("load", scrollToBottom);
+
+            //엔터키
+            $("#send_text").keyup(function (event) {
+                if (event.which === 13) {
+                    $("#send_btn").click();
+                }
+            });
+
+
+            $(document).on("click", "#send_btn", function () {
+                let send_text = $('#send_text').val();
+                let receive_user = $('#receive_user').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/sendMessage",
+                    data: {
+                        receiveuser: receive_user,
+                        sendText: send_text
+                    },
+                    success: function (response) {
+                        // Ajax 요청이 성공하면 호출되는 함수
+                        $('#send_text').val("");
+
+                    },
+                    error: function (){
+                        $('#send_text').attr("placeholder","메세지 전송 실패");
+                    }
+                });
+            });
+        });
+    </script>
+</th:block>
+</html>

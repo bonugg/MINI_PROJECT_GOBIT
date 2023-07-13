@@ -8,9 +8,9 @@
     <title>Empty</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부. 2번째 링크는 돋보기 버튼용 -->
-        <link rel="stylesheet" type="text/css" href="css/empty.css">
+        <link rel="stylesheet" type="text/css" href="/css/empty.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
-        <link rel="stylesheet" type="text/css" href="css/approvalList.css">
+        <link rel="stylesheet" type="text/css" href="/css/approvalList.css">
     </th:block>
 </head>
 <body layout:fragment="content">
@@ -115,7 +115,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="approval : ${appForLeader}">
+                                <tr th:each="approval : ${appForLeader}" class="tr_cls" th:onclick="|location.href='@{/approvalList/{appNum} (appNum=${approval.appNum})}'|">
                                     <!-- 문서번호 -->
                                     <th class="left-line" th:text="${approval.appNum}"></th>
 
@@ -126,14 +126,14 @@
                                         <span th:case="M">회의</span>
                                     </td>
 
-                                    <td><a th:href="@{/approvalList/{appNum} (appNum=${approval.appNum})}"
-                                           th:text="${approval.appContent}"></a></td>
+                                    <td th:text="${approval.appContent}"></td>
 
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
 
                                     <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
 
-                                    <td th:text="${approval.appState}"></td>
+                                    <td th:text="${approval.appState}" th:style="${approval.appState == '승인' ? 'color: cornflowerblue;' : (approval.appState == '반려' ? 'color: indianred;' : '') }"></td>
+
 
                                     <!-- 결재 요청자  -->
                                     <td class="right-line" th:text="${approval.userNum.getUSERNAME()}"></td>

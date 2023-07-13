@@ -75,32 +75,37 @@ public class excepController {
                     break;
                 }
                 User data = new User();
+                System.out.println("==================================");
+                System.out.println("현재 i 값 : "+ i);
+                System.out.println("==================================");
+                if(row.getCell(1).getStringCellValue().equals("END")){
+                    break;
+                }else {
+                    String pwd = String.valueOf((int)row.getCell(4).getNumericCellValue());
+                    Date joinDate = row.getCell(7).getDateCellValue();
+                    String joinStr = new SimpleDateFormat("yyyy-MM-dd").format(joinDate);
 
-                String pwd = String.valueOf((int)row.getCell(4).getNumericCellValue());
-                Date joinDate = row.getCell(7).getDateCellValue();
-                String joinStr = new SimpleDateFormat("yyyy-MM-dd").format(joinDate);
+                    data.setUSERENO((long) row.getCell(0).getNumericCellValue());
+                    data.setUSERNAME(row.getCell(1).getStringCellValue());
+                    data.setUSERDEPT(row.getCell(2).getStringCellValue());
+                    data.setUSERPOSITION(row.getCell(3).getStringCellValue());
+                    data.setUSER_PWD(passwordEncoder.encode(pwd));
+                    data.setUSER_EMAIL(row.getCell(5).getStringCellValue());
+                    data.setUSER_PHONE(row.getCell(6).getStringCellValue());
+                    data.setUSER_JOIN(joinStr);
+                    data.setUSER_EXIT_CHK('N');
+                    dataList.add(data);
+                    data.setImagePath("C:/tmp/upload/");
+                    data.setUSERIMAGE("user.png");
 
-                data.setUSERENO((long) row.getCell(0).getNumericCellValue());
-                data.setUSERNAME(row.getCell(1).getStringCellValue());
-                data.setUSERDEPT(row.getCell(2).getStringCellValue());
-                data.setUSERPOSITION(row.getCell(3).getStringCellValue());
-                data.setUSER_PWD(passwordEncoder.encode(pwd));
-                data.setUSER_EMAIL(row.getCell(5).getStringCellValue());
-                data.setUSER_PHONE(row.getCell(6).getStringCellValue());
-                data.setUSER_JOIN(joinStr);
-                data.setUSER_EXIT_CHK('N');
-                dataList.add(data);
-                data.setImagePath("C:/tmp/upload/");
-                data.setUSERIMAGE("user.png");
+                    userRepository.save(data);
 
-                userRepository.save(data);
-
-                //회원추가 시 휴가설정
-                System.out.println("======================" + data.getUSERNAME() + "님 연차 설정======================");
-                Vacation vacation = new Vacation();
-                vacation.setDefault(data);
-                vacationRepository.save(vacation);
-
+                    //회원추가 시 휴가설정
+                    System.out.println("======================" + data.getUSERNAME() + "님 연차 설정======================");
+                    Vacation vacation = new Vacation();
+                    vacation.setDefault(data);
+                    vacationRepository.save(vacation);
+                }
             }
             return ResponseEntity.ok().body("회원가입 완료");
         } catch (DataIntegrityViolationException dve){

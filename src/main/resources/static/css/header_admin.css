@@ -48,7 +48,7 @@ body::-webkit-scrollbar-track {
     width: 100%;
     height: 100%;
     background-color: #181F42;
-    border: 0px solid lightgray;
+    border: 0px solid black;
     border-bottom-width: 1px;
     display: flex;
     list-style: none;
@@ -70,6 +70,7 @@ body::-webkit-scrollbar-track {
     align-items: center;
 }
 #logo_img{
+    margin-top: 3px;
     width: 130px;
     height: 35px;
 }

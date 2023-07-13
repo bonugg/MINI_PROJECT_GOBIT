@@ -28,6 +28,13 @@
         const userNum = [[${session.user.USERNUM}]];
     </script>
     <script th:src="@{/js/websocket.js}"></script>
+    <script>
+        $(function () {
+            window.messagePage = function messagePage() {
+                window.open("/messagePage", "_blank", "width=550, height=700");
+            };
+        });
+    </script>
     <!--특정 페이지에서만 동작할 js 링크나 태그 -->
     <th:block layout:fragment="script">
         <!--<script>
