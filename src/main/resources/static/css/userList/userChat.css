@@ -47,6 +47,9 @@ input{
     width: 330px;
     height: 25px;
 }
+#fileUpload {
+    border: none;
+}
 #yourMsg{
     display: none;
 }
