@@ -80,7 +80,7 @@
 
 
                         <!-- 페이징처리 시작 -->
-                        <div class="paging" th:if="${!paging.isEmpty()}">
+                        <div class="paging">
                             <ul class="board_ul">
 
                                 <li th:if="${paging.hasPrevious()}" style="margin-right: 3px">
@@ -88,9 +88,10 @@
                                         이전
                                     </a>
                                 </li>
-                                <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}" style="margin-right: 3px"
-                                    th:if="${page >= paging.number-2 and page <= paging.number+2}"
-                                    th:class="${page+1 == currentPage ? 'active-page' : ''}">
+                                <li th:each="page: ${#numbers.sequence(0, paging.totalPages - 1)}"
+                                    style="margin-right: 3px"
+                                    th:if="${page >= paging.number-2 and page <= paging.number+2 and paging.totalPages > 0}"
+                                    th:class="${page == paging.number ? 'active-page' : ''}">
                                     <a th:text="${page+1}" class="page_link" href="javascript:void(0)" th:data-page="${page}"></a>
                                 </li>
                                 <li th:if="${paging.hasNext()}">
@@ -164,6 +165,7 @@ $(document).ready(function () {
                     kw: kw,
                 },
                 success: function(response) {
+                    console.log(response);
                     // Update the table body with the new data
                     var tbodyHtml = "";
                     response.content.forEach(function(boardDTO) {
@@ -219,7 +221,7 @@ $(document).ready(function () {
         let pageButtons = "";
 
         const startPage = Math.max(currentPage - 2, 0); // 현재 페이지의 앞에서 2페이지까지 생성
-        const endPage = Math.min(currentPage + 2, totalPages - 1); // 현재 페이지의 뒤에서 2페이지까지 생성
+        const endPage = Math.min(currentPage + 2, totalPages -1); // 현재 페이지의 뒤에서 2페이지까지 생성
 
         for (let page = startPage; page <= endPage; page++) {
             const activeClass = page === currentPage ? "active-page" : "";
