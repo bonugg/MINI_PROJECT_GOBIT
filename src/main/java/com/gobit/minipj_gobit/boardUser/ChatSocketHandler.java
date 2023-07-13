@@ -69,6 +69,7 @@ public class ChatSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
+        System.out.println(message);
         //바이너리 메시지 발송
         ByteBuffer byteBuffer = message.getPayload();
         String fileName = "temp.jpg";
