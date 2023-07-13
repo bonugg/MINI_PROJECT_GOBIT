@@ -33,36 +33,39 @@
                             <input type="hidden" id="appVacReq" name="appVacReq">
                             <section id="inputData-section">
                                 <div class="input-date">
-                                    <div>휴가날짜</div>
+                                    <div class="column">휴가날짜</div>
                                     <div class="input-date-form">
-                                        <input type="datetime-local" id="input-appStart" name="appStart" required onchange="handleStartDate()"/>
+                                        <input type="datetime-local" id="input-appStart" name="appStart" required
+                                               onchange="handleStartDate()"/>
                                         <p>~</p>
-                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required onchange="handleEndDate()"/>
+                                        <input type="datetime-local" id="input-appEnd" name="appEnd" required
+                                               onchange="handleEndDate()"/>
                                     </div>
                                 </div>
                                 <div class="input-user">
-                                    <div>신청자</div>
+                                    <div class="column">신청자</div>
                                     <div class="input-user-form">
                                         <input type="hidden" name="userNum" th:value="${session.user.USERNUM}">
                                         <p th:text="${session.user.USERNAME}"></p>
                                     </div>
                                 </div>
                                 <div class="input-type">
-                                    <div>휴가 종류</div>
+                                    <div class="column">휴가 종류</div>
                                     <div class="input-place-form">
-                                            <select id="input-appVacType" name="appVacType" required onchange="handleVacType()">
-                                                <option value="morningOff">오전반차</option>
-                                                <option value="afternoonOff">오후반차</option>
-                                                <option value="dayOff">연차</option>
-                                                <option value="sickDay">병가</option>
-                                            </select>
+                                        <select id="input-appVacType" name="appVacType" required
+                                                onchange="handleVacType()">
+                                            <option value="morningOff">오전반차</option>
+                                            <option value="afternoonOff">오후반차</option>
+                                            <option value="dayOff">연차</option>
+                                            <option value="sickDay">병가</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="input-text">
-                                    <div>휴가 사유</div>
+                                    <div class="column">휴가 사유</div>
                                     <div class="input-text-form">
-                            <textarea id="input-appContent" name="appContent" style="resize:vertical" cols="50"
-                                      rows="1" required onkeyup="printContent()"></textarea>
+                            <textarea id="input-appContent" name="appContent" cols="50"
+                                      rows="1" required placeholder="내용을 입력해주세요" onkeyup="printContent()"></textarea>
                                     </div>
                                 </div>
                             </section>
@@ -77,7 +80,8 @@
                                             </tr>
                                             <tr>
                                                 <td class="column_appInfoTitle">부서</td>
-                                                <td class="column_appInfoContent" th:text="${session.user.USERDEPT}"></td>
+                                                <td class="column_appInfoContent"
+                                                    th:text="${session.user.USERDEPT}"></td>
                                             </tr>
                                             <tr>
                                                 <td class="column_appInfoTitle">기안일</td>
@@ -85,7 +89,8 @@
                                             </tr>
                                             <tr>
                                                 <td class="column_appInfoTitle">기안자</td>
-                                                <td class="column_appInfoContent" th:text="${session.user.USERNAME}"></td>
+                                                <td class="column_appInfoContent"
+                                                    th:text="${session.user.USERNAME}"></td>
                                             </tr>
                                         </table>
                                     </div>

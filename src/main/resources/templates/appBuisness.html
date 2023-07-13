@@ -33,33 +33,31 @@
                             <input type="hidden" id="appVacReq" name="appVacReq" value="0">
                             <section id="inputData-section">
                                 <div class="input-date">
-                                    <div>출장날짜</div>
+                                    <div class="column">출장날짜</div>
                                     <div class="input-date-form">
-                                        <div class="input-date-form">
                                             <input type="datetime-local" id="input-appStart" name="appStart" required onchange="handleStartDate()"/>
                                             <p>~</p>
                                             <input type="datetime-local" id="input-appEnd" name="appEnd" required onchange="handleEndDate()"/>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="input-user">
-                                    <div>신청자</div>
+                                    <div class="column">신청자</div>
                                     <div class="input-user-form">
                                         <input type="hidden" name="userNum" th:value="${session.user.USERNUM}">
                                         <p th:text="${session.user.USERNAME}"></p>
                                     </div>
                                 </div>
                                 <div class="input-place">
-                                    <div>출장 장소</div>
+                                    <div class="column">출장 장소</div>
                                     <div class="input-place-form">
                                         <input type="text" id="input-appLocation" name="appLocation" required onkeyup="printPlace()">
                                     </div>
                                 </div>
                                 <div class="input-text">
-                                    <div>출장 목적</div>
+                                    <div class="column">출장 목적</div>
                                     <div class="input-text-form">
-                            <textarea id="input-appContent" name="appContent" style="resize:vertical" cols="50"
-                                      rows="1" required onkeyup="printContent()"></textarea>
+                            <textarea id="input-appContent" name="appContent" cols="50"
+                                      rows="1" required placeholder="내용을 입력해주세요" onkeyup="printContent()"></textarea>
                                     </div>
                                 </div>
                             </section>
