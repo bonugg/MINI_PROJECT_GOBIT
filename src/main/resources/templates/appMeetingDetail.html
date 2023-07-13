@@ -36,7 +36,7 @@
                             <input type="hidden" name="userNum" th:value="${approval.userNum.USERNUM}">
                             <section id="inputData-section">
                                 <div class="input-date">
-                                    <div>회의날짜</div>
+                                    <div class="column">회의날짜</div>
                                     <div class="input-date-form">
                                         <input type="datetime-local" id="input-appStart" name="appStart" th:value="${approval.appStart}" required onchange="handleStartDate()"/>
                                         <p>~</p>
@@ -44,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="input-user">
-                                    <div>회의 참석자</div>
+                                    <div class="column">회의 참석자</div>
                                     <div class="input-user-form">
                                      <textarea id="input-Participant" name="appParticipant" th:text="${approval.appParticipant}"
                                                style="resize:vertical" cols="50" rows="1"
@@ -52,17 +52,17 @@
                                     </div>
                                 </div>
                                 <div class="input-place">
-                                    <div>회의 장소</div>
+                                    <div class="column">회의 장소</div>
                                     <div class="input-place-form">
                                         <input type="text" id="input-appLocation" name="appLocation" th:value="${approval.appLocation}"
                                                required onkeyup="printPlace()">
                                     </div>
                                 </div>
                                 <div class="input-text">
-                                    <div>회의 목적</div>
+                                    <div class="column">회의 목적</div>
                                     <div class="input-text-form">
                             <textarea id="input-appContent" name="appContent" th:text="${approval.appContent}"
-                                      style="resize:vertical" cols="50" rows="1" required onkeyup="printContent()"></textarea>
+                                      style="resize:vertical" cols="50" rows="1" required placeholder="내용을 입력해주세요" onkeyup="printContent()"></textarea>
                                     </div>
                                 </div>
                             </section>
