@@ -225,6 +225,7 @@
         left: 50%;
         transform: translate(-50%);
     }
+
     .changeLink, .pwChangeLink {
         display: none;
     }
@@ -244,7 +245,6 @@
     #profile-image {
         width: 100%;
         height: 100%;
-        object-fit: cover;
     }
 
     .mini_pwChange {
