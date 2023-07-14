@@ -12,6 +12,4 @@ public interface NfileRepository extends JpaRepository<nBoardFile, Long> {
 
     List<nBoardFile> findAllByBoard(nBoard board);
 
-    @Query(value = "select n from nBoardFile n where n.board.id = : bid")
-    List<nBoardFile> findAllByBoard2(Long bid);
 }
