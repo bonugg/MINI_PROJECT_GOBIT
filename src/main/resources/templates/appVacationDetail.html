@@ -118,10 +118,10 @@
                                             </tr>
                                             <tr>
                                                 <td class="column_confirmId" th:if="${approval.appState =='미승인'}">담당자
-                                                    id
+                                                    이름
                                                 </td>
                                                 <td class="column_confirmId" th:if="${approval.appState !='미승인'}"
-                                                    th:text="${approval.appUserNum.USERNUM}"></td>
+                                                    th:text="${approval.appUserNum.USERNAME}"></td>
                                             </tr>
                                         </table>
                                     </div>
