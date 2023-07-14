@@ -46,7 +46,6 @@ function printDate() {
     const appEndInput = document.getElementById("input-appEnd");
     const vacationDateElement = document.getElementById('appData-vacationDate');
     if ($('#input-appStart').val() != null && $('#input-appEnd').val() != null) {
-        console.log("테스트테스트테스트: " + $('#input-appStart').val());
         const dateStart = appStartInput.value;
         const dateEnd = appEndInput.value;
         vacationDateElement.innerText = `${dateStart} ~ ${dateEnd}`;
@@ -84,7 +83,6 @@ function handleEndDate() {
         alert("휴가 종료일은 휴가 시작일보다 이후여야 합니다");
         return;
     }
-
     calculateDateDifference();
     printDate();
 }
@@ -113,25 +111,36 @@ function changeDateType() {
 function calculateDateDifference() {
     const appStartInput = document.getElementById("input-appStart");
     const appEndInput = document.getElementById("input-appEnd");
-
     const appStartValue = new Date(appStartInput.value);
     const appEndValue = new Date(appEndInput.value);
-
     const differenceInMilliseconds = appEndValue.getTime() - appStartValue.getTime();
-
     const differenceInSeconds = differenceInMilliseconds / 1000;
-    const twentyFourHoursInSeconds = 24 * 60 * 60;
 
-    const totalDifferenceInSeconds = differenceInSeconds + twentyFourHoursInSeconds;
-    console.log("차이(초):", totalDifferenceInSeconds);
+    const appVacReq = document.getElementById('appVacReq')
 
-    document.getElementById("appVacReq").value = totalDifferenceInSeconds;
+    if(appStartInput.type == 'date'){
+        console.log("날짜 단위");
+        document.getElementById("appVacReq").value = differenceInSeconds + 86400;
+    }
+    if(appStartInput.type=='datetime-local'){
+        console.log("시간 단위");
+        document.getElementById("appVacReq").value = differenceInSeconds + 3600;
+    }
+    console.log("신청한 휴가(초): " + appVacReq.value);
 
-    console.log(appVacReq);
+    const appVacReqSec = appVacReq.value; // 초 단위의 값
+    const days = Math.floor(appVacReqSec / (60 * 60 * 24)); // 일(day)로 변환된 값
+    const hours = (appVacReqSec % (60 * 60 * 24)) / (60 * 60); // 시간으로 변환된 값
 
-    const appVacReqSec = document.getElementById('appVacReq').value;
-    const days = appVacReqSec / (60 * 60 * 24);
-    document.getElementById('appData-vacationDateCnt').innerText = days.toFixed(1);
+    let result = "";
+    if (days > 0) {
+        result += days + "일";
+    }
+    if (hours > 0) {
+        result += hours.toFixed(1) + "시간";
+    }
+
+    document.getElementById('appData-vacationDateCnt').innerText = result;
 
 }
 
