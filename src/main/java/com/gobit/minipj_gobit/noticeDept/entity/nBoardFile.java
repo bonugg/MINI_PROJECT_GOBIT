@@ -30,15 +30,4 @@ public class nBoardFile {
         this.size = size;
         this.createDate = LocalDateTime.now();
     }
-
-    @Override
-    public String toString() {
-        return "nBoardFile{" +
-                "id=" + id +
-                ", originalName='" + originalName + '\'' +
-                ", saveName='" + saveName + '\'' +
-                ", size=" + size +
-                ", createDate=" + createDate +
-                '}';
-    }
 }
