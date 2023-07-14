@@ -5,6 +5,7 @@ $(function() {
     });
 
     $("#submit_btn").on("click", () => {
+        $('#status_text').text("회원가입 진행 중...")
         const file = $("#file")[0].files[0]; // 파일 객체
         const formData = new FormData($("#file_form")[0]); // form 데이터
         formData.append("file", file); // FormData에 파일 객체를 append

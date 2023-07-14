@@ -43,7 +43,11 @@ public class CalendarController {
                 map.put("vacationtype", calendar.getApproval().getAppVacType());
                 map.put("applocate", calendar.getApproval().getAppLocation());
                 map.put("meetingPT", calendar.getApproval().getAppParticipant());
-                map.put("approvedName", calendar.getApproval().getAppUserNum().getUSERNAME());
+                if(calendar.getApproval().getAppUserNum() != null){
+                    map.put("approvedName", calendar.getApproval().getAppUserNum().getUSERNAME());
+                }else {
+                    map.put("approvedName", null);
+                }
             }else {
                 map.put("vacationtype", null);
                 map.put("applocate", null);
