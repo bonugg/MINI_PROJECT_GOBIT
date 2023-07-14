@@ -164,9 +164,6 @@ public class AppDetailController {
         }else{
             System.out.println("수정한 휴가 시작일(하루단위): " + appStartDay);
             System.out.println("수정한 휴가 종료일(하루단위): " + appEndDay);
-            if(appStartDay.isBefore(appEndDay)){
-                isDateFormatOk = true;
-            }
         }
 
         long newVacReq = approvalDTO.getAppVacReq();
