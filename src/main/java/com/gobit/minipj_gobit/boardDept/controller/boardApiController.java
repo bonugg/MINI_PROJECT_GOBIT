@@ -1,6 +1,6 @@
 package com.gobit.minipj_gobit.boardDept.controller;
 
-import com.gobit.minipj_gobit.boardDept.controller.dto.BoardDTO;
+import com.gobit.minipj_gobit.boardDept.dto.BoardDTO;
 import com.gobit.minipj_gobit.boardDept.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

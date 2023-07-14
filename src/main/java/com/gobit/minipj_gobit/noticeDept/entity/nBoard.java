@@ -23,7 +23,7 @@ public class nBoard {
     @Column(name = "NBOARD_TITLE")
     private String title;
 
-    @Column(name = "NBOARD_CONTENT")
+    @Column(name = "NBOARD_CONTENT", length = 1000)
     private String content;
 
     @Column(name = "NBOARD_REGDATE")

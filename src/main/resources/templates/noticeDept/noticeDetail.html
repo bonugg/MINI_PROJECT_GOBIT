@@ -48,18 +48,17 @@
                                     <dt>조회</dt>
                                     <dd th:text="${nBoard.cnt}"></dd>
                                 </dl>
-                                <div style="margin-top: 10px">
+                                <div class="file_cs">
                                     <dl>
-                                        <dt class="label-hover" th:if="${nBoard.files}">첨부파일</dt>
-                                        <dd th:each="a : ${nBoard.files}">
-                                                <a style="text-decoration: underline" th:id="${a.id}" th:href="@{/noticeDept/down/{fileId}(fileId=${a.id})}"
+                                        <dt th:if="${nBoard.files}">첨부파일</dt>
+                                        <dd class="file-hover" th:each="a : ${nBoard.files}">
+                                                <a style="text-decoration: underline;" th:id="${a.id}" th:href="@{/noticeDept/down/{fileId}(fileId=${a.id})}"
                                                    th:text="${a.originalName}"></a>
                                         </dd>
                                     </dl>
                                 </div>
                             </div>
-                            <div class="cont" style="white-space: pre-line;" th:text="${nBoard.content}">
-                            </div>
+                            <div class="cont" style="white-space: pre-line;" th:utext="${@commonUtil.markdown(nBoard.content)}"></div>
                         </div>
                         <div class="bt_wrap">
                             <a href="/noticeDept/list"><button class="on" type="button">목록</button></a>

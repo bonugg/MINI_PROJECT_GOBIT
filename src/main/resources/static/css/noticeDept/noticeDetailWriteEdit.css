@@ -15,6 +15,7 @@ a {
 .board_wrap {
     width: 1000px;
     margin: 100px auto;
+    margin-top: 50px;
 }
 
 .board_title {
@@ -26,7 +27,7 @@ a {
 }
 
 .bt_wrap {
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
     font-size: 0;
 }
@@ -69,7 +70,8 @@ a {
 .board_view .title {
     padding: 20px 15px;
     border-bottom: 1px dashed #ddd;
-    font-size: 1.5rem;
+    font-size: 2.0rem;
+    font-weight: bold;
 }
 
 .board_view .info {
@@ -217,6 +219,7 @@ a {
 
 .board_write .title input[type="text"] {
     width: 80%;
+    font-size: 1rem;
 }
 
 
@@ -250,4 +253,12 @@ a {
 #file_input_label22{
     width: 0px;
     height: 0px;
+}
+
+.file_cs {
+    margin-top: 10px
+}
+
+.file-hover a:hover {
+    color:#23527c;
 }

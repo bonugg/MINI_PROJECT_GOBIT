@@ -12,9 +12,7 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 public class ReplyService {
-
     private final ReplyRepository replyRepository;
-
     public Reply create(dBoard board, String content, User user) {
         Reply reply = new Reply();
         reply.setContent(content);
@@ -24,11 +22,9 @@ public class ReplyService {
         this.replyRepository.save(reply);
         return  reply;
     }
-
     public Reply getReply(Long id) {
         return this.replyRepository.findById(id).get();
     }
-
     public void delete(Reply reply) {
         this.replyRepository.delete(reply);
     }

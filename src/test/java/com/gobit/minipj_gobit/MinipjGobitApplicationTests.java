@@ -1,24 +1,18 @@
 package com.gobit.minipj_gobit;
 
-import com.gobit.minipj_gobit.boardDept.controller.FileController;
-import com.gobit.minipj_gobit.boardDept.controller.dto.BoardDTO;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
-import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
 import com.gobit.minipj_gobit.boardDept.service.BoardService;
-import com.gobit.minipj_gobit.boardUser.UserDTO;
 import com.gobit.minipj_gobit.boardUser.UserService;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootTest
 class MinipjGobitApplicationTests {
