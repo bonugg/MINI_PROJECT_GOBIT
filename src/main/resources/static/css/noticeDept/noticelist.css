@@ -237,10 +237,6 @@ section.notice {
 }
 
 <!--paging-->
-.page_wrap {
-    text-align: center;
-    font-size:0;
-}
 .page_nation {
     display:inline-block;
 }
