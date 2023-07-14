@@ -125,19 +125,20 @@ public class AppRequestController {
         if(appStart != null && appEnd != null){
             System.out.println("신청한 휴가 시작일(시간단위): " + appStart);
             System.out.println("신청한 휴가 종료일(시간단위): " + appStart);
-            if(appStart.isBefore(appEnd)){
+            if(appStart.isBefore(appEnd) || appStart.isEqual(appEnd)){
                 isDateFormatOk = true;
             }
         }else{
             System.out.println("신청한 휴가 시작일(하루단위): " + appStartDay);
             System.out.println("신청한 휴가 종료일(하루단위): " + appEndDay);
-            if(appStartDay.isBefore(appEndDay)){
+            if(appStartDay.isBefore(appEndDay) || appStartDay.isEqual(appEndDay)){
                 isDateFormatOk = true;
             }
         }
 
         try {
             long vacUsed = vacationService.getVacUsed(userNum);
+
             long vacLeft = vacationService.getVacLeft(userNum);
             long vacTotal = vacationService.getVacTotal(userNum);
 

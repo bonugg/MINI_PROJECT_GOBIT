@@ -117,11 +117,11 @@
                                         <table>
                                             <tr>
                                                 <td class="column_narrow">총 연차</td>
-                                                <td id="appData-totalOff"></td>
+                                                <td id="appData-totalOff" th:text="${vacation.vacTotalD}"></td>
                                                 <td class="column_narrow">사용 일수</td>
-                                                <td id="appData-vacationUsed"></td>
+                                                <td id="appData-vacationUsed" th:text="${vacation.vacUsedD} + '일'"></td>
                                                 <td class="column_narrow">잔여 연차</td>
-                                                <td id="appData-vacationLeft"></td>
+                                                <td id="appData-vacationLeft" th:text="${vacation.vacLeftD} + '일'"></td>
                                             </tr>
                                             <tr>
                                                 <td class="column_narrow">휴가 날짜</td>
