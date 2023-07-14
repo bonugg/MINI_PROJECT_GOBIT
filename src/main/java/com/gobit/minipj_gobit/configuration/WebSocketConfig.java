@@ -3,7 +3,6 @@ package com.gobit.minipj_gobit.configuration;
 import com.gobit.minipj_gobit.boardUser.ChatSocketHandler;
 import com.gobit.minipj_gobit.handler.WSHandler;
 import com.gobit.minipj_gobit.repository.ApprovalRepository;
-import com.gobit.minipj_gobit.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +18,6 @@ import org.springframework.web.socket.server.standard.ServletServerContainerFact
 @RequiredArgsConstructor
 public class WebSocketConfig  implements WebSocketConfigurer{
     private final ApprovalRepository approvalRepository;
-    private final MessageRepository messageRepository;
     private final ChatSocketHandler chatSocketHandler;
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
@@ -29,7 +27,7 @@ public class WebSocketConfig  implements WebSocketConfigurer{
     }
     @Bean
     public WebSocketHandler databaseChangeHandler() {
-        return new WSHandler(approvalRepository, messageRepository);
+        return new WSHandler(approvalRepository);
     }
 
     @Bean

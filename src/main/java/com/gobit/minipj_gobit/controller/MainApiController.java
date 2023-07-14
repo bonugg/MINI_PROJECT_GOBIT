@@ -3,7 +3,6 @@ package com.gobit.minipj_gobit.controller;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
 import com.gobit.minipj_gobit.boardUser.UserDTO;
-import com.gobit.minipj_gobit.dto.ChatUserDTO;
 import com.gobit.minipj_gobit.entity.*;
 import com.gobit.minipj_gobit.entity.Calendar;
 import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
@@ -31,8 +30,6 @@ import java.util.stream.Collectors;
 public class MainApiController {
     @Autowired
     private HttpSession httpSession;
-    @Autowired
-    private MessageListener messageListener;
     private final UserOnOffRepository userOnOffRepository;
     private final CalendarRepository calendarRepository;
     private final dBoardRepository dBoardRepository;
@@ -40,82 +37,75 @@ public class MainApiController {
     private final ApprovalRepository approvalRepository;
     private final VacationRepository vacationRepository;
     private final UserRepository userRepository;
-    private final MessageRepository messageRepository;
 
-    @GetMapping("/messagePage")
-    public ModelAndView MessagePage() {
-        User loginuser = (User) httpSession.getAttribute("user");
-        ModelAndView mv = new ModelAndView();
-        List<ChatUserDTO> userDTOList = new ArrayList<>();
-
-        List<User> userList = userRepository.findAll();
-
-        for (User user : userList) {
-            ChatUserDTO userDTO = ChatUserDTO.ChatUserToDTO(user);
-            if(userDTO.getId() != loginuser.getUSERNUM()){
-                userDTO.setCount(messageRepository.findBycnt(user, loginuser));
-                userDTOList.add(userDTO);
-            }
-        }
-        mv.addObject("userDTOList", userDTOList);
-        mv.setViewName("/chat/chatUserList.html");
-        return mv;
-    }
-
-    @GetMapping("/messageSendPage/{id}")
-    public ModelAndView messageSendPage(@PathVariable long id) throws IOException {
-        ModelAndView mv = new ModelAndView();
-        User user = (User) httpSession.getAttribute("user");
-        User receiveUser = userRepository.findById(id).get();
-
-        UserDTO userDTO = UserDTO.userToDTO(user);
-        UserDTO receiveUserDTO = UserDTO.userToDTO(receiveUser);
-
-        List<Message> sendList = messageRepository.findByUserAndReceiveUser(user, receiveUser);
-        List<Message> sendList2 = messageRepository.findByUserAndReceiveUser(receiveUser, user);
-        sendList.addAll(sendList2);
-        sendList.sort(Comparator.comparing(Message::getChatSendDate));
-
-        List<Message> addSetCheck = new ArrayList<>();
-        for(Message ms : sendList){
-            if(ms.getReceiveUser().getUSERNUM() == user.getUSERNUM() && ms.getChatCheck() != 1){
-                ms.setChatCheck(1);
-                addSetCheck.add(ms);
-            }
-        }
-
-        messageRepository.saveAll(addSetCheck);
-        messageRepository.flush();
-        // 발행 후 이벤트 수정
-        messageListener.afterSaveAll(addSetCheck);
-
-        mv.addObject("sendId", userDTO);
-        mv.addObject("receiveId", receiveUserDTO);
-        mv.addObject("sendList", sendList);
-        mv.setViewName("/chat/chatUser.html");
-        return mv;
-    }
-
-    @PostMapping("/sendMessage")
-    public String sendMessage(@RequestParam("receiveuser") long receiveuser,
-                              @RequestParam("sendText") String sendText,
-                              @RequestParam("usercheck") String usercheck){
-        System.out.println("유저 체크 : " + usercheck);
-        User user = (User) httpSession.getAttribute("user");
-        Message message = new Message();
-        message.setChatSend(sendText);
-        message.setUser(user);
-        if(usercheck.equals("1")){
-            message.setChatCheck(1);
-        }else if (usercheck.equals("0")){
-            message.setChatCheck(0);
-        }
-        message.setReceiveUser(userRepository.findById(receiveuser).get());
-        messageRepository.save(message);
-        messageRepository.flush();
-
-        return null;
-    }
+//    @GetMapping("/messagePage")
+//    public ModelAndView MessagePage() {
+//        User loginuser = (User) httpSession.getAttribute("user");
+//        ModelAndView mv = new ModelAndView();
+//        List<ChatUserDTO> userDTOList = new ArrayList<>();
+//
+//        List<User> userList = userRepository.findAll();
+//
+//        for (User user : userList) {
+//            ChatUserDTO userDTO = ChatUserDTO.ChatUserToDTO(user);
+//            if(userDTO.getId() != loginuser.getUSERNUM()){
+//                userDTO.setCount(messageRepository.findBycnt(user, loginuser));
+//                userDTOList.add(userDTO);
+//            }
+//        }
+//        mv.addObject("userDTOList", userDTOList);
+//        mv.setViewName("/chat/chatUserList.html");
+//        return mv;
+//    }
+//
+//    @GetMapping("/messageSendPage/{id}")
+//    public ModelAndView messageSendPage(@PathVariable long id) throws IOException {
+//        ModelAndView mv = new ModelAndView();
+//        User user = (User) httpSession.getAttribute("user");
+//        User receiveUser = userRepository.findById(id).get();
+//
+//        UserDTO userDTO = UserDTO.userToDTO(user);
+//        UserDTO receiveUserDTO = UserDTO.userToDTO(receiveUser);
+//
+//        List<Message> sendList = messageRepository.findByUserAndReceiveUser(user, receiveUser);
+//        List<Message> sendList2 = messageRepository.findByUserAndReceiveUser(receiveUser, user);
+//        sendList.addAll(sendList2);
+//        sendList.sort(Comparator.comparing(Message::getChatSendDate));
+//
+//        List<Message> addSetCheck = new ArrayList<>();
+//        for(Message ms : sendList){
+//            if(ms.getReceiveUser().getUSERNUM() == user.getUSERNUM() && ms.getChatCheck() != 1){
+//                ms.setChatCheck(1);
+//                addSetCheck.add(ms);
+//            }
+//        }
+//
+//        messageRepository.saveAll(addSetCheck);
+//        messageRepository.flush();
+//        // 발행 후 이벤트 수정
+//        messageListener.afterSaveAll(addSetCheck);
+//
+//        mv.addObject("sendId", userDTO);
+//        mv.addObject("receiveId", receiveUserDTO);
+//        mv.addObject("sendList", sendList);
+//        mv.setViewName("/chat/chatUser.html");
+//        return mv;
+//    }
+//
+//    @PostMapping("/sendMessage")
+//    public String sendMessage(@RequestParam("receiveuser") long receiveuser,
+//                              @RequestParam("sendText") String sendText
+//                             ){
+//        User user = (User) httpSession.getAttribute("user");
+//        Message message = new Message();
+//        message.setChatSend(sendText);
+//        message.setUser(user);
+//        message.setReceiveUser(userRepository.findById(receiveuser).get());
+//        messageRepository.save(message);
+//        messageRepository.flush();
+//
+//        return null;
+//    }
 
     @GetMapping("/approvalList/{appNum}")
     public ModelAndView approvalListDetail(@PathVariable long appNum) {

@@ -67,11 +67,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<UserOnOff> userOnOffList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Message> userChatMessage = new ArrayList<>();
-
-    @OneToMany(mappedBy = "receiveUser", cascade = CascadeType.REMOVE)
-    private List<Message> userChatReceiveMessage = new ArrayList<>();
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+//    private List<Message> userChatMessage = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "receiveUser", cascade = CascadeType.REMOVE)
+//    private List<Message> userChatReceiveMessage = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Vacation vacation;

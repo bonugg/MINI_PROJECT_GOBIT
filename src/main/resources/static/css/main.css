@@ -717,6 +717,7 @@
 
 .notice_item {
     height: 150px;
+    max-height: 150px;
     width: 100%;
     margin-bottom: 7px;
 }
@@ -854,6 +855,10 @@
     position: relative;
     line-height: 1em;
 
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .notice_content_div2 span {

@@ -1,72 +1,72 @@
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
-<head>
-    <meta charset="UTF-8">
-    <title>사원 목록</title>
-    <th:block layout:fragment="css">
-        <!--사용할 css는 여기에 첨부 -->
-        <link rel="stylesheet" type="text/css" href="/css/chat/usercharList.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&family=Orbit&family=Russo+One&display=swap"
-              rel="stylesheet">
-    </th:block>
-</head>
-<body>
-<div class="container">
-    <div id="div_title">
-        사원 목록
-    </div>
-    <div id="div_content">
-        <div id="onoff-grid-container" th:each="item : ${userDTOList}">
-            <div class="item">
-                <table class="onoff_table" th:id="${item.id}">
-                    <tr>
-                        <td class="img_td">
-                            <div class="img_td_div">
-                                <img th:src="@{'/upload/' + ${item.img}}"
-                                     alt="유저 프로필 이미지"
-                                     class="img_list"
-                                     style="font-size: 0px"
-                                />
-                            </div>
-                        </td>
-                        <td class="name_list"
-                            th:text="${item.name + '님'}">
-                        </td>
-                        <td class="name_list3">
-                            <div th:id="${'num'+item.id}" class="name_list2" th:text="${item.count}" th:style="${item.count} == 0 ? 'display:none' : ''">
-                            </div>
-                        </td>
-                        <td class="btn_list">
-                            <button type="button" class="btn_chat" th:onclick="messageSendPage([[${item.id}]])">대화하기</button>
-                        </td>
-                    </tr>
-                </table>
+<!--<html lang="ko"-->
+<!--      xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--&gt;-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>사원 목록</title>-->
+<!--    <th:block layout:fragment="css">-->
+<!--        &lt;!&ndash;사용할 css는 여기에 첨부 &ndash;&gt;-->
+<!--        <link rel="stylesheet" type="text/css" href="/css/chat/usercharList.css">-->
+<!--        <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+<!--        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&family=Orbit&family=Russo+One&display=swap"-->
+<!--              rel="stylesheet">-->
+<!--    </th:block>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--    <div id="div_title">-->
+<!--        사원 목록-->
+<!--    </div>-->
+<!--    <div id="div_content">-->
+<!--        <div id="onoff-grid-container" th:each="item : ${userDTOList}">-->
+<!--            <div class="item">-->
+<!--                <table class="onoff_table" th:id="${item.id}">-->
+<!--                    <tr>-->
+<!--                        <td class="img_td">-->
+<!--                            <div class="img_td_div">-->
+<!--                                <img th:src="@{'/upload/' + ${item.img}}"-->
+<!--                                     alt="유저 프로필 이미지"-->
+<!--                                     class="img_list"-->
+<!--                                     style="font-size: 0px"-->
+<!--                                />-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                        <td class="name_list"-->
+<!--                            th:text="${item.name + '님'}">-->
+<!--                        </td>-->
+<!--                        <td class="name_list3">-->
+<!--                            <div th:id="${'num'+item.id}" class="name_list2" th:text="${item.count}" th:style="${item.count} == 0 ? 'display:none' : ''">-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                        <td class="btn_list">-->
+<!--                            <button type="button" class="btn_chat" th:onclick="messageSendPage([[${item.id}]])">대화하기</button>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </table>-->
 
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-<th:block layout:fragment="script">
-    <!--사용할 자바스크립트는 여기에 첨부 -->
-    <script src="/js/jquery-3.7.0.min.js"></script>
-    <script th:inline="javascript">
-        const userDept = [[${session.user.USERDEPT}]];
-        const userNum = [[${session.user.USERNUM}]];
-    </script>
-    <script th:src="@{/js/websocketChatList.js}"></script>
-    <script>
-        $(function () {
-            window.messageSendPage = function messageSendPage(id) {
-                console.log(id);
-                let chatWindowName = "chatWindow";
-                let chatWindow = window.open("/messageSendPage/" + id, chatWindowName, "width=600, height=700");
-            };
-        });
-    </script>
-</th:block>
-</html>
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--<th:block layout:fragment="script">-->
+<!--    &lt;!&ndash;사용할 자바스크립트는 여기에 첨부 &ndash;&gt;-->
+<!--    <script src="/js/jquery-3.7.0.min.js"></script>-->
+<!--    <script th:inline="javascript">-->
+<!--        const userDept = [[${session.user.USERDEPT}]];-->
+<!--        const userNum = [[${session.user.USERNUM}]];-->
+<!--    </script>-->
+<!--    <script th:src="@{/js/websocketChatList.js}"></script>-->
+<!--    <script>-->
+<!--        $(function () {-->
+<!--            window.messageSendPage = function messageSendPage(id) {-->
+<!--                console.log(id);-->
+<!--                let chatWindowName = "chatWindow";-->
+<!--                let chatWindow = window.open("/messageSendPage/" + id, chatWindowName, "width=600, height=700");-->
+<!--            };-->
+<!--        });-->
+<!--    </script>-->
+<!--</th:block>-->
+<!--</html>-->

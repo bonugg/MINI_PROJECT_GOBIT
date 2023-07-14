@@ -20,10 +20,7 @@ $(function () {
         };
 
         socket.onmessage = (event) => {
-            console.log("---------------");
             let jsonObj = JSON.parse(event.data);
-            console.log(jsonObj);
-            console.log("---------------");
             if(jsonObj.receiveUser == userNum){
                 $('#num'+jsonObj.sendid).css("display", "").text(jsonObj.sendUserCnt);
             }
