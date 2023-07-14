@@ -116,7 +116,7 @@ $(function () {
                     document.getElementById('changeChart').addEventListener('click', () => {
                         if (currentOption == myChart.getOption(option1).title[0].a) {
                             $('#changeChart').css("backgroundColor", "#253170");
-                            $('#chart_title').text("년간 근무 시간");
+                            $('#chart_title').text("연간 근무 시간");
                             myChart.setOption(option1);
                         } else {
                             $('#changeChart').css("backgroundColor", "#181F42");
@@ -138,7 +138,7 @@ $(function () {
                 // Specify the configuration items and data for the chart
                 let option1 = {
                     title: {
-                        text: '년간 평균 근무시간',
+                        text: '연간 평균 근무시간',
                         left: 'center',
                         top: 'center',
                         a: '1'
@@ -218,8 +218,8 @@ $(function () {
                 let userListHTML = '';
                 for (let i = 0; i < obj.length; i++) {
                     let item = obj[i];
-                    const regex = /(<([^>]+)>)/ig;
-                    item.dboardContent = item.dboardContent.replace(regex, "");
+                    // const regex = /(<([^>]+)>)/ig;
+                    // item.dboardContent = item.dboardContent.replace(regex, "");
                     console.log(item.dboardContent);
                     userListHTML += `
                                          <table class="notice_table" onclick="location.href='/boardDept/updateCnt/${item.dboardNum}'">
