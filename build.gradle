@@ -48,13 +48,3 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-//bootJar{
-//    mainClassName = 'com.gobit.minipj_gobit.MinipjGObitApplication'
-//}
-
-bootRun {
-    String activeProfile =
-            System.properties['spring.profiles.active']
-    systemProperty "spring.profile.active", activeProfile
-}
