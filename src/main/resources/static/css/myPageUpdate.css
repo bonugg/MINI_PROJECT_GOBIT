@@ -12,11 +12,11 @@
     display: flex;
 }
 #_emt3{
-    width: 100px;
+    width: 80px;
     height: 100%;
 }
 #_emt4{
-    width: calc(100% - 100px);
+    width: calc(100% - 80px);
     height: 100%;
     display: flex;
 }
@@ -26,8 +26,8 @@
 }
 
 .mypage-title {
-    font-size: 13px;
-    color: #949393;
+    font-size: 15px;
+    color: gray;
     position: absolute;
     margin-left: 40px;
     margin-top: 40px;

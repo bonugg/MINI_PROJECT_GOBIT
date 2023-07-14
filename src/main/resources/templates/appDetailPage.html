@@ -8,7 +8,7 @@
     <title>Empty</title>
     <th:block layout:fragment="css">
         <!--사용할 css는 여기에 첨부. 2번째 링크는 돋보기 버튼용 -->
-        <link rel="stylesheet" type="text/css" href="css/empty.css">
+        <link rel="stylesheet" type="text/css" href="/css/empty.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
         <link rel="stylesheet" type="text/css" href="/css/appDetail.css">
     </th:block>
@@ -25,7 +25,7 @@
                 <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
                 <!-- 1st (06.20 17:00) fragment > header에 링크 추가 완료 -->
                 <div id="app_main_title">
-                    <p>결재 요청 목록</p>
+                    <p>내가 신청한 결재 목록</p>
                 </div>
 
                     <div id="app_list_card">
@@ -115,7 +115,7 @@
                                 </tr>
                                 </thead>
                                 <tbody id="tbody_all">
-                                <tr th:each="approval : ${appForUser}" class="tr_cls">
+                                <tr th:each="approval : ${appForUser}" class="tr_cls" th:onclick="|location.href='@{/appDetail/{appNum} (appNum=${approval.appNum})}'|">
                                     <th class="left-line">
                                         <p th:text="${approval.appNum}"></p>
                                         <div th:if="${approval.appAlarm == 0 && approval.appState !='미승인'}"
@@ -128,11 +128,10 @@
                                         <span th:case="B">출장</span>
                                         <span th:case="M">회의</span>
                                     </td>
-                                    <td><a th:href="@{/appDetail/{appNum} (appNum=${approval.appNum})}"
-                                           th:text="${approval.appContent}"></a></td>
+                                    <td  th:text="${approval.appContent}"></td>
                                     <td th:text="${#temporals.format(approval.appWriDate, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${#temporals.format(approval.appStateDate, 'yyyy-MM-dd')}"></td>
-                                    <td th:text="${approval.appState}"></td>
+                                    <td th:text="${approval.appState}" th:style="${approval.appState == '승인' ? 'color: cornflowerblue;' : (approval.appState == '반려' ? 'color: indianred;' : '') }"></td>
                                     <!-- 결재 승인자  -->
                                     <td class="right-line"
                                         th:text="${approval.appUserNum != null ? approval.appUserNum.getUSERNAME() : ' '}"></td>

@@ -36,8 +36,7 @@ public class nBoardController {
 
     @Autowired
     private nBoardService boardService;
-    @Autowired
-    private NfileRepository nfileRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -84,11 +83,7 @@ public class nBoardController {
 
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
-        System.out.println("============");
-        System.out.println(id);
-        System.out.println("============");
         nBoard board = this.boardService.getBoard(id);
-        System.out.println("============");
         model.addAttribute("nBoard", board);
         return "noticeDept/noticeDetail";
     }
@@ -120,22 +115,12 @@ public class nBoardController {
                              @RequestParam("content") String content,
                              @RequestParam(value = "items", required = false, defaultValue = "null") List<String> exFilesStr,
                              @RequestParam(value = "files") List<MultipartFile> multipartFiles) {
-        System.out.println("-----------시작---------------");
-        if(multipartFiles != null){
-            System.out.println(multipartFiles.get(0));
-        }else {
-            System.out.println(multipartFiles);
-        }
 
         boardService.modify(id, title, content);
 
         if (exFilesStr != null) {
-            System.out.println(exFilesStr);
-            System.out.println("--기존 파일 리스트---");
             //기존 파일리스트 조회
             List<nBoardFile> exFiles = nfileService.findByFiles(id);
-            System.out.println(exFiles);
-            System.out.println("--기존 파일 리스트---");
             //수정된 파일 삭제
             nfileService.modifyFiles(exFilesStr, exFiles);
         }

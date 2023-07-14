@@ -39,7 +39,7 @@ public class ApprovalController {
 
     @GetMapping("/approvalList")
     public String getLeaderList(Model model, String cls, String sWord,
-                                @PageableDefault(page = 0, size = 10, sort = "appNum", direction = Sort.Direction.DESC) Pageable pageable) {
+                                @PageableDefault(page = 0, size = 8, sort = "appNum", direction = Sort.Direction.DESC) Pageable pageable) {
 //                                                   page 인덱스 0부터 10개씩, appNum기준으로 역순 제공
 
         User user = (User) httpSession.getAttribute("user");
@@ -95,7 +95,7 @@ public class ApprovalController {
     //
     @GetMapping("/appDetail")
     public String getUserList(Model model, String cls, String sWord,
-                              @PageableDefault(page = 0, size = 10, sort = "appNum", direction = Sort.Direction.DESC) Pageable pageable) {
+                              @PageableDefault(page = 0, size = 8, sort = "appNum", direction = Sort.Direction.DESC) Pageable pageable) {
 //                                                   page 인덱스 0부터 10개씩, appNum기준으로 역순 제공
         User user = (User) httpSession.getAttribute("user");
 

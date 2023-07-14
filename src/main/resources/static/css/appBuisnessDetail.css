@@ -12,11 +12,11 @@
     display: flex;
 }
 #_emt3{
-    width: 100px;
+    width: 80px;
     height: 100%;
 }
 #_emt4{
-    width: calc(100% - 100px);
+    width: calc(100% - 80px);
     height: 100%;
     display: flex;
 }
@@ -24,6 +24,19 @@
 #use_screen {
     width: 100%;
     height: 100%;
+    overflow: auto;
+}
+#use_screen::-webkit-scrollbar {
+    background-color: #181F42;
+    width: 8px;
+    height: 0px;
+}
+#use_screen::-webkit-scrollbar-thumb {
+    background: rgb(255, 255, 255, 0.5);
+}
+
+#use_screen::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255, 0.5);
 }
 
 .use_screen_form{

@@ -429,6 +429,7 @@ $(function () {
             }
         });
     }
+    console.log(formattedDate);
     $.ajax({ //출퇴근 버튼 상태 가져오기
         type: 'POST',
         url: '/onaddcheck',

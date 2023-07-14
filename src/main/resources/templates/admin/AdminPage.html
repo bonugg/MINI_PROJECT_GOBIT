@@ -31,9 +31,17 @@
                             <p id="status_text">(파일첨부 후에 제출버튼을 눌러주세요.)</p>
                         </div>
                     </div>
-                        <button type="button" onclick="location.href='/admin/main'">
+                    <div id="btn_Div">
+                        <form action="/logout" method="post" id="logout_form">
+                        <button type="button" onclick="location.href='/admin/main'" style="margin-right: 15px">
                             돌아가기
                         </button>
+
+                            <button type="button"onclick="this.form.submit();">
+                                로그아웃
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
             </div>

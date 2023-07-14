@@ -12,14 +12,15 @@
     display: flex;
 }
 #_emt3{
-    width: 100px;
+    width: 80px;
     height: 100%;
 }
 #_emt4{
-    width: calc(100% - 100px);
+    width: calc(100% - 80px);
     height: 100%;
     display: flex;
 }
+
 #use_screen{
     width: 100%;
     height: 100%;
@@ -27,7 +28,7 @@
 
 .pwChange-title {
     font-size: 15px;
-    color: #949393;
+    color: gray;
     position: absolute;
     margin-left: 40px;
     margin-top: 40px;
@@ -43,18 +44,32 @@
 #changePwForm input[type="password"] {
     margin-bottom: 20px;
     width: 250px;
-    height: 70px;
-    border: 0.2px;
+    height: 50px;
+    border: 1px solid darkgray;
+    border-radius: 5px;
+    padding-left: 10px;
+    box-sizing: border-box;
+    outline: none;
+}
+#changePwForm input[type="password"]:focus{
+    border: 0.1rem solid #181F42;
 }
 
 #btnChange {
-    width: 150px;
+    width: 250px;
     height: 50px;
     background-color: #878BA0;
     color: #ffffff;
     font-size: 15px;
+    font-weight: bold;
     text-align: center;
     cursor: pointer;
     justify-content: center;
     border: none;
+    border-radius: 5px;
+    outline: none;
+    transition: background-color 0.25s ease-in-out;
+}
+#btnChange:hover{
+    background-color: #777983;
 }
