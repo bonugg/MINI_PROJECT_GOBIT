@@ -212,23 +212,22 @@ public class AppDetailController {
     }
 
     @PostMapping("/meeting/{appNum}")
-    public ModelAndView deleteMeeting(@PathVariable long appNum) {
+    public String deleteMeeting(@PathVariable long appNum) {
         System.out.println("=======================meeting approval delete result=======================");
         System.out.println("삭제한 회의결재 번호:" + appNum);
         ModelAndView mv = new ModelAndView();
         approvalService.deleteApproval(appNum);
         mv.setViewName("appDetailPage.html");
-        return mv;
+        return "회의 삭제성공";
     }
 
     @PostMapping("/buisness/{appNum}")
-    public ModelAndView deleteBuisness(@PathVariable long appNum) {
+    public String deleteBuisness(@PathVariable long appNum) {
         System.out.println("=======================buisness approval delete result=======================");
         System.out.println("삭제한 출장결재 번호:" + appNum);
         ModelAndView mv = new ModelAndView();
         approvalService.deleteApproval(appNum);
-        mv.setViewName("appDetailPage.html");
-        return mv;
+        return "출장 삭제성공";
     }
 
     @PostMapping("/vacation/{appNum}")
