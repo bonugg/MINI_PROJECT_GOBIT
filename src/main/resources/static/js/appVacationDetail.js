@@ -144,7 +144,7 @@ function calculateDateDifference() {
     console.log(appVacReq);
 
     const appVacReqSec = document.getElementById('appVacReq').value;
-    const days = appVacReqSec / (60 * 60 * 24);
+    const days = (appVacReqSec / (60 * 60 * 24)) + 1;
     document.getElementById('appData-vacationDateCnt').innerText = days.toFixed(1);
 
 }

@@ -138,6 +138,7 @@ public class AppRequestController {
 
         try {
             long vacUsed = vacationService.getVacUsed(userNum);
+
             long vacLeft = vacationService.getVacLeft(userNum);
             long vacTotal = vacationService.getVacTotal(userNum);
 
