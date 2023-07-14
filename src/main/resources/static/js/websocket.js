@@ -5,6 +5,7 @@ $(function () {
         $('#hid').css("display", "block");
     }
 // 현재 페이지 URL이 /main 인 경우에만 웹소켓 연결을 시작합니다.
+
     window.onload = () => {
         const url = `ws://${location.host}/database-change?dept=` + userDept;
         setupWebSocketAsync(url);

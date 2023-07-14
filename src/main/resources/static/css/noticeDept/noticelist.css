@@ -19,7 +19,7 @@ section.notice {
 #board-search .search-window {
     padding: 15px 0;
     background-color: #181F42;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 #board-search .search-window .search-wrap {
     position: relative;

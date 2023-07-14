@@ -169,9 +169,10 @@
     outline: none;
     margin-right: 5px;
     box-sizing: border-box;
+    transition: background-color 0.25s ease-in-out;
 }
 #pwd_clean:hover{
-    background-color: #ebebeb;
+    background-color: #dcdcdc;
     cursor: pointer;
 }
 
@@ -322,7 +323,7 @@
 }
 .search_input_text:focus{
     outline: none;
-    border: 1px solid black;
+    border: 1px solid darkgray;
 }
 .search_input_btn{
     background-color: rgb(192, 193, 201);
@@ -541,17 +542,20 @@
 }
 .user_Img_td{
     width: 100px;
+    max-height: 100px;
     height: 100px;
 }
 .user_Img_div{
     width: 100%;
     height: 100%;
+    max-height: 100px;
     display: flex;
 }
 .user_Img{
     border-radius: 5px;
     width: 100px;
-    height: 100%
+    height: 100%;
+    max-height: 100px;
 }
 .user-checkboxIT{
     position: relative;
@@ -611,9 +615,10 @@
     outline: none;
     margin-right: 5px;
     box-sizing: border-box;
+    transition: background-color 0.25s ease-in-out;
 }
 .up_btn:hover{
-    background-color: #ebebeb;
+    background-color: #dcdcdc;
     cursor: pointer;
 }
 .user_delete_td{
@@ -635,6 +640,7 @@
     border-radius: 5px;
     outline: none;
     box-sizing: border-box;
+    transition: background-color 0.25s ease-in-out;
 }
 #delete_user:hover{
     border: 1px solid #a94442;
