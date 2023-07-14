@@ -49,9 +49,9 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-bootJar{
-    mainClassName = 'com.gobit.minipj_gobit.MinipjGObitApplication'
-}
+//bootJar{
+//    mainClassName = 'com.gobit.minipj_gobit.MinipjGObitApplication'
+//}
 
 bootRun {
     String activeProfile =
