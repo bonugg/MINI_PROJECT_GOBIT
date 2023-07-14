@@ -113,6 +113,8 @@ function calculateDateDifference() {
     const appEndInput = document.getElementById("input-appEnd");
     const appStartValue = new Date(appStartInput.value);
     const appEndValue = new Date(appEndInput.value);
+    console.log("시작시간" +appStartValue);
+    console.log("종료시간" +appEndValue);
     const differenceInMilliseconds = appEndValue.getTime() - appStartValue.getTime();
     const differenceInSeconds = differenceInMilliseconds / 1000;
 
@@ -124,24 +126,26 @@ function calculateDateDifference() {
     }
     if(appStartInput.type=='datetime-local'){
         console.log("시간 단위");
-        document.getElementById("appVacReq").value = differenceInSeconds + 3600;
+        const tmp = differenceInSeconds;
+        document.getElementById("appVacReq").value = tmp;
+        console.log("신청한 휴가(초): " + appVacReq.value);
     }
-    console.log("신청한 휴가(초): " + appVacReq.value);
 
     const appVacReqSec = appVacReq.value; // 초 단위의 값
     const days = Math.floor(appVacReqSec / (60 * 60 * 24)); // 일(day)로 변환된 값
-    const hours = (appVacReqSec % (60 * 60 * 24)) / (60 * 60); // 시간으로 변환된 값
+    const hours = Math.floor((appVacReqSec % (60 * 60 * 24)) / (60 * 60)); // 시간으로 변환된 값
+
 
     let result = "";
     if (days > 0) {
         result += days + "일";
     }
-    if (hours > 0) {
-        result += hours.toFixed(1) + "시간";
+    if (hours > 0 && days === 0) {
+        result += hours + "시간";
+        console.log(hours);
     }
 
     document.getElementById('appData-vacationDateCnt').innerText = result;
-
 }
 
 function printContent() {
