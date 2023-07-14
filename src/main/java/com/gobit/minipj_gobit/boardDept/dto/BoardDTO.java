@@ -1,4 +1,4 @@
-package com.gobit.minipj_gobit.boardDept.controller.dto;
+package com.gobit.minipj_gobit.boardDept.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

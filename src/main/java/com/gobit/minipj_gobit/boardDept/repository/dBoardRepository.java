@@ -1,14 +1,11 @@
 package com.gobit.minipj_gobit.boardDept.repository;
 
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
-import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 
 import java.util.List;
 

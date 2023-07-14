@@ -1,6 +1,5 @@
 package com.gobit.minipj_gobit.boardUser;
 
-import com.gobit.minipj_gobit.boardDept.file.FileUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -20,11 +19,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.gobit.minipj_gobit.boardDept.file.FileUtils.UPLOAD_PATH;
+
 @Component
 public class ChatSocketHandler extends TextWebSocketHandler {
     //HashMap<String, WebSocketSession> sessionMap = new HashMap<>(); //웹소켓 세션을 담아둘 맵
     List<HashMap<String, Object>> rls = new ArrayList<>(); //웹소켓 세션을 담아둘 리스트 ---roomListSessions
-    private static final String FILE_UPLOAD_PATH = "/Users/minje/Desktop/upload/chat";
+    private static final String FILE_UPLOAD_PATH = UPLOAD_PATH + "/chat";
     static int fileUploadIdx = 0;
     static String fileUploadSession = "";
 

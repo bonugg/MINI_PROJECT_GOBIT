@@ -21,9 +21,7 @@ import java.util.UUID;
 @Component
 public class FileUtils {
 
-
     public static final  String UPLOAD_PATH = "/Users/minje/Desktop/upload";
-
 
     /**
      * 다중 파일 업로드
