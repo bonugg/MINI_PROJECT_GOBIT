@@ -542,17 +542,20 @@
 }
 .user_Img_td{
     width: 100px;
+    max-height: 100px;
     height: 100px;
 }
 .user_Img_div{
     width: 100%;
     height: 100%;
+    max-height: 100px;
     display: flex;
 }
 .user_Img{
     border-radius: 5px;
     width: 100px;
-    height: 100%
+    height: 100%;
+    max-height: 100px;
 }
 .user-checkboxIT{
     position: relative;
