@@ -193,7 +193,6 @@
     Array.from(cancel_elements).forEach(function(ele) {
         ele.addEventListener('click', function(event) {
             var conf = confirm("정말로 수정을 취소하시겠습니까? 작성 내용이 수정되지 않습니다.");
-            console.log(conf);
             if (conf) {
                 location.href = this.dataset.uri;
             } else {
