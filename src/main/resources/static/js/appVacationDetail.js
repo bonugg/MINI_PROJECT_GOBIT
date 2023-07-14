@@ -136,15 +136,17 @@ function calculateDateDifference() {
     const differenceInMilliseconds = appEndValue.getTime() - appStartValue.getTime();
 
     const differenceInSeconds = differenceInMilliseconds / 1000;
-    console.log("차이(초):", differenceInSeconds);
-    const appVacReq = document.getElementById('appVacReq')
-    // appVacReq.setAttribute("value", differenceInSeconds);
-    document.getElementById("appVacReq").value = differenceInSeconds;
+    const twentyFourHoursInSeconds = 24 * 60 * 60;
+
+    const totalDifferenceInSeconds = differenceInSeconds + twentyFourHoursInSeconds;
+    console.log("차이(초):", totalDifferenceInSeconds);
+
+    document.getElementById("appVacReq").value = totalDifferenceInSeconds;
 
     console.log(appVacReq);
 
     const appVacReqSec = document.getElementById('appVacReq').value;
-    const days = (appVacReqSec / (60 * 60 * 24)) + 1;
+    const days = appVacReqSec / (60 * 60 * 24);
     document.getElementById('appData-vacationDateCnt').innerText = days.toFixed(1);
 
 }
