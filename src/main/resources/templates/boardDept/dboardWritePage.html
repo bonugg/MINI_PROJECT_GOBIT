@@ -26,17 +26,8 @@
             <div id="use_screen">
                 <!--헤더와 메뉴바를 제외한 영역 -->
                 <!--여기에 본인의 코드를 넣어주시면 됩니다 -->
-                <div>
-                    <!-- 머리부분 -->
-                    <div class="heead">
-                        <div class="div-title">
-                            <div class="title">
-                                <p>전사게시판</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 머리부분 -->
-
+                <div id="use_screen2">
+                    <p id="boardDept"><a href="/boardDept/list" style="color: grey" class="exit">전사게시판</a></p>
 
                     <!-- 몸통 부분 -->
                     <div class="boody">
@@ -46,7 +37,7 @@
                             <!-- 제목 -->
                             <div class="div-botitle">
                                 <div class="board-title">
-                                    <input id="title_input" type="text" name="title" placeholder="여기에 제목을 입력하세요.">
+                                    <input id="title_input" type="text" name="title" placeholder="여기에 제목을 입력해주세요.">
                                 </div>
                             </div>
                             <!-- 제목 -->
@@ -84,8 +75,8 @@
 
                             <!-- 버튼들 -->
                             <div class="div-board-btns">
-                                <button type="submit" class="sub_btn">완료</button>
-                                <button type="button" class="cancel" data-uri="/boardDept/list">취소</button>
+                                <button type="submit" class="sub_btn" id="write_submit_btn">완료</button>
+                                <button type="button" class="cancel exit" data-uri="/boardDept/list">취소</button>
                             </div>
                             <!-- 버튼들 -->
                         </form>
@@ -99,17 +90,18 @@
     </div>
 </div>
 <script>
-    //에디터 https://summernote.org/
     $(document).ready(function() {
+        //에디터 https://summernote.org/
         var MAX_LENGTH = 1000;
         var fontList = ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'];
         $('#summernote').summernote({
-            height: 300,
+            disableResizeEditor: true,
+            height: 370,
             focus: true,
             lang: "ko-KR",
             fontNames: fontList,
             fontNamesIgnoreCheck: fontList,
-            placeholder: '최대 1000자까지 쓸 수 있습니다',
+            placeholder: '여기에 내용을 입력해주세요.',
             theme: 'yeti',
             toolbar: [
                 ['fontname'],
@@ -121,20 +113,9 @@
                 ['insert',['picture','link','video']]
             ],
             fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-            callbacks: {
-                onchange: function(e) {
-                    var content = $(this).summernote('getText');
-                    if (content.length > MAX_LENGTH) {
-                        var excessContent = content.substring(MAX_LENGTH);
-                        var sanitizedContent = content.substring(0, MAX_LENGTH);
-                        $(this).summernote('setText', sanitizedContent);
-                        alert('1000자 이하로 입력해 주세요.');
-                    }
-                }
-            }
         });
 
-        //빈 제목일 경우
+        //빈 제목일 경우 & 중복 작성 방지
         var form = document.getElementById('final_form');
 
         form.addEventListener('submit', function(event) {
@@ -144,6 +125,16 @@
             if (titleValue === '') {
                 event.preventDefault(); // 폼 제출을 막음
                 alert('제목을 입력해주세요.');
+            } else {
+                // 알림창 표시
+                var confirmResult = confirm("작성을 완료하시겠습니까?");
+
+                if (confirmResult) {
+                    // 확인 버튼을 눌렀을 때 submit 이벤트 발생
+                    $("#final_form").submit();
+                } else {
+                    event.preventDefault();
+                }
             }
         });
 
@@ -202,12 +193,16 @@
         element.parentElement.remove();
     }
 
-    const cancel_elements = document.getElementsByClassName("cancel");
+    //페이지 이탈 시
+    const cancel_elements = document.getElementsByClassName("exit");
     Array.from(cancel_elements).forEach(function(ele) {
-        ele.addEventListener('click', function() {
-            if(confirm("정말로 작성을 취소하시겠습니까?")) {
+        ele.addEventListener('click', function(event) {
+            var conf = confirm("정말로 작성을 취소하시겠습니까? 작성 내용이 저장되지 않습니다.");
+            if (conf) {
                 location.href = this.dataset.uri;
-            };
+            } else {
+                event.preventDefault(); // 폼 제출을 막음
+            }
         });
     });
 </script>

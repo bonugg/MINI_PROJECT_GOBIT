@@ -51,6 +51,10 @@ body{
     width: 71px;
     text-align: center;
 }
+.roomList .del{
+    width: 31px;
+    text-align: center;
+}
 button{
     background-color: #181F42;
     font-size: 14px;

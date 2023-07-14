@@ -1,7 +1,6 @@
 package com.gobit.minipj_gobit.boardDept.controller;
 
 import com.gobit.minipj_gobit.boardDept.file.FileUtils;
-import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
 import com.gobit.minipj_gobit.boardDept.service.FileService;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
@@ -14,7 +13,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -25,14 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.*;
-import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/boardDept")
@@ -164,9 +157,6 @@ public class dBoardController {
     public void fileDown(@PathVariable("fileId") Long fileId, HttpServletResponse response) throws IOException {
         dBoardFile file = fileService.findById(fileId);
         Resource resource = fileUtils.readFileAsResource(file);
-
-//        String originalFilename = file.getOriginalName();
-//        String encodedFilename = URLEncoder.encode(originalFilename, StandardCharsets.UTF_8.toString());
 
         try {
             String filename = URLEncoder.encode(file.getOriginalName(), "UTF-8");

@@ -61,8 +61,10 @@ public class nBoardController {
         }
 
         int nowPage = boardList.getNumber() + 1;
-        int startPage = Math.max(1, nowPage -5);
-        int endPage = Math.min(nowPage + 5, boardList.getTotalPages());
+        int totalPageCount = boardList.getTotalPages();
+        int fixedPageCount = 5; // 고정으로 보여줄 페이지 수
+        int startPage = Math.max(1, nowPage - (fixedPageCount / 2));
+        int endPage = Math.min(startPage + fixedPageCount - 1, totalPageCount);
 
         model.addAttribute("postList", boardList);
         model.addAttribute("nowPage", nowPage);

@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @Data
 @Entity
@@ -29,16 +27,5 @@ public class dBoardFile {
         this.saveName = saveName;
         this.size = size;
         this.createDate = LocalDateTime.now();
-    }
-
-    @Override
-    public String toString() {
-        return "dBoardFile{" +
-                "id=" + id +
-                ", originalName='" + originalName + '\'' +
-                ", saveName='" + saveName + '\'' +
-                ", size=" + size +
-                ", createDate=" + createDate +
-                '}';
     }
 }

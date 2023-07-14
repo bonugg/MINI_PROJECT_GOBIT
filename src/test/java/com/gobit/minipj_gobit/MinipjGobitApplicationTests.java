@@ -1,24 +1,18 @@
 package com.gobit.minipj_gobit;
 
-import com.gobit.minipj_gobit.boardDept.controller.FileController;
-import com.gobit.minipj_gobit.boardDept.controller.dto.BoardDTO;
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
-import com.gobit.minipj_gobit.boardDept.entity.dBoardFile;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardFileRepository;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
 import com.gobit.minipj_gobit.boardDept.service.BoardService;
-import com.gobit.minipj_gobit.boardUser.UserDTO;
 import com.gobit.minipj_gobit.boardUser.UserService;
 import com.gobit.minipj_gobit.entity.User;
 import com.gobit.minipj_gobit.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 
 import java.io.File;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootTest
 class MinipjGobitApplicationTests {
@@ -38,25 +32,25 @@ class MinipjGobitApplicationTests {
     void contextLoads() {
     }
 
-//    @Test
-//    void 게시물_저장() {
-//        for (int i = 0; i < 55; i++) {
-//            String title = String.format("테스트 제목입니다:[%02d]", i);
-//            String content = "테스트 내용입니다~";
-//            User user = userRepository.findByUSERENO(20230010).get();
-//
-//            dBoard board = dBoard.builder()
-//                    .title(title)
-//                    .content(content)
-//                    .user(user)
-//                    .createDate(LocalDateTime.now())
-//                    .modifyDate(LocalDateTime.now())
-//                    .cnt(0)
-//                    .like(0)
-//                    .build();
-//            dBoardRepository.save(board);
-//        }
-//    }
+    @Test
+    void 게시물_저장() {
+        for (int i = 0; i < 99; i++) {
+            String title = String.format("테스트 제목입니다:[%02d]", i);
+            String content = "테스트 내용입니다~";
+            User user = userRepository.findByUSERENO(9).get();
+
+            dBoard board = dBoard.builder()
+                    .title(title)
+                    .content(content)
+                    .user(user)
+                    .createDate(LocalDateTime.now())
+                    .modifyDate(LocalDateTime.now())
+                    .cnt(0)
+                    .like(0)
+                    .build();
+            dBoardRepository.save(board);
+        }
+    }
 
     @Test
     void 파일_삭제() {
@@ -68,14 +62,14 @@ class MinipjGobitApplicationTests {
         }
     }
 
-    @Test
-    void 파일리스트_확인() {
-        dBoard board = dBoardRepository.findById(Long.valueOf(297)).get();
-        List<dBoardFile> files = fileRepository.findAllByBoard(board);
-        for (dBoardFile file : files) {
-            System.out.println(file.getOriginalName());
-        }
-    }
+//    @Test
+//    void 파일리스트_확인() {
+//        dBoard board = dBoardRepository.findById(Long.valueOf(297)).get();
+//        List<dBoardFile> files = fileRepository.findAllByBoard(board);
+//        for (dBoardFile file : files) {
+//            System.out.println(file.getOriginalName());
+//        }
+//    }
 
 //    @Test
 //    void 유저리스트() {
@@ -85,4 +79,9 @@ class MinipjGobitApplicationTests {
 //            System.out.println(userDTO.getDept());
 //        }
 //    }
+
+    @Test
+    void 전사게시판다삭제() {
+        dBoardRepository.deleteAll();
+    }
 }
