@@ -19,7 +19,6 @@
     width: calc(100% - 80px);
     height: 100%;
     display: flex;
-    overflow: auto;
 }
 #use_screen::-webkit-scrollbar {
     background-color: #181F42;
@@ -38,10 +37,18 @@
     height: 100%;
     overflow: auto;
     scroll-behavior: smooth;
+    position: relative;
 }
 .page-name{
     margin-top: 40px;
     margin-left: 40px;
+    font-size: 15px;
+    color: grey;
+}
+#sub_title{
+    position: absolute;
+    top: 40px;
+    left: 40px;
     font-size: 15px;
     color: grey;
 }
