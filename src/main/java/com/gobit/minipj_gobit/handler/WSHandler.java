@@ -1,21 +1,26 @@
 package com.gobit.minipj_gobit.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gobit.minipj_gobit.entity.Approval;
-import com.gobit.minipj_gobit.entity.UserOnOff;
-import com.gobit.minipj_gobit.repository.ApprovalRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
+        import com.fasterxml.jackson.databind.ObjectMapper;
+        import com.gobit.minipj_gobit.entity.Approval;
+        import com.gobit.minipj_gobit.entity.User;
+        import com.gobit.minipj_gobit.entity.UserOnOff;
+        import com.gobit.minipj_gobit.repository.ApprovalRepository;
+        import jakarta.servlet.http.HttpSession;
+        import lombok.RequiredArgsConstructor;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.web.socket.CloseStatus;
+        import org.springframework.web.socket.TextMessage;
+        import org.springframework.web.socket.WebSocketSession;
+        import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CopyOnWriteArrayList;
+        import java.io.IOException;
+        import java.time.LocalDateTime;
+        import java.time.format.DateTimeFormatter;
+        import java.util.HashMap;
+        import java.util.List;
+        import java.util.Map;
+        import java.util.concurrent.CompletableFuture;
+        import java.util.concurrent.CopyOnWriteArrayList;
 
 @RequiredArgsConstructor
 public class WSHandler extends TextWebSocketHandler {
@@ -26,9 +31,9 @@ public class WSHandler extends TextWebSocketHandler {
     public void handleDatabaseChanges(Object o) {
         for (WebSocketSession currentSession : sessions) {
             if (currentSession.isOpen()) {
+                System.out.println(currentSession+"===");
                 CompletableFuture.runAsync(() -> {
                             try {
-                                System.out.println("메세지 전송 전");
                                 sendUserOnOffMessage(currentSession, o);
                                 System.out.println("메세지 전송 성공");
                             } catch (IOException e) {
@@ -56,9 +61,6 @@ public class WSHandler extends TextWebSocketHandler {
             result.put("end", userOnOff.getEND());
         }else if(o instanceof Approval){
             Approval approval = (Approval) o;
-            System.out.println("유저 : " + approval.getUserNum());
-            System.out.println("유저 번호 : " + approval.getUserNum().getUSERNUM());
-            System.out.println("숫자 : " + approvalRepository.findByCntUserApp(approval.getUserNum()));
             result.put("testcnt", approvalRepository.findByCntUserApp(approval.getUserNum()));
             result.put("testusernum", approval.getUserNum().getUSERNUM());
         }
@@ -78,5 +80,8 @@ public class WSHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
         sessions.add(session);
+    }
+    public int getActiveSessionCount() {
+        return sessions.size();
     }
 }

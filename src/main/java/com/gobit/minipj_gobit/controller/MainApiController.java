@@ -2,20 +2,22 @@ package com.gobit.minipj_gobit.controller;
 
 import com.gobit.minipj_gobit.boardDept.entity.dBoard;
 import com.gobit.minipj_gobit.boardDept.repository.dBoardRepository;
+import com.gobit.minipj_gobit.boardUser.UserDTO;
 import com.gobit.minipj_gobit.entity.*;
 import com.gobit.minipj_gobit.entity.Calendar;
 import com.gobit.minipj_gobit.noticeDept.entity.nBoard;
 import com.gobit.minipj_gobit.noticeDept.repository.nBoardRepository;
-import com.gobit.minipj_gobit.repository.ApprovalRepository;
-import com.gobit.minipj_gobit.repository.CalendarRepository;
-import com.gobit.minipj_gobit.repository.UserOnOffRepository;
-import com.gobit.minipj_gobit.repository.VacationRepository;
+import com.gobit.minipj_gobit.repository.*;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,6 +36,76 @@ public class MainApiController {
     private final nBoardRepository nBoardRepository;
     private final ApprovalRepository approvalRepository;
     private final VacationRepository vacationRepository;
+    private final UserRepository userRepository;
+
+//    @GetMapping("/messagePage")
+//    public ModelAndView MessagePage() {
+//        User loginuser = (User) httpSession.getAttribute("user");
+//        ModelAndView mv = new ModelAndView();
+//        List<ChatUserDTO> userDTOList = new ArrayList<>();
+//
+//        List<User> userList = userRepository.findAll();
+//
+//        for (User user : userList) {
+//            ChatUserDTO userDTO = ChatUserDTO.ChatUserToDTO(user);
+//            if(userDTO.getId() != loginuser.getUSERNUM()){
+//                userDTO.setCount(messageRepository.findBycnt(user, loginuser));
+//                userDTOList.add(userDTO);
+//            }
+//        }
+//        mv.addObject("userDTOList", userDTOList);
+//        mv.setViewName("/chat/chatUserList.html");
+//        return mv;
+//    }
+//
+//    @GetMapping("/messageSendPage/{id}")
+//    public ModelAndView messageSendPage(@PathVariable long id) throws IOException {
+//        ModelAndView mv = new ModelAndView();
+//        User user = (User) httpSession.getAttribute("user");
+//        User receiveUser = userRepository.findById(id).get();
+//
+//        UserDTO userDTO = UserDTO.userToDTO(user);
+//        UserDTO receiveUserDTO = UserDTO.userToDTO(receiveUser);
+//
+//        List<Message> sendList = messageRepository.findByUserAndReceiveUser(user, receiveUser);
+//        List<Message> sendList2 = messageRepository.findByUserAndReceiveUser(receiveUser, user);
+//        sendList.addAll(sendList2);
+//        sendList.sort(Comparator.comparing(Message::getChatSendDate));
+//
+//        List<Message> addSetCheck = new ArrayList<>();
+//        for(Message ms : sendList){
+//            if(ms.getReceiveUser().getUSERNUM() == user.getUSERNUM() && ms.getChatCheck() != 1){
+//                ms.setChatCheck(1);
+//                addSetCheck.add(ms);
+//            }
+//        }
+//
+//        messageRepository.saveAll(addSetCheck);
+//        messageRepository.flush();
+//        // 발행 후 이벤트 수정
+//        messageListener.afterSaveAll(addSetCheck);
+//
+//        mv.addObject("sendId", userDTO);
+//        mv.addObject("receiveId", receiveUserDTO);
+//        mv.addObject("sendList", sendList);
+//        mv.setViewName("/chat/chatUser.html");
+//        return mv;
+//    }
+//
+//    @PostMapping("/sendMessage")
+//    public String sendMessage(@RequestParam("receiveuser") long receiveuser,
+//                              @RequestParam("sendText") String sendText
+//                             ){
+//        User user = (User) httpSession.getAttribute("user");
+//        Message message = new Message();
+//        message.setChatSend(sendText);
+//        message.setUser(user);
+//        message.setReceiveUser(userRepository.findById(receiveuser).get());
+//        messageRepository.save(message);
+//        messageRepository.flush();
+//
+//        return null;
+//    }
 
     @GetMapping("/approvalList/{appNum}")
     public ModelAndView approvalListDetail(@PathVariable long appNum) {
@@ -82,7 +154,7 @@ public class MainApiController {
     @PostMapping("/approvalList/cancle")
     public String approvalListDetailCancle(@RequestParam("id") long id,
                                            @RequestParam("sign") String sign,
-                                           @RequestParam("canclereason") String canclereason ) {
+                                           @RequestParam("canclereason") String canclereason) {
         System.out.println(canclereason);
         User user = (User) httpSession.getAttribute("user");
         Approval approval = approvalRepository.findById(id).orElse(null);

@@ -1,29 +1,29 @@
-#fullscreen{
-    width: 100vw;
-    height: 100vh;
-}
-#_emt1{
-    width: 100%;
-    height: 70px;
-}
-#_emt2{
-    width: 100%;
-    height: calc(100% - 70px);
-    display: flex;
-}
-#_emt3{
-    width: 100px;
-    height: 100%;
-}
-#_emt4{
-    width: calc(100% - 100px);
-    height: 100%;
-    display: flex;
-}
-#use_screen{
-    width: 100%;
-    height: 100%;
-}
+/*#fullscreen{*/
+/*    width: 100vw;*/
+/*    height: 100vh;*/
+/*}*/
+/*#_emt1{*/
+/*    width: 100%;*/
+/*    height: 70px;*/
+/*}*/
+/*#_emt2{*/
+/*    width: 100%;*/
+/*    height: calc(100% - 70px);*/
+/*    display: flex;*/
+/*}*/
+/*#_emt3{*/
+/*    width: 100px;*/
+/*    height: 100%;*/
+/*}*/
+/*#_emt4{*/
+/*    width: calc(100% - 100px);*/
+/*    height: 100%;*/
+/*    display: flex;*/
+/*}*/
+/*#use_screen{*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*}*/
 
 
 
@@ -156,6 +156,7 @@
     padding: 15px 50px;
     font-size: 15px;
     cursor: pointer;
+    transition: background-color 0.25s ease-in-out;
 }
 
 
@@ -222,7 +223,6 @@ tbody th, tbody td {
     border-bottom: 1px solid gray;
     padding: 10px;   /*상 우 하 좌*/
     font-size: 14px;
-    background: #fff;
     text-align: center;
     white-space: nowrap; /* 셀의 내용이 한 줄로 표시되도록 설정 */
     overflow: hidden; /* 셀 내용이 넘칠 경우 숨김 처리 */
@@ -235,6 +235,15 @@ tbody th, tbody td {
 
 .right-line {
     border-right: 1px solid gray;
+}
+
+.tr_cls{
+    background-color: white;
+    transition: background-color 0.25s ease-in-out;
+}
+tr.tr_cls:hover{
+    background-color: #e7e7e7;
+    cursor: pointer;
 }
 
 /*결재 목록 종료*/
