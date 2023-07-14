@@ -95,7 +95,7 @@
                     </ul>
                 </div>
                 <div class="bt_wrap">
-                <a href="/noticeDept/noticeWrite" class="on">등록</a>
+                <a href="/noticeDept/noticeWrite" class="on" th:if="${session.user.USERPOSITION=='팀장'}">등록</a>
                 </div>
             </div>
         </div>
