@@ -129,23 +129,41 @@ function changeDateType() {
 function calculateDateDifference() {
     const appStartInput = document.getElementById("input-appStart");
     const appEndInput = document.getElementById("input-appEnd");
-
     const appStartValue = new Date(appStartInput.value);
     const appEndValue = new Date(appEndInput.value);
-
+    console.log("시작시간" +appStartValue);
+    console.log("종료시간" +appEndValue);
     const differenceInMilliseconds = appEndValue.getTime() - appStartValue.getTime();
-
     const differenceInSeconds = differenceInMilliseconds / 1000;
-    console.log("차이(초):", differenceInSeconds);
+
     const appVacReq = document.getElementById('appVacReq')
-    // appVacReq.setAttribute("value", differenceInSeconds);
-    document.getElementById("appVacReq").value = differenceInSeconds;
 
-    console.log(appVacReq);
+    if(appStartInput.type == 'date'){
+        console.log("날짜 단위");
+        document.getElementById("appVacReq").value = differenceInSeconds + 86400;
+    }
+    if(appStartInput.type=='datetime-local'){
+        console.log("시간 단위");
+        const tmp = differenceInSeconds - 3600;
+        document.getElementById("appVacReq").value = tmp;
+        console.log("신청한 휴가(초): " + appVacReq.value);
+    }
 
-    const appVacReqSec = document.getElementById('appVacReq').value;
-    const days = (appVacReqSec / (60 * 60 * 24)) + 1;
-    document.getElementById('appData-vacationDateCnt').innerText = days.toFixed(1);
+    const appVacReqSec = appVacReq.value; // 초 단위의 값
+    const days = Math.floor(appVacReqSec / (60 * 60 * 24)); // 일(day)로 변환된 값
+    const hours = Math.floor((appVacReqSec % (60 * 60 * 24)) / (60 * 60)); // 시간으로 변환된 값
+
+
+    let result = "";
+    if (days > 0) {
+        result += days + "일";
+    }
+    if (hours > 0 && days === 0) {
+        result += hours + "시간";
+        console.log(hours);
+    }
+
+    document.getElementById('appData-vacationDateCnt').innerText = result;
 
 }
 
