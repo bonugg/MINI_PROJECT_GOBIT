@@ -1,5 +1,6 @@
 # 💼 GOBIT<br/>
 [![Watch the video](https://img.youtube.com/vi/SnloahdMZWo/maxresdefault.jpg)](https://youtu.be/SnloahdMZWo)
+
 <h6 align="right">유튜브 시연 영상 링크</h6>
 
 `비트캠프 네이버클라우드 개발자과정 3조 미니 프로젝트`<br/>
